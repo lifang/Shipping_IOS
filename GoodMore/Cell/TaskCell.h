@@ -17,4 +17,6 @@
 @property(nonatomic,strong)UILabel *moneyLabel;
 @property(nonatomic,strong)UILabel *whereLabel;
 
+@property(nonatomic,strong)UIImageView *distanceImV;
+
 @end

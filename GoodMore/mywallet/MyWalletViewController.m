@@ -47,6 +47,7 @@
     NSMutableArray *_dataArray;
     UILabel *_totalVal;
     UITextField *_moneyNum;
+    UILabel *_prompt;
 }
 @property (nonatomic, strong) RefreshView *topRefreshView;
 @property (nonatomic, strong) RefreshView *bottomRefreshView;
@@ -54,19 +55,36 @@
 @property (nonatomic, assign) CGFloat primaryOffsetY;
 @property (nonatomic, assign) int page;
 @property (nonatomic,assign)NSInteger selectIndex;//当前点击的按钮
+@property(nonatomic,assign)CGFloat height;
+@property(nonatomic,strong)UIButton *downButton;//数字键盘上的完成按钮
+@property(nonatomic,strong)UITextField *editingField;//处于编辑状态的输入框
 @end
 
 @implementation MyWalletViewController
 
+-(void)dealloc
+{
+    //移除通知
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 -(void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
-    _icon.hidden=NO;
-    //[self firstLoadData];
+    [self.navigationController setNavigationBarHidden:YES];
+    
 }
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:NO];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
     [self initNavigation];
     [self initAndLayoutUI];
@@ -92,48 +110,53 @@
 }
 -(void)initNavigation
 {
-    //去除下面的黑色边框
-//    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
-//    self.navigationController.navigationBar.shadowImage=[[UIImage alloc]init];
-//    self.navigationController.navigationBar.barTintColor=kMainColor;
+    UIView *navView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 64)];
+    navView.backgroundColor=kMainColor;
+    self.edgesForExtendedLayout=UIRectEdgeNone;
+    [self.navigationController.view addSubview:navView];
     
-    CGFloat leftSpace;
-    CGFloat rightSpace;
-    leftSpace=rightSpace=20;
-    CGFloat space=20;
-    CGFloat width=(kScreenWidth-60)/2;
+    CGFloat space=30;
+    CGFloat width=(kScreenWidth-space*3)/2;
     _leftButton=[MYButton buttonWithType:UIButtonTypeCustom];
-    _leftButton.selected=YES;
-    _leftButton.tag=110;
     [_leftButton setTitle:@"可提现金额" forState:UIControlStateNormal];
+    _leftButton.titleLabel.font=[UIFont boldSystemFontOfSize:20];
+    _leftButton.frame=CGRectMake(space, 25, width, 30);
     [_leftButton addTarget:self action:@selector(leftButton:) forControlEvents:UIControlEventTouchUpInside];
-    _leftButton.frame=CGRectMake(leftSpace, 20, width, 44);
-    UIBarButtonItem *leftItem=[[UIBarButtonItem alloc]initWithCustomView:_leftButton];
-    //[self.navigationController.view addSubview:_leftButton];
-    self.navigationItem.leftBarButtonItem=leftItem;
+    _leftButton.tag=110;
+    _leftButton.selected=YES;
+    //_currentButton=leftButton;
+    [navView addSubview:_leftButton];
+    
     
     _rightButton=[MYButton buttonWithType:UIButtonTypeCustom];
-    _rightButton.selected=NO;
-    _rightButton.tag=111;
+    _rightButton.frame=CGRectMake(space+space+width, 25, width, 30);
     [_rightButton setTitle:@"未支付运费" forState:UIControlStateNormal];
+    _rightButton.titleLabel.font=[UIFont boldSystemFontOfSize:20];
     [_rightButton addTarget:self action:@selector(rightButton:) forControlEvents:UIControlEventTouchUpInside];
-    _rightButton.frame=CGRectMake(leftSpace+width+space, 20, width, 44);
-    //[self.navigationController.view addSubview:_rightButton];
-    UIBarButtonItem *rightItem=[[UIBarButtonItem alloc]initWithCustomView:_rightButton];
-    self.navigationItem.rightBarButtonItem=rightItem;
+    _rightButton.tag=111;
+    _rightButton.selected=NO;
     
     _icon=[[UIImageView alloc]initWithImage:kImageName(@"sanjiao.png")];
     _icon.frame=CGRectMake(_leftButton.center.x-10, 64-8, 20, 8);
-    [self.navigationController.view addSubview:_icon];
+    [navView addSubview:_icon];
+    
+    [navView addSubview:_rightButton];
+
     
 }
 -(void)initAndLayoutUI
 {
+    //获得状态栏的高度
+    CGFloat statusBarHeight=[[UIApplication sharedApplication] statusBarFrame].size.height;
+    //导航栏的高度
+    CGFloat navHeight=self.navigationController.navigationBar.frame.size.height;
+    _height=statusBarHeight + navHeight;
+
     CGFloat leftSpace=10;
     CGFloat topSpace=10;
     _blueView=[[UIView alloc]init];
     _blueView.translatesAutoresizingMaskIntoConstraints=NO;
-    _blueView.frame=CGRectMake(leftSpace, topSpace, kScreenWidth-leftSpace*2, kScreenHeight/4);
+    _blueView.frame=CGRectMake(leftSpace, topSpace+_height, kScreenWidth-leftSpace*2, kScreenHeight/4);
     _blueView.backgroundColor=[self colorWithHexString:@"09BAE0"];
     [self.view addSubview:_blueView];
     
@@ -150,6 +173,7 @@
     UILabel *label1=[[UILabel alloc]init];
     label1.frame=CGRectMake(leftSpace*4, topSpace+cash.bounds.size.height+20, 30, 30);
     label1.text=@"￥";
+    label1.textAlignment=NSTextAlignmentRight;
     label1.font=[UIFont boldSystemFontOfSize:24];
     label1.textColor=[UIColor whiteColor];
     [_blueView addSubview:label1];
@@ -157,7 +181,7 @@
     _totalVal=[[UILabel alloc]init];
     _totalVal.frame=CGRectMake(leftSpace*4+30, topSpace+cash.bounds.size.height+5, kScreenWidth-leftSpace*2-leftSpace*4-30, 60);
     _totalVal.textColor=[UIColor whiteColor];
-    _totalVal.font=[UIFont boldSystemFontOfSize:36];
+    _totalVal.font=[UIFont boldSystemFontOfSize:48];
     [_blueView addSubview:_totalVal];
     
     NSArray *titleArray=[[NSArray alloc]initWithObjects:@"日期",@"说明",@"金额", nil];
@@ -179,7 +203,7 @@
     _tableView.frame=CGRectMake(0, CGRectGetMaxY(_blueView.frame)+leftSpace/2+30+1, kScreenWidth, kScreenHeight-(CGRectGetMaxY(_blueView.frame)+leftSpace/2+30));
     _tableView.delegate=self;
     _tableView.dataSource=self;
-    _tableView.rowHeight=50;
+    _tableView.rowHeight=40;
     [self.view addSubview:_tableView];
     
     _topRefreshView = [[RefreshView alloc] initWithFrame:CGRectMake(0, -80, self.view.bounds.size.width, 80)];
@@ -203,6 +227,7 @@
 }
 -(IBAction)leftButton:(MYButton*)sender
 {
+    
     if (_selectIndex==sender.tag)
     {
         //点击是同一个按钮
@@ -230,10 +255,11 @@
         sender.selected=YES;
         _leftButton.selected=NO;
         _NoPay=[[NopayViewController alloc]init];
-        _NoPay.icon=_icon;
-        [self.view addSubview:_NoPay.view];
         [self addChildViewController:_NoPay];
-        [_NoPay didMoveToParentViewController:self];
+        [self.view addSubview:_NoPay.view];
+        
+        
+//        [_NoPay didMoveToParentViewController:self];
     }
     
 }
@@ -264,22 +290,26 @@
     
     _moneyNum=[[UITextField alloc]init];
     _moneyNum.delegate=self;
-    _moneyNum.clearButtonMode=UITextFieldViewModeAlways;
-    _moneyNum.backgroundColor=[UIColor lightGrayColor];
+    _moneyNum.keyboardType=UIKeyboardTypeNumberPad;
+    _moneyNum.clearButtonMode=UITextFieldViewModeWhileEditing;
+    
+    _moneyNum.frame=CGRectMake(leftSpace, topSpace+30, width*0.8-leftSpace*2, 30);
+    _moneyNum.placeholder=@"请输入金额";
+    _moneyNum.leftViewMode=UITextFieldViewModeAlways;
+    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 10, 30)];
+    _moneyNum.leftView=view;
+    _moneyNum.contentVerticalAlignment=UIControlContentHorizontalAlignmentCenter;
     _moneyNum.layer.cornerRadius=0;
     _moneyNum.layer.borderColor=[UIColor grayColor].CGColor;
     _moneyNum.layer.borderWidth=1;
-    _moneyNum.frame=CGRectMake(leftSpace, topSpace+30, width*0.8-leftSpace*2, 30);
-    _moneyNum.placeholder=@"请输入金额";
     [whiteView addSubview:_moneyNum];
     
-    UILabel *prompt=[[UILabel alloc]init];
-    prompt.text=@"可提现金额:99999.99元";
-    prompt.textColor=[self colorWithHexString:@"757474"];
-    prompt.textAlignment=NSTextAlignmentRight;
-    prompt.font=[UIFont systemFontOfSize:12];
-    prompt.frame=CGRectMake(width*0.8-160-rightSpace, topSpace+30+30, 160, 30);
-    [whiteView addSubview:prompt];
+    _prompt=[[UILabel alloc]init];
+    _prompt.textColor=[self colorWithHexString:@"757474"];
+    _prompt.textAlignment=NSTextAlignmentRight;
+    _prompt.font=[UIFont systemFontOfSize:12];
+    _prompt.frame=CGRectMake(width*0.8-160-rightSpace, topSpace+30+30, 160, 30);
+    [whiteView addSubview:_prompt];
     
     UIButton *cancelBTN=[UIButton buttonWithType:UIButtonTypeCustom];
     cancelBTN.frame=CGRectMake(2*leftSpace, height*0.3-bottomSpace-30, 60, 30);
@@ -297,66 +327,105 @@
     [sureBTN addTarget:self action:@selector(sureBTN:) forControlEvents:UIControlEventTouchUpInside];
     [whiteView addSubview:sureBTN];
 }
+#pragma mark action
 -(void)cancelBTN:(UIButton*)btn
 {
+    _moneyNum.text=nil;
     _backView.hidden=YES;
+    [self.view endEditing:YES];
 }
 
 -(void)sureBTN:(UIButton*)btn
 {
-    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.labelText=@"正在提现";
-    [NetWorkInterface checkGetCashWithmoneyNum:[_moneyNum.text intValue] finished:^(BOOL success, NSData *response) {
-    
-         hud.customView=[[UIImageView alloc]init];
-         [hud hide:YES afterDelay:0.3];
-         NSLog(@"------------可提现金额:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
-         if (success)
-         {
-             id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
-             if ([object isKindOfClass:[NSDictionary class]])
-             {
-                 if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
-                 {
-                     [hud setHidden:YES];
-                     
-                     [self parseLoginDataWithDictionary:object];
-                     
-                     
-                 }else
-                 {
-                     
-                     hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
-                 }
-             }else
-             {
-                 
-                 hud.labelText=kServiceReturnWrong;
-             }
-         }else
-         {
-             hud.labelText=kNetworkFailed;
-         }
-         
-     }];
+    if ([_moneyNum.text intValue]>=100 && [_moneyNum.text intValue]<=50000)
+    {
+        if ([_moneyNum.text intValue]<=[_totalVal.text intValue])
+        {
+            
+            SureCashViewController *sure=[[SureCashViewController alloc]init];
+            sure.hidesBottomBarWhenPushed=YES;
+            sure.moneyNum=_moneyNum.text;
+            [self.navigationController pushViewController:sure animated:YES];
+            
+            _moneyNum.text=nil;
+            [self.view endEditing:YES];
+            _backView.hidden=YES;
 
-}
--(void)parseLoginDataWithDictionary:(NSDictionary*)dic
-{
-    
-    if (![dic objectForKey:@"result"] || ![[dic objectForKey:@"result"] isKindOfClass:[NSDictionary class]]) {
-        return;
+
+        }else
+        {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.customView = [[UIImageView alloc] init];
+            hud.mode = MBProgressHUDModeCustomView;
+            [hud hide:YES afterDelay:1.f];
+            hud.labelText = @"大于可提现金额";
+
+        }
+    }else
+    {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        [hud hide:YES afterDelay:1.f];
+        hud.labelText = @"金额为100至5万之间";
     }
-    NSDictionary *result = [dic objectForKey:@"result"];
-    MoneyNumModel *moneyNum=[[MoneyNumModel alloc]initWithDictionary:result];
-    SureCashViewController *sure=[[SureCashViewController alloc]init];
-    sure.hidesBottomBarWhenPushed=YES;
-    sure.icon=_icon;
-    sure.moneyNum=moneyNum;
-    [self.navigationController pushViewController:sure animated:YES];
-
+    
+    
+    
+    
+//    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+//    hud.labelText=@"正在提现";
+//    [NetWorkInterface checkGetCashWithmoneyNum:[_moneyNum.text intValue] finished:^(BOOL success, NSData *response) {
+//    
+//         hud.customView=[[UIImageView alloc]init];
+//         [hud hide:YES afterDelay:0.3];
+//         NSLog(@"------------可提现金额:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+//         if (success)
+//         {
+//             id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+//             if ([object isKindOfClass:[NSDictionary class]])
+//             {
+//                 if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
+//                 {
+//                     [hud setHidden:YES];
+//                     
+//                     [self parseLoginDataWithDictionary:object];
+//                     
+//                     
+//                 }else
+//                 {
+//                     
+//                     hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+//                 }
+//             }else
+//             {
+//                 
+//                 hud.labelText=kServiceReturnWrong;
+//             }
+//         }else
+//         {
+//             hud.labelText=kNetworkFailed;
+//         }
+//         
+//     }];
 
 }
+//-(void)parseLoginDataWithDictionary:(NSDictionary*)dic
+//{
+//    
+//    if (![dic objectForKey:@"result"] || ![[dic objectForKey:@"result"] isKindOfClass:[NSDictionary class]]) {
+//        return;
+//    }
+//    NSDictionary *result = [dic objectForKey:@"result"];
+//    MoneyNumModel *moneyNum=[[MoneyNumModel alloc]initWithDictionary:result];
+//    SureCashViewController *sure=[[SureCashViewController alloc]init];
+//    sure.hidesBottomBarWhenPushed=YES;
+//    sure.icon=_icon;
+//    sure.moneyNum=moneyNum;
+//    [self.navigationController pushViewController:sure animated:YES];
+//
+//
+//}
 
 #pragma mark --------------UITableView-------------------------
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -396,7 +465,90 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+#pragma mark 键盘
+//键盘出现
+-(void)handleKeyboardDidShow:(NSNotification*)notification
+{
+    if (self.editingField.keyboardType==UIKeyboardTypeNumberPad)
+    {
+    
+        if (_downButton==nil)
+        {
+            _downButton=[UIButton buttonWithType:UIButtonTypeCustom];
+            
+            CGFloat screenHeight=[[UIScreen mainScreen] bounds].size.height;
+            CGFloat screenwidth=[[UIScreen mainScreen] bounds].size.width;
+            
+            //NSLog(@"------尺寸:%f  宽度:%f",screenHeight,screenwidth);
+            // 667 iphone6   736 iPhone6 Plus
+            if(screenHeight==568.0f)
+            {
+                _downButton.frame = CGRectMake(0, 568 - 53, 106, 53);
+            }
+            
+            if(screenHeight==667.0f)
+            {
+                _downButton.frame = CGRectMake(0, 667 - 53, 125, 53);
+            }
+            if (screenHeight==736.0f)
+            {
+                _downButton.frame = CGRectMake(0, 736 - 53, 138, 53);
+            }
+            if (screenHeight==480.0f)
+            {//3.5寸
+                _downButton.frame = CGRectMake(0, 480 - 53, 106, 53);
+            }
+            
+            _downButton.adjustsImageWhenHighlighted=NO;
+            
+            [_downButton setTitle:@"完成" forState:UIControlStateNormal];
+            [_downButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            
+            [_downButton addTarget:self action:@selector(finishAction) forControlEvents:UIControlEventTouchUpInside];
+        }
+        
+        UIWindow* tempWindow = [[[UIApplication sharedApplication] windows] objectAtIndex:1];
+        
+        if (_downButton.superview == nil)
+        {
+            [tempWindow addSubview:_downButton];    // 注意这里直接加到window上
+        }
+        
+    }
+    
+}
+//键盘将要隐藏
+-(void)handleKeyboardWillHide:(NSNotification*)notification
+{
+    if (_downButton.superview)
+    {
+        [_downButton removeFromSuperview];
+    }
+}
+
+-(void)finishAction
+{
+    [[[UIApplication sharedApplication] keyWindow] endEditing:YES];//关闭键盘
+}
+
 #pragma mark -------UITextField-------
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    self.editingField=textField;
+    return YES;
+}
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
@@ -412,8 +564,8 @@
     MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.labelText=@"加载中...";
     NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
-    NSString *shipOwerId=[userDefaults objectForKey:@"shipOwerId"];
-    [NetWorkInterface availblePayWithshipOwerId:[shipOwerId intValue] page:page finished:^(BOOL success, NSData *response) {
+    NSString *shipOwnerId=[userDefaults objectForKey:@"shipOwnerId"];
+    [NetWorkInterface availblePayWithshipOwerId:[shipOwnerId intValue] page:page finished:^(BOOL success, NSData *response) {
         
         hud.customView=[[UIImageView alloc]init];
         [hud hide:YES afterDelay:0.3];
@@ -468,6 +620,7 @@
     NSDictionary *result=[dic objectForKey:@"result"];
     NSNumber *totalAvailble=[result objectForKey:@"totalAvailble"];
     double total=[totalAvailble doubleValue];
+    _prompt.text=[NSString stringWithFormat:@"￥%.2f",total];
     _totalVal.text=[NSString stringWithFormat:@"%.2f",total];
     NSDictionary *recordList=[result objectForKey:@"recordList"];
     NSArray *content=[recordList objectForKey:@"content"];

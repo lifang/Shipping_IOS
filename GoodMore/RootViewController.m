@@ -8,9 +8,13 @@
 #import "RootViewController.h"
 #import "NavigationBar.h"
 #import "Constants.h"
+#import "NetWorkInterface.h"
+#import "MBProgressHUD.h"
 
 @interface RootViewController ()
-
+{
+    NSString *_down_url;
+}
 @end
 
 @implementation RootViewController
@@ -58,6 +62,8 @@
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:button];
     }
+    
+    [self checkAppVersion];
     
 }
 -(void)buttonClick:(UIButton*)sender
@@ -112,6 +118,55 @@
         _registerViewController = nil;
     }
 
+}
+//检测版本更新
+-(void)checkAppVersion
+{
+    
+    [NetWorkInterface checkVersionFinished:^(BOOL success, NSData *response) {
+        
+        NSLog(@"------------检测版本:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+        if (success)
+        {
+            id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+            if ([object isKindOfClass:[NSDictionary class]])
+            {
+                if ([[object objectForKey:@"code"] intValue] == RequestSuccess)
+                {
+                    NSDictionary *result=[object objectForKey:@"result"];
+                    int versions=[[result objectForKey:@"versions"]intValue];
+                    _down_url=[result objectForKey:@"down_url"];
+                    NSString *localVersion=[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+                    if (versions == [localVersion intValue])
+                    {
+                       
+                    }else
+                    {
+                        UIAlertView *aler=[[UIAlertView alloc]initWithTitle:@"提示信息" message:@"您需要更新版本" delegate:self cancelButtonTitle:@"确认" otherButtonTitles: nil];
+                        [aler show];
+                    }
+                }
+            }else
+            {
+                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示信息" message: kServiceReturnWrong delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
+                [alert show];
+            }
+        }else
+        {
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示信息" message: kNetworkFailed delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
+            [alert show];
+            
+        }
+        
+    }];
+}
+#pragma mark-----------------UIAlertViewDelegate------------------
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==0)
+    {
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:_down_url]];
+    }
 }
 
 //-(void)showMainViewController

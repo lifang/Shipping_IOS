@@ -15,8 +15,12 @@
 #import "NavigationBar.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface MainViewController ()
 
+
+@interface MainViewController ()
+{
+    UIView *_backView;
+}
 @end
 
 @implementation MainViewController
@@ -25,9 +29,25 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
     [self initControllers];
+    //处理船的级别问题
+    //[self checkShipRank];
 }
+////判断船的级别
+//-(void)checkShipRank
+//{
+//    NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
+//    NSString *type=[userDefault objectForKey:@"type"];
+//    if ([type intValue]==1)
+//    {
+//        //高级船
+//    }else if ([type intValue]==6)
+//    {
+//        //普通船
+//        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"友情提示" message:@"您现在的船舶级别为普通船,普通船无法组队接单,只能加入船队进行接单!" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:@"升级为高级船", nil];
+//        [alertView show];
+//    }
+//}
 -(void)initControllers
 {
     
@@ -72,14 +92,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

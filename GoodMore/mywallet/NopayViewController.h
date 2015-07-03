@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface NopayViewController : UIViewController
-@property(nonatomic,strong)UIImageView *icon;
+
 @end

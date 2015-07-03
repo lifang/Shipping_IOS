@@ -11,9 +11,10 @@
 #define GoodMore_Constants_h
 
 #define kDeviceVersion [[[UIDevice currentDevice] systemVersion] floatValue]
-#define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
+
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
 
 //UI主体颜色
@@ -31,6 +32,8 @@
 #define kImageName(name) [UIImage imageNamed:name]
 
 #define KServiceURL @"http://120.25.243.169:8888/HDDPlatForm/"
+
+//#define KServiceURL @"http://192.168.0.205:8080/HDDPlatForm/"
 
 #define kAppVersionType  2   //版本更新
 

@@ -29,11 +29,19 @@
     NSMutableArray *_province;
     NSMutableArray *_citys;
     UIButton *_commit;
+    NSString *_orderId;//流水号
 }
+@property(nonatomic,strong)UITextField *editingField;//处于编辑状态的输入框
+@property(nonatomic,strong)UIButton *downButton;//数字键盘上的完成按钮
 @end
 
 @implementation BankInfoViewController
 
+-(void)dealloc
+{
+    //移除通知
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -41,7 +49,10 @@
     [self initStaticData];
     [self initAndLayoutUI];
     
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 -(void)initStaticData
 {
@@ -52,7 +63,7 @@
 -(void)initAndLayoutUI
 {
     _tableView=[[UITableView alloc]init];
-    _tableView.scrollEnabled=NO;
+    //_tableView.scrollEnabled=NO;
     _tableView.translatesAutoresizingMaskIntoConstraints=NO;
     _tableView.dataSource=self;
     _tableView.delegate=self;
@@ -67,36 +78,45 @@
     
     _which=[[UILabel alloc]init];
     _which.textAlignment=NSTextAlignmentRight;
+    _which.font=[UIFont systemFontOfSize:14];
     _which.textColor=[self colorWithHexString:@"757474"];
     
     _selectWhich=[UIButton buttonWithType:UIButtonTypeCustom];
-    [_selectWhich setBackgroundImage:kImageName(@"setting_in.png") forState:UIControlStateNormal];
     [_selectWhich addTarget:self action:@selector(which) forControlEvents:UIControlEventTouchUpInside];
     
     _bankName=[[UITextField alloc]init];
+    _bankName.font=[UIFont systemFontOfSize:14];
+    _bankName.textAlignment=NSTextAlignmentRight;
     _bankName.delegate=self;
-    _bankName.clearButtonMode=UITextFieldViewModeAlways;
+    _bankName.clearButtonMode=UITextFieldViewModeWhileEditing;
     _bankName.placeholder=@"请输入开户行名称";
     _bankName.delegate=self;
     
     _where=[[UILabel alloc]init];
     _where.text=@"请选择";
+    _where.font=[UIFont systemFontOfSize:14];
     _where.textAlignment=NSTextAlignmentRight;
     _where.textColor=[self colorWithHexString:@"757474"];
    
     _selectWhere=[UIButton buttonWithType:UIButtonTypeCustom];
-    [_selectWhere setBackgroundImage:kImageName(@"setting_in.png") forState:UIControlStateNormal];
     [_selectWhere addTarget:self action:@selector(where) forControlEvents:UIControlEventTouchUpInside];
     
     _people=[[UITextField alloc]init];
+    _people.font=[UIFont systemFontOfSize:14];
+    _people.textAlignment=NSTextAlignmentRight;
     _people.delegate=self;
-    _people.clearButtonMode=UITextFieldViewModeAlways;
+    _people.tag=1111;
+    _people.clearButtonMode=UITextFieldViewModeWhileEditing;
     _people.placeholder=@"请输入收款人";
     _people.delegate=self;
     
     _number=[[UITextField alloc]init];
+    _number.font=[UIFont systemFontOfSize:14];
+    _number.textAlignment=NSTextAlignmentRight;
     _number.delegate=self;
-    _number.clearButtonMode=UITextFieldViewModeAlways;
+    _number.tag=2222;
+    _number.keyboardType=UIKeyboardTypeNumberPad;
+    _number.clearButtonMode=UITextFieldViewModeWhileEditing;
     _number.placeholder=@"请输入卡号";
     _number.delegate=self;
 
@@ -183,10 +203,11 @@
     MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.labelText=@"正在提现";
     NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
-    NSString *shipOwerId=[userDefaults objectForKey:@"shipOwerId"];
+    NSString *shipOwerId=[userDefaults objectForKey:@"shipOwnerId"];
     [NetWorkInterface getCashWithshipOwerId:[shipOwerId intValue] cashNum:[_cashNum intValue]provinceCity:_where.text bankName:_which.text kuaihuhang:_bankName.text creditName:_people.text bankCardNumber:_number.text finished:^(BOOL success, NSData *response) {
      
         hud.customView=[[UIImageView alloc]init];
+        [hud hide:YES afterDelay:0.3];
                  NSLog(@"------------提现cash:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
          if (success)
          {
@@ -195,20 +216,50 @@
              {
                  if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
                  {
-                     
-                     hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
                      [hud hide:YES];
-                 }else
-                 {
-                     //NSString *message=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
-                     NSDictionary *result=[object objectForKey:@"result"];
-                     NSNumber *code=[result objectForKey:@"code"];
-                     if ([code intValue]==0)
+                     
+                     //hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                     //NSDictionary *result=[object objectForKey:@"result"];
+                     if ([object objectForKey:@"result"] && [[object objectForKey:@"result"]isKindOfClass:[NSDictionary class]])
                      {
-                         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"提现失败,重新提现" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+                         NSDictionary *result =[object objectForKey:@"result"];
+                         //NSString *message=[object objectForKey:@"message"];
+                         NSNumber *code=[result objectForKey:@"code"];
+                         _orderId=[result objectForKey:@"orderId"];
+                         switch ([code intValue])
+                         {
+                             case -1:
+                             {
+                                 UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"提现失败" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
+                                 alert.tag=1;
+                                 [alert show];
+                             }
+                                 break;
+                             case 0:
+                             {
+                                 //刷新页面,重新提现
+                                 
+                                 UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"提现失败" delegate:self cancelButtonTitle:@"重新提现" otherButtonTitles:nil];
+                                 alert.tag=2;
+                                 [alert show];
+                             }
+                                 break;
+                                 
+                             default:
+                                 break;
+                         }
+
+                         
+                     }else
+                     {
+                         //成功
+                         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"提现成功" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
                          [alert show];
                      }
+                    
                      
+                 }else
+                 {
                      
                  }
              }else
@@ -229,7 +280,6 @@
 #pragma mark ------UIPickView------
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
-
     return 2;
 }
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
@@ -293,6 +343,7 @@
 {
     UITableViewCell*cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     cell.textLabel.text=_staticDate[indexPath.row];
+    cell.textLabel.font=[UIFont systemFontOfSize:16];
     CGFloat cellHeight=50.0;
     switch (indexPath.row)
     {
@@ -309,6 +360,7 @@
             [cell.contentView addSubview:_which];
             _selectWhich.frame=CGRectMake(cell.bounds.size.width-30, (cellHeight-20)/2, 20, 20);
             [cell.contentView addSubview:_selectWhich];
+            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         }
             break;
         case 1:
@@ -321,10 +373,10 @@
         {
             _where.frame=CGRectMake(cell.bounds.size.width-160-30, (cellHeight-30)/2, 160, 30);
            
-        
             [cell.contentView addSubview:_where];
             _selectWhere.frame=CGRectMake(cell.bounds.size.width-30, (cellHeight-20)/2, 20, 20);
             [cell.contentView addSubview:_selectWhere];
+            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
 
         }
             break;
@@ -336,7 +388,7 @@
             break;
         case 4:
         {
-            _number.frame=CGRectMake(cell.bounds.size.width-160-10, (cellHeight-30)/2, 160, 30);
+            _number.frame=CGRectMake(cell.bounds.size.width-200-10, (cellHeight-30)/2, 200, 30);
             [cell.contentView addSubview:_number];
 
         }
@@ -366,6 +418,7 @@
         {
             [self where];
             [self pickerScrollIn];
+            [self.view endEditing:YES];
             
         }
             break;
@@ -384,6 +437,18 @@
             break;
     }
 }
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
 //RGB 颜色转换
 -(UIColor *)colorWithHexString:(NSString *)hexColor
 {
@@ -404,33 +469,140 @@
     _bank=bank;
     [_tableView reloadData];
 }
+
+#pragma mark 键盘
+//键盘出现
+-(void)handleKeyboardDidShow:(NSNotification*)notification
+{
+   
+    if (self.editingField.keyboardType==UIKeyboardTypeNumberPad)
+    {
+       
+        if (_downButton==nil)
+        {
+            _downButton=[UIButton buttonWithType:UIButtonTypeCustom];
+            
+            CGFloat screenHeight=[[UIScreen mainScreen] bounds].size.height;
+            CGFloat screenwidth=[[UIScreen mainScreen] bounds].size.width;
+            
+            NSLog(@"------尺寸:%f  宽度:%f",screenHeight,screenwidth);
+            // 667 iphone6   960 iPhone6 Plus
+            if(screenHeight==568.0f)
+            {
+                _downButton.frame = CGRectMake(0, 568 - 53, 106, 53);
+            }
+            
+            if(screenHeight==667.0f)
+            {
+                _downButton.frame = CGRectMake(0, 667 - 53, 125, 53);
+            }
+            if (screenHeight==736.0f)
+            {
+                _downButton.frame = CGRectMake(0, 736 - 53, 138, 53);
+            }
+            if (screenHeight==480.0f)
+            {//3.5寸
+                _downButton.frame = CGRectMake(0, 480 - 53, 106, 53);
+            }
+            
+            _downButton.adjustsImageWhenHighlighted=NO;
+            
+            [_downButton setTitle:@"完成" forState:UIControlStateNormal];
+            [_downButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            
+            [_downButton addTarget:self action:@selector(finishAction) forControlEvents:UIControlEventTouchUpInside];
+        }
+        
+        UIWindow* tempWindow = [[[UIApplication sharedApplication] windows] objectAtIndex:1];
+        
+        if (_downButton.superview == nil)
+        {
+            [tempWindow addSubview:_downButton];    // 注意这里直接加到window上
+        }
+        
+    }
+    
+}
+//键盘将要隐藏
+-(void)handleKeyboardWillHide:(NSNotification*)notification
+{
+    
+    if (_downButton.superview)
+    {
+        [_downButton removeFromSuperview];
+    }
+}
+
+-(void)finishAction
+{
+    [[[UIApplication sharedApplication] keyWindow] endEditing:YES];//关闭键盘
+    [self judgeAllInfo];
+}
+
+
 #pragma mark ---------UITextField-----
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    
     [textField resignFirstResponder];
     [self judgeAllInfo];
     return YES;
 }
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    self.editingField=textField;
+    if (textField.tag==2222)
+    {
+        _downButton.hidden=NO;
+    }else
+    {
+        _downButton.hidden=YES;
+    }
+    return YES;
+}
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+   
+    if (textField.tag==1111 || textField.tag==2222 ) {
+    
+        _tableView.contentOffset=CGPointMake(0, 100);
+    }
+}
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    
+    if (textField.tag==1111 || textField.tag==2222 ) {
+        
+        _tableView.contentOffset=CGPointZero;
+    }
+}
+
+
+
 #pragma mark --------UIAlertView---
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex==1)
+    if (alertView.tag==2)
     {
-        //确认,重新提现
-        //[self refreshCash];
+        if (buttonIndex==0)
+        {
+            //确认,重新提现
+            [self refreshCash];
+        }
+
     }
-}
+    }
 //刷新重新提现
 -(void)refreshCash
 {
     MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.labelText=@"正在提现";
+    hud.labelText=@"重新提现...";
 
-    [NetWorkInterface getRefreshWithorderId:@"" finished:^(BOOL success, NSData *response) {
+    [NetWorkInterface getRefreshWithorderId:_orderId finished:^(BOOL success, NSData *response) {
         
         hud.customView=[[UIImageView alloc]init];
         [hud hide:YES afterDelay:0.3];
-        NSLog(@"------------提现cash:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+        NSLog(@"------------刷新提现cash:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
         if (success)
         {
             id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
@@ -485,6 +657,7 @@
         return NO;
     }
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

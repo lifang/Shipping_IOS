@@ -23,7 +23,7 @@
     NSTimer *_timer;
 }
 @property(nonatomic,strong)NSString *loginId;
-@property(nonatomic,strong)NSString *shipOwerId;
+@property(nonatomic,strong)NSString *shipOwnerId;
 @end
 
 @implementation LoginViewController
@@ -69,10 +69,11 @@
     
     NSUserDefaults *usersDefault=[NSUserDefaults standardUserDefaults];
     NSString *loginName=[usersDefault objectForKey:@"loginName"];
+    //NSString *pwd=[usersDefault objectForKey:@"pwd"];
     
     _loginName=[[UITextField alloc]init];
     _loginName.text=loginName;
-    _loginName.clearButtonMode=UITextFieldViewModeAlways;
+    _loginName.clearButtonMode=UITextFieldViewModeWhileEditing;
     _loginName.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
     _loginName.placeholder=@"请输入登录帐号";
     _loginName.delegate=self;
@@ -80,9 +81,10 @@
     
     
     _pwd=[[UITextField alloc]init];
+    //_pwd.text=pwd;
     _pwd.placeholder=@"请输入密码";
     _pwd.secureTextEntry=YES;
-    _pwd.clearButtonMode=UITextFieldViewModeAlways;
+    _pwd.clearButtonMode=UITextFieldViewModeWhileEditing;
     _pwd.delegate=self;
     _pwd.tag=111;
    
@@ -218,19 +220,28 @@
     }
     NSDictionary *result=[dictionary objectForKey:@"result"];
     _loginId=[NSString stringWithFormat:@"%@",[result objectForKey:@"id"]];
-    _shipOwerId=[result objectForKey:@"shipOwnerId"];
+    _shipOwnerId=[result objectForKey:@"shipOwnerId"];
+    
+    _type=[NSString stringWithFormat:@"%@",[result objectForKey:@"type"]];
     NSString *name=[result objectForKey:@"name"];
     NSString *shipNumber=[result objectForKey:@"shipNumber"];
     NSString *phone=[result objectForKey:@"phone"];
     NSString *loginName=[result objectForKey:@"loginName"];
+    NSString *shipName=[result objectForKey:@"shipName"];
+    NSString *pwd=[result objectForKey:@"pwd"];
+    
     NSLog(@"-------登录loginName---%@",loginName);
     NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
     [userDefault setObject:_loginId forKey:@"loginId"];
-    [userDefault setObject:_shipOwerId forKey:@"shipOwerId"];
+    [userDefault setObject:_shipOwnerId forKey:@"shipOwnerId"];
+     NSLog(@"-------登录shipOwnerId---%@",_shipOwnerId);
+    [userDefault setObject:_type forKey:@"type"];
     [userDefault setObject:name forKey:@"name"];
     [userDefault setObject:shipNumber forKey:@"shipNumber"];
     [userDefault setObject:phone forKey:@"phone"];
     [userDefault setObject:loginName forKey:@"loginName"];
+    [userDefault setObject:shipName forKey:@"shipName"];
+    //[userDefault setObject:pwd forKey:@"pwd"];
     [userDefault synchronize];
     
     //保存坐标
@@ -247,7 +258,7 @@
     double longitude=[[user objectForKey:@"longitude"] doubleValue];
     
     NSString *coordinate=[NSString stringWithFormat:@"%.4f,%.4f",longitude,latitude];
-    [NetWorkInterface recordCoordinateWithshipOwerId:[_shipOwerId intValue] loginId:[_loginId intValue] coordinate:coordinate finished:^(BOOL success, NSData *response) {
+    [NetWorkInterface recordCoordinateWithshipOwerId:[_shipOwnerId intValue] loginId:[_loginId intValue] coordinate:coordinate finished:^(BOOL success, NSData *response) {
         NSLog(@"----------------------保存船坐标:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
     }];
 }
@@ -270,6 +281,7 @@
     if (indexPath.row==0)
     {
         cell.textLabel.text=@"登录号";
+        cell.textLabel.font=[UIFont systemFontOfSize:18];
         _loginName.frame=CGRectMake(100, 5, 180, 50);
 
         [cell.contentView addSubview:_loginName];
@@ -277,6 +289,7 @@
     }else if (indexPath.row==1)
     {
         cell.textLabel.text=@"输入密码";
+        cell.textLabel.font=[UIFont systemFontOfSize:18];
         _pwd.frame=CGRectMake(100, 5, 180, 50);
 
         [cell.contentView addSubview:_pwd];
@@ -288,6 +301,17 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 #pragma mark -------------------UITextFieldDelegate-------------------------

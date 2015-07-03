@@ -32,6 +32,14 @@
 @property(nonatomic,strong)NSString *shipNumber;
 @property(nonatomic,strong)NSNumber *inWriteTime;
 @property(nonatomic,strong)NSNumber *status;
+@property(nonatomic,strong)NSNumber *percent;
+@property(nonatomic,strong)NSString *shipName;
+@property(nonatomic,strong)NSString *joinCode;
+@property(nonatomic,strong)NSString *ownCode;
+@property(nonatomic,strong)NSNumber *isLeader;
+@property(nonatomic,strong)NSString *outImgUrl;
+@property(nonatomic,strong)NSString *inImgUrl;
+@property(nonatomic,strong)NSString *imgList;
 
 -(instancetype)initWithDictionary:(NSDictionary*)dictionary;
 

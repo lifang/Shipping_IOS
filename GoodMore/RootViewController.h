@@ -24,7 +24,7 @@
 
 -(void)showLoginViewController;
 
--(void)showMainViewController;
+//-(void)showMainViewController;
 
 @end
 

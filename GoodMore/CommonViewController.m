@@ -20,6 +20,7 @@
     
     if (kDeviceVersion >= 7.0) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
+        [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     }
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@""
                                                                 style:UIBarButtonItemStyleDone

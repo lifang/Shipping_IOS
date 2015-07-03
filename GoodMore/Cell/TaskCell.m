@@ -76,7 +76,7 @@
     _statusBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     _statusBtn.translatesAutoresizingMaskIntoConstraints=NO;
     //_statusBtn.backgroundColor=[UIColor orangeColor];
-    [_statusBtn setTitleColor:kMainColor forState:UIControlStateNormal];
+    [_statusBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
     _statusBtn.titleLabel.font=[UIFont systemFontOfSize:12];
     [self.contentView addSubview:_statusBtn];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_statusBtn attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:topSpace]];
@@ -134,13 +134,13 @@
     _whatLabel.font=[UIFont systemFontOfSize:12];
     [self.contentView addSubview:_whatLabel];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whatLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:imageView3 attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whatLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:imageView3 attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whatLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:imageView3 attribute:NSLayoutAttributeRight multiplier:1.0 constant:5]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whatLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:lWidth]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whatLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:lHeight]];
     
     UIImageView *imageView4=[[UIImageView alloc]init];
     imageView4.translatesAutoresizingMaskIntoConstraints=NO;
-    imageView4.image=kImageName(@"money.png");
+    imageView4.image=kImageName(@"weight.png");
     [self.contentView addSubview:imageView4];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView4 attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-bottomSpace]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView4 attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_whatLabel attribute:NSLayoutAttributeRight multiplier:1.0 constant:hSpaceBig]];
@@ -155,18 +155,18 @@
     _moneyLabel.font=[UIFont systemFontOfSize:12];
     [self.contentView addSubview:_moneyLabel];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_moneyLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:imageView4 attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_moneyLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:imageView4 attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_moneyLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:imageView4 attribute:NSLayoutAttributeRight multiplier:1.0 constant:5]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_moneyLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:lWidth]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_moneyLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:lHeight]];
     
-    UIImageView *imageView5=[[UIImageView alloc]init];
-    imageView5.translatesAutoresizingMaskIntoConstraints=NO;
-    imageView5.image=kImageName(@"where.png");
-    [self.contentView addSubview:imageView5];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView5 attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-bottomSpace]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView5 attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_moneyLabel attribute:NSLayoutAttributeRight multiplier:1.0 constant:hSpaceBig]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView5 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:size]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView5 attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:size]];
+    _distanceImV=[[UIImageView alloc]init];
+    _distanceImV.translatesAutoresizingMaskIntoConstraints=NO;
+    //imageView5.image=kImageName(@"where.png");
+    [self.contentView addSubview:_distanceImV];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_distanceImV attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-bottomSpace]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_distanceImV attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_moneyLabel attribute:NSLayoutAttributeRight multiplier:1.0 constant:hSpaceBig]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_distanceImV attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:size]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_distanceImV attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:size]];
     
     _whereLabel=[[UILabel alloc]init];
     _whereLabel.translatesAutoresizingMaskIntoConstraints=NO;
@@ -175,8 +175,8 @@
     _whereLabel.textColor=kGrayColor;
     _whereLabel.font=[UIFont systemFontOfSize:12];
     [self.contentView addSubview:_whereLabel];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whereLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:imageView5 attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whereLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:imageView5 attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whereLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_distanceImV attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whereLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_distanceImV attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whereLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:lWidth]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whereLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:lHeight]];
 }

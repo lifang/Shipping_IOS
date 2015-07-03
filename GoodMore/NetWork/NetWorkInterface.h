@@ -16,13 +16,22 @@ typedef enum {
 
 typedef enum {
    
-    OrderStatusAll=-1,       //全部
-    OrderStatusSelecting=0, //选船中
-    OrderStatusRefuse=1,    //被拒绝
-    OrderStatusPerforming=2,//执行中
-    OrderStatusFinished=3,  //已完成
-}OrderStatus;
+    ShipTeamStatusAll=-1,        //全部
+    ShipTeamStatusMaking=0,      //组队中
+    ShipTeamStatusMakeSuccess=1, //组队成功
+    ShipTeamStatusMakeFail=2,    //组队失败
+    ShipTeamStatusPayfreight=3,  //计算运费
+    ShipTeamStatusFinished=4,    //完成
+}ShipTeamStatus;
 
+typedef enum{
+    
+    GoodsTransportStatusAll=-1,         //全部
+    GoodsTransportStatusMaking=0,       //组队中
+    GoodsTransportStatusMakeFail=1,     //组队失败
+    GoodsTransportStatusPerforming=2,   //执行中
+    GoodsTransportStatusFinish=3,       //完成
+}GoodsTransportStatus;
 
 #import <Foundation/Foundation.h>
 #import "Constants.h"
@@ -60,8 +69,7 @@ static NSString *orderDetail_method = @"app/orders/getInfo";
 //版本更新
 static NSString *updataApp_method = @"app/index/getVersion";
 
-//我的任务
-static NSString *myTask_method = @"app/orders/getListByShipOwnerId";
+
 
 //保存船坐标
 static NSString *recordCoorddinate_method = @"app/coordinate/recordCoordinate";
@@ -90,13 +98,68 @@ static NSString *checkGetCash_method = @"common/checkGetCash";
 //提现
 static NSString *getCash_method = @"common/getCash";
 
+//刷新重新提现
 static NSString *getRefresh_method = @"common/forRefresh";
 
+//单张图片上传
+static NSString *uploadSingleImage_method = @"app/util/uploadImg/";
+
+//多张图片上传
+static NSString *uploadManyImage_method = @"app/util/uploadImgs/";
+
+//加入船队
+static NSString *joinTeam_method = @"app/team/joinTeam";
+
+//组队接单
+static NSString *makeTeam_method = @"app/team/makeTeam";
+
+//船队列表
+static NSString *getShipTeamList_method = @"app/team/getShipTeamListByShipOwnerId";
+
+//货物运输列表
+static NSString *getGoodsList_method = @"app/orders/getMyOrderListByShipOwnerId";
+
+//船队详细列表
+static NSString *getShipTeamDetail_method = @"app/team/getShipTeamInfoById";
+
+//解散船队
+static NSString *breakShipTeam_method = @"app/team/breakTeam";
+
+//船队抢单
+static NSString *shipTeamGetOrder_method = @"app/team/getOrder";
+
+//删除船
+static NSString *deleteFromTeam_method = @"app/team/delFromTeam";
+
+//分配船队运费
+static NSString *setPayEveryShip_method = @"app/team/setPay";
+
+//装货吨位设置
+static NSString *upInAccount_method = @"app/orders/upInAccount";
+
+//卸货吨位设置
+static NSString *upOutAccount_method = @"app/orders/upOutAccount";
+
+//升级为高级船
+static NSString *upShip_method = @"app/toPay/getPayInfo";
 
 @interface NetWorkInterface : NSObject
 
+/*
+ "loginName":"船老大",
+ "pwd":"123456",
+ "name":"yangyibin",
+ "shipNumber":"苏F110234",//船舶号
+ "phone":"1537132460",
+ "volume":"20",//吨位
+ “dentCode”：”256963”,//验证码
+ “builderTime”:”adfa”,//建造时间
+ “imgList”:23//签证薄照片id
+ “joinCode”:”xadf”//邀请码
+ “shipName”://船名
+ */
 //注册
-+(void)registerWithLoginName:(NSString*)loginName pwd:(NSString*)pwd shipName:(NSString*)shipName shipNumber:(NSString*)shipNumber phone:(NSString*)phone dentCode:(NSString*)dentCode volume:(NSString*)volume finished:(requestDidFinished)finish;
++(void)registerWithLoginName:(NSString*)loginName pwd:(NSString*)pwd name:(NSString*)name shipNumber:(NSString*)shipNumber phone:(NSString*)phone volume:(NSString*)volume dentCode:(NSString*)dentCode builderTime:(NSString*)builderTime imgList:(int)imgList joinCode:(NSString*)joinCode shipName:(NSString*)shipName  finished:(requestDidFinished)finish;
 
 //发送验证码 (注册)
 +(void)sendCodeWith:(NSString*)phone finished:(requestDidFinished)finish;
@@ -120,13 +183,7 @@ static NSString *getRefresh_method = @"common/forRefresh";
 //任务大厅
 +(void)getOrderListWithPage:(int)page status:(int)status keys:(NSString*)keys mLat1:(double)mLat1 mLon1:(double)mLon1 finished:(requestDidFinished)finish;
 
-/*
- page  
- status
- shipOwnerId
- */
-//我的任务
-+(void)myTaskListWithPage:(int)page status:(int)status shipOwerId:(int)shipOwerId finished:(requestDidFinished)finish;
+
 
 /*
  id     每一个货单的ID
@@ -209,4 +266,51 @@ static NSString *getRefresh_method = @"common/forRefresh";
 //“orderId”:”xxx”    流水号
 //刷新查询提现
 +(void)getRefreshWithorderId:(NSString*)orderId finished:(requestDidFinished)finish;
+
+//单张图片上传
++(void)uploadSingleImageWithImage:(UIImage*)image loginId:(NSString*)loginId finished:(requestDidFinished)finish;
+
+//多张图片上传
++(void)uploadManyImageWithloginId:(NSString*)loginId finished:(requestDidFinished)finish;
+
+//加入船队
++(void)joinTeamWithCode:(NSString*)code loginId:(int)loginId shipOwnerId:(int)shipOwnerId finished:(requestDidFinished)finish;
+
+//组队接单
++(void)makeTeamWithorderId:(int)orderId loginId:(int)loginId shipOwnerId:(int)shipOwnerId finished:(requestDidFinished)finish;
+
+//船队列表
++(void)getshipTeamListWithPage:(int)page status:(int)status shipOwnerId:(int)shipOwnerId finished:(requestDidFinished)finish;
+/*
+ page
+ status
+ shipOwnerId
+ */
+//货物运输
++(void)getGoodsTransportListWithPage:(int)page status:(int)status shipOwerId:(int)shipOwerId finished:(requestDidFinished)finish;
+
+//船队详情
++(void)getShipTeamDetailWithloginId:(int)loginId ID:(int)ID finished:(requestDidFinished)finish;
+
+//解散船队
++(void)breakshipTeamWithshipTeamId:(int)shipTeamId loginId:(int)loginId shipOwnerId:(int)shipOwnerId finished:(requestDidFinished)finish;
+
+//船队抢单
++(void)shipTeamGetOrderWithshipTeamId:(int)shipTeamId loginId:(int)loginId shipOwnerId:(int)shipOwnerId finished:(requestDidFinished)finish;
+
+//删除船
++(void)deleteShipFromTeamWithshipTeamId:(int)shipTeamId loginId:(int)loginId delShipId:(int)delShipId finished:(requestDidFinished)finish;
+
+//分配船队运费
++(void)setPayEveryShipWithshipTeamId:(int)shipTeamId loginId:(int)loginId shipSetStr:(NSString*)shipSetStr finished:(requestDidFinished)finish;
+
+//装货吨位设置
++(void)upInAccountWithID:(int)ID inAccount:(int)inAccount loginId:(int)loginId imgUrlList:(NSString*)imgUrlList finished:(requestDidFinished)finish;
+
+//卸货吨位设置
++(void)upOutAccountWithID:(int)ID inAccount:(int)inAccount loginId:(int)loginId imgUrlList:(NSString*)imgUrlList finished:(requestDidFinished)finish;
+
+//升级为高级船
++(void)upShipWithshipId:(int)shipId loginId:(int)loginId finished:(requestDidFinished)finish;
 @end
+

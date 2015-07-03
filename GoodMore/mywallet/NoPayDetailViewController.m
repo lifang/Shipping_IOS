@@ -24,7 +24,7 @@
 @property (nonatomic, assign) BOOL reloading;
 @property (nonatomic, assign) CGFloat primaryOffsetY;
 @property (nonatomic, assign) int page;
-
+@property(nonatomic,assign)CGFloat height;
 @end
 
 @implementation NoPayDetailViewController
@@ -37,6 +37,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.navigationController.navigationBarHidden=NO;
     self.view.backgroundColor=[UIColor whiteColor];
     self.navigationItem.title=_cargoName;
     _dataArray=[[NSMutableArray alloc]initWithCapacity:0];
@@ -45,6 +46,7 @@
 }
 -(void)initAndLayoutUI
 {
+
     NSArray *titleArray=[[NSArray alloc]initWithObjects:@"日期", @"类型",@"金额",@"累计",nil];
     CGFloat topSpace=20;
     CGFloat leftSpace=20;
@@ -126,6 +128,21 @@
     return cell;
 
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 
 -(void)firstLoadData
 {
@@ -137,8 +154,8 @@
     MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.labelText=@"加载中...";
     NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
-    NSString *shipOwerId=[userDefaults objectForKey:@"shipOwerId"];
-    [NetWorkInterface payRecordListWithCargoId:[_cargoId intValue] shipOwerId:[shipOwerId intValue] page:page cargoName:_cargoName finished:^(BOOL success, NSData *response) {
+    NSString *shipOwnerId=[userDefaults objectForKey:@"shipOwnerId"];
+    [NetWorkInterface payRecordListWithCargoId:[_cargoId intValue] shipOwerId:[shipOwnerId intValue] page:page cargoName:_cargoName finished:^(BOOL success, NSData *response) {
         
         hud.customView=[[UIImageView alloc]init];
         [hud hide:YES afterDelay:0.3];

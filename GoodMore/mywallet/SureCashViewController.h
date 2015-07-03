@@ -11,6 +11,9 @@
 
 @interface SureCashViewController : CommonViewController
 
-@property(nonatomic,strong)MoneyNumModel *moneyNum;
-@property(nonatomic,strong)UIImageView *icon;
+//@property(nonatomic,strong)MoneyNumModel *moneyNum;
+
+@property(nonatomic,strong)NSString *moneyNum;
+
+
 @end

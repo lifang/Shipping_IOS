@@ -25,7 +25,7 @@
 @property (nonatomic, strong) RefreshView *bottomRefreshView;
 @property (nonatomic, assign) BOOL reloading;
 @property (nonatomic, assign) CGFloat primaryOffsetY;
-
+@property(nonatomic,assign)CGFloat height;
 @end
 
 @implementation NopayViewController
@@ -33,37 +33,46 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    _icon.hidden=NO;
+    [self downloadDate];
+
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor=[UIColor whiteColor];
     
+    self.view.backgroundColor=[UIColor whiteColor];
     _dataArray=[[NSMutableArray alloc]initWithCapacity:0];
+    //[self downloadDate];
     [self initAndLayoutUI];
-    [self downloadDate];
 }
+
 -(void)initAndLayoutUI
 {
+//    //获得状态栏的高度
+//    CGFloat statusBarHeight=[[UIApplication sharedApplication] statusBarFrame].size.height;
+//    //导航栏的高度
+//    CGFloat navHeight=self.navigationController.navigationBar.frame.size.height;
+//    _height=statusBarHeight + navHeight;
+    
     CGFloat leftSpace=10;
     CGFloat topSpace=10;
     _greenView=[[UIView alloc]init];
     _greenView.translatesAutoresizingMaskIntoConstraints=NO;
-    _greenView.frame=CGRectMake(leftSpace, topSpace, kScreenWidth-leftSpace*2, kScreenHeight/5);
+    _greenView.frame=CGRectMake(leftSpace, topSpace+64, kScreenWidth-leftSpace*2, kScreenHeight/5);
     _greenView.backgroundColor=[self colorWithHexString:@"03D97C"];
     [self.view addSubview:_greenView];
     
     UILabel *label1=[[UILabel alloc]init];
     label1.frame=CGRectMake(leftSpace*4, _greenView.bounds.size.height/2-15, 30, 30);
     label1.text=@"￥";
+    label1.textAlignment=NSTextAlignmentRight;
     label1.font=[UIFont boldSystemFontOfSize:24];
     label1.textColor=[UIColor whiteColor];
     [_greenView addSubview:label1];
     _totalNoPay=[[UILabel alloc]init];
     _totalNoPay.frame=CGRectMake(leftSpace*4+30, (_greenView.bounds.size.height-60)/2, kScreenWidth-leftSpace*2-leftSpace*4-30, 60);
     _totalNoPay.textColor=[UIColor whiteColor];
-    _totalNoPay.font=[UIFont boldSystemFontOfSize:36];
+    _totalNoPay.font=[UIFont boldSystemFontOfSize:48];
     [_greenView addSubview:_totalNoPay];
     
     UILabel *company=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, CGRectGetMaxY(_greenView.frame)+topSpace, 100, 30)];
@@ -85,7 +94,7 @@
     _tableView.tableFooterView=[[UIView alloc]init];
     _tableView.dataSource=self;
     _tableView.delegate=self;
-    _tableView.rowHeight=50;
+    _tableView.rowHeight=40;
     _tableView.frame=CGRectMake(0, CGRectGetMaxY(company.frame)+1, kScreenWidth, kScreenHeight-CGRectGetMaxY(_greenView.frame)-topSpace-30-1);
     [self.view addSubview:_tableView];
 
@@ -114,13 +123,25 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NoPayModel *noPay=_dataArray[indexPath.row];
     NoPayDetailViewController *noPayDetail=[[NoPayDetailViewController alloc]init];
     noPayDetail.hidesBottomBarWhenPushed=YES;
-    noPayDetail.icon=_icon;
+    
     noPayDetail.cargoId=noPay.cargoOwnerId;
     noPayDetail.cargoName=noPay.companyName;
     [self.navigationController pushViewController:noPayDetail animated:YES];
+}
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 //RGB 颜色转换
@@ -139,11 +160,14 @@
 }
 -(void)downloadDate
 {
+
     MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=@"加载中...";
+    
     NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
-    NSString *shipOwerId=[userDefaults objectForKey:@"shipOwerId"];
-    [NetWorkInterface noPaylistWithshipOwerId:[shipOwerId intValue] finished:^(BOOL success, NSData *response) {
+    NSString *shipOwnerId=[userDefaults objectForKey:@"shipOwnerId"];
+    
+    [NetWorkInterface noPaylistWithshipOwerId:[shipOwnerId intValue] finished:^(BOOL success, NSData *response) {
         
         NSLog(@"!!---------------未支付列表:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
         hud.customView=[[UIImageView alloc]init];
@@ -182,6 +206,9 @@
     if (![dic objectForKey:@"result"] || ![[dic objectForKey:@"result"] isKindOfClass:[NSDictionary class]]) {
         return;
     }
+    
+    [_dataArray removeAllObjects];
+    
     NSDictionary *result=[dic objectForKey:@"result"];
     double totalNoPay=[[result objectForKey:@"totalNoPay"]doubleValue];
     _totalNoPay.text=[NSString stringWithFormat:@"%.2f",totalNoPay];

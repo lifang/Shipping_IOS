@@ -7,12 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9302B5981B3AA6CE00596A80 /* MYView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9302B5971B3AA6CE00596A80 /* MYView.m */; };
+		9302B59B1B3AC2F300596A80 /* GoodsTransDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9302B59A1B3AC2F300596A80 /* GoodsTransDetailViewController.m */; };
+		9302B59E1B3AE1BE00596A80 /* ShipInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9302B59D1B3AE1BE00596A80 /* ShipInfoCell.m */; };
+		931EFD041B4284930045752C /* WebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 931EFD031B4284930045752C /* WebViewViewController.m */; };
+		9335142A1B3B9AD60059611B /* PayFreightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 933514291B3B9AD60059611B /* PayFreightViewController.m */; };
+		9335142D1B3C09CA0059611B /* RegresultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9335142C1B3C09CA0059611B /* RegresultViewController.m */; };
+		933514301B3C1FD70059611B /* LoadGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9335142F1B3C1FD70059611B /* LoadGoodsViewController.m */; };
+		933514331B3D826F0059611B /* ShipTeamDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 933514321B3D826F0059611B /* ShipTeamDetailViewController.m */; };
+		933514361B3D8BB40059611B /* ShipListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 933514351B3D8BB40059611B /* ShipListModel.m */; };
 		9342EE9C1B1F0F43000BF13F /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9342EE9B1B1F0F43000BF13F /* SettingViewController.m */; };
 		9342EE9F1B1F1F95000BF13F /* SetNewPWDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9342EE9E1B1F1F95000BF13F /* SetNewPWDViewController.m */; };
 		935C4FB41B281132004F292B /* WalletCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 935C4FB31B281132004F292B /* WalletCell.m */; };
 		935C4FB71B281A06004F292B /* NopayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935C4FB61B281A06004F292B /* NopayViewController.m */; };
 		935C4FBA1B282ED5004F292B /* AvaliblePayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 935C4FB91B282ED5004F292B /* AvaliblePayModel.m */; };
 		9384DDE41B26C13D001D539F /* MyWalletViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9384DDE31B26C13D001D539F /* MyWalletViewController.m */; };
+		9386339D1B4110F50092F05E /* AddCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9386339C1B4110F50092F05E /* AddCollectionViewCell.m */; };
+		938633A01B4116D50092F05E /* ImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9386339F1B4116D50092F05E /* ImageCollectionViewCell.m */; };
 		938E24F91B292BEA003B7EC5 /* NoPayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E24F81B292BEA003B7EC5 /* NoPayModel.m */; };
 		938E24FC1B29342E003B7EC5 /* NoPayDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E24FB1B29342E003B7EC5 /* NoPayDetailViewController.m */; };
 		938E24FF1B29347E003B7EC5 /* NoPayDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E24FE1B29347E003B7EC5 /* NoPayDetailCell.m */; };
@@ -22,6 +33,8 @@
 		938E97581B1FF8190050FE4D /* FindPwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E97571B1FF8190050FE4D /* FindPwdViewController.m */; };
 		938E975B1B2027420050FE4D /* RegularNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E975A1B2027420050FE4D /* RegularNumber.m */; };
 		938E975E1B207FF70050FE4D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 938E975D1B207FF70050FE4D /* CoreLocation.framework */; };
+		938EDE0D1B3E535400A0D201 /* ShipTeamModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 938EDE0C1B3E535400A0D201 /* ShipTeamModel.m */; };
+		938EDE101B3E83AB00A0D201 /* ShipInfoCell1.m in Sources */ = {isa = PBXBuildFile; fileRef = 938EDE0F1B3E83AB00A0D201 /* ShipInfoCell1.m */; };
 		9396213F1B18563A00CB730B /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9396213E1B18563A00CB730B /* MainViewController.m */; };
 		939621421B18567D00CB730B /* TaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 939621411B18567D00CB730B /* TaskViewController.m */; };
 		939621451B1856A400CB730B /* MyTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 939621441B1856A400CB730B /* MyTaskViewController.m */; };
@@ -66,6 +79,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9302B5961B3AA6CE00596A80 /* MYView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYView.h; sourceTree = "<group>"; };
+		9302B5971B3AA6CE00596A80 /* MYView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYView.m; sourceTree = "<group>"; };
+		9302B5991B3AC2F300596A80 /* GoodsTransDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsTransDetailViewController.h; sourceTree = "<group>"; };
+		9302B59A1B3AC2F300596A80 /* GoodsTransDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsTransDetailViewController.m; sourceTree = "<group>"; };
+		9302B59C1B3AE1BE00596A80 /* ShipInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipInfoCell.h; sourceTree = "<group>"; };
+		9302B59D1B3AE1BE00596A80 /* ShipInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipInfoCell.m; sourceTree = "<group>"; };
+		931EFD021B4284930045752C /* WebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewViewController.h; sourceTree = "<group>"; };
+		931EFD031B4284930045752C /* WebViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewViewController.m; sourceTree = "<group>"; };
+		933514281B3B9AD60059611B /* PayFreightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayFreightViewController.h; sourceTree = "<group>"; };
+		933514291B3B9AD60059611B /* PayFreightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayFreightViewController.m; sourceTree = "<group>"; };
+		9335142B1B3C09CA0059611B /* RegresultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegresultViewController.h; sourceTree = "<group>"; };
+		9335142C1B3C09CA0059611B /* RegresultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegresultViewController.m; sourceTree = "<group>"; };
+		9335142E1B3C1FD70059611B /* LoadGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadGoodsViewController.h; sourceTree = "<group>"; };
+		9335142F1B3C1FD70059611B /* LoadGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadGoodsViewController.m; sourceTree = "<group>"; };
+		933514311B3D826F0059611B /* ShipTeamDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipTeamDetailViewController.h; sourceTree = "<group>"; };
+		933514321B3D826F0059611B /* ShipTeamDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipTeamDetailViewController.m; sourceTree = "<group>"; };
+		933514341B3D8BB40059611B /* ShipListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipListModel.h; sourceTree = "<group>"; };
+		933514351B3D8BB40059611B /* ShipListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipListModel.m; sourceTree = "<group>"; };
 		9342EE9A1B1F0F43000BF13F /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		9342EE9B1B1F0F43000BF13F /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		9342EE9D1B1F1F95000BF13F /* SetNewPWDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetNewPWDViewController.h; sourceTree = "<group>"; };
@@ -78,6 +109,10 @@
 		935C4FB91B282ED5004F292B /* AvaliblePayModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvaliblePayModel.m; sourceTree = "<group>"; };
 		9384DDE21B26C13D001D539F /* MyWalletViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWalletViewController.h; sourceTree = "<group>"; };
 		9384DDE31B26C13D001D539F /* MyWalletViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWalletViewController.m; sourceTree = "<group>"; };
+		9386339B1B4110F50092F05E /* AddCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCollectionViewCell.h; sourceTree = "<group>"; };
+		9386339C1B4110F50092F05E /* AddCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCollectionViewCell.m; sourceTree = "<group>"; };
+		9386339E1B4116D50092F05E /* ImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCollectionViewCell.h; sourceTree = "<group>"; };
+		9386339F1B4116D50092F05E /* ImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCollectionViewCell.m; sourceTree = "<group>"; };
 		938E24F71B292BEA003B7EC5 /* NoPayModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoPayModel.h; sourceTree = "<group>"; };
 		938E24F81B292BEA003B7EC5 /* NoPayModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoPayModel.m; sourceTree = "<group>"; };
 		938E24FA1B29342E003B7EC5 /* NoPayDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoPayDetailViewController.h; sourceTree = "<group>"; };
@@ -95,6 +130,10 @@
 		938E97591B2027420050FE4D /* RegularNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegularNumber.h; sourceTree = "<group>"; };
 		938E975A1B2027420050FE4D /* RegularNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegularNumber.m; sourceTree = "<group>"; };
 		938E975D1B207FF70050FE4D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		938EDE0B1B3E535400A0D201 /* ShipTeamModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipTeamModel.h; sourceTree = "<group>"; };
+		938EDE0C1B3E535400A0D201 /* ShipTeamModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipTeamModel.m; sourceTree = "<group>"; };
+		938EDE0E1B3E83AB00A0D201 /* ShipInfoCell1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipInfoCell1.h; sourceTree = "<group>"; };
+		938EDE0F1B3E83AB00A0D201 /* ShipInfoCell1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipInfoCell1.m; sourceTree = "<group>"; };
 		9396213D1B18563A00CB730B /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		9396213E1B18563A00CB730B /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		939621401B18567D00CB730B /* TaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskViewController.h; sourceTree = "<group>"; };
@@ -234,6 +273,10 @@
 				93B84E2E1B1EE34C00EF2DB4 /* ShipRelation.m */,
 				93B84E301B1EE37000EF2DB4 /* BusinessOrders.h */,
 				93B84E311B1EE37000EF2DB4 /* BusinessOrders.m */,
+				933514341B3D8BB40059611B /* ShipListModel.h */,
+				933514351B3D8BB40059611B /* ShipListModel.m */,
+				938EDE0B1B3E535400A0D201 /* ShipTeamModel.h */,
+				938EDE0C1B3E535400A0D201 /* ShipTeamModel.m */,
 				935C4FB81B282ED5004F292B /* AvaliblePayModel.h */,
 				935C4FB91B282ED5004F292B /* AvaliblePayModel.m */,
 				938E24F71B292BEA003B7EC5 /* NoPayModel.h */,
@@ -341,6 +384,8 @@
 				938E97571B1FF8190050FE4D /* FindPwdViewController.m */,
 				93CDA0A31B15B9200008DCC0 /* RegisterViewController.h */,
 				93CDA0A41B15B9200008DCC0 /* RegisterViewController.m */,
+				9335142B1B3C09CA0059611B /* RegresultViewController.h */,
+				9335142C1B3C09CA0059611B /* RegresultViewController.m */,
 				9342EE9A1B1F0F43000BF13F /* SettingViewController.h */,
 				9342EE9B1B1F0F43000BF13F /* SettingViewController.m */,
 				9342EE9D1B1F1F95000BF13F /* SetNewPWDViewController.h */,
@@ -351,8 +396,18 @@
 				939621411B18567D00CB730B /* TaskViewController.m */,
 				939621431B1856A400CB730B /* MyTaskViewController.h */,
 				939621441B1856A400CB730B /* MyTaskViewController.m */,
+				9335142E1B3C1FD70059611B /* LoadGoodsViewController.h */,
+				9335142F1B3C1FD70059611B /* LoadGoodsViewController.m */,
+				9302B5991B3AC2F300596A80 /* GoodsTransDetailViewController.h */,
+				9302B59A1B3AC2F300596A80 /* GoodsTransDetailViewController.m */,
+				933514311B3D826F0059611B /* ShipTeamDetailViewController.h */,
+				933514321B3D826F0059611B /* ShipTeamDetailViewController.m */,
+				933514281B3B9AD60059611B /* PayFreightViewController.h */,
+				933514291B3B9AD60059611B /* PayFreightViewController.m */,
 				93F673831B1C6D3D00A4E34E /* DetailViewController.h */,
 				93F673841B1C6D3D00A4E34E /* DetailViewController.m */,
+				931EFD021B4284930045752C /* WebViewViewController.h */,
+				931EFD031B4284930045752C /* WebViewViewController.m */,
 				9384DDE11B26C10B001D539F /* mywallet */,
 			);
 			path = Controllers;
@@ -365,6 +420,8 @@
 				93CDA0AB1B15BBF20008DCC0 /* NavigationBar.m */,
 				938E97591B2027420050FE4D /* RegularNumber.h */,
 				938E975A1B2027420050FE4D /* RegularNumber.m */,
+				9302B5961B3AA6CE00596A80 /* MYView.h */,
+				9302B5971B3AA6CE00596A80 /* MYView.m */,
 			);
 			path = MY__UI;
 			sourceTree = "<group>";
@@ -378,6 +435,14 @@
 				935C4FB31B281132004F292B /* WalletCell.m */,
 				938E24FD1B29347E003B7EC5 /* NoPayDetailCell.h */,
 				938E24FE1B29347E003B7EC5 /* NoPayDetailCell.m */,
+				9302B59C1B3AE1BE00596A80 /* ShipInfoCell.h */,
+				9302B59D1B3AE1BE00596A80 /* ShipInfoCell.m */,
+				938EDE0E1B3E83AB00A0D201 /* ShipInfoCell1.h */,
+				938EDE0F1B3E83AB00A0D201 /* ShipInfoCell1.m */,
+				9386339B1B4110F50092F05E /* AddCollectionViewCell.h */,
+				9386339C1B4110F50092F05E /* AddCollectionViewCell.m */,
+				9386339E1B4116D50092F05E /* ImageCollectionViewCell.h */,
+				9386339F1B4116D50092F05E /* ImageCollectionViewCell.m */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -483,9 +548,13 @@
 			files = (
 				9396214F1B18637D00CB730B /* NetWorkInterface.m in Sources */,
 				93CDA0A51B15B9200008DCC0 /* RegisterViewController.m in Sources */,
+				931EFD041B4284930045752C /* WebViewViewController.m in Sources */,
 				939621421B18567D00CB730B /* TaskViewController.m in Sources */,
 				93C123961B391B5F002BB29C /* BanksListViewController.m in Sources */,
 				93CDA0AC1B15BBF20008DCC0 /* NavigationBar.m in Sources */,
+				938EDE0D1B3E535400A0D201 /* ShipTeamModel.m in Sources */,
+				9302B5981B3AA6CE00596A80 /* MYView.m in Sources */,
+				938EDE101B3E83AB00A0D201 /* ShipInfoCell1.m in Sources */,
 				938E25371B2978FE003B7EC5 /* SureCashViewController.m in Sources */,
 				935C4FB71B281A06004F292B /* NopayViewController.m in Sources */,
 				93B84E291B1ED21200EF2DB4 /* MytaskModel.m in Sources */,
@@ -500,29 +569,38 @@
 				93CDA0A21B15B8C80008DCC0 /* LoginViewController.m in Sources */,
 				93B84E321B1EE37000EF2DB4 /* BusinessOrders.m in Sources */,
 				93B84E2F1B1EE34C00EF2DB4 /* ShipRelation.m in Sources */,
+				938633A01B4116D50092F05E /* ImageCollectionViewCell.m in Sources */,
 				93CDA0821B15B6750008DCC0 /* RootViewController.m in Sources */,
 				938E253A1B29B00A003B7EC5 /* BankInfoViewController.m in Sources */,
 				93C89A721B1D3FD9008DF209 /* CommonViewController.m in Sources */,
+				933514331B3D826F0059611B /* ShipTeamDetailViewController.m in Sources */,
 				93C123A11B3954DE002BB29C /* CityHandle.m in Sources */,
 				9396213F1B18563A00CB730B /* MainViewController.m in Sources */,
 				9342EE9F1B1F1F95000BF13F /* SetNewPWDViewController.m in Sources */,
 				93C89A761B1D895D008DF209 /* PortModel.m in Sources */,
 				939621491B18612F00CB730B /* NetworkRequest.m in Sources */,
+				9335142D1B3C09CA0059611B /* RegresultViewController.m in Sources */,
 				939621531B186D0300CB730B /* MBProgressHUD.m in Sources */,
 				938E25021B295009003B7EC5 /* NoPayDetailModel.m in Sources */,
+				933514301B3C1FD70059611B /* LoadGoodsViewController.m in Sources */,
+				9302B59B1B3AC2F300596A80 /* GoodsTransDetailViewController.m in Sources */,
 				935C4FBA1B282ED5004F292B /* AvaliblePayModel.m in Sources */,
+				9386339D1B4110F50092F05E /* AddCollectionViewCell.m in Sources */,
 				935C4FB41B281132004F292B /* WalletCell.m in Sources */,
 				93C89A791B1D9708008DF209 /* OrdersModel.m in Sources */,
 				939621451B1856A400CB730B /* MyTaskViewController.m in Sources */,
 				938E24FF1B29347E003B7EC5 /* NoPayDetailCell.m in Sources */,
 				938E24FC1B29342E003B7EC5 /* NoPayDetailViewController.m in Sources */,
+				9335142A1B3B9AD60059611B /* PayFreightViewController.m in Sources */,
 				93CDA07F1B15B6750008DCC0 /* AppDelegate.m in Sources */,
 				938E975B1B2027420050FE4D /* RegularNumber.m in Sources */,
+				9302B59E1B3AE1BE00596A80 /* ShipInfoCell.m in Sources */,
 				93CDA07C1B15B6750008DCC0 /* main.m in Sources */,
 				93C1239C1B3933A7002BB29C /* CityModel.m in Sources */,
 				9342EE9C1B1F0F43000BF13F /* SettingViewController.m in Sources */,
 				938E24F91B292BEA003B7EC5 /* NoPayModel.m in Sources */,
 				93C123991B3920F3002BB29C /* BanksModel.m in Sources */,
+				933514361B3D8BB40059611B /* ShipListModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -18,7 +18,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    _icon.hidden=YES;
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,7 +47,8 @@
     cash.textColor=kWalletTitleColor;
     cash.font=[UIFont systemFontOfSize:18];
     cash.textAlignment=NSTextAlignmentLeft;
-    cash.text=[NSString stringWithFormat:@"%@元",_moneyNum.allNum];
+    //cash.text=[NSString stringWithFormat:@"%@元",_moneyNum.allNum];
+    cash.text=_moneyNum;
     [self.view addSubview:cash];
     
     UILabel *label2=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, CGRectGetMaxY(cash.frame)+Vspace, kScreenWidth-leftSpace*2, 30)];
@@ -61,7 +62,8 @@
     commission.textAlignment=NSTextAlignmentLeft;
     commission.textColor=kWalletTitleColor;
     commission.font=[UIFont systemFontOfSize:18];
-    commission.text=[NSString stringWithFormat:@"%@元",_moneyNum.sxf];
+    //commission.text=[NSString stringWithFormat:@"%@元",_moneyNum.sxf];
+     commission.text=_moneyNum;
     [self.view addSubview:commission];
     
     UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, CGRectGetMaxY(commission.frame)+Vspace, kScreenWidth-2*leftSpace, 30)];
@@ -72,7 +74,8 @@
     [self.view addSubview:label3];
     
     UILabel *reality=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, CGRectGetMaxY(label3.frame)-5, kScreenWidth-2*leftSpace, 30)];
-    reality.text=[NSString stringWithFormat:@"%@元",_moneyNum.actualNum];
+    //reality.text=[NSString stringWithFormat:@"%@元",_moneyNum.actualNum];
+     reality.text=_moneyNum;
     reality.textAlignment=NSTextAlignmentLeft;
     reality.textColor=kWalletTitleColor;
     reality.font=[UIFont systemFontOfSize:18];
@@ -98,7 +101,8 @@
 -(void)sureCash:(UIButton*)sender
 {
     BankInfoViewController *bankInfo=[[BankInfoViewController alloc]init];
-    bankInfo.cashNum=_moneyNum.allNum;
+    //bankInfo.cashNum=_moneyNum.allNum;
+    bankInfo.cashNum=_moneyNum;
     [self.navigationController pushViewController:bankInfo animated:YES];
 }
 - (void)didReceiveMemoryWarning {

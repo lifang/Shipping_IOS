@@ -11,4 +11,7 @@
 
 @interface RegisterViewController : CommonViewController
 
+@property(nonatomic,assign)int imgList;
+@property(nonatomic,strong)NSString *imvURL;
+
 @end

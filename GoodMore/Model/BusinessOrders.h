@@ -11,11 +11,14 @@
 @interface BusinessOrders : NSObject
 @property(nonatomic,strong)NSString *endPortName;
 @property(nonatomic,strong)NSNumber *amount;
+@property(nonatomic,strong)NSNumber *maxAmount;
+@property(nonatomic,strong)NSNumber *minAmount;
 @property(nonatomic,strong)NSNumber *creator;
 @property(nonatomic,strong)NSString *companyName;
 @property(nonatomic,strong)NSNumber *beginPortId;
 @property(nonatomic,strong)NSNumber *updateTime;
 @property(nonatomic,strong)NSString *cargos;
+@property(nonatomic,strong)NSNumber *cargoBossId;
 @property(nonatomic,strong)NSString *workTime;
 @property(nonatomic,strong)NSNumber *allPay;
 @property(nonatomic,strong)NSNumber *publishId;
@@ -28,6 +31,7 @@
 @property(nonatomic,strong)NSString *applyNumbers;
 @property(nonatomic,strong)NSString *beginPortName;
 @property(nonatomic,strong)NSNumber *status;
+@property(nonatomic,strong)NSNumber *shipTeamId;
 @property(nonatomic,strong)NSString *remarks;
 
 -(instancetype)initWithDictionary:(NSDictionary*)dictionary;

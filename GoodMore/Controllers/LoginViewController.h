@@ -10,5 +10,5 @@
 #import "CommonViewController.h"
 
 @interface LoginViewController : CommonViewController
-
+@property(nonatomic,strong)NSString *type;
 @end

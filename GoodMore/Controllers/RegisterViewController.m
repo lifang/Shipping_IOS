@@ -12,7 +12,11 @@
 #import "NetWorkInterface.h"
 #import "LoginViewController.h"
 #import "RegularNumber.h"
-@interface RegisterViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
+#import "RegresultViewController.h"
+
+#import "LoadGoodsViewController.h"
+
+@interface RegisterViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     UITableView *_tableView;
     NSArray *_dataArray;
@@ -26,6 +30,7 @@
     UITextField *_year;
     UITextField *_inviteNum;
     UIButton *_codeBtn;
+    UIButton *_upload;
 }
 @property(nonatomic,strong)NSString *codeNumber;
 @end
@@ -40,7 +45,7 @@
     rightItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem=rightItem;
     
-    _dataArray=[[NSArray alloc]initWithObjects:@"姓名",@"船名",@"船舶吨位",@"建造年份",@"邀请码",@"手机号码",@"验证码",@"密码",@"确认密码", nil];
+    _dataArray=[[NSArray alloc]initWithObjects:@"姓名",@"船名",@"船舶吨位",@"建造年份",@"邀请码",@"手机号码",@"验证码",@"密码",@"确认密码",@"签证薄概况页照片", nil];
     
     [self initAndLayoutUI];
     
@@ -63,36 +68,42 @@
     
     _name=[[UITextField alloc]init];
     _name.placeholder=@"请输入姓名";
+    _name.font=[UIFont systemFontOfSize:14];
     _name.delegate=self;
     _name.tag=1;
     _name.clearButtonMode=UITextFieldViewModeAlways;
     
     _shipName=[[UITextField alloc]init];
     _shipName.placeholder=@"请输入船名";
+    _shipName.font=[UIFont systemFontOfSize:14];
     _shipName.delegate=self;
     _shipName.tag=2;
     _shipName.clearButtonMode=UITextFieldViewModeAlways;
     
     _volume=[[UITextField alloc]init];
     _volume.placeholder=@"请输入船舶吨位";
+    _volume.font=[UIFont systemFontOfSize:14];
     _volume.delegate=self;
     _volume.tag=3;
     _volume.clearButtonMode=UITextFieldViewModeAlways;
 
     _year=[[UITextField alloc]init];
     _year.placeholder=@"请输入建造年份";
+    _year.font=[UIFont systemFontOfSize:14];
     _year.delegate=self;
     _year.tag=4;
     _year.clearButtonMode=UITextFieldViewModeAlways;
     
     _inviteNum=[[UITextField alloc]init];
     _inviteNum.placeholder=@"请输入邀请码";
+    _inviteNum.font=[UIFont systemFontOfSize:14];
     _inviteNum.delegate=self;
     _inviteNum.tag=5;
     _inviteNum.clearButtonMode=UITextFieldViewModeAlways;
     
     _phoneNum=[[UITextField alloc]init];
     _phoneNum.placeholder=@"请输入手机号码";
+    _phoneNum.font=[UIFont systemFontOfSize:14];
     _phoneNum.delegate=self;
     _phoneNum.tag=6;
     _phoneNum.clearButtonMode=UITextFieldViewModeAlways;
@@ -105,12 +116,14 @@
     
     _dentcode=[[UITextField alloc]init];
     _dentcode.placeholder=@"请输入验证码";
+    _dentcode.font=[UIFont systemFontOfSize:14];
     _dentcode.delegate=self;
     _dentcode.tag=7;
     _dentcode.clearButtonMode=UITextFieldViewModeAlways;
     
     _pwd=[[UITextField alloc]init];
     _pwd.placeholder=@"请输入密码";
+    _pwd.font=[UIFont systemFontOfSize:14];
     _pwd.secureTextEntry=YES;
     _pwd.delegate=self;
     _pwd.tag=8;
@@ -118,13 +131,17 @@
     
     _sure=[[UITextField alloc]init];
     _sure.placeholder=@"请再次输入密码";
+    _sure.font=[UIFont systemFontOfSize:14];
     _sure.secureTextEntry=YES;
     _sure.delegate=self;
     _sure.tag=9;
     _sure.clearButtonMode=UITextFieldViewModeAlways;
     
-    
-    
+    _upload=[UIButton buttonWithType:UIButtonTypeCustom];
+    [_upload setTitle:@"上传图片" forState:UIControlStateNormal];
+    [_upload setBackgroundColor:kMainColor];
+    _upload.titleLabel.font=[UIFont systemFontOfSize:10];
+    [_upload addTarget:self action:@selector(upload:) forControlEvents:UIControlEventTouchUpInside];
 }
 -(void)setHeadAndFootView
 {
@@ -174,6 +191,41 @@
     });
     dispatch_resume(_timer);
 }
+#pragma mark  上传图片
+- (void)showImageOption
+{
+    UIActionSheet *sheet=[[UIActionSheet alloc] initWithTitle:@""
+                                                     delegate:self
+                                            cancelButtonTitle:@"取消"
+                                       destructiveButtonTitle:nil
+                                            otherButtonTitles:@"相册上传",@"拍照上传",nil];
+    [sheet showInView:self.view];
+}
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSInteger sourceType = UIImagePickerControllerSourceTypeCamera;
+    if (buttonIndex==0)
+    {
+        //相册
+        sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }else if (buttonIndex==1)
+    {
+        //拍照
+         sourceType = UIImagePickerControllerSourceTypeCamera;
+    }
+    if ([UIImagePickerController isSourceTypeAvailable:sourceType] &&
+        buttonIndex != actionSheet.cancelButtonIndex) {
+        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+        imagePickerController.delegate = self;
+        imagePickerController.allowsEditing = YES;
+        imagePickerController.sourceType = sourceType;
+        [self presentViewController:imagePickerController animated:YES completion:nil];
+    }
+
+}
+#pragma mark action
+
+
 //获得验证码
 -(IBAction)getCode:(UIButton*)sender
 {
@@ -227,17 +279,8 @@
 //提交注册
 -(IBAction)commit:(UIButton*)sender
 {
-//    if (!_dentcode.text || [_dentcode.text isEqualToString:@""])
-//    {
-//        MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-//        hud.customView = [[UIImageView alloc] init];
-//        hud.mode = MBProgressHUDModeCustomView;
-//        [hud hide:YES afterDelay:1.f];
-//        hud.labelText = @"验证码不能为空";
-//        return;
-//    }
-    
-    if (!_name.text || [_name.text isEqualToString:@""] ||  !_shipName.text || [_shipName.text isEqualToString:@""] || !_volume.text || [_volume.text isEqualToString:@""] || !_phoneNum.text || [_phoneNum.text isEqualToString:@""] || !_dentcode.text || [_dentcode.text isEqualToString:@""] || !_pwd.text || [_pwd.text isEqualToString:@""] || !_sure.text || [_sure.text isEqualToString:@""] )
+
+    if (!_name.text || [_name.text isEqualToString:@""] ||  !_shipName.text || [_shipName.text isEqualToString:@""] || !_volume.text || [_volume.text isEqualToString:@""] || !_year.text || [_year.text isEqualToString:@""] || !_inviteNum.text || [_inviteNum.text isEqualToString:@""] || !_phoneNum.text || [_phoneNum.text isEqualToString:@""] || !_dentcode.text || [_dentcode.text isEqualToString:@""] || !_pwd.text || [_pwd.text isEqualToString:@""] || !_sure.text || [_sure.text isEqualToString:@""] )
     {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         hud.customView = [[UIImageView alloc] init];
@@ -264,10 +307,11 @@
         MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         hud.labelText=@"正在提交";
         
-        [NetWorkInterface registerWithLoginName:_phoneNum.text pwd:_pwd.text shipName:_name.text shipNumber:_shipName.text phone:_phoneNum.text dentCode:_dentcode.text volume:_volume.text finished:^(BOOL success, NSData *response) {
+        [NetWorkInterface registerWithLoginName:_phoneNum.text pwd:_pwd.text name:_name.text shipNumber:_shipName.text phone:_phoneNum.text volume:_volume.text dentCode:_dentcode.text builderTime:_year.text imgList:_imgList joinCode:_inviteNum.text shipName:_shipName.text finished:^(BOOL success, NSData *response) {
+            
             hud.customView = [[UIImageView alloc] init];
             hud.mode = MBProgressHUDModeCustomView;
-            [hud hide:YES afterDelay:0.3f];
+            [hud hide:YES afterDelay:0.5f];
             NSLog(@"------------注册:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
             if (success)
             {
@@ -277,8 +321,8 @@
                     if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
                     {
                         [hud setHidden:YES];
-                        //LoginViewController *loginVC=[[LoginViewController alloc]init];
-                        [self.navigationController popToRootViewControllerAnimated:YES];
+                        RegresultViewController *regResult=[[RegresultViewController alloc]init];
+                        [self.navigationController pushViewController:regResult animated:YES];
                         
                     }else
                     {
@@ -297,7 +341,7 @@
  
     }
 }
-
+#pragma mark ---UITableViewDelegate------
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _dataArray.count;
@@ -372,6 +416,14 @@
 
         }
             break;
+        case 9:
+        {
+            _upload.frame=CGRectMake(230, 5, 80, 30);
+            [cell.contentView addSubview:_upload];
+            
+        }
+            break;
+
             
         default:
             break;
@@ -382,6 +434,76 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+#pragma mark 上传图片
+-(void)upload:(UIButton*)sender
+{
+    [self showImageOption];
+}
+- (void)uploadPictureWithImage:(UIImage *)image
+{
+    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText=@"上传中...";
+    
+    [NetWorkInterface uploadSingleImageWithImage:image loginId:@"-1" finished:^(BOOL success, NSData *response) {
+        NSLog(@"上传一张图片---%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        [hud hide:YES afterDelay:0.5f];
+        if (success) {
+            id object = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+        if ([object isKindOfClass:[NSDictionary class]]) {
+            NSString *errorCode = [NSString stringWithFormat:@"%@",[object objectForKey:@"code"]];
+            if ([errorCode intValue] == RequestFail) {
+                //返回错误代码
+                hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+            }
+            else if ([errorCode intValue] == RequestSuccess) {
+                hud.labelText = @"上传成功";
+                [self parseImageUploadInfo:object];
+            }
+        }
+        else {
+            //返回错误数据
+            hud.labelText = kServiceReturnWrong;
+        }
+    }
+     else {
+         hud.labelText = kNetworkFailed;
+     }
+
+    }];
+}
+-(void)parseImageUploadInfo:(NSDictionary*)dic
+{
+    if (![dic objectForKey:@"result"] || ![[dic objectForKey:@"result"] isKindOfClass:[NSString class]]) {
+        return;
+    }
+    NSDictionary *result=[dic objectForKey:@"result"];
+    _imgList=[[result objectForKey:@"id"] intValue];
+    _imvURL=[result objectForKey:@"url"];
+}
+#pragma mark --UIImagePickerDelegate--
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    //调接口上传图片
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    UIImage *editImage = [info objectForKey:UIImagePickerControllerEditedImage];
+    [self uploadPictureWithImage:editImage];
+
+}
+
 #pragma mark ----------------UITextFieldDelegate-------------------
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -422,14 +544,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
