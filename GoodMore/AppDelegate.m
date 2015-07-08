@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "RootViewController.h"
+
 #import "Constants.h"
 #import <CoreLocation/CoreLocation.h>
 #import "MyWalletViewController.h"
@@ -47,8 +47,8 @@
     
     //[self checkAppVersion];
     
-    RootViewController*rootViewController=[[RootViewController alloc]init];
-    self.window.rootViewController=rootViewController;
+    _rootViewController=[[RootViewController alloc]init];
+    self.window.rootViewController=_rootViewController;
     
     [self getUserLocation];
     

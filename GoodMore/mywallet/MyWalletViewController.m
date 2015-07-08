@@ -461,10 +461,12 @@
     
     return cell;
 }
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
         [tableView setSeparatorInset:UIEdgeInsetsZero];
@@ -487,9 +489,9 @@
         if (_downButton==nil)
         {
             _downButton=[UIButton buttonWithType:UIButtonTypeCustom];
-            
+        
             CGFloat screenHeight=[[UIScreen mainScreen] bounds].size.height;
-            CGFloat screenwidth=[[UIScreen mainScreen] bounds].size.width;
+            //CGFloat screenwidth=[[UIScreen mainScreen] bounds].size.width;
             
             //NSLog(@"------尺寸:%f  宽度:%f",screenHeight,screenwidth);
             // 667 iphone6   736 iPhone6 Plus

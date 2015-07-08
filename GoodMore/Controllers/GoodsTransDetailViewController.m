@@ -1208,7 +1208,7 @@
         
     }];
     
-    NSLog(@"-------ship列表:%d",_shipListArray.count);
+    //NSLog(@"-------ship列表:%d",_shipListArray.count);
     [self initAndLayoutUI];
 
 }

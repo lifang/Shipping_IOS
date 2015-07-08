@@ -9,7 +9,8 @@
 #import "MainViewController.h"
 #import "TaskViewController.h"
 #import "MyTaskViewController.h"
-#import "MyWalletViewController.h"
+#import "TransportingViewController.h"
+#import "MyShipViewController.h"
 #import "NavigationBar.h"
 #import "Constants.h"
 #import "NavigationBar.h"
@@ -30,24 +31,14 @@
     // Do any additional setup after loading the view.
     
     [self initControllers];
-    //处理船的级别问题
-    //[self checkShipRank];
+    
+//    UIImageView *s=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"to.png"]];
+//    s.frame=CGRectMake(kScreenWidth/2+40, 15, 20, 20);
+//    //[self.tabBarController.view addSubview:s];
+//    [self.tabBar addSubview:s];
+    
+    
 }
-////判断船的级别
-//-(void)checkShipRank
-//{
-//    NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
-//    NSString *type=[userDefault objectForKey:@"type"];
-//    if ([type intValue]==1)
-//    {
-//        //高级船
-//    }else if ([type intValue]==6)
-//    {
-//        //普通船
-//        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"友情提示" message:@"您现在的船舶级别为普通船,普通船无法组队接单,只能加入船队进行接单!" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:@"升级为高级船", nil];
-//        [alertView show];
-//    }
-//}
 -(void)initControllers
 {
     
@@ -62,24 +53,25 @@
     UINavigationController *taskNav=[[UINavigationController alloc]initWithRootViewController:taskVC];
     [NavigationBar setNavigationBarStyle:taskNav];
     
-    MyTaskViewController *myTaskVC=[[MyTaskViewController alloc]init];
-    myTaskVC.tabBarItem.title=@"我的任务";
-    myTaskVC.tabBarItem.image=[kImageName(@"tabar2_n.png")imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    myTaskVC.tabBarItem.selectedImage=[kImageName(@"tabar2_h.png")imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UINavigationController *myTaskNav=[[UINavigationController alloc]initWithRootViewController:myTaskVC];
-    [NavigationBar setNavigationBarStyle:myTaskNav];
+    TransportingViewController *transVC=[[TransportingViewController alloc]init];
+    transVC.tabBarItem.title=@"运输中";
+    transVC.tabBarItem.image=[kImageName(@"trans_n.png")imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    transVC.tabBarItem.selectedImage=[kImageName(@"trans_h.png")imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UINavigationController *transNav=[[UINavigationController alloc]initWithRootViewController:transVC];
+    [NavigationBar setNavigationBarStyle:transNav];
     
-    MyWalletViewController*walletVC=[[MyWalletViewController alloc]init];
-    walletVC.tabBarItem.title=@"我的钱包";
-    walletVC.tabBarItem.image=[kImageName(@"wallet_n.png")imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    walletVC.tabBarItem.selectedImage=[kImageName(@"wallet_h.png")imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UINavigationController*walletNav=[[UINavigationController alloc]initWithRootViewController:walletVC];
+    MyShipViewController*myShipVC=[[MyShipViewController alloc]init];
+    myShipVC.tabBarItem.title=@"我的船队";
+    myShipVC.tabBarItem.image=[kImageName(@"ship_n.png")imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    myShipVC.tabBarItem.selectedImage=[kImageName(@"ship_h.png")imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UINavigationController*myShipNav=[[UINavigationController alloc]initWithRootViewController:myShipVC];
     //[walletNav.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     //[[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
     //[[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
-    [NavigationBar setNavigationBarStyle:walletNav];
-    self.viewControllers=[[NSArray alloc]initWithObjects:myTaskNav,taskNav,walletNav, nil];
+    [NavigationBar setNavigationBarStyle:myShipNav];
+    self.viewControllers=[[NSArray alloc]initWithObjects:taskNav,transNav,myShipNav, nil];
     self.selectedIndex=1;
+    
     
     
 }

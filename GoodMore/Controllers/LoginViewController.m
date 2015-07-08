@@ -13,6 +13,7 @@
 #import "NetWorkInterface.h"
 #import "MainViewController.h"
 #import "FindPwdViewController.h"
+#import "AppDelegate.h"
 @interface LoginViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIAlertViewDelegate>
 
 {
@@ -37,8 +38,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title=@"登录";
-    
     [self initAndLayoutUI];
+//    if (_loginName.text && ![_loginName.text isEqualToString:@""] && _pwd.text && ![_pwd.text isEqualToString:@""])
+//    {
+//        [self login];
+//    }
 }
 
 
@@ -79,9 +83,10 @@
     _loginName.delegate=self;
     _loginName.tag=110;
     
-    
+    NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
+    NSString *pwd=[userDefault objectForKey:@"pwd"];
     _pwd=[[UITextField alloc]init];
-    //_pwd.text=pwd;
+    _pwd.text=pwd;
     _pwd.placeholder=@"请输入密码";
     _pwd.secureTextEntry=YES;
     _pwd.clearButtonMode=UITextFieldViewModeWhileEditing;
@@ -174,44 +179,58 @@
 //登录
 -(IBAction)login:(UIButton*)sender
 {
-    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.labelText=@"正在登录";
-    [NetWorkInterface loginWithLoginName:_loginName.text pwd:_pwd.text finished:^(BOOL success, NSData *response)
-    {
-        hud.customView=[[UIImageView alloc]init];
-        [hud hide:YES afterDelay:0.3];
-        NSLog(@"------------登录:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
-        if (success)
-        {
-            id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
-            if ([object isKindOfClass:[NSDictionary class]])
-            {
-                if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
-                {
-                    [hud setHidden:YES];
-                    
-                    [self parseLoginDataWithDictionary:object];
-                    MainViewController *main=[[MainViewController alloc]init];
-                    [self presentViewController:main animated:YES completion:nil];
-
-                }else
-                {
-                    
-                    hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
-                }
-            }else
-            {
-                
-                hud.labelText=kServiceReturnWrong;
-            }
-        }else
-        {
-            hud.labelText=kNetworkFailed;
-        }
-        
-    }];
+    [self login];
 }
+-(void)login
+{
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate.rootViewController showMainViewController];
 
+    
+//    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+//    hud.labelText=@"正在登录";
+//    [NetWorkInterface loginWithLoginName:_loginName.text pwd:_pwd.text finished:^(BOOL success, NSData *response)
+//     {
+//         hud.customView=[[UIImageView alloc]init];
+//         [hud hide:YES afterDelay:0.3];
+//         NSLog(@"------------登录:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+//         if (success)
+//         {
+//             id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+//             if ([object isKindOfClass:[NSDictionary class]])
+//             {
+//                 if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
+//                 {
+//                     [hud setHidden:YES];
+//                     
+//                     [self parseLoginDataWithDictionary:object];
+//                     
+//                     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+//                     [delegate.rootViewController showMainViewController];
+//
+//                     
+////                     MainViewController *main=[[MainViewController alloc]init];
+////                     [self presentViewController:main animated:YES completion:nil];
+//                     
+//                 }else
+//                 {
+//                     
+//                     hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+//                 }
+//             }else
+//             {
+//                 
+//                 hud.labelText=kServiceReturnWrong;
+//             }
+//         }else
+//         {
+//             hud.labelText=kNetworkFailed;
+//         }
+//         
+//     }];
+
+}
 -(void)parseLoginDataWithDictionary:(NSDictionary*)dictionary
 {
     if (![dictionary objectForKey:@"result"] || ![[dictionary objectForKey:@"result"] isKindOfClass:[NSDictionary class]])
@@ -228,13 +247,13 @@
     NSString *phone=[result objectForKey:@"phone"];
     NSString *loginName=[result objectForKey:@"loginName"];
     NSString *shipName=[result objectForKey:@"shipName"];
-    NSString *pwd=[result objectForKey:@"pwd"];
+    //NSString *pwd=[result objectForKey:@"pwd"];
     
-    NSLog(@"-------登录loginName---%@",loginName);
+    //NSLog(@"-------登录loginName---%@",loginName);
     NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
     [userDefault setObject:_loginId forKey:@"loginId"];
     [userDefault setObject:_shipOwnerId forKey:@"shipOwnerId"];
-     NSLog(@"-------登录shipOwnerId---%@",_shipOwnerId);
+     //NSLog(@"-------登录shipOwnerId---%@",_shipOwnerId);
     [userDefault setObject:_type forKey:@"type"];
     [userDefault setObject:name forKey:@"name"];
     [userDefault setObject:shipNumber forKey:@"shipNumber"];
@@ -242,6 +261,7 @@
     [userDefault setObject:loginName forKey:@"loginName"];
     [userDefault setObject:shipName forKey:@"shipName"];
     //[userDefault setObject:pwd forKey:@"pwd"];
+    [userDefault setObject:_pwd.text forKey:@"pwd"];
     [userDefault synchronize];
     
     //保存坐标

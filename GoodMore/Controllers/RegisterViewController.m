@@ -45,7 +45,8 @@
     rightItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem=rightItem;
     
-    _dataArray=[[NSArray alloc]initWithObjects:@"姓名",@"船名",@"船舶吨位",@"建造年份",@"邀请码",@"手机号码",@"验证码",@"密码",@"确认密码",@"签证薄概况页照片", nil];
+//    _dataArray=[[NSArray alloc]initWithObjects:@"姓名",@"船名",@"船舶吨位",@"建造年份",@"邀请码",@"手机号码",@"验证码",@"密码",@"确认密码",@"签证薄概况页照片", nil];
+    _dataArray=[[NSArray alloc]initWithObjects:@"*姓名",@"*手机号码",@"*验证码",@"邀请码(选填)",@"*密码",@"*确认密码", nil];
     
     [self initAndLayoutUI];
     
@@ -71,42 +72,36 @@
     _name.font=[UIFont systemFontOfSize:14];
     _name.delegate=self;
     _name.tag=1;
-    _name.clearButtonMode=UITextFieldViewModeAlways;
+    _name.clearButtonMode=UITextFieldViewModeWhileEditing;
     
-    _shipName=[[UITextField alloc]init];
-    _shipName.placeholder=@"请输入船名";
-    _shipName.font=[UIFont systemFontOfSize:14];
-    _shipName.delegate=self;
-    _shipName.tag=2;
-    _shipName.clearButtonMode=UITextFieldViewModeAlways;
+//    _shipName=[[UITextField alloc]init];
+//    _shipName.placeholder=@"请输入船名";
+//    _shipName.font=[UIFont systemFontOfSize:14];
+//    _shipName.delegate=self;
+//    _shipName.tag=2;
+//    _shipName.clearButtonMode=UITextFieldViewModeAlways;
+//    
+//    _volume=[[UITextField alloc]init];
+//    _volume.placeholder=@"请输入船舶吨位";
+//    _volume.font=[UIFont systemFontOfSize:14];
+//    _volume.delegate=self;
+//    _volume.tag=3;
+//    _volume.clearButtonMode=UITextFieldViewModeAlways;
+//
+//    _year=[[UITextField alloc]init];
+//    _year.placeholder=@"请输入建造年份";
+//    _year.font=[UIFont systemFontOfSize:14];
+//    _year.delegate=self;
+//    _year.tag=4;
+//    _year.clearButtonMode=UITextFieldViewModeAlways;
     
-    _volume=[[UITextField alloc]init];
-    _volume.placeholder=@"请输入船舶吨位";
-    _volume.font=[UIFont systemFontOfSize:14];
-    _volume.delegate=self;
-    _volume.tag=3;
-    _volume.clearButtonMode=UITextFieldViewModeAlways;
-
-    _year=[[UITextField alloc]init];
-    _year.placeholder=@"请输入建造年份";
-    _year.font=[UIFont systemFontOfSize:14];
-    _year.delegate=self;
-    _year.tag=4;
-    _year.clearButtonMode=UITextFieldViewModeAlways;
-    
-    _inviteNum=[[UITextField alloc]init];
-    _inviteNum.placeholder=@"请输入邀请码";
-    _inviteNum.font=[UIFont systemFontOfSize:14];
-    _inviteNum.delegate=self;
-    _inviteNum.tag=5;
-    _inviteNum.clearButtonMode=UITextFieldViewModeAlways;
     
     _phoneNum=[[UITextField alloc]init];
     _phoneNum.placeholder=@"请输入手机号码";
     _phoneNum.font=[UIFont systemFontOfSize:14];
     _phoneNum.delegate=self;
-    _phoneNum.tag=6;
-    _phoneNum.clearButtonMode=UITextFieldViewModeAlways;
+    _phoneNum.tag=2;
+    _phoneNum.clearButtonMode=UITextFieldViewModeWhileEditing;
     
     _codeBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     [_codeBtn setBackgroundColor:kMainColor];
@@ -114,34 +109,45 @@
     _codeBtn.titleLabel.font=[UIFont systemFontOfSize:10];
     [_codeBtn addTarget:self action:@selector(getCode:) forControlEvents:UIControlEventTouchUpInside];
     
+    
     _dentcode=[[UITextField alloc]init];
     _dentcode.placeholder=@"请输入验证码";
     _dentcode.font=[UIFont systemFontOfSize:14];
     _dentcode.delegate=self;
-    _dentcode.tag=7;
-    _dentcode.clearButtonMode=UITextFieldViewModeAlways;
+    _dentcode.tag=3;
+    _dentcode.clearButtonMode=UITextFieldViewModeWhileEditing;
+    
+    
+    
+    _inviteNum=[[UITextField alloc]init];
+    _inviteNum.placeholder=@"请输入邀请码";
+    _inviteNum.font=[UIFont systemFontOfSize:14];
+    _inviteNum.delegate=self;
+    _inviteNum.tag=4;
+    _inviteNum.clearButtonMode=UITextFieldViewModeWhileEditing;
+
     
     _pwd=[[UITextField alloc]init];
     _pwd.placeholder=@"请输入密码";
     _pwd.font=[UIFont systemFontOfSize:14];
     _pwd.secureTextEntry=YES;
     _pwd.delegate=self;
-    _pwd.tag=8;
-    _pwd.clearButtonMode=UITextFieldViewModeAlways;
+    _pwd.tag=5;
+    _pwd.clearButtonMode=UITextFieldViewModeWhileEditing;
     
     _sure=[[UITextField alloc]init];
     _sure.placeholder=@"请再次输入密码";
     _sure.font=[UIFont systemFontOfSize:14];
     _sure.secureTextEntry=YES;
     _sure.delegate=self;
-    _sure.tag=9;
-    _sure.clearButtonMode=UITextFieldViewModeAlways;
+    _sure.tag=6;
+    _sure.clearButtonMode=UITextFieldViewModeWhileEditing;
     
-    _upload=[UIButton buttonWithType:UIButtonTypeCustom];
-    [_upload setTitle:@"上传图片" forState:UIControlStateNormal];
-    [_upload setBackgroundColor:kMainColor];
-    _upload.titleLabel.font=[UIFont systemFontOfSize:10];
-    [_upload addTarget:self action:@selector(upload:) forControlEvents:UIControlEventTouchUpInside];
+//    _upload=[UIButton buttonWithType:UIButtonTypeCustom];
+//    [_upload setTitle:@"上传图片" forState:UIControlStateNormal];
+//    [_upload setBackgroundColor:kMainColor];
+//    _upload.titleLabel.font=[UIFont systemFontOfSize:10];
+//    [_upload addTarget:self action:@selector(upload:) forControlEvents:UIControlEventTouchUpInside];
 }
 -(void)setHeadAndFootView
 {
@@ -360,70 +366,52 @@
     {
         case 0:
         {
-            _name.frame=CGRectMake(80, 5, 150, 30);
+            //_people.frame=CGRectMake(cell.bounds.size.width-160-10, (cellHeight-30)/2, 160, 30);
+            _name.frame=CGRectMake(cell.bounds.size.width-150-10, 5, 150, 30);
             [cell.contentView addSubview:_name];
         }
             break;
         case 1:
         {
-            _shipName.frame=CGRectMake(80, 5, 150, 30);
-            [cell.contentView addSubview:_shipName];
+//            _shipName.frame=CGRectMake(80, 5, 150, 30);
+//            [cell.contentView addSubview:_shipName];
+            
+            _phoneNum.frame=CGRectMake(90, 5, 130, 30);
+            _codeBtn.frame=CGRectMake(230, 5, 80, 30);
+            [cell.contentView addSubview:_codeBtn];
+            [cell.contentView addSubview:_phoneNum];
+            
         }
             break;
         case 2:
         {
-            _volume.frame=CGRectMake(80, 5, 150, 30);
-            [cell.contentView addSubview:_volume];
-        }
-            break;
-        case 3:
-        {
-            _year.frame=CGRectMake(80, 5, 150, 30);
-            [cell.contentView addSubview:_year];
-        }
-            break;
-        case 4:
-        {
-            _inviteNum.frame=CGRectMake(80, 5, 150, 30);
-            [cell.contentView addSubview:_inviteNum];
-        }
-            break;
-        case 5:
-        {
-            _phoneNum.frame=CGRectMake(80, 5, 150, 30);
-            _codeBtn.frame=CGRectMake(230, 5, 80, 30);
-            [cell.contentView addSubview:_codeBtn];
-            [cell.contentView addSubview:_phoneNum];
-        }
-            break;
-        case 6:
-        {
-            _dentcode.frame=CGRectMake(80, 5, 150, 30);
+//            _volume.frame=CGRectMake(80, 5, 150, 30);
+//            [cell.contentView addSubview:_volume];
+            
+            _dentcode.frame=CGRectMake(cell.bounds.size.width-150-10, 5, 150, 30);;
             
             [cell.contentView addSubview:_dentcode];
         }
             break;
-        case 7:
+        case 3:
         {
-            _pwd.frame=CGRectMake(80, 5, 150, 30);
+            _inviteNum.frame=CGRectMake(cell.bounds.size.width-150-10, 5, 150, 30);
+            [cell.contentView addSubview:_inviteNum];
+
+        }
+            break;
+        case 4:
+        {
+            _pwd.frame=CGRectMake(cell.bounds.size.width-150-10, 5, 150, 30);
             [cell.contentView addSubview:_pwd];
         }
             break;
-        case 8:
+        case 5:
         {
-            _sure.frame=CGRectMake(80, 5, 150, 30);
+            _sure.frame=CGRectMake(cell.bounds.size.width-150-10, 5, 150, 30);
             [cell.contentView addSubview:_sure];
-
         }
             break;
-        case 9:
-        {
-            _upload.frame=CGRectMake(230, 5, 80, 30);
-            [cell.contentView addSubview:_upload];
-            
-        }
-            break;
-
             
         default:
             break;
@@ -514,19 +502,19 @@
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    if (textField.tag==6 || textField.tag==7 || textField.tag==8 || textField.tag==9) {
-        _tableView.center=CGPointMake(_tableView.center.x, _tableView.center.y-100);
-    }
+//    if (textField.tag==6 || textField.tag==7 || textField.tag==8 || textField.tag==9) {
+//        _tableView.center=CGPointMake(_tableView.center.x, _tableView.center.y-100);
+//    }
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    if (textField.tag==6 || textField.tag==7 || textField.tag==8 || textField.tag==9) {
-        _tableView.center=CGPointMake(_tableView.center.x, _tableView.center.y+100);
-    }
+//    if (textField.tag==6 || textField.tag==7 || textField.tag==8 || textField.tag==9) {
+//        _tableView.center=CGPointMake(_tableView.center.x, _tableView.center.y+100);
+//    }
 }
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (textField.tag==3)
+    if (textField.tag==4)
     {
         if (![RegularNumber isNumber:string])
         {

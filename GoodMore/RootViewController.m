@@ -169,21 +169,31 @@
     }
 }
 
-//-(void)showMainViewController
-//{
-//    if (!_mainViewController) {
-//        _mainViewController=[[MainViewController alloc]init];
-//        _mainViewController.view.frame=self.view.bounds;
-//        [self.view addSubview:_mainViewController.view];
-//        [self addChildViewController:_mainViewController];
-//    }
-//    if (_loginNav)
-//    {
-//        [_loginNav.view removeFromSuperview];
-//        [_loginNav removeFromParentViewController];
-//        _loginNav=nil;
-//    }
-//}
+- (void)showMainViewController {
+    if (!_menuController) {
+        _mainController = [[MainViewController alloc] init];
+        _messageController = [[RightViewController alloc] init];
+        UINavigationController *mainNav = [[UINavigationController alloc] initWithRootViewController:_mainController];
+        [NavigationBar setNavigationBarStyle:mainNav];
+        _menuController= [[MMDrawerController alloc] initWithCenterViewController:_mainController
+                                                         leftDrawerViewController:nil
+                                                        rightDrawerViewController:_messageController];
+        [_menuController setMaximumRightDrawerWidth:180];
+        [_menuController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+        [_menuController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeTapCenterView | MMCloseDrawerGestureModePanningCenterView | MMCloseDrawerGestureModeTapNavigationBar];
+        [_menuController setCenterHiddenInteractionMode:MMDrawerOpenCenterInteractionModeNone];
+        _menuController.view.frame = self.view.bounds;
+        [self.view addSubview:_menuController.view];
+        [self addChildViewController:_menuController];
+    }
+    if (_loginNav) {
+        [_loginNav.view removeFromSuperview];
+        [_loginNav removeFromParentViewController];
+        _loginNav = nil;
+    }
+    [self.view bringSubviewToFront:_mainController.view];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

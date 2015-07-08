@@ -20,6 +20,8 @@
     NSMutableArray *_imgUrlArray;
     UIImageView *_bigImageView;
 }
+@property(nonatomic,strong)UIView *backView;
+@property(nonatomic,strong)UILabel *pageLabel;
 @end
 
 @implementation LoadGoodsViewController
@@ -99,7 +101,7 @@
         
     UICollectionViewFlowLayout *flowLayout=[[UICollectionViewFlowLayout alloc]init];
     flowLayout.minimumLineSpacing=5;
-    flowLayout.itemSize=CGSizeMake(50, 50);
+    flowLayout.itemSize=CGSizeMake(60, 60);
     flowLayout.minimumInteritemSpacing=5;
     //UICollectionView *collectionView=[[UICollectionView alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+Vspace+30+Vspace+Vspace+30, kScreenWidth-leftSpace*2, 100)];
     _collectionView=[[UICollectionView alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+Vspace+30+Vspace+Vspace+30, kScreenWidth-leftSpace*2, (kScreenHeight-(topSpace+30+Vspace+30+Vspace+Vspace+30))-(kScreenHeight-(kScreenHeight-bottomSpace-40-64-30))) collectionViewLayout:flowLayout];
@@ -485,25 +487,56 @@
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-//    if (!indexPath.row==_imageArray.count +1)
-//    {
-//        UIImage *image=_imageArray[indexPath.row];
-//        [self showDetailImageWithImage:image];
-//        
-//    }
-    
+    ImageCollectionViewCell *cell=(ImageCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
+    [self showBigImageWithImage:cell.imv.image index:indexPath.row];
 }
 //显示大图
--(void)showDetailImageWithImage:(UIImage*)image
+-(void)showBigImageWithImage:(UIImage*)image index:(NSInteger)index
 {
-    _bigImageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-    _bigImageView.userInteractionEnabled=YES;
-    _bigImageView.image=image;
-    [self.view addSubview:_bigImageView];
-    UITapGestureRecognizer *tap1=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImage:)];
-    [_bigImageView addGestureRecognizer:tap1];
+    _backView=[[UIView alloc]initWithFrame:self.view.frame];
+    _backView.backgroundColor=[UIColor blackColor];
     
+    UIScrollView *scrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(20, 140, kScreenWidth-40, kScreenHeight-280)];
+    scrollView.pagingEnabled=YES;
+    scrollView.delegate=self;
+    scrollView.showsHorizontalScrollIndicator=NO;
+    [UIView animateWithDuration:0.1 animations:^{
+        scrollView.contentOffset=CGPointMake((kScreenWidth-40)*index, kScreenHeight-280);
+    }];
+    
+    scrollView.contentSize=CGSizeMake((self.view.bounds.size.width-40)*9, 0);
+    for (int i=0; i<_imageArray.count; i++)
+    {
+        UIImageView *imaV=[[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth-40)*i, 0, kScreenWidth-40, kScreenHeight-280)];
+        imaV.image=[_imageArray objectAtIndex:i];
+        [scrollView addSubview:imaV];
+        
+    }
+    [_backView addSubview:scrollView];
+    [self.view addSubview:_backView];
+    
+    self.pageLabel=[[UILabel alloc]initWithFrame:CGRectMake((kScreenWidth-80)/2, kScreenHeight-20-80, 80, 20)];
+    
+    self.pageLabel.text=[NSString stringWithFormat:@"%ld/%ld",index+1,_imageArray.count];
+    self.pageLabel.textColor=[UIColor whiteColor];
+    self.pageLabel.textAlignment=NSTextAlignmentCenter;
+    [_backView addSubview:self.pageLabel];
+    
+    UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tap:)];
+    _backView.userInteractionEnabled=YES;
+    [_backView addGestureRecognizer:tap];
+    
+    
+}
+-(void)tap:(UITapGestureRecognizer*)tap
+{
+    [_backView removeFromSuperview];
+}
+#pragma mark UIScrollView
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSInteger m = scrollView.contentOffset.x/(self.view.bounds.size.width-40);
+    self.pageLabel.text=[NSString stringWithFormat:@"%ld/%ld",m+1,_imageArray.count];
 }
 
 #pragma mark UITextFieldDelegate

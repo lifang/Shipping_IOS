@@ -461,7 +461,7 @@
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"-----------tag:%d",tableView.tag);
+    //NSLog(@"-----------tag:%d",tableView.tag);
     
     if (tableView.tag==10086)
     {

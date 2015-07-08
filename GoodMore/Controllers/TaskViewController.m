@@ -18,6 +18,8 @@
 
 #import "WebViewViewController.h"
 
+#import "CommonCell.h"
+
 @interface TaskViewController ()<UITableViewDataSource,UITableViewDelegate,RefreshDelegate,UITextFieldDelegate,UIAlertViewDelegate>
 {
     UITableView *_tableView;
@@ -55,24 +57,24 @@
      _backView.hidden=YES;
     
     //处理船的级别问题
-    [self checkShipRank];
+    //[self checkShipRank];
 
 }
-//判断船的级别
--(void)checkShipRank
-{
-    NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
-    NSString *type=[userDefault objectForKey:@"type"];
-    if ([type intValue]==1)
-    {
-        //高级船
-    }else if ([type intValue]==6)
-    {
-        //普通船
-        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"友情提示" message:@"您现在的船舶级别为普通船,普通船无法组队接单,只能加入船队进行接单!" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:@"升级为高级船", nil];
-        [alertView show];
-    }
-}
+////判断船的级别
+//-(void)checkShipRank
+//{
+//    NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
+//    NSString *type=[userDefault objectForKey:@"type"];
+//    if ([type intValue]==1)
+//    {
+//        //高级船
+//    }else if ([type intValue]==6)
+//    {
+//        //普通船
+//        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"友情提示" message:@"您现在的船舶级别为普通船,普通船无法组队接单,只能加入船队进行接单!" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:@"升级为高级船", nil];
+//        [alertView show];
+//    }
+//}
 
 -(void)initNavigation
 {
@@ -117,7 +119,7 @@
     _tableView.dataSource=self;
     _tableView.delegate=self;
     _tableView.tableFooterView=[[UIView alloc]init];
-    _tableView.rowHeight=100;
+    _tableView.rowHeight=150;
     [self.view addSubview:_tableView];
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
@@ -341,43 +343,58 @@
 #pragma mark ----------------UITableViewDelegate----------------------------
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [_ordersArray count];
+    return 1;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     static NSString *cellIndetifier =@"taskCell";
-    TaskCell*cell=[tableView dequeueReusableCellWithIdentifier:cellIndetifier];
+    CommonCell*cell=[tableView dequeueReusableCellWithIdentifier:cellIndetifier];
     if (cell==nil)
     {
-        cell=[[TaskCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndetifier];
+        cell=[[CommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndetifier];
     }
-    OrdersModel *order=_ordersArray[indexPath.row];
-    cell.fromLabel.text=order.beginPortName;
-    cell.toLabel.text=order.endPortName;
-    cell.whatLabel.text=order.cargos;
-//    double allPay=[order.allPay doubleValue];
-//    NSString *pay=[NSString stringWithFormat:@"%.2f",allPay];
-    cell.moneyLabel.text=[NSString stringWithFormat:@"%@吨",order.amount];
-     cell.distanceImV.image=kImageName(@"where.png");
-    cell.whereLabel.text=order.longDistance;
+//    OrdersModel *order=_ordersArray[indexPath.row];
+//    cell.fromLabel.text=order.beginPortName;
+//    cell.toLabel.text=order.endPortName;
+//    cell.whatLabel.text=order.cargos;
+////    double allPay=[order.allPay doubleValue];
+////    NSString *pay=[NSString stringWithFormat:@"%.2f",allPay];
+//    cell.moneyLabel.text=[NSString stringWithFormat:@"%@吨",order.amount];
+//     cell.distanceImV.image=kImageName(@"where.png");
+//    cell.whereLabel.text=order.longDistance;
+    
+    //cell.backgroundColor=[UIColor redColor];
+    
+    cell.companyName.text=@"中宁物流";
+    cell.fromCity.text=@"南通";
+    cell.fromPort.text=@"马达加斯加港口";
+    cell.toCity.text=@"芜湖";
+    cell.toPort.text=@"安达曼港";
+    cell.price.text=@"12.00元";
+    cell.weight.text=@"2000吨";
+    cell.loadTime.text=@"2015年7月6号装船";
+    cell.goods.text=@"水泥";
+    cell.endTime.text=@"2小时53分34秒后结束";
+    cell.deposit.text=@"保证金:200.00元";
     
     return cell;
         
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OrdersModel *order=_ordersArray[indexPath.row];
-    int ID=[order.ID intValue];
-    DetailViewController *detail=[[DetailViewController alloc]init];
-    detail.selectedIndex=_index;
-    detail.ID=ID;
-    detail.hidesBottomBarWhenPushed=YES;
-    [self.navigationController pushViewController:detail animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    OrdersModel *order=_ordersArray[indexPath.row];
+//    int ID=[order.ID intValue];
+//    DetailViewController *detail=[[DetailViewController alloc]init];
+//    detail.selectedIndex=_index;
+//    detail.ID=ID;
+//    detail.hidesBottomBarWhenPushed=YES;
+//    [self.navigationController pushViewController:detail animated:YES];
 }
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {

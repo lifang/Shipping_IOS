@@ -51,6 +51,12 @@
 		93C1239C1B3933A7002BB29C /* CityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C1239B1B3933A7002BB29C /* CityModel.m */; };
 		93C1239E1B39539D002BB29C /* city.js in Resources */ = {isa = PBXBuildFile; fileRef = 93C1239D1B39539D002BB29C /* city.js */; };
 		93C123A11B3954DE002BB29C /* CityHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C123A01B3954DE002BB29C /* CityHandle.m */; };
+		93C4CA301B4CB7DE00FE23DE /* MyShipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C4CA2F1B4CB7DE00FE23DE /* MyShipViewController.m */; };
+		93C4CA3B1B4CC15200FE23DE /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C4CA331B4CC15200FE23DE /* MMDrawerBarButtonItem.m */; };
+		93C4CA3C1B4CC15200FE23DE /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C4CA361B4CC15200FE23DE /* MMDrawerController.m */; };
+		93C4CA3D1B4CC15200FE23DE /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C4CA381B4CC15200FE23DE /* MMDrawerVisualState.m */; };
+		93C4CA3E1B4CC15200FE23DE /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C4CA3A1B4CC15200FE23DE /* UIViewController+MMDrawerController.m */; };
+		93C4CA411B4CC4DC00FE23DE /* RightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C4CA401B4CC4DC00FE23DE /* RightViewController.m */; };
 		93C89A721B1D3FD9008DF209 /* CommonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C89A711B1D3FD9008DF209 /* CommonViewController.m */; };
 		93C89A761B1D895D008DF209 /* PortModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C89A751B1D895D008DF209 /* PortModel.m */; };
 		93C89A791B1D9708008DF209 /* OrdersModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C89A781B1D9708008DF209 /* OrdersModel.m */; };
@@ -64,6 +70,9 @@
 		93CDA0A21B15B8C80008DCC0 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CDA0A11B15B8C80008DCC0 /* LoginViewController.m */; };
 		93CDA0A51B15B9200008DCC0 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CDA0A41B15B9200008DCC0 /* RegisterViewController.m */; };
 		93CDA0AC1B15BBF20008DCC0 /* NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CDA0AB1B15BBF20008DCC0 /* NavigationBar.m */; };
+		93E6EC6B1B4BE5D90082E990 /* CommonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6EC6A1B4BE5D90082E990 /* CommonCell.m */; };
+		93E6EC6F1B4BEDEA0082E990 /* TransportingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6EC6E1B4BEDEA0082E990 /* TransportingViewController.m */; };
+		93E6EC721B4BEF6B0082E990 /* MYInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6EC711B4BEF6B0082E990 /* MYInfoView.m */; };
 		93F673821B1C1E5900A4E34E /* TaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F673811B1C1E5900A4E34E /* TaskCell.m */; };
 		93F673851B1C6D3D00A4E34E /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F673841B1C6D3D00A4E34E /* DetailViewController.m */; };
 /* End PBXBuildFile section */
@@ -165,6 +174,19 @@
 		93C1239D1B39539D002BB29C /* city.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = city.js; sourceTree = "<group>"; };
 		93C1239F1B3954DE002BB29C /* CityHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityHandle.h; sourceTree = "<group>"; };
 		93C123A01B3954DE002BB29C /* CityHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityHandle.m; sourceTree = "<group>"; };
+		93C4CA2E1B4CB7DE00FE23DE /* MyShipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyShipViewController.h; sourceTree = "<group>"; };
+		93C4CA2F1B4CB7DE00FE23DE /* MyShipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyShipViewController.m; sourceTree = "<group>"; };
+		93C4CA321B4CC15200FE23DE /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
+		93C4CA331B4CC15200FE23DE /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
+		93C4CA341B4CC15200FE23DE /* MMDrawerController+Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMDrawerController+Subclass.h"; sourceTree = "<group>"; };
+		93C4CA351B4CC15200FE23DE /* MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerController.h; sourceTree = "<group>"; };
+		93C4CA361B4CC15200FE23DE /* MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerController.m; sourceTree = "<group>"; };
+		93C4CA371B4CC15200FE23DE /* MMDrawerVisualState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerVisualState.h; sourceTree = "<group>"; };
+		93C4CA381B4CC15200FE23DE /* MMDrawerVisualState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerVisualState.m; sourceTree = "<group>"; };
+		93C4CA391B4CC15200FE23DE /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
+		93C4CA3A1B4CC15200FE23DE /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
+		93C4CA3F1B4CC4DC00FE23DE /* RightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightViewController.h; sourceTree = "<group>"; };
+		93C4CA401B4CC4DC00FE23DE /* RightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RightViewController.m; sourceTree = "<group>"; };
 		93C89A701B1D3FD9008DF209 /* CommonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonViewController.h; sourceTree = "<group>"; };
 		93C89A711B1D3FD9008DF209 /* CommonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonViewController.m; sourceTree = "<group>"; };
 		93C89A741B1D895D008DF209 /* PortModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PortModel.h; sourceTree = "<group>"; };
@@ -193,6 +215,12 @@
 		93CDA0AA1B15BBF20008DCC0 /* NavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationBar.h; sourceTree = "<group>"; };
 		93CDA0AB1B15BBF20008DCC0 /* NavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationBar.m; sourceTree = "<group>"; };
 		93D1E1631B18141D0009D80D /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		93E6EC691B4BE5D90082E990 /* CommonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonCell.h; sourceTree = "<group>"; };
+		93E6EC6A1B4BE5D90082E990 /* CommonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonCell.m; sourceTree = "<group>"; };
+		93E6EC6D1B4BEDEA0082E990 /* TransportingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransportingViewController.h; sourceTree = "<group>"; };
+		93E6EC6E1B4BEDEA0082E990 /* TransportingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransportingViewController.m; sourceTree = "<group>"; };
+		93E6EC701B4BEF6B0082E990 /* MYInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYInfoView.h; sourceTree = "<group>"; };
+		93E6EC711B4BEF6B0082E990 /* MYInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYInfoView.m; sourceTree = "<group>"; };
 		93F673801B1C1E5900A4E34E /* TaskCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskCell.h; sourceTree = "<group>"; };
 		93F673811B1C1E5900A4E34E /* TaskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskCell.m; sourceTree = "<group>"; };
 		93F673831B1C6D3D00A4E34E /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
@@ -258,6 +286,32 @@
 				939621521B186D0300CB730B /* MBProgressHUD.m */,
 			);
 			path = HUD;
+			sourceTree = "<group>";
+		};
+		93C4CA2D1B4CB7B600FE23DE /* myShip */ = {
+			isa = PBXGroup;
+			children = (
+				93C4CA2E1B4CB7DE00FE23DE /* MyShipViewController.h */,
+				93C4CA2F1B4CB7DE00FE23DE /* MyShipViewController.m */,
+			);
+			name = myShip;
+			path = transporting/myShip;
+			sourceTree = "<group>";
+		};
+		93C4CA311B4CC15200FE23DE /* MMDrawerController */ = {
+			isa = PBXGroup;
+			children = (
+				93C4CA321B4CC15200FE23DE /* MMDrawerBarButtonItem.h */,
+				93C4CA331B4CC15200FE23DE /* MMDrawerBarButtonItem.m */,
+				93C4CA341B4CC15200FE23DE /* MMDrawerController+Subclass.h */,
+				93C4CA351B4CC15200FE23DE /* MMDrawerController.h */,
+				93C4CA361B4CC15200FE23DE /* MMDrawerController.m */,
+				93C4CA371B4CC15200FE23DE /* MMDrawerVisualState.h */,
+				93C4CA381B4CC15200FE23DE /* MMDrawerVisualState.m */,
+				93C4CA391B4CC15200FE23DE /* UIViewController+MMDrawerController.h */,
+				93C4CA3A1B4CC15200FE23DE /* UIViewController+MMDrawerController.m */,
+			);
+			path = MMDrawerController;
 			sourceTree = "<group>";
 		};
 		93C89A731B1D8938008DF209 /* Model */ = {
@@ -335,6 +389,7 @@
 				93CDA0811B15B6750008DCC0 /* RootViewController.m */,
 				93C89A701B1D3FD9008DF209 /* CommonViewController.h */,
 				93C89A711B1D3FD9008DF209 /* CommonViewController.m */,
+				93C4CA311B4CC15200FE23DE /* MMDrawerController */,
 				939621501B186D0300CB730B /* HUD */,
 				93C89A7A1B1DAC47008DF209 /* Refresh */,
 				93C89A731B1D8938008DF209 /* Model */,
@@ -408,7 +463,11 @@
 				93F673841B1C6D3D00A4E34E /* DetailViewController.m */,
 				931EFD021B4284930045752C /* WebViewViewController.h */,
 				931EFD031B4284930045752C /* WebViewViewController.m */,
+				93C4CA3F1B4CC4DC00FE23DE /* RightViewController.h */,
+				93C4CA401B4CC4DC00FE23DE /* RightViewController.m */,
 				9384DDE11B26C10B001D539F /* mywallet */,
+				93C4CA2D1B4CB7B600FE23DE /* myShip */,
+				93E6EC6C1B4BEDB10082E990 /* transporting */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -422,8 +481,19 @@
 				938E975A1B2027420050FE4D /* RegularNumber.m */,
 				9302B5961B3AA6CE00596A80 /* MYView.h */,
 				9302B5971B3AA6CE00596A80 /* MYView.m */,
+				93E6EC701B4BEF6B0082E990 /* MYInfoView.h */,
+				93E6EC711B4BEF6B0082E990 /* MYInfoView.m */,
 			);
 			path = MY__UI;
+			sourceTree = "<group>";
+		};
+		93E6EC6C1B4BEDB10082E990 /* transporting */ = {
+			isa = PBXGroup;
+			children = (
+				93E6EC6D1B4BEDEA0082E990 /* TransportingViewController.h */,
+				93E6EC6E1B4BEDEA0082E990 /* TransportingViewController.m */,
+			);
+			path = transporting;
 			sourceTree = "<group>";
 		};
 		93F6737F1B1C1E1F00A4E34E /* Cell */ = {
@@ -443,6 +513,8 @@
 				9386339C1B4110F50092F05E /* AddCollectionViewCell.m */,
 				9386339E1B4116D50092F05E /* ImageCollectionViewCell.h */,
 				9386339F1B4116D50092F05E /* ImageCollectionViewCell.m */,
+				93E6EC691B4BE5D90082E990 /* CommonCell.h */,
+				93E6EC6A1B4BE5D90082E990 /* CommonCell.m */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -557,6 +629,7 @@
 				938EDE101B3E83AB00A0D201 /* ShipInfoCell1.m in Sources */,
 				938E25371B2978FE003B7EC5 /* SureCashViewController.m in Sources */,
 				935C4FB71B281A06004F292B /* NopayViewController.m in Sources */,
+				93C4CA3C1B4CC15200FE23DE /* MMDrawerController.m in Sources */,
 				93B84E291B1ED21200EF2DB4 /* MytaskModel.m in Sources */,
 				9384DDE41B26C13D001D539F /* MyWalletViewController.m in Sources */,
 				93C89A7F1B1DAC47008DF209 /* CircleView.m in Sources */,
@@ -564,12 +637,14 @@
 				93C89A801B1DAC47008DF209 /* RefreshView.m in Sources */,
 				93F673851B1C6D3D00A4E34E /* DetailViewController.m in Sources */,
 				938E97581B1FF8190050FE4D /* FindPwdViewController.m in Sources */,
+				93C4CA301B4CB7DE00FE23DE /* MyShipViewController.m in Sources */,
 				93C123931B38F90A002BB29C /* MoneyNumModel.m in Sources */,
 				9396214C1B18615100CB730B /* EncryptHelper.m in Sources */,
 				93CDA0A21B15B8C80008DCC0 /* LoginViewController.m in Sources */,
 				93B84E321B1EE37000EF2DB4 /* BusinessOrders.m in Sources */,
 				93B84E2F1B1EE34C00EF2DB4 /* ShipRelation.m in Sources */,
 				938633A01B4116D50092F05E /* ImageCollectionViewCell.m in Sources */,
+				93E6EC6B1B4BE5D90082E990 /* CommonCell.m in Sources */,
 				93CDA0821B15B6750008DCC0 /* RootViewController.m in Sources */,
 				938E253A1B29B00A003B7EC5 /* BankInfoViewController.m in Sources */,
 				93C89A721B1D3FD9008DF209 /* CommonViewController.m in Sources */,
@@ -577,8 +652,12 @@
 				93C123A11B3954DE002BB29C /* CityHandle.m in Sources */,
 				9396213F1B18563A00CB730B /* MainViewController.m in Sources */,
 				9342EE9F1B1F1F95000BF13F /* SetNewPWDViewController.m in Sources */,
+				93C4CA3D1B4CC15200FE23DE /* MMDrawerVisualState.m in Sources */,
+				93E6EC721B4BEF6B0082E990 /* MYInfoView.m in Sources */,
 				93C89A761B1D895D008DF209 /* PortModel.m in Sources */,
 				939621491B18612F00CB730B /* NetworkRequest.m in Sources */,
+				93E6EC6F1B4BEDEA0082E990 /* TransportingViewController.m in Sources */,
+				93C4CA3B1B4CC15200FE23DE /* MMDrawerBarButtonItem.m in Sources */,
 				9335142D1B3C09CA0059611B /* RegresultViewController.m in Sources */,
 				939621531B186D0300CB730B /* MBProgressHUD.m in Sources */,
 				938E25021B295009003B7EC5 /* NoPayDetailModel.m in Sources */,
@@ -590,6 +669,7 @@
 				93C89A791B1D9708008DF209 /* OrdersModel.m in Sources */,
 				939621451B1856A400CB730B /* MyTaskViewController.m in Sources */,
 				938E24FF1B29347E003B7EC5 /* NoPayDetailCell.m in Sources */,
+				93C4CA3E1B4CC15200FE23DE /* UIViewController+MMDrawerController.m in Sources */,
 				938E24FC1B29342E003B7EC5 /* NoPayDetailViewController.m in Sources */,
 				9335142A1B3B9AD60059611B /* PayFreightViewController.m in Sources */,
 				93CDA07F1B15B6750008DCC0 /* AppDelegate.m in Sources */,
@@ -600,6 +680,7 @@
 				9342EE9C1B1F0F43000BF13F /* SettingViewController.m in Sources */,
 				938E24F91B292BEA003B7EC5 /* NoPayModel.m in Sources */,
 				93C123991B3920F3002BB29C /* BanksModel.m in Sources */,
+				93C4CA411B4CC4DC00FE23DE /* RightViewController.m in Sources */,
 				933514361B3D8BB40059611B /* ShipListModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,12 +14,14 @@
 {
     //[nav.navigationBar setBackgroundImage:[[UIImage imageNamed:@"blue.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(21, 1, 21, 1)] forBarMetrics:UIBarMetricsDefault];
     
+    //字体属性
     NSDictionary *textDict=[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName, nil];
     
     nav.navigationBar.titleTextAttributes=textDict;
     
+    //导航栏的颜色
     nav.navigationBar.barTintColor=kMainColor;
-   
+    
     nav.navigationBar.tintColor = [UIColor whiteColor];
 }
 
