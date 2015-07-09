@@ -41,10 +41,10 @@
     self.title=@"任务详情";
     self.navigationController.navigationBarHidden=NO;
     self.view.backgroundColor=[UIColor whiteColor];
-    //[self downloadData];
-    [self initAndLayoutUI];
-    //[self initBackView];
-    
+    [self downloadData];
+    //[self initAndLayoutUI];
+    [self initBackView];
+    _backView.hidden=YES;
     
     
 }
@@ -139,16 +139,24 @@
     CGFloat PortWidth=kScreenWidth/3;//港口label的宽度
     CGFloat jianTouWidth=42;//箭头的长度
 
+    UIView *Vline1=[[UIView alloc]initWithFrame:CGRectMake(10, topSpace, 1, kScreenHeight+100)];
+    Vline1.backgroundColor=kColor(201, 201, 201, 1);
+    [_scrollView addSubview:Vline1];
     
-    UIView *headView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight+94)];
-    UIView *view1=[[UIView alloc]initWithFrame:CGRectMake(leftSpace, topSpace, kScreenWidth-leftSpace*2, 30)];
+    UIView *Vline2=[[UIView alloc]initWithFrame:CGRectMake(kScreenWidth-10, topSpace, 1, kScreenHeight+100)];
+    Vline2.backgroundColor=kColor(201, 201, 201, 1);
+    [_scrollView addSubview:Vline2];
+
+    
+    UIView *headView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight+100)];
+    UIView *view1=[[UIView alloc]initWithFrame:CGRectMake(10, topSpace, kScreenWidth-10*2, 30)];
     view1.backgroundColor=kColor(217, 220, 221, 1);
     UIImageView *imav1=[[UIImageView alloc]initWithFrame:CGRectMake(10, (30-17)/2, 17, 17)];
     imav1.image=kImageName(@"company.png");
     [view1 addSubview:imav1];
     
     UILabel *company=[[UILabel alloc]initWithFrame:CGRectMake(10+17, (30-17)/2, 120, 17)];
-    company.text=@"中宁物流";
+    company.text=_businessOrder.companyName;
     [view1 addSubview:company];
     
     UIView *line1=[[UIView alloc]initWithFrame:CGRectMake(view1.bounds.size.width-10-80-10, (30-17)/2, 1, 17)];
@@ -167,12 +175,12 @@
     [headView addSubview:fromImaV];
     
     UILabel *fromCity=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace*2+12+10, topSpace+30+10,  cityWidth, 20)];
-    fromCity.text=@"南通";
+    fromCity.text=_businessOrder.beginPortName;
     fromCity.font=[UIFont boldSystemFontOfSize:20];
     [headView addSubview:fromCity];
     
     UILabel *fromPort=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5, PortWidth, 20)];
-    fromPort.text=@"马达加斯加港口";
+    fromPort.text=_businessOrder.beginDockName;
     fromPort.font=[UIFont systemFontOfSize:15];
     fromPort.textAlignment=NSTextAlignmentCenter;
     [headView addSubview:fromPort];
@@ -186,17 +194,17 @@
     [headView addSubview:toImaV];
     
     UILabel *toCity=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace*2+12+10, topSpace+30+10, cityWidth, 20)];
-    toCity.text=@"芜湖";
+    toCity.text=_businessOrder.endPortName;
     toCity.font=[UIFont boldSystemFontOfSize:20];
     [headView addSubview:toCity];
     
     UILabel *toPort=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5, PortWidth, 20)];
-    toPort.text=@"安达曼港";
+    toPort.text=_businessOrder.endDockName;
     toPort.textAlignment=NSTextAlignmentCenter;
     toPort.font=[UIFont systemFontOfSize:15];
     [headView addSubview:toPort];
 
-    UIView *view2=[[UIView alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10, kScreenWidth-leftSpace*2, 30)];
+    UIView *view2=[[UIView alloc]initWithFrame:CGRectMake(10, topSpace+30+10+20+5+20+10, kScreenWidth-10*2, 30)];
     view2.backgroundColor=kColor(200, 233, 243, 1);
     [headView addSubview:view2];
     
@@ -224,7 +232,7 @@
     [headView addSubview:goodsName];
     
     UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5, 120, 20)];
-    name.text=@"水泥";
+    name.text=_businessOrder.companyName;
     [headView addSubview:name];
     
     UILabel *goodsWeight=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5, 120, 20)];
@@ -233,7 +241,7 @@
     [headView addSubview:goodsWeight];
     
     UILabel *weight=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5, 120, 20)];
-    weight.text=@"1000吨";
+    weight.text=[NSString stringWithFormat:@"%@吨",_businessOrder.amount];
     [headView addSubview:weight];
 
     UILabel *goodsPrice=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20, 120, 20)];
@@ -242,7 +250,8 @@
     [headView addSubview:goodsPrice];
     
     UILabel *price=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5, 120, 20)];
-    price.text=@"$12.00";
+    double pay=[_businessOrder.maxPay doubleValue];
+    price.text=[NSString stringWithFormat:@"￥%.2f元",pay];
     [headView addSubview:price];
     
     UILabel *loadTime=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20, 120, 20)];
@@ -251,7 +260,7 @@
     [headView addSubview:loadTime];
     
     UILabel *loadT=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5, 120, 20)];
-    loadT.text=@"2015/5/21 10:12";
+    loadT.text=_businessOrder.workTime;
     [headView addSubview:loadT];
 
     UILabel *loadtimeLimit=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20, 120, 20)];
@@ -260,7 +269,7 @@
     [headView addSubview:loadtimeLimit];
     
     UILabel *loadlimit=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5, 120, 20)];
-    loadlimit.text=@"3天";
+    loadlimit.text=[NSString stringWithFormat:@"%@天",_businessOrder.inDays];
     [headView addSubview:loadlimit];
     
     UILabel *unloadTimeLimit=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20, 120, 20)];
@@ -269,7 +278,7 @@
     [headView addSubview:unloadTimeLimit];
     
     UILabel *unloadLimit=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5, 120, 20)];
-    unloadLimit.text=@"3天";
+    unloadLimit.text=[NSString stringWithFormat:@"%@天",_businessOrder.outDays];
     [headView addSubview:unloadLimit];
     
     UILabel *shipRule=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+10, kScreenWidth/2, 20)];
@@ -283,7 +292,7 @@
     [headView addSubview:shipWeight1];
     
     UILabel *shipW1=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+5, 120, 20)];
-    shipW1.text=@"1000吨";
+    shipW1.text=[NSString stringWithFormat:@"%@天",_businessOrder.minAmount];
     [headView addSubview:shipW1];
     
     UILabel *shipWeight2=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+5, 120, 20)];
@@ -292,7 +301,7 @@
     [headView addSubview:shipWeight2];
     
     UILabel *shipW2=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+5, 120, 20)];
-    shipW2.text=@"1001吨";
+    shipW2.text=[NSString stringWithFormat:@"%@天",_businessOrder.maxAmount];
     [headView addSubview:shipW2];
 
     UILabel *waterLevel=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+5, 120, 20)];
@@ -462,47 +471,47 @@
 -(IBAction)receive:(UIButton*)sender
 {
     
-//    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-//    hud.labelText=@"接单中...";
-//    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
-//    int loginId=[[userDefaults objectForKey:@"loginId"] intValue];
-//    int shipOwnerId=[[userDefaults objectForKey:@"shipOwnerId"] intValue];
-//
-//    NSString *ordersList = [NSString stringWithFormat:@"%@",_businessOrder.ID];
-//    [NetWorkInterface makeTeamWithorderId:[ordersList intValue] loginId:loginId shipOwnerId:shipOwnerId finished:^(BOOL success, NSData *response) {
-//        
-//            hud.customView=[[UIImageView alloc]init];
-//            [hud hide:YES afterDelay:0.3];
-//            NSLog(@"------------组队接单----:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
-//            if (success)
-//            {
-//                hud.customView=[[UIImageView alloc]init];
-//                [hud hide:YES afterDelay:0.3];
-//                id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
-//                if ([object isKindOfClass:[NSDictionary class]])
-//                {
-//                    if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
-//                    {
-//                        [hud setHidden:YES];
-//                        _backView.hidden=NO;
-//                        _code=[object objectForKey:@"result"];
-//                        _shipPwd.text=[NSString stringWithFormat:@"组队密码:%@",_code];
-//                        [self changeStatus];
-//                        
-//                    }else
-//                    {
-//                        hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
-//                    }
-//                }else
-//                {
-//                    hud.labelText=kServiceReturnWrong;
-//                }
-//            }else
-//            {
-//                hud.labelText=kNetworkFailed;
-//            }
-//            
-//        }];
+    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText=@"接单中...";
+    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+    int loginId=[[userDefaults objectForKey:@"loginId"] intValue];
+    int shipOwnerId=[[userDefaults objectForKey:@"shipOwnerId"] intValue];
+
+    NSString *ordersList = [NSString stringWithFormat:@"%@",_businessOrder.ID];
+    [NetWorkInterface makeTeamWithorderId:[ordersList intValue] loginId:loginId shipOwnerId:shipOwnerId finished:^(BOOL success, NSData *response) {
+        
+            hud.customView=[[UIImageView alloc]init];
+            [hud hide:YES afterDelay:0.3];
+            NSLog(@"------------组队接单----:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+            if (success)
+            {
+                hud.customView=[[UIImageView alloc]init];
+                [hud hide:YES afterDelay:0.3];
+                id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+                if ([object isKindOfClass:[NSDictionary class]])
+                {
+                    if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
+                    {
+                        [hud setHidden:YES];
+                        _backView.hidden=NO;
+                        _code=[object objectForKey:@"result"];
+                        _shipPwd.text=[NSString stringWithFormat:@"组队密码:%@",_code];
+                        [self changeStatus];
+                        
+                    }else
+                    {
+                        hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                    }
+                }else
+                {
+                    hud.labelText=kServiceReturnWrong;
+                }
+            }else
+            {
+                hud.labelText=kNetworkFailed;
+            }
+            
+        }];
 
    
     
@@ -526,11 +535,12 @@
     hud.labelText=@"加载中...";
     NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
     int loginId=[[userDefault objectForKey:@"loginId"] intValue];
+    
     [NetWorkInterface OrderDetailWithID:_ID loginId:loginId finished:^(BOOL success, NSData *response) {
         
         hud.customView=[[UIImageView alloc]init];
         [hud hide:YES afterDelay:0.3];
-        NSLog(@"------------货单详情:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+        NSLog(@"------------任务详情:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
         if (success)
         {
             id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
@@ -590,14 +600,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
