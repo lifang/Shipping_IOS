@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A0769B11B4D5B1B00704269 /* HistoryDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A0769B01B4D5B1B00704269 /* HistoryDetailCell.m */; };
+		1A2B6FF61B4CF0B8002FFD96 /* TopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B6FF51B4CF0B8002FFD96 /* TopButton.m */; };
+		1A2B6FF91B4D0441002FFD96 /* LogisticsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B6FF81B4D0441002FFD96 /* LogisticsCell.m */; };
+		1A2B6FFC1B4D2314002FFD96 /* ShipDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B6FFB1B4D2314002FFD96 /* ShipDetailCell.m */; };
+		1A2B6FFF1B4D3C29002FFD96 /* HistoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B6FFE1B4D3C29002FFD96 /* HistoryController.m */; };
+		1A2B70021B4D4253002FFD96 /* ShipHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B70011B4D4253002FFD96 /* ShipHistoryCell.m */; };
+		1A2B70051B4D4C12002FFD96 /* HistoryDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B70041B4D4C12002FFD96 /* HistoryDetailController.m */; };
 		9302B5981B3AA6CE00596A80 /* MYView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9302B5971B3AA6CE00596A80 /* MYView.m */; };
 		9302B59B1B3AC2F300596A80 /* GoodsTransDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9302B59A1B3AC2F300596A80 /* GoodsTransDetailViewController.m */; };
 		9302B59E1B3AE1BE00596A80 /* ShipInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9302B59D1B3AE1BE00596A80 /* ShipInfoCell.m */; };
@@ -88,6 +95,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A0769AF1B4D5B1B00704269 /* HistoryDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryDetailCell.h; sourceTree = "<group>"; };
+		1A0769B01B4D5B1B00704269 /* HistoryDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryDetailCell.m; sourceTree = "<group>"; };
+		1A2B6FF21B4CED3C002FFD96 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		1A2B6FF41B4CF0B8002FFD96 /* TopButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopButton.h; sourceTree = "<group>"; };
+		1A2B6FF51B4CF0B8002FFD96 /* TopButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopButton.m; sourceTree = "<group>"; };
+		1A2B6FF71B4D0441002FFD96 /* LogisticsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogisticsCell.h; sourceTree = "<group>"; };
+		1A2B6FF81B4D0441002FFD96 /* LogisticsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogisticsCell.m; sourceTree = "<group>"; };
+		1A2B6FFA1B4D2314002FFD96 /* ShipDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipDetailCell.h; sourceTree = "<group>"; };
+		1A2B6FFB1B4D2314002FFD96 /* ShipDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipDetailCell.m; sourceTree = "<group>"; };
+		1A2B6FFD1B4D3C29002FFD96 /* HistoryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryController.h; sourceTree = "<group>"; };
+		1A2B6FFE1B4D3C29002FFD96 /* HistoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryController.m; sourceTree = "<group>"; };
+		1A2B70001B4D4253002FFD96 /* ShipHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipHistoryCell.h; sourceTree = "<group>"; };
+		1A2B70011B4D4253002FFD96 /* ShipHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipHistoryCell.m; sourceTree = "<group>"; };
+		1A2B70031B4D4C12002FFD96 /* HistoryDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryDetailController.h; sourceTree = "<group>"; };
+		1A2B70041B4D4C12002FFD96 /* HistoryDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryDetailController.m; sourceTree = "<group>"; };
 		9302B5961B3AA6CE00596A80 /* MYView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYView.h; sourceTree = "<group>"; };
 		9302B5971B3AA6CE00596A80 /* MYView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYView.m; sourceTree = "<group>"; };
 		9302B5991B3AC2F300596A80 /* GoodsTransDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsTransDetailViewController.h; sourceTree = "<group>"; };
@@ -246,6 +268,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A2B6FF31B4CF08D002FFD96 /* HhzView */ = {
+			isa = PBXGroup;
+			children = (
+				1A2B6FF41B4CF0B8002FFD96 /* TopButton.h */,
+				1A2B6FF51B4CF0B8002FFD96 /* TopButton.m */,
+				1A2B6FF71B4D0441002FFD96 /* LogisticsCell.h */,
+				1A2B6FF81B4D0441002FFD96 /* LogisticsCell.m */,
+				1A2B6FFA1B4D2314002FFD96 /* ShipDetailCell.h */,
+				1A2B6FFB1B4D2314002FFD96 /* ShipDetailCell.m */,
+				1A2B70001B4D4253002FFD96 /* ShipHistoryCell.h */,
+				1A2B70011B4D4253002FFD96 /* ShipHistoryCell.m */,
+				1A0769AF1B4D5B1B00704269 /* HistoryDetailCell.h */,
+				1A0769B01B4D5B1B00704269 /* HistoryDetailCell.m */,
+			);
+			name = HhzView;
+			sourceTree = "<group>";
+		};
 		9384DDE11B26C10B001D539F /* mywallet */ = {
 			isa = PBXGroup;
 			children = (
@@ -291,8 +330,13 @@
 		93C4CA2D1B4CB7B600FE23DE /* myShip */ = {
 			isa = PBXGroup;
 			children = (
+				1A2B6FF31B4CF08D002FFD96 /* HhzView */,
 				93C4CA2E1B4CB7DE00FE23DE /* MyShipViewController.h */,
 				93C4CA2F1B4CB7DE00FE23DE /* MyShipViewController.m */,
+				1A2B6FFD1B4D3C29002FFD96 /* HistoryController.h */,
+				1A2B6FFE1B4D3C29002FFD96 /* HistoryController.m */,
+				1A2B70031B4D4C12002FFD96 /* HistoryDetailController.h */,
+				1A2B70041B4D4C12002FFD96 /* HistoryDetailController.m */,
 			);
 			name = myShip;
 			path = transporting/myShip;
@@ -406,6 +450,7 @@
 		93CDA0791B15B6750008DCC0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1A2B6FF21B4CED3C002FFD96 /* PrefixHeader.pch */,
 				93C1239D1B39539D002BB29C /* city.js */,
 				93CDA07A1B15B6750008DCC0 /* Info.plist */,
 				93CDA07B1B15B6750008DCC0 /* main.m */,
@@ -627,9 +672,11 @@
 				938EDE0D1B3E535400A0D201 /* ShipTeamModel.m in Sources */,
 				9302B5981B3AA6CE00596A80 /* MYView.m in Sources */,
 				938EDE101B3E83AB00A0D201 /* ShipInfoCell1.m in Sources */,
+				1A2B70021B4D4253002FFD96 /* ShipHistoryCell.m in Sources */,
 				938E25371B2978FE003B7EC5 /* SureCashViewController.m in Sources */,
 				935C4FB71B281A06004F292B /* NopayViewController.m in Sources */,
 				93C4CA3C1B4CC15200FE23DE /* MMDrawerController.m in Sources */,
+				1A2B6FFF1B4D3C29002FFD96 /* HistoryController.m in Sources */,
 				93B84E291B1ED21200EF2DB4 /* MytaskModel.m in Sources */,
 				9384DDE41B26C13D001D539F /* MyWalletViewController.m in Sources */,
 				93C89A7F1B1DAC47008DF209 /* CircleView.m in Sources */,
@@ -639,8 +686,10 @@
 				938E97581B1FF8190050FE4D /* FindPwdViewController.m in Sources */,
 				93C4CA301B4CB7DE00FE23DE /* MyShipViewController.m in Sources */,
 				93C123931B38F90A002BB29C /* MoneyNumModel.m in Sources */,
+				1A0769B11B4D5B1B00704269 /* HistoryDetailCell.m in Sources */,
 				9396214C1B18615100CB730B /* EncryptHelper.m in Sources */,
 				93CDA0A21B15B8C80008DCC0 /* LoginViewController.m in Sources */,
+				1A2B70051B4D4C12002FFD96 /* HistoryDetailController.m in Sources */,
 				93B84E321B1EE37000EF2DB4 /* BusinessOrders.m in Sources */,
 				93B84E2F1B1EE34C00EF2DB4 /* ShipRelation.m in Sources */,
 				938633A01B4116D50092F05E /* ImageCollectionViewCell.m in Sources */,
@@ -663,15 +712,18 @@
 				938E25021B295009003B7EC5 /* NoPayDetailModel.m in Sources */,
 				933514301B3C1FD70059611B /* LoadGoodsViewController.m in Sources */,
 				9302B59B1B3AC2F300596A80 /* GoodsTransDetailViewController.m in Sources */,
+				1A2B6FF61B4CF0B8002FFD96 /* TopButton.m in Sources */,
 				935C4FBA1B282ED5004F292B /* AvaliblePayModel.m in Sources */,
 				9386339D1B4110F50092F05E /* AddCollectionViewCell.m in Sources */,
 				935C4FB41B281132004F292B /* WalletCell.m in Sources */,
+				1A2B6FFC1B4D2314002FFD96 /* ShipDetailCell.m in Sources */,
 				93C89A791B1D9708008DF209 /* OrdersModel.m in Sources */,
 				939621451B1856A400CB730B /* MyTaskViewController.m in Sources */,
 				938E24FF1B29347E003B7EC5 /* NoPayDetailCell.m in Sources */,
 				93C4CA3E1B4CC15200FE23DE /* UIViewController+MMDrawerController.m in Sources */,
 				938E24FC1B29342E003B7EC5 /* NoPayDetailViewController.m in Sources */,
 				9335142A1B3B9AD60059611B /* PayFreightViewController.m in Sources */,
+				1A2B6FF91B4D0441002FFD96 /* LogisticsCell.m in Sources */,
 				93CDA07F1B15B6750008DCC0 /* AppDelegate.m in Sources */,
 				938E975B1B2027420050FE4D /* RegularNumber.m in Sources */,
 				9302B59E1B3AE1BE00596A80 /* ShipInfoCell.m in Sources */,
@@ -791,6 +843,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Sen Ye (FE46ZS29LM)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Sen Ye (FE46ZS29LM)";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/GoodMore/PrefixHeader.pch";
 				INFOPLIST_FILE = GoodMore/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = GoodMore;
@@ -806,6 +859,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Sen Ye (FE46ZS29LM)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Sen Ye (FE46ZS29LM)";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/GoodMore/PrefixHeader.pch";
 				INFOPLIST_FILE = GoodMore/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = GoodMore;

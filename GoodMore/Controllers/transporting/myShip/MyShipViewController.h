@@ -7,6 +7,12 @@
 //
 
 #import "CommonViewController.h"
+typedef enum {
+    TableViewTypeTeam = 201, //组队tableview
+    TableViewTypeHistory,    //历史记录tableview
+}TableViewType;
+
+static NSString *PushToHistoryDetailNotification = @"PushToHistoryDetailNotification";
 
 @interface MyShipViewController : CommonViewController
 
