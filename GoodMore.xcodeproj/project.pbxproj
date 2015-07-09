@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0ECD46611B4D0109002BA802 /* TransportingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD46601B4D0109002BA802 /* TransportingTableViewCell.m */; };
+		0ECD46641B4D3B4A002BA802 /* LoadGoodsViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD46631B4D3B4A002BA802 /* LoadGoodsViewController2.m */; };
 		9302B5981B3AA6CE00596A80 /* MYView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9302B5971B3AA6CE00596A80 /* MYView.m */; };
 		9302B59B1B3AC2F300596A80 /* GoodsTransDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9302B59A1B3AC2F300596A80 /* GoodsTransDetailViewController.m */; };
 		9302B59E1B3AE1BE00596A80 /* ShipInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9302B59D1B3AE1BE00596A80 /* ShipInfoCell.m */; };
@@ -88,6 +90,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0ECD465F1B4D0109002BA802 /* TransportingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransportingTableViewCell.h; sourceTree = "<group>"; };
+		0ECD46601B4D0109002BA802 /* TransportingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransportingTableViewCell.m; sourceTree = "<group>"; };
+		0ECD46621B4D3B4A002BA802 /* LoadGoodsViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadGoodsViewController2.h; sourceTree = "<group>"; };
+		0ECD46631B4D3B4A002BA802 /* LoadGoodsViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadGoodsViewController2.m; sourceTree = "<group>"; };
 		9302B5961B3AA6CE00596A80 /* MYView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYView.h; sourceTree = "<group>"; };
 		9302B5971B3AA6CE00596A80 /* MYView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYView.m; sourceTree = "<group>"; };
 		9302B5991B3AC2F300596A80 /* GoodsTransDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsTransDetailViewController.h; sourceTree = "<group>"; };
@@ -100,8 +106,8 @@
 		933514291B3B9AD60059611B /* PayFreightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayFreightViewController.m; sourceTree = "<group>"; };
 		9335142B1B3C09CA0059611B /* RegresultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegresultViewController.h; sourceTree = "<group>"; };
 		9335142C1B3C09CA0059611B /* RegresultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegresultViewController.m; sourceTree = "<group>"; };
-		9335142E1B3C1FD70059611B /* LoadGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadGoodsViewController.h; sourceTree = "<group>"; };
-		9335142F1B3C1FD70059611B /* LoadGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadGoodsViewController.m; sourceTree = "<group>"; };
+		9335142E1B3C1FD70059611B /* LoadGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadGoodsViewController.h; path = ../LoadGoodsViewController.h; sourceTree = "<group>"; };
+		9335142F1B3C1FD70059611B /* LoadGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadGoodsViewController.m; path = ../LoadGoodsViewController.m; sourceTree = "<group>"; };
 		933514311B3D826F0059611B /* ShipTeamDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipTeamDetailViewController.h; sourceTree = "<group>"; };
 		933514321B3D826F0059611B /* ShipTeamDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipTeamDetailViewController.m; sourceTree = "<group>"; };
 		933514341B3D8BB40059611B /* ShipListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipListModel.h; sourceTree = "<group>"; };
@@ -451,8 +457,6 @@
 				939621411B18567D00CB730B /* TaskViewController.m */,
 				939621431B1856A400CB730B /* MyTaskViewController.h */,
 				939621441B1856A400CB730B /* MyTaskViewController.m */,
-				9335142E1B3C1FD70059611B /* LoadGoodsViewController.h */,
-				9335142F1B3C1FD70059611B /* LoadGoodsViewController.m */,
 				9302B5991B3AC2F300596A80 /* GoodsTransDetailViewController.h */,
 				9302B59A1B3AC2F300596A80 /* GoodsTransDetailViewController.m */,
 				933514311B3D826F0059611B /* ShipTeamDetailViewController.h */,
@@ -490,6 +494,10 @@
 		93E6EC6C1B4BEDB10082E990 /* transporting */ = {
 			isa = PBXGroup;
 			children = (
+				9335142E1B3C1FD70059611B /* LoadGoodsViewController.h */,
+				9335142F1B3C1FD70059611B /* LoadGoodsViewController.m */,
+				0ECD46621B4D3B4A002BA802 /* LoadGoodsViewController2.h */,
+				0ECD46631B4D3B4A002BA802 /* LoadGoodsViewController2.m */,
 				93E6EC6D1B4BEDEA0082E990 /* TransportingViewController.h */,
 				93E6EC6E1B4BEDEA0082E990 /* TransportingViewController.m */,
 			);
@@ -515,6 +523,8 @@
 				9386339F1B4116D50092F05E /* ImageCollectionViewCell.m */,
 				93E6EC691B4BE5D90082E990 /* CommonCell.h */,
 				93E6EC6A1B4BE5D90082E990 /* CommonCell.m */,
+				0ECD465F1B4D0109002BA802 /* TransportingTableViewCell.h */,
+				0ECD46601B4D0109002BA802 /* TransportingTableViewCell.m */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -620,6 +630,7 @@
 			files = (
 				9396214F1B18637D00CB730B /* NetWorkInterface.m in Sources */,
 				93CDA0A51B15B9200008DCC0 /* RegisterViewController.m in Sources */,
+				0ECD46611B4D0109002BA802 /* TransportingTableViewCell.m in Sources */,
 				931EFD041B4284930045752C /* WebViewViewController.m in Sources */,
 				939621421B18567D00CB730B /* TaskViewController.m in Sources */,
 				93C123961B391B5F002BB29C /* BanksListViewController.m in Sources */,
@@ -637,6 +648,7 @@
 				93C89A801B1DAC47008DF209 /* RefreshView.m in Sources */,
 				93F673851B1C6D3D00A4E34E /* DetailViewController.m in Sources */,
 				938E97581B1FF8190050FE4D /* FindPwdViewController.m in Sources */,
+				0ECD46641B4D3B4A002BA802 /* LoadGoodsViewController2.m in Sources */,
 				93C4CA301B4CB7DE00FE23DE /* MyShipViewController.m in Sources */,
 				93C123931B38F90A002BB29C /* MoneyNumModel.m in Sources */,
 				9396214C1B18615100CB730B /* EncryptHelper.m in Sources */,
@@ -742,7 +754,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "8525b04d-39d9-4d72-971a-178562e26230";
+				PROVISIONING_PROFILE = "cad5d974-d31c-4a37-a883-e0aa523ad8a3";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -778,7 +790,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "8525b04d-39d9-4d72-971a-178562e26230";
+				PROVISIONING_PROFILE = "cad5d974-d31c-4a37-a883-e0aa523ad8a3";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -794,7 +806,7 @@
 				INFOPLIST_FILE = GoodMore/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = GoodMore;
-				PROVISIONING_PROFILE = "8525b04d-39d9-4d72-971a-178562e26230";
+				PROVISIONING_PROFILE = "cad5d974-d31c-4a37-a883-e0aa523ad8a3";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
@@ -809,7 +821,7 @@
 				INFOPLIST_FILE = GoodMore/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = GoodMore;
-				PROVISIONING_PROFILE = "8525b04d-39d9-4d72-971a-178562e26230";
+				PROVISIONING_PROFILE = "cad5d974-d31c-4a37-a883-e0aa523ad8a3";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

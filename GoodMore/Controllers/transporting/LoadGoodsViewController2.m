@@ -1,18 +1,18 @@
 //
-//  LoadGoodsViewController.m
+//  LoadGoodsViewController2.m
 //  GoodMore
 //
-//  Created by lihongliang on 15/6/25.
+//  Created by comdosoft on 15/7/8.
 //  Copyright (c) 2015年 comdosoft. All rights reserved.
 //
 
-#import "LoadGoodsViewController.h"
+#import "LoadGoodsViewController2.h"
 #import "Constants.h"
 #import "MBProgressHUD.h"
 #import "NetWorkInterface.h"
 #import "AddCollectionViewCell.h"
 #import "ImageCollectionViewCell.h"
-@interface LoadGoodsViewController ()<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UITextFieldDelegate>
+@interface LoadGoodsViewController2 ()<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UITextFieldDelegate>
 {
     UITextField *_num;
     UICollectionView *_collectionView;
@@ -22,18 +22,20 @@
 }
 @property(nonatomic,strong)UIView *backView;
 @property(nonatomic,strong)UILabel *pageLabel;
+@property(nonatomic,strong)UITextField *stopTextField;
+
+
 @end
 
-@implementation LoadGoodsViewController
 
+@implementation LoadGoodsViewController2
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor=[UIColor whiteColor];
-  
-        self.title=@"装货";
    
+        self.title=@"卸货";
     
     _imageArray=[[NSMutableArray alloc]initWithCapacity:0];
     _imgUrlArray=[[NSMutableArray alloc]initWithCapacity:0];
@@ -44,38 +46,53 @@
 -(void)initAndLayoutUI
 {
     CGFloat leftSpace=30;
-    CGFloat topSpace=10;
+    CGFloat topSpace=20;
     CGFloat bottomSpace=30;
     
     CGFloat Vspace=10;
-//    UILabel *goodsWeight=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace, 100, 30)];
-//    
-//    switch (_index) {
-//        case 1:
-//            goodsWeight.text=@"装货重量:";
-//            break;
-//        case 2:
-//            goodsWeight.text=@"卸货重量:";
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//    
-//    goodsWeight.textColor=[UIColor blackColor];
-//    [self.view addSubview:goodsWeight];
-//    
-    _num=[[UITextField alloc]initWithFrame:CGRectMake(leftSpace, topSpace, (kScreenWidth-leftSpace*2)*0.8, 30)];
+    //    UILabel *goodsWeight=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace, 100, 30)];
+    //
+    //    switch (_index) {
+    //        case 1:
+    //            goodsWeight.text=@"装货重量:";
+    //            break;
+    //        case 2:
+    //            goodsWeight.text=@"卸货重量:";
+    //            break;
+    //
+    //        default:
+    //            break;
+    //    }
+    //
+    //    goodsWeight.textColor=[UIColor blackColor];
+    //    [self.view addSubview:goodsWeight];
+    //
+    UIView *line4=[[UIView alloc]initWithFrame:CGRectMake(0, 10, kScreenWidth, 1)];
+    line4.backgroundColor=kColor(201, 201, 201, 1);
+    [self.view addSubview:line4];
+    _stopTextField=[[UITextField alloc]initWithFrame:CGRectMake(leftSpace, topSpace, (kScreenWidth-leftSpace*2)*0.8, 30)];
+    _stopTextField.placeholder=@"请输入滞港费";
+    _stopTextField.delegate=self;
+    
+    
+    
+    
+    //    _num.backgroundColor=kColor(232, 232, 232, 1);
+    [self.view addSubview:_stopTextField];
+    UIView *line3=[[UIView alloc]initWithFrame:CGRectMake(0, topSpace+35, kScreenWidth, 1)];
+    line3.backgroundColor=kColor(201, 201, 201, 1);
+    [self.view addSubview:line3];
+    _num=[[UITextField alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+Vspace, (kScreenWidth-leftSpace*2)*0.8, 30)];
     _num.placeholder=@"请输入装货重量";
     _num.delegate=self;
     
-    _num.contentVerticalAlignment=UIControlContentHorizontalAlignmentCenter;
+//    _num.contentVerticalAlignment=UIControlContentHorizontalAlignmentCenter;
+//    
+//    _num.clearButtonMode=UITextFieldViewModeWhileEditing;
+//    _num.leftViewMode=UITextFieldViewModeAlways;
+//    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 10, 30)];
+//    _num.leftView=view;
     
-    _num.clearButtonMode=UITextFieldViewModeWhileEditing;
-    _num.leftViewMode=UITextFieldViewModeAlways;
-    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 10, 30)];
-    _num.leftView=view;
-
     
 //    _num.backgroundColor=kColor(232, 232, 232, 1);
     [self.view addSubview:_num];
@@ -86,25 +103,25 @@
 //    unit.textColor=[UIColor blackColor];
 //    [self.view addSubview:unit];
     
-    UIView *line1=[[UIView alloc]initWithFrame:CGRectMake(0, topSpace+35, kScreenWidth, 1)];
+    UIView *line1=[[UIView alloc]initWithFrame:CGRectMake(0, topSpace+30+Vspace+35, kScreenWidth, 1)];
     line1.backgroundColor=kColor(201, 201, 201, 1);
     [self.view addSubview:line1];
     
-    UILabel *proof=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+Vspace+Vspace+Vspace+30, 80, 30)];
+    UILabel *proof=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+Vspace+30+Vspace+Vspace, 80, 30)];
     proof.text=@"凭证:";
     proof.textColor=[UIColor blackColor];
     [self.view addSubview:proof];
-        
+    
     UICollectionViewFlowLayout *flowLayout=[[UICollectionViewFlowLayout alloc]init];
     flowLayout.minimumLineSpacing=5;
     flowLayout.itemSize=CGSizeMake(60, 60);
     flowLayout.minimumInteritemSpacing=5;
     //UICollectionView *collectionView=[[UICollectionView alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+Vspace+30+Vspace+Vspace+30, kScreenWidth-leftSpace*2, 100)];
-    _collectionView=[[UICollectionView alloc]initWithFrame:CGRectMake(leftSpace, topSpace+Vspace+30+Vspace+Vspace+30, kScreenWidth-leftSpace*2, (kScreenHeight-(topSpace+30+Vspace+30+Vspace+Vspace+30))-(kScreenHeight-(kScreenHeight-bottomSpace-40-64-60))) collectionViewLayout:flowLayout];
+    _collectionView=[[UICollectionView alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+Vspace+30+Vspace+Vspace+30, kScreenWidth-leftSpace*2, (kScreenHeight-(topSpace+30+Vspace+30+Vspace+Vspace+30))-(kScreenHeight-(kScreenHeight-bottomSpace-40-64-60))) collectionViewLayout:flowLayout];
     _collectionView.backgroundColor=[UIColor whiteColor];
     _collectionView.dataSource=self;
     _collectionView.delegate=self;
-   
+    
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     
     //[_collectionView registerNib:[UINib nibWithNibName:@"AddCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"add"];
@@ -113,13 +130,13 @@
     
     [self.view addSubview:_collectionView];
     
-    UIView *line2=[[UIView alloc]initWithFrame:CGRectMake(leftSpace, kScreenHeight-bottomSpace-80-64-40, kScreenWidth-leftSpace*2, 1)];
+    UIView *line2=[[UIView alloc]initWithFrame:CGRectMake(leftSpace, kScreenHeight-bottomSpace-80-64-10, kScreenWidth-leftSpace*2, 1)];
     line2.backgroundColor=kColor(201, 201, 201, 1);
     [self.view addSubview:line2];
     //kScreenHeight-bottomSpace-40
     UIButton *commit=[UIButton buttonWithType:UIButtonTypeCustom];
-    commit.frame=CGRectMake(leftSpace*2, kScreenHeight-bottomSpace-110-64, kScreenWidth-leftSpace*4, 40);
-    [commit setTitle:@"提交" forState:UIControlStateNormal];
+    commit.frame=CGRectMake(leftSpace*2, kScreenHeight-bottomSpace-80-64, kScreenWidth-leftSpace*4, 40);
+    [commit setTitle:@"确认" forState:UIControlStateNormal];
     [commit addTarget:self action:@selector(commitInfo:) forControlEvents:UIControlEventTouchUpInside];
     [commit setBackgroundColor:kMainColor];
     commit.layer.cornerRadius=4;
@@ -161,20 +178,20 @@
         default:
             break;
     }
-
+    
 }
 //装货
 -(void)upInGoods
 {
-//    if ([_num.text isEqualToString:@""])
-//    {
-//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-//        hud.customView = [[UIImageView alloc] init];
-//        hud.mode = MBProgressHUDModeCustomView;
-//        [hud hide:YES afterDelay:1.f];
-//        hud.labelText = @"重量不能为空";
-//
-//    }
+    //    if ([_num.text isEqualToString:@""])
+    //    {
+    //        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    //        hud.customView = [[UIImageView alloc] init];
+    //        hud.mode = MBProgressHUDModeCustomView;
+    //        [hud hide:YES afterDelay:1.f];
+    //        hud.labelText = @"重量不能为空";
+    //
+    //    }
     
     MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.labelText=@"提交中...";
@@ -228,7 +245,7 @@
         }
         
     }];
-
+    
 }
 //卸货
 -(void)upOutGoods
@@ -257,7 +274,7 @@
     }
     
     [NetWorkInterface upOutAccountWithID:_shipRelationID inAccount:[_num.text intValue] loginId:[loginId intValue] imgUrlList:string finished:^(BOOL success, NSData *response) {
-    
+        
         
         NSLog(@"提交卸货信息---%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
         hud.customView = [[UIImageView alloc] init];
@@ -388,12 +405,12 @@
                 imagePickerController.sourceType = sourceType;
                 [self presentViewController:imagePickerController animated:YES completion:nil];
             }
-
+            
         }
             break;
         case 2222:
         {
-             NSLog(@"---------2222222222222");
+            NSLog(@"---------2222222222222");
         }
             break;
             
@@ -401,15 +418,15 @@
             break;
     }
     NSInteger sourceType = UIImagePickerControllerSourceTypeCamera;
-//    if (buttonIndex==0)
-//    {
-//        //相册
-//        sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-//    }else if (buttonIndex==1)
-//    {
-//        //拍照
-//        sourceType = UIImagePickerControllerSourceTypeCamera;
-//    }
+    //    if (buttonIndex==0)
+    //    {
+    //        //相册
+    //        sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    //    }else if (buttonIndex==1)
+    //    {
+    //        //拍照
+    //        sourceType = UIImagePickerControllerSourceTypeCamera;
+    //    }
     if ([UIImagePickerController isSourceTypeAvailable:sourceType] &&
         buttonIndex != actionSheet.cancelButtonIndex) {
         UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
@@ -427,9 +444,9 @@
     //调接口上传图片
     [picker dismissViewControllerAnimated:YES completion:nil];
     UIImage *editImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-   
+    
     [self uploadPictureWithImage:editImage];
-
+    
 }
 #pragma mark collectionViewDelegate
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -440,7 +457,7 @@
 {
     if (_imageArray.count==0)
     {
-        return 11;
+        return 1;
     }else
     {
         return _imageArray.count + 1;
@@ -449,7 +466,7 @@
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
     if (_imageArray.count==0)
     {
         AddCollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"add" forIndexPath:indexPath];
@@ -471,14 +488,14 @@
         {
             ImageCollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"image" forIndexPath:indexPath];
             cell.imv.image=_imageArray[indexPath.row];
-        
+            
             return cell;
         }
-
+        
         
         
     }
-   
+    
     
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -538,6 +555,8 @@
 #pragma mark UITextFieldDelegate
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    [_stopTextField resignFirstResponder];
+
     [_num resignFirstResponder];
     return YES;
 }
@@ -546,7 +565,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 @end
