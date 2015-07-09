@@ -26,18 +26,14 @@
 
 @implementation LoadGoodsViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor=[UIColor whiteColor];
-    
-    if (_index==1)
-    {
+  
         self.title=@"装货";
-    }else
-    {
-        self.title=@"卸货";
-    }
+   
     
     _imageArray=[[NSMutableArray alloc]initWithCapacity:0];
     _imgUrlArray=[[NSMutableArray alloc]initWithCapacity:0];
@@ -48,29 +44,29 @@
 -(void)initAndLayoutUI
 {
     CGFloat leftSpace=30;
-    CGFloat topSpace=40;
+    CGFloat topSpace=10;
     CGFloat bottomSpace=30;
     
     CGFloat Vspace=10;
-    UILabel *goodsWeight=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace, 100, 30)];
-    
-    switch (_index) {
-        case 1:
-            goodsWeight.text=@"装货重量:";
-            break;
-        case 2:
-            goodsWeight.text=@"卸货重量:";
-            break;
-            
-        default:
-            break;
-    }
-    
-    goodsWeight.textColor=[UIColor blackColor];
-    [self.view addSubview:goodsWeight];
-    
-    _num=[[UITextField alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+Vspace, (kScreenWidth-leftSpace*2)*0.8, 30)];
-    //_num.placeholder=@"请输入装货重量";
+//    UILabel *goodsWeight=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace, 100, 30)];
+//    
+//    switch (_index) {
+//        case 1:
+//            goodsWeight.text=@"装货重量:";
+//            break;
+//        case 2:
+//            goodsWeight.text=@"卸货重量:";
+//            break;
+//            
+//        default:
+//            break;
+//    }
+//    
+//    goodsWeight.textColor=[UIColor blackColor];
+//    [self.view addSubview:goodsWeight];
+//    
+    _num=[[UITextField alloc]initWithFrame:CGRectMake(leftSpace, topSpace, (kScreenWidth-leftSpace*2)*0.8, 30)];
+    _num.placeholder=@"请输入装货重量";
     _num.delegate=self;
     
     _num.contentVerticalAlignment=UIControlContentHorizontalAlignmentCenter;
@@ -81,20 +77,20 @@
     _num.leftView=view;
 
     
-    _num.backgroundColor=kColor(232, 232, 232, 1);
+//    _num.backgroundColor=kColor(232, 232, 232, 1);
     [self.view addSubview:_num];
     
-    UILabel *unit=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-leftSpace-(kScreenWidth-leftSpace*2)*0.2, topSpace+30+Vspace, (kScreenWidth-leftSpace*2)*0.2, 30)];
-    unit.text=@"吨";
-    unit.textAlignment=NSTextAlignmentCenter;
-    unit.textColor=[UIColor blackColor];
-    [self.view addSubview:unit];
+//    UILabel *unit=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-leftSpace-(kScreenWidth-leftSpace*2)*0.2, topSpace+30+Vspace, (kScreenWidth-leftSpace*2)*0.2, 30)];
+//    unit.text=@"吨";
+//    unit.textAlignment=NSTextAlignmentCenter;
+//    unit.textColor=[UIColor blackColor];
+//    [self.view addSubview:unit];
     
-    UIView *line1=[[UIView alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+Vspace+30+Vspace, kScreenWidth-leftSpace*2, 1)];
+    UIView *line1=[[UIView alloc]initWithFrame:CGRectMake(0, topSpace+35, kScreenWidth, 1)];
     line1.backgroundColor=kColor(201, 201, 201, 1);
     [self.view addSubview:line1];
     
-    UILabel *proof=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+Vspace+30+Vspace+Vspace, 80, 30)];
+    UILabel *proof=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+Vspace+Vspace+Vspace+30, 80, 30)];
     proof.text=@"凭证:";
     proof.textColor=[UIColor blackColor];
     [self.view addSubview:proof];
@@ -104,7 +100,7 @@
     flowLayout.itemSize=CGSizeMake(60, 60);
     flowLayout.minimumInteritemSpacing=5;
     //UICollectionView *collectionView=[[UICollectionView alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+Vspace+30+Vspace+Vspace+30, kScreenWidth-leftSpace*2, 100)];
-    _collectionView=[[UICollectionView alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+Vspace+30+Vspace+Vspace+30, kScreenWidth-leftSpace*2, (kScreenHeight-(topSpace+30+Vspace+30+Vspace+Vspace+30))-(kScreenHeight-(kScreenHeight-bottomSpace-40-64-30))) collectionViewLayout:flowLayout];
+    _collectionView=[[UICollectionView alloc]initWithFrame:CGRectMake(leftSpace, topSpace+Vspace+30+Vspace+Vspace+30, kScreenWidth-leftSpace*2, (kScreenHeight-(topSpace+30+Vspace+30+Vspace+Vspace+30))-(kScreenHeight-(kScreenHeight-bottomSpace-40-64-60))) collectionViewLayout:flowLayout];
     _collectionView.backgroundColor=[UIColor whiteColor];
     _collectionView.dataSource=self;
     _collectionView.delegate=self;
@@ -117,12 +113,12 @@
     
     [self.view addSubview:_collectionView];
     
-    UIView *line2=[[UIView alloc]initWithFrame:CGRectMake(leftSpace, kScreenHeight-bottomSpace-40-64-30, kScreenWidth-leftSpace*2, 1)];
+    UIView *line2=[[UIView alloc]initWithFrame:CGRectMake(leftSpace, kScreenHeight-bottomSpace-80-64-40, kScreenWidth-leftSpace*2, 1)];
     line2.backgroundColor=kColor(201, 201, 201, 1);
     [self.view addSubview:line2];
     //kScreenHeight-bottomSpace-40
     UIButton *commit=[UIButton buttonWithType:UIButtonTypeCustom];
-    commit.frame=CGRectMake(leftSpace*2, kScreenHeight-bottomSpace-40-64, kScreenWidth-leftSpace*4, 40);
+    commit.frame=CGRectMake(leftSpace*2, kScreenHeight-bottomSpace-110-64, kScreenWidth-leftSpace*4, 40);
     [commit setTitle:@"提交" forState:UIControlStateNormal];
     [commit addTarget:self action:@selector(commitInfo:) forControlEvents:UIControlEventTouchUpInside];
     [commit setBackgroundColor:kMainColor];
@@ -444,7 +440,7 @@
 {
     if (_imageArray.count==0)
     {
-        return 1;
+        return 11;
     }else
     {
         return _imageArray.count + 1;

@@ -65,9 +65,7 @@
     myShipVC.tabBarItem.image=[kImageName(@"ship_n.png")imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     myShipVC.tabBarItem.selectedImage=[kImageName(@"ship_h.png")imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UINavigationController*myShipNav=[[UINavigationController alloc]initWithRootViewController:myShipVC];
-    //[walletNav.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
-    //[[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
-    //[[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
+
     [NavigationBar setNavigationBarStyle:myShipNav];
     self.viewControllers=[[NSArray alloc]initWithObjects:taskNav,transNav,myShipNav, nil];
     self.selectedIndex=1;

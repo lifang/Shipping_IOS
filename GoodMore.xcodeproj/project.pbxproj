@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0ECD46611B4D0109002BA802 /* TransportingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD46601B4D0109002BA802 /* TransportingTableViewCell.m */; };
+		0ECD46641B4D3B4A002BA802 /* LoadGoodsViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD46631B4D3B4A002BA802 /* LoadGoodsViewController2.m */; };
 		1A0769B11B4D5B1B00704269 /* HistoryDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A0769B01B4D5B1B00704269 /* HistoryDetailCell.m */; };
 		1A2B6FF61B4CF0B8002FFD96 /* TopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B6FF51B4CF0B8002FFD96 /* TopButton.m */; };
 		1A2B6FF91B4D0441002FFD96 /* LogisticsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B6FF81B4D0441002FFD96 /* LogisticsCell.m */; };
@@ -64,6 +66,11 @@
 		93C4CA3D1B4CC15200FE23DE /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C4CA381B4CC15200FE23DE /* MMDrawerVisualState.m */; };
 		93C4CA3E1B4CC15200FE23DE /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C4CA3A1B4CC15200FE23DE /* UIViewController+MMDrawerController.m */; };
 		93C4CA411B4CC4DC00FE23DE /* RightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C4CA401B4CC4DC00FE23DE /* RightViewController.m */; };
+		93C4CA441B4CE27600FE23DE /* LocationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C4CA431B4CE27600FE23DE /* LocationButton.m */; };
+		93C4CA471B4CEBB500FE23DE /* SelectPortViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C4CA461B4CEBB500FE23DE /* SelectPortViewController.m */; };
+		93C4CA4A1B4CF4FC00FE23DE /* PortListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C4CA491B4CF4FC00FE23DE /* PortListViewController.m */; };
+		93C4CA4D1B4D14F000FE23DE /* ShipInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C4CA4C1B4D14F000FE23DE /* ShipInfoViewController.m */; };
+		93C4CA511B4D540400FE23DE /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C4CA501B4D540400FE23DE /* MessageViewController.m */; };
 		93C89A721B1D3FD9008DF209 /* CommonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C89A711B1D3FD9008DF209 /* CommonViewController.m */; };
 		93C89A761B1D895D008DF209 /* PortModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C89A751B1D895D008DF209 /* PortModel.m */; };
 		93C89A791B1D9708008DF209 /* OrdersModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C89A781B1D9708008DF209 /* OrdersModel.m */; };
@@ -81,7 +88,7 @@
 		93E6EC6F1B4BEDEA0082E990 /* TransportingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6EC6E1B4BEDEA0082E990 /* TransportingViewController.m */; };
 		93E6EC721B4BEF6B0082E990 /* MYInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6EC711B4BEF6B0082E990 /* MYInfoView.m */; };
 		93F673821B1C1E5900A4E34E /* TaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F673811B1C1E5900A4E34E /* TaskCell.m */; };
-		93F673851B1C6D3D00A4E34E /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F673841B1C6D3D00A4E34E /* DetailViewController.m */; };
+		93F673851B1C6D3D00A4E34E /* TaskDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F673841B1C6D3D00A4E34E /* TaskDetailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +102,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0ECD465F1B4D0109002BA802 /* TransportingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransportingTableViewCell.h; sourceTree = "<group>"; };
+		0ECD46601B4D0109002BA802 /* TransportingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransportingTableViewCell.m; sourceTree = "<group>"; };
+		0ECD46621B4D3B4A002BA802 /* LoadGoodsViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadGoodsViewController2.h; sourceTree = "<group>"; };
+		0ECD46631B4D3B4A002BA802 /* LoadGoodsViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadGoodsViewController2.m; sourceTree = "<group>"; };
 		1A0769AF1B4D5B1B00704269 /* HistoryDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryDetailCell.h; sourceTree = "<group>"; };
 		1A0769B01B4D5B1B00704269 /* HistoryDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryDetailCell.m; sourceTree = "<group>"; };
 		1A2B6FF21B4CED3C002FFD96 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -122,8 +133,8 @@
 		933514291B3B9AD60059611B /* PayFreightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayFreightViewController.m; sourceTree = "<group>"; };
 		9335142B1B3C09CA0059611B /* RegresultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegresultViewController.h; sourceTree = "<group>"; };
 		9335142C1B3C09CA0059611B /* RegresultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegresultViewController.m; sourceTree = "<group>"; };
-		9335142E1B3C1FD70059611B /* LoadGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadGoodsViewController.h; sourceTree = "<group>"; };
-		9335142F1B3C1FD70059611B /* LoadGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadGoodsViewController.m; sourceTree = "<group>"; };
+		9335142E1B3C1FD70059611B /* LoadGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadGoodsViewController.h; path = ../LoadGoodsViewController.h; sourceTree = "<group>"; };
+		9335142F1B3C1FD70059611B /* LoadGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadGoodsViewController.m; path = ../LoadGoodsViewController.m; sourceTree = "<group>"; };
 		933514311B3D826F0059611B /* ShipTeamDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipTeamDetailViewController.h; sourceTree = "<group>"; };
 		933514321B3D826F0059611B /* ShipTeamDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipTeamDetailViewController.m; sourceTree = "<group>"; };
 		933514341B3D8BB40059611B /* ShipListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipListModel.h; sourceTree = "<group>"; };
@@ -209,6 +220,16 @@
 		93C4CA3A1B4CC15200FE23DE /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
 		93C4CA3F1B4CC4DC00FE23DE /* RightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightViewController.h; sourceTree = "<group>"; };
 		93C4CA401B4CC4DC00FE23DE /* RightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RightViewController.m; sourceTree = "<group>"; };
+		93C4CA421B4CE27600FE23DE /* LocationButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationButton.h; sourceTree = "<group>"; };
+		93C4CA431B4CE27600FE23DE /* LocationButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationButton.m; sourceTree = "<group>"; };
+		93C4CA451B4CEBB500FE23DE /* SelectPortViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectPortViewController.h; sourceTree = "<group>"; };
+		93C4CA461B4CEBB500FE23DE /* SelectPortViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectPortViewController.m; sourceTree = "<group>"; };
+		93C4CA481B4CF4FC00FE23DE /* PortListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PortListViewController.h; sourceTree = "<group>"; };
+		93C4CA491B4CF4FC00FE23DE /* PortListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PortListViewController.m; sourceTree = "<group>"; };
+		93C4CA4B1B4D14F000FE23DE /* ShipInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipInfoViewController.h; sourceTree = "<group>"; };
+		93C4CA4C1B4D14F000FE23DE /* ShipInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipInfoViewController.m; sourceTree = "<group>"; };
+		93C4CA4F1B4D540400FE23DE /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
+		93C4CA501B4D540400FE23DE /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
 		93C89A701B1D3FD9008DF209 /* CommonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonViewController.h; sourceTree = "<group>"; };
 		93C89A711B1D3FD9008DF209 /* CommonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonViewController.m; sourceTree = "<group>"; };
 		93C89A741B1D895D008DF209 /* PortModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PortModel.h; sourceTree = "<group>"; };
@@ -245,8 +266,8 @@
 		93E6EC711B4BEF6B0082E990 /* MYInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYInfoView.m; sourceTree = "<group>"; };
 		93F673801B1C1E5900A4E34E /* TaskCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskCell.h; sourceTree = "<group>"; };
 		93F673811B1C1E5900A4E34E /* TaskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskCell.m; sourceTree = "<group>"; };
-		93F673831B1C6D3D00A4E34E /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
-		93F673841B1C6D3D00A4E34E /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		93F673831B1C6D3D00A4E34E /* TaskDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailViewController.h; sourceTree = "<group>"; };
+		93F673841B1C6D3D00A4E34E /* TaskDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -356,6 +377,41 @@
 				93C4CA3A1B4CC15200FE23DE /* UIViewController+MMDrawerController.m */,
 			);
 			path = MMDrawerController;
+			sourceTree = "<group>";
+		};
+		93C4CA4E1B4D533300FE23DE /* task */ = {
+			isa = PBXGroup;
+			children = (
+				9396213E1B18563A00CB730B /* MainViewController.m */,
+				9396213D1B18563A00CB730B /* MainViewController.h */,
+				939621401B18567D00CB730B /* TaskViewController.h */,
+				939621411B18567D00CB730B /* TaskViewController.m */,
+				93C4CA451B4CEBB500FE23DE /* SelectPortViewController.h */,
+				93C4CA461B4CEBB500FE23DE /* SelectPortViewController.m */,
+				9342EE9E1B1F1F95000BF13F /* SetNewPWDViewController.m */,
+				9342EE9D1B1F1F95000BF13F /* SetNewPWDViewController.h */,
+				9342EE9A1B1F0F43000BF13F /* SettingViewController.h */,
+				9342EE9B1B1F0F43000BF13F /* SettingViewController.m */,
+				9335142C1B3C09CA0059611B /* RegresultViewController.m */,
+				9335142B1B3C09CA0059611B /* RegresultViewController.h */,
+				93CDA0A41B15B9200008DCC0 /* RegisterViewController.m */,
+				93CDA0A31B15B9200008DCC0 /* RegisterViewController.h */,
+				938E97571B1FF8190050FE4D /* FindPwdViewController.m */,
+				938E97561B1FF8190050FE4D /* FindPwdViewController.h */,
+				93CDA0A11B15B8C80008DCC0 /* LoginViewController.m */,
+				93CDA0A01B15B8C80008DCC0 /* LoginViewController.h */,
+				93C4CA4B1B4D14F000FE23DE /* ShipInfoViewController.h */,
+				93C4CA4C1B4D14F000FE23DE /* ShipInfoViewController.m */,
+				93C4CA481B4CF4FC00FE23DE /* PortListViewController.h */,
+				93C4CA491B4CF4FC00FE23DE /* PortListViewController.m */,
+				93F673831B1C6D3D00A4E34E /* TaskDetailViewController.h */,
+				93F673841B1C6D3D00A4E34E /* TaskDetailViewController.m */,
+				93C4CA3F1B4CC4DC00FE23DE /* RightViewController.h */,
+				93C4CA401B4CC4DC00FE23DE /* RightViewController.m */,
+				93C4CA4F1B4D540400FE23DE /* MessageViewController.h */,
+				93C4CA501B4D540400FE23DE /* MessageViewController.m */,
+			);
+			name = task;
 			sourceTree = "<group>";
 		};
 		93C89A731B1D8938008DF209 /* Model */ = {
@@ -478,38 +534,17 @@
 		93CDA09F1B15B8B50008DCC0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				93CDA0A01B15B8C80008DCC0 /* LoginViewController.h */,
-				93CDA0A11B15B8C80008DCC0 /* LoginViewController.m */,
-				938E97561B1FF8190050FE4D /* FindPwdViewController.h */,
-				938E97571B1FF8190050FE4D /* FindPwdViewController.m */,
-				93CDA0A31B15B9200008DCC0 /* RegisterViewController.h */,
-				93CDA0A41B15B9200008DCC0 /* RegisterViewController.m */,
-				9335142B1B3C09CA0059611B /* RegresultViewController.h */,
-				9335142C1B3C09CA0059611B /* RegresultViewController.m */,
-				9342EE9A1B1F0F43000BF13F /* SettingViewController.h */,
-				9342EE9B1B1F0F43000BF13F /* SettingViewController.m */,
-				9342EE9D1B1F1F95000BF13F /* SetNewPWDViewController.h */,
-				9342EE9E1B1F1F95000BF13F /* SetNewPWDViewController.m */,
-				9396213D1B18563A00CB730B /* MainViewController.h */,
-				9396213E1B18563A00CB730B /* MainViewController.m */,
-				939621401B18567D00CB730B /* TaskViewController.h */,
-				939621411B18567D00CB730B /* TaskViewController.m */,
+				93C4CA4E1B4D533300FE23DE /* task */,
 				939621431B1856A400CB730B /* MyTaskViewController.h */,
 				939621441B1856A400CB730B /* MyTaskViewController.m */,
-				9335142E1B3C1FD70059611B /* LoadGoodsViewController.h */,
-				9335142F1B3C1FD70059611B /* LoadGoodsViewController.m */,
 				9302B5991B3AC2F300596A80 /* GoodsTransDetailViewController.h */,
 				9302B59A1B3AC2F300596A80 /* GoodsTransDetailViewController.m */,
 				933514311B3D826F0059611B /* ShipTeamDetailViewController.h */,
 				933514321B3D826F0059611B /* ShipTeamDetailViewController.m */,
 				933514281B3B9AD60059611B /* PayFreightViewController.h */,
 				933514291B3B9AD60059611B /* PayFreightViewController.m */,
-				93F673831B1C6D3D00A4E34E /* DetailViewController.h */,
-				93F673841B1C6D3D00A4E34E /* DetailViewController.m */,
 				931EFD021B4284930045752C /* WebViewViewController.h */,
 				931EFD031B4284930045752C /* WebViewViewController.m */,
-				93C4CA3F1B4CC4DC00FE23DE /* RightViewController.h */,
-				93C4CA401B4CC4DC00FE23DE /* RightViewController.m */,
 				9384DDE11B26C10B001D539F /* mywallet */,
 				93C4CA2D1B4CB7B600FE23DE /* myShip */,
 				93E6EC6C1B4BEDB10082E990 /* transporting */,
@@ -528,6 +563,8 @@
 				9302B5971B3AA6CE00596A80 /* MYView.m */,
 				93E6EC701B4BEF6B0082E990 /* MYInfoView.h */,
 				93E6EC711B4BEF6B0082E990 /* MYInfoView.m */,
+				93C4CA421B4CE27600FE23DE /* LocationButton.h */,
+				93C4CA431B4CE27600FE23DE /* LocationButton.m */,
 			);
 			path = MY__UI;
 			sourceTree = "<group>";
@@ -535,6 +572,10 @@
 		93E6EC6C1B4BEDB10082E990 /* transporting */ = {
 			isa = PBXGroup;
 			children = (
+				9335142E1B3C1FD70059611B /* LoadGoodsViewController.h */,
+				9335142F1B3C1FD70059611B /* LoadGoodsViewController.m */,
+				0ECD46621B4D3B4A002BA802 /* LoadGoodsViewController2.h */,
+				0ECD46631B4D3B4A002BA802 /* LoadGoodsViewController2.m */,
 				93E6EC6D1B4BEDEA0082E990 /* TransportingViewController.h */,
 				93E6EC6E1B4BEDEA0082E990 /* TransportingViewController.m */,
 			);
@@ -560,6 +601,8 @@
 				9386339F1B4116D50092F05E /* ImageCollectionViewCell.m */,
 				93E6EC691B4BE5D90082E990 /* CommonCell.h */,
 				93E6EC6A1B4BE5D90082E990 /* CommonCell.m */,
+				0ECD465F1B4D0109002BA802 /* TransportingTableViewCell.h */,
+				0ECD46601B4D0109002BA802 /* TransportingTableViewCell.m */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -665,6 +708,7 @@
 			files = (
 				9396214F1B18637D00CB730B /* NetWorkInterface.m in Sources */,
 				93CDA0A51B15B9200008DCC0 /* RegisterViewController.m in Sources */,
+				0ECD46611B4D0109002BA802 /* TransportingTableViewCell.m in Sources */,
 				931EFD041B4284930045752C /* WebViewViewController.m in Sources */,
 				939621421B18567D00CB730B /* TaskViewController.m in Sources */,
 				93C123961B391B5F002BB29C /* BanksListViewController.m in Sources */,
@@ -680,10 +724,13 @@
 				93B84E291B1ED21200EF2DB4 /* MytaskModel.m in Sources */,
 				9384DDE41B26C13D001D539F /* MyWalletViewController.m in Sources */,
 				93C89A7F1B1DAC47008DF209 /* CircleView.m in Sources */,
+				93C4CA441B4CE27600FE23DE /* LocationButton.m in Sources */,
+				93C4CA4A1B4CF4FC00FE23DE /* PortListViewController.m in Sources */,
 				93F673821B1C1E5900A4E34E /* TaskCell.m in Sources */,
 				93C89A801B1DAC47008DF209 /* RefreshView.m in Sources */,
-				93F673851B1C6D3D00A4E34E /* DetailViewController.m in Sources */,
+				93F673851B1C6D3D00A4E34E /* TaskDetailViewController.m in Sources */,
 				938E97581B1FF8190050FE4D /* FindPwdViewController.m in Sources */,
+				0ECD46641B4D3B4A002BA802 /* LoadGoodsViewController2.m in Sources */,
 				93C4CA301B4CB7DE00FE23DE /* MyShipViewController.m in Sources */,
 				93C123931B38F90A002BB29C /* MoneyNumModel.m in Sources */,
 				1A0769B11B4D5B1B00704269 /* HistoryDetailCell.m in Sources */,
@@ -691,6 +738,7 @@
 				93CDA0A21B15B8C80008DCC0 /* LoginViewController.m in Sources */,
 				1A2B70051B4D4C12002FFD96 /* HistoryDetailController.m in Sources */,
 				93B84E321B1EE37000EF2DB4 /* BusinessOrders.m in Sources */,
+				93C4CA4D1B4D14F000FE23DE /* ShipInfoViewController.m in Sources */,
 				93B84E2F1B1EE34C00EF2DB4 /* ShipRelation.m in Sources */,
 				938633A01B4116D50092F05E /* ImageCollectionViewCell.m in Sources */,
 				93E6EC6B1B4BE5D90082E990 /* CommonCell.m in Sources */,
@@ -699,6 +747,7 @@
 				93C89A721B1D3FD9008DF209 /* CommonViewController.m in Sources */,
 				933514331B3D826F0059611B /* ShipTeamDetailViewController.m in Sources */,
 				93C123A11B3954DE002BB29C /* CityHandle.m in Sources */,
+				93C4CA471B4CEBB500FE23DE /* SelectPortViewController.m in Sources */,
 				9396213F1B18563A00CB730B /* MainViewController.m in Sources */,
 				9342EE9F1B1F1F95000BF13F /* SetNewPWDViewController.m in Sources */,
 				93C4CA3D1B4CC15200FE23DE /* MMDrawerVisualState.m in Sources */,
@@ -715,6 +764,7 @@
 				1A2B6FF61B4CF0B8002FFD96 /* TopButton.m in Sources */,
 				935C4FBA1B282ED5004F292B /* AvaliblePayModel.m in Sources */,
 				9386339D1B4110F50092F05E /* AddCollectionViewCell.m in Sources */,
+				93C4CA511B4D540400FE23DE /* MessageViewController.m in Sources */,
 				935C4FB41B281132004F292B /* WalletCell.m in Sources */,
 				1A2B6FFC1B4D2314002FFD96 /* ShipDetailCell.m in Sources */,
 				93C89A791B1D9708008DF209 /* OrdersModel.m in Sources */,
@@ -794,7 +844,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "8525b04d-39d9-4d72-971a-178562e26230";
+				PROVISIONING_PROFILE = "cad5d974-d31c-4a37-a883-e0aa523ad8a3";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -830,7 +880,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "8525b04d-39d9-4d72-971a-178562e26230";
+				PROVISIONING_PROFILE = "cad5d974-d31c-4a37-a883-e0aa523ad8a3";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -847,7 +897,7 @@
 				INFOPLIST_FILE = GoodMore/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = GoodMore;
-				PROVISIONING_PROFILE = "8525b04d-39d9-4d72-971a-178562e26230";
+				PROVISIONING_PROFILE = "cad5d974-d31c-4a37-a883-e0aa523ad8a3";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
@@ -863,7 +913,7 @@
 				INFOPLIST_FILE = GoodMore/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = GoodMore;
-				PROVISIONING_PROFILE = "8525b04d-39d9-4d72-971a-178562e26230";
+				PROVISIONING_PROFILE = "cad5d974-d31c-4a37-a883-e0aa523ad8a3";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

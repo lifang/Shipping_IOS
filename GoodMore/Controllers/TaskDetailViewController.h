@@ -9,7 +9,7 @@
 
 #import "CommonViewController.h"
 
-@interface DetailViewController : CommonViewController
+@interface TaskDetailViewController : CommonViewController
 
 @property(nonatomic,assign)NSInteger selectedIndex;
 

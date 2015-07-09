@@ -9,7 +9,7 @@
 #import "TaskViewController.h"
 #import "TaskCell.h"
 #import "Constants.h"
-#import "DetailViewController.h"
+#import "TaskDetailViewController.h"
 #import "NetWorkInterface.h"
 #import "MBProgressHUD.h"
 #import "OrdersModel.h"
@@ -19,6 +19,10 @@
 #import "WebViewViewController.h"
 
 #import "CommonCell.h"
+#import "UIViewController+MMDrawerController.h"
+#import "LocationButton.h"
+#import "SelectPortViewController.h"
+#import "RightViewController.h"
 
 @interface TaskViewController ()<UITableViewDataSource,UITableViewDelegate,RefreshDelegate,UITextFieldDelegate,UIAlertViewDelegate>
 {
@@ -40,13 +44,16 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self firstLoadData];
+    
+    self.hidesBottomBarWhenPushed=NO;
+    
+    //[self firstLoadData];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title=@"任务大厅";
+    //self.title=@"任务大厅";
     _index=1;
     _ordersArray=[[NSMutableArray alloc]init];
    
@@ -56,35 +63,63 @@
     //[self firstLoadData];
      _backView.hidden=YES;
     
-    //处理船的级别问题
-    //[self checkShipRank];
+    
 
 }
-////判断船的级别
-//-(void)checkShipRank
-//{
-//    NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
-//    NSString *type=[userDefault objectForKey:@"type"];
-//    if ([type intValue]==1)
-//    {
-//        //高级船
-//    }else if ([type intValue]==6)
-//    {
-//        //普通船
-//        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"友情提示" message:@"您现在的船舶级别为普通船,普通船无法组队接单,只能加入船队进行接单!" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:@"升级为高级船", nil];
-//        [alertView show];
-//    }
-//}
 
 -(void)initNavigation
 {
-    UIBarButtonItem *leftItem=[[UIBarButtonItem alloc]initWithImage:kImageName(@"personal.png") style:UIBarButtonItemStyleDone target:self action:@selector(setting:)];
-    self.navigationItem.leftBarButtonItem=leftItem;
+    UIButton *rightButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    rightButton.frame=CGRectMake(0, 0, 24, 24);
+    [rightButton setBackgroundImage:kImageName(@"head_small.png") forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(showRight:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem=[[UIBarButtonItem alloc]initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem=rightItem;
 
-    UIBarButtonItem *rigthItem=[[UIBarButtonItem alloc]initWithTitle:@"加入船队" style:UIBarButtonItemStyleDone target:self action:@selector(join:)];
-    self.navigationItem.rightBarButtonItem=rigthItem;
+//    UIButton *leftButton1=[UIButton buttonWithType:UIButtonTypeCustom];
+//    leftButton1.frame=CGRectMake(0, 0, 24, 24);
+//    [leftButton1 setBackgroundImage:kImageName(@"choose.png") forState:UIControlStateNormal];
+//    [leftButton1 addTarget:self action:@selector(selcetPort:) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem  *leftItem1=[[UIBarButtonItem alloc]initWithCustomView:leftButton1];
+//    
+//    UIButton *leftButton2=[UIButton buttonWithType:UIButtonTypeCustom];
+//    [leftButton2 setTitle:@"港口筛选" forState:UIControlStateNormal];
+//    leftButton2.titleLabel.font=[UIFont boldSystemFontOfSize:14];
+//    leftButton2.frame=CGRectMake(0, 0, 60, 24);
+//    [leftButton2 addTarget:self action:@selector(selcetPort:) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem  *leftItem2=[[UIBarButtonItem alloc]initWithCustomView:leftButton2];
+
+    LocationButton *leftButton1=[LocationButton buttonWithType:UIButtonTypeCustom];
+    //leftButton1.backgroundColor=[UIColor redColor];
+    leftButton1.nameLabel.text=@"港口筛选";
+    leftButton1.frame=CGRectMake(0, 0, kLocationButtonWidth, 24);
+    [leftButton1 addTarget:self action:@selector(selcetPort:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem  *leftItem1=[[UIBarButtonItem alloc]initWithCustomView:leftButton1];
+    
+    self.navigationItem.leftBarButtonItem=leftItem1;
+
+    //leftButton1.frame=CGRectMake(0, 0, 24, 24);
+
+    //[leftButton1 setBackgroundImage:kImageName(@"choose.png") forState:UIControlStateNormal];
+    //[leftButton1 addTarget:self action:@selector(selcetPort:) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem  *leftItem1=[[UIBarButtonItem alloc]initWithCustomView:leftButton1];
+//    
+//    self.navigationItem.leftBarButtonItem=leftItem1;
+    
 }
 #pragma mark action
+-(IBAction)selcetPort:(id)sender
+{
+    SelectPortViewController *selectPort=[[SelectPortViewController alloc]init];
+    selectPort.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:selectPort animated:YES];
+}
+-(IBAction)showRight:(id)sender
+{
+    [self.mm_drawerController openDrawerSide:MMDrawerSideRight animated:YES completion:nil];
+    
+}
 -(IBAction)setting:(id)sender
 {
     SettingViewController*setting=[[SettingViewController alloc]init];
@@ -387,14 +422,14 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 //    OrdersModel *order=_ordersArray[indexPath.row];
 //    int ID=[order.ID intValue];
-//    DetailViewController *detail=[[DetailViewController alloc]init];
-//    detail.selectedIndex=_index;
-//    detail.ID=ID;
-//    detail.hidesBottomBarWhenPushed=YES;
-//    [self.navigationController pushViewController:detail animated:YES];
+    TaskDetailViewController *detail=[[TaskDetailViewController alloc]init];
+    detail.selectedIndex=_index;
+    //detail.ID=ID;
+    detail.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:detail animated:YES];
 }
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {

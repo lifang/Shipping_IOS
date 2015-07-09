@@ -8,8 +8,15 @@
 //
 
 #import "RightViewController.h"
-
-@interface RightViewController ()
+#import "MYInfoView.h"
+#import "Constants.h"
+#import "NavigationBar.h"
+#import "SettingViewController.h"  //我的资料
+#import "ShipInfoViewController.h" //船舶情况
+#import "MyWalletViewController.h" //我的钱包
+#import "MessageViewController.h"  //我的消息
+#import "UIViewController+MMDrawerController.h"
+@interface RightViewController ()<MYInfoViewDelegate>
 
 @end
 
@@ -18,21 +25,87 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
+    [self initUI];
 }
 
+-(void)initUI
+{
+    MYInfoView *view=[[MYInfoView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth/2, kScreenHeight)];
+    view.delegate=self;
+    view.name.text=@"叶森";
+    view.phone.text=@"18205622983";
+    view.cash.text=@"$20000";
+    view.cash.textColor=[UIColor blueColor];
+    [self.view addSubview:view];
+}
+#pragma mark MYInfoViewDelegate
+-(void)selectInfoWithIndex:(NSInteger)index
+{
+    switch (index)
+    {
+        case 0:
+        {
+            //我的资料
+            SettingViewController *set=[[SettingViewController alloc]init];
+            UINavigationController *setNav=[[UINavigationController alloc]initWithRootViewController:set];
+            [NavigationBar setNavigationBarStyle:setNav];
+            [self.mm_drawerController setCenterViewController:setNav withCloseAnimation:YES completion:nil];
+        }
+            
+            break;
+        case 1:
+        {
+            //船舶情况
+            ShipInfoViewController *shipInfo=[[ShipInfoViewController alloc]init];
+            UINavigationController *shiNav=[[UINavigationController alloc]initWithRootViewController:shipInfo];
+            [NavigationBar setNavigationBarStyle:shiNav];
+            [self.mm_drawerController setCenterViewController:shiNav withCloseAnimation:YES completion:nil];
+
+        }
+            
+            
+            break;
+        case 2:
+        {
+            //我的钱包
+            MyWalletViewController *mywallet=[[MyWalletViewController alloc]init];
+            UINavigationController *myWalletNav=[[UINavigationController alloc]initWithRootViewController:mywallet];
+            [NavigationBar setNavigationBarStyle:myWalletNav];
+            [self.mm_drawerController setCenterViewController:myWalletNav withCloseAnimation:YES completion:nil];
+        }
+            
+           
+            break;
+        case 3:
+        {
+            //我的消息
+            MessageViewController *message=[[MessageViewController alloc]init];
+            UINavigationController *messageNav=[[UINavigationController alloc]initWithRootViewController:message];
+            [NavigationBar setNavigationBarStyle:messageNav];
+            [self.mm_drawerController setCenterViewController:messageNav withCloseAnimation:YES completion:nil];
+        }
+            
+         
+            break;
+        case 4:
+        {
+            //退出登录
+        }
+            
+           
+            break;
+            
+        default:
+            break;
+    }
+
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

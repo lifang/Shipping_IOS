@@ -9,7 +9,7 @@
 #import "MyTaskViewController.h"
 #import "Constants.h"
 #import "TaskCell.h"
-#import "DetailViewController.h"
+#import "TaskDetailViewController.h"
 #import "NetWorkInterface.h"
 #import "MBProgressHUD.h"
 #import "RefreshView.h"
