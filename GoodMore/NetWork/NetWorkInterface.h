@@ -343,7 +343,7 @@ static NSString *deleteMessage_method = @"app/messages/delById";
 +(void)singleShipCompletWithshipOwnerId:(int)shipOwnerId bsOrderId:(int)bsOrderId loginId:(int)loginId finished:(requestDidFinished)finish;
 
 //消息列表
-+(void)getMessageListWith:(int)shipOwnerId finished:(requestDidFinished)finish;
++(void)getMessageListWithshipOwnerId:(int)shipOwnerId finished:(requestDidFinished)finish;
 
 //批量更新消息为已读
 +(void)uploadMessageStausWithStatus:(int)status loginId:(int)loginId idStr:(NSString*)idStr finished:(requestDidFinished)finish;

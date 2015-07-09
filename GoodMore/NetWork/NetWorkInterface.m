@@ -411,7 +411,7 @@ static NSString *HTTP_GET = @"GET";
 
 }
 //消息列表
-+(void)getMessageListWith:(int)shipOwnerId finished:(requestDidFinished)finish
++(void)getMessageListWithshipOwnerId:(int)shipOwnerId finished:(requestDidFinished)finish
 {
     NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
     [paramDic setObject:[NSNumber numberWithInt:shipOwnerId] forKey:@"shipOwnerId"];

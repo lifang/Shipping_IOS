@@ -169,7 +169,7 @@
                                                          leftDrawerViewController:nil
                                                         rightDrawerViewController:_messageController];
         [_menuController setMaximumRightDrawerWidth:kScreenWidth/2];
-        [_menuController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+        [_menuController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
         [_menuController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeTapCenterView | MMCloseDrawerGestureModePanningCenterView | MMCloseDrawerGestureModeTapNavigationBar];
         [_menuController setCenterHiddenInteractionMode:MMDrawerOpenCenterInteractionModeNone];
         _menuController.view.frame = self.view.bounds;
