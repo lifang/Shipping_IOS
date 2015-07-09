@@ -136,26 +136,26 @@
         _marginLabel.text = @"保证金：200.00元";
         [self.contentView addSubview:_marginLabel];
         
-        UILabel *successLabel = [[UILabel alloc]init];
-        successLabel.textAlignment = NSTextAlignmentCenter;
-        successLabel.backgroundColor = [UIColor clearColor];
-        CALayer *readBtnLayer = [successLabel layer];
+        _successLabel = [[UILabel alloc]init];
+        _successLabel.textAlignment = NSTextAlignmentCenter;
+        _successLabel.backgroundColor = [UIColor clearColor];
+        CALayer *readBtnLayer = [_successLabel layer];
         [readBtnLayer setMasksToBounds:YES];
         [readBtnLayer setCornerRadius:2.0];
         [readBtnLayer setBorderWidth:1.0];
         if ([reuseIdentifier isEqualToString:@"1"]) {
-            successLabel.text = @"组队成功";
-            successLabel.textColor = kLightColor;
-            successLabel.font = [UIFont systemFontOfSize:13];
+            _successLabel.text = @"组队成功";
+            _successLabel.textColor = kLightColor;
+            _successLabel.font = [UIFont systemFontOfSize:13];
             [readBtnLayer setBorderColor:kLightColor.CGColor];
         }else{
-            successLabel.text = @"组队失败";
-            successLabel.textColor = kColor(73, 76, 73, 1.0);
-            successLabel.font = [UIFont systemFontOfSize:13];
+            _successLabel.text = @"组队失败";
+            _successLabel.textColor = kColor(73, 76, 73, 1.0);
+            _successLabel.font = [UIFont systemFontOfSize:13];
             [readBtnLayer setBorderColor:kColor(73, 76, 73, 1.0).CGColor];
         }
-        successLabel.frame = CGRectMake(K_MainWidth - 80, _logistNameLabel.frame.origin.y + 20, 60, 20);
-        [self.contentView addSubview:successLabel];
+        _successLabel.frame = CGRectMake(K_MainWidth - 80, _logistNameLabel.frame.origin.y + 20, 60, 20);
+        [self.contentView addSubview:_successLabel];
     }
     return self;
 }

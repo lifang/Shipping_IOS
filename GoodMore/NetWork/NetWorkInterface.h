@@ -143,6 +143,11 @@ static NSString *upOutAccount_method = @"app/orders/upOutAccount";
 //升级为高级船
 static NSString *upShip_method = @"app/toPay/getPayInfo";
 
+//组队中
+static NSString *shipMakeTeam_methd = @"app/team/getMyIngTeam";
+
+//加入船队
+static NSString *shipInTeam_methd = @"app/team/joinTeam";
 //单船竞价
 static NSString *singleShipComplete_method= @"shipBusiness/singleComplete";
 
@@ -154,8 +159,6 @@ static NSString *uploadMessageStatus_method= @"app/messages/upStatus";
 
 //删除消息
 static NSString *deleteMessage_method = @"app/messages/delById";
-
-
 
 @interface NetWorkInterface : NSObject
 
@@ -327,6 +330,15 @@ static NSString *deleteMessage_method = @"app/messages/delById";
 //升级为高级船
 +(void)upShipWithshipId:(int)shipId loginId:(int)loginId finished:(requestDidFinished)finish;
 
+//获取船队详细列表
++(void)shipMakeTeamWithLoginId:(int)loginId finished:(requestDidFinished)finish;
+
+//获取船队详细列表
++(void)joinInTeamWithLoginId:(int)loginId
+                        Code:(NSString *)code
+                   ShipOwnID:(int)shipOwnId
+                       Quote:(int)quote
+                    finished:(requestDidFinished)finish;
 //单船竞价
 +(void)singleShipCompletWithshipOwnerId:(int)shipOwnerId bsOrderId:(int)bsOrderId loginId:(int)loginId finished:(requestDidFinished)finish;
 
