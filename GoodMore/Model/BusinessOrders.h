@@ -10,6 +10,8 @@
 
 @interface BusinessOrders : NSObject
 @property(nonatomic,strong)NSString *endPortName;
+@property(nonatomic,strong)NSString *beginDockName;
+@property(nonatomic,strong)NSString *endDockName;
 @property(nonatomic,strong)NSNumber *amount;
 @property(nonatomic,strong)NSNumber *maxAmount;
 @property(nonatomic,strong)NSNumber *minAmount;
@@ -33,6 +35,12 @@
 @property(nonatomic,strong)NSNumber *status;
 @property(nonatomic,strong)NSNumber *shipTeamId;
 @property(nonatomic,strong)NSString *remarks;
+@property(nonatomic,strong)NSNumber *waterEat;
+@property(nonatomic,strong)NSNumber *storage;
+@property(nonatomic,strong)NSNumber *maxPay;
+@property(nonatomic,strong)NSNumber *inDays;
+@property(nonatomic,strong)NSNumber *outDays;
+@property(nonatomic,strong)NSNumber *endDockId;
 
 -(instancetype)initWithDictionary:(NSDictionary*)dictionary;
 @end

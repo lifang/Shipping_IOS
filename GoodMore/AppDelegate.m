@@ -52,7 +52,7 @@
     
     [self getUserLocation];
     
-    
+
     _timer = [NSTimer scheduledTimerWithTimeInterval:15*60 target:self selector:@selector(getUserLocation) userInfo:nil repeats:YES];
     
     [self.window makeKeyAndVisible];

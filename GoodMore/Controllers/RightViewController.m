@@ -15,7 +15,9 @@
 #import "ShipInfoViewController.h" //船舶情况
 #import "MyWalletViewController.h" //我的钱包
 #import "MessageViewController.h"  //我的消息
+#import "RootViewController.h"
 #import "UIViewController+MMDrawerController.h"
+#import "AppDelegate.h"
 @interface RightViewController ()<MYInfoViewDelegate>
 
 @end
@@ -31,10 +33,13 @@
 
 -(void)initUI
 {
+    NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
+    NSString *name=[userDefault objectForKey:@"name"];
+    NSString *phone=[userDefault objectForKey:@"phone"];
     MYInfoView *view=[[MYInfoView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth/2, kScreenHeight)];
     view.delegate=self;
-    view.name.text=@"叶森";
-    view.phone.text=@"18205622983";
+    view.name.text=name;
+    view.phone.text=phone;
     view.cash.text=@"$20000";
     view.cash.textColor=[UIColor blueColor];
     [self.view addSubview:view];
@@ -91,6 +96,10 @@
         case 4:
         {
             //退出登录
+            AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+            
+            [delegate.rootViewController showLoginViewController];
+            
         }
             
            

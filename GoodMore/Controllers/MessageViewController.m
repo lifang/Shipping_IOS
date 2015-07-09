@@ -9,8 +9,8 @@
 #import "MessageViewController.h"
 #import "AppDelegate.h"
 #import "UIViewController+MMDrawerController.h"
-#import "Constants.h"
-#import "AppDelegate.h"
+#import "NetWorkInterface.h"
+
 
 @interface MessageViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -150,6 +150,16 @@
         _tableView.editing = NO;
     }
     self.isMultiDelete = !_isMultiDelete;
+}
+//标记为已读
+-(IBAction)setReadAll:(id)sender
+{
+    
+}
+//删除消息
+-(IBAction)deleteMessage:(id)sender
+{
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

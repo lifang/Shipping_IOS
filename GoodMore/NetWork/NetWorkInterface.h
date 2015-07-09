@@ -143,6 +143,20 @@ static NSString *upOutAccount_method = @"app/orders/upOutAccount";
 //升级为高级船
 static NSString *upShip_method = @"app/toPay/getPayInfo";
 
+//单船竞价
+static NSString *singleShipComplete_method= @"shipBusiness/singleComplete";
+
+//消息列表
+static NSString *messageList_method= @"app/messages/getList";
+
+//批量更新消息为已读
+static NSString *uploadMessageStatus_method= @"app/messages/upStatus";
+
+//删除消息
+static NSString *deleteMessage_method = @"app/messages/delById";
+
+
+
 @interface NetWorkInterface : NSObject
 
 /*
@@ -159,7 +173,7 @@ static NSString *upShip_method = @"app/toPay/getPayInfo";
  “shipName”://船名
  */
 //注册
-+(void)registerWithLoginName:(NSString*)loginName pwd:(NSString*)pwd name:(NSString*)name shipNumber:(NSString*)shipNumber phone:(NSString*)phone volume:(NSString*)volume dentCode:(NSString*)dentCode builderTime:(NSString*)builderTime imgList:(int)imgList joinCode:(NSString*)joinCode shipName:(NSString*)shipName  finished:(requestDidFinished)finish;
++(void)registerWithLoginName:(NSString*)loginName pwd:(NSString*)pwd name:(NSString*)name  phone:(NSString*)phone  dentCode:(NSString*)dentCode  joinCode:(NSString*)joinCode  finished:(requestDidFinished)finish;
 
 //发送验证码 (注册)
 +(void)sendCodeWith:(NSString*)phone finished:(requestDidFinished)finish;
@@ -181,7 +195,7 @@ static NSString *upShip_method = @"app/toPay/getPayInfo";
  mlon
 */
 //任务大厅
-+(void)getOrderListWithPage:(int)page status:(int)status keys:(NSString*)keys mLat1:(double)mLat1 mLon1:(double)mLon1 finished:(requestDidFinished)finish;
++(void)getOrderListWithPage:(int)page status:(int)status keys:(NSString*)keys mLat1:(double)mLat1 mLon1:(double)mLon1 portId:(int)portId distance:(NSString*)distance finished:(requestDidFinished)finish;
 
 
 
@@ -312,5 +326,17 @@ static NSString *upShip_method = @"app/toPay/getPayInfo";
 
 //升级为高级船
 +(void)upShipWithshipId:(int)shipId loginId:(int)loginId finished:(requestDidFinished)finish;
+
+//单船竞价
++(void)singleShipCompletWithshipOwnerId:(int)shipOwnerId bsOrderId:(int)bsOrderId loginId:(int)loginId finished:(requestDidFinished)finish;
+
+//消息列表
++(void)getMessageListWith:(int)shipOwnerId finished:(requestDidFinished)finish;
+
+//批量更新消息为已读
++(void)uploadMessageStausWithStatus:(int)status loginId:(int)loginId idStr:(NSString*)idStr finished:(requestDidFinished)finish;
+
+//删除消息
++(void)deleteMessageWithID:(int)ID finished:(requestDidFinished)finish;
 @end
 

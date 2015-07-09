@@ -18,7 +18,9 @@
 
 #import "WebViewViewController.h"
 
-#import "CommonCell.h"
+//#import "CommonCell.h"
+#import "ShipHistoryCell.h"
+
 #import "UIViewController+MMDrawerController.h"
 #import "LocationButton.h"
 #import "SelectPortViewController.h"
@@ -47,7 +49,7 @@
     
     self.hidesBottomBarWhenPushed=NO;
     
-    //[self firstLoadData];
+    [self firstLoadData];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -154,7 +156,7 @@
     _tableView.dataSource=self;
     _tableView.delegate=self;
     _tableView.tableFooterView=[[UIView alloc]init];
-    _tableView.rowHeight=150;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
@@ -314,7 +316,10 @@
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     double latitude=[[user objectForKey:@"latitude"] doubleValue];
     double longitude=[[user objectForKey:@"longitude"] doubleValue];
-    [NetWorkInterface getOrderListWithPage:page status:0 keys:@"" mLat1:latitude mLon1:longitude finished:^(BOOL success, NSData *response) {
+    
+    [NetWorkInterface getOrderListWithPage:page status:0 keys:@"" mLat1:latitude mLon1:longitude portId:-1 distance:@"" finished:^(BOOL success, NSData *response) {
+    
+    //[NetWorkInterface getOrderListWithPage:page status:0 keys:@"" mLat1:latitude mLon1:longitude finished:^(BOOL success, NSData *response) {
          NSLog(@"!!---------------任务大厅:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
          hud.customView=[[UIImageView alloc]init];
          [hud hide:YES afterDelay:0.3];
@@ -376,72 +381,58 @@
     [_tableView reloadData];
 }
 #pragma mark ----------------UITableViewDelegate----------------------------
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 2;
-}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return _ordersArray.count;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     static NSString *cellIndetifier =@"taskCell";
-    CommonCell*cell=[tableView dequeueReusableCellWithIdentifier:cellIndetifier];
+    ShipHistoryCell*cell=[tableView dequeueReusableCellWithIdentifier:cellIndetifier];
     if (cell==nil)
     {
-        cell=[[CommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndetifier];
+        cell=[[ShipHistoryCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndetifier];
     }
-//    OrdersModel *order=_ordersArray[indexPath.row];
-//    cell.fromLabel.text=order.beginPortName;
-//    cell.toLabel.text=order.endPortName;
-//    cell.whatLabel.text=order.cargos;
-////    double allPay=[order.allPay doubleValue];
-////    NSString *pay=[NSString stringWithFormat:@"%.2f",allPay];
-//    cell.moneyLabel.text=[NSString stringWithFormat:@"%@吨",order.amount];
-//     cell.distanceImV.image=kImageName(@"where.png");
-//    cell.whereLabel.text=order.longDistance;
     
-    //cell.backgroundColor=[UIColor redColor];
-    
-    cell.companyName.text=@"中宁物流";
-    cell.fromCity.text=@"南通";
-    cell.fromPort.text=@"马达加斯加港口";
-    cell.toCity.text=@"芜湖";
-    cell.toPort.text=@"安达曼港";
-    cell.price.text=@"12.00元";
-    cell.weight.text=@"2000吨";
-    cell.loadTime.text=@"2015年7月6号装船";
-    cell.goods.text=@"水泥";
-    cell.endTime.text=@"2小时53分34秒后结束";
-    cell.deposit.text=@"保证金:200.00元";
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    OrdersModel *order=_ordersArray[indexPath.row];
+
+    cell.logistNameLabel.text=order.companyName;
+
+    cell.startPlaceLabel.text=order.beginPortName;
+    cell.startPortLabel.text=order.beginDockName;
+
+    cell.endPlaceLabel.text=order.endPortName;
+    cell.endPortLabel.text=order.endDockName;
+    double price=[order.maxPay doubleValue];
+    cell.moneyLabel.text=[NSString stringWithFormat:@"%.2f元",price];
+    cell.weightLabel.text=[NSString stringWithFormat:@"%@吨",order.amount];
+    cell.dateLabel.text=order.workTime;
+    cell.goodsLabel.text=order.cargos;
+    cell.endTimeLabel.text=order.showTime;
+    cell.marginLabel.text=@"保证金:200.00元";
     
     return cell;
         
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    OrdersModel *order=_ordersArray[indexPath.row];
-//    int ID=[order.ID intValue];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    OrdersModel *order=_ordersArray[indexPath.row];
+    int ID=[order.ID intValue];
     TaskDetailViewController *detail=[[TaskDetailViewController alloc]init];
     detail.selectedIndex=_index;
-    //detail.ID=ID;
+    detail.ID=ID;
     detail.hidesBottomBarWhenPushed=YES;
     [self.navigationController pushViewController:detail animated:YES];
 }
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
-        [tableView setSeparatorInset:UIEdgeInsetsZero];
-    }
-    if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
-        [tableView setLayoutMargins:UIEdgeInsetsZero];
-    }
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        [cell setLayoutMargins:UIEdgeInsetsZero];
-    }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 200.f;
 }
+
 
 #pragma mark ---UITextFieldDelegate----
 -(BOOL)textFieldShouldReturn:(UITextField *)textField

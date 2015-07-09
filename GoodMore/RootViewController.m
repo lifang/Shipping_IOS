@@ -102,10 +102,10 @@
         [self addChildViewController:_loginNav];
         [NavigationBar setNavigationBarStyle:_loginNav];
     }
-    if (_registerViewController) {
-        [_registerViewController.view removeFromSuperview];
-        [_registerViewController removeFromParentViewController];
-        _registerViewController = nil;
+    if (_menuController) {
+        [_menuController.view removeFromSuperview];
+        [_menuController removeFromParentViewController];
+        _menuController = nil;
     }
 
 }

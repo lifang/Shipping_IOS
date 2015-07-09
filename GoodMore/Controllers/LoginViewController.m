@@ -179,56 +179,52 @@
 //登录
 -(IBAction)login:(UIButton*)sender
 {
+    NSLog(@"------登录---------");
     [self login];
 }
 -(void)login
 {
-    
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    [delegate.rootViewController showMainViewController];
+    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText=@"正在登录";
+    [NetWorkInterface loginWithLoginName:_loginName.text pwd:_pwd.text finished:^(BOOL success, NSData *response)
+     {
+         hud.customView=[[UIImageView alloc]init];
+         [hud hide:YES afterDelay:0.3];
+         NSLog(@"------------登录:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+         if (success)
+         {
+             id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+             if ([object isKindOfClass:[NSDictionary class]])
+             {
+                 if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
+                 {
+                     [hud setHidden:YES];
+                     
+                     [self parseLoginDataWithDictionary:object];
+                     
+                     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+                     [delegate.rootViewController showMainViewController];
 
-    
-//    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-//    hud.labelText=@"正在登录";
-//    [NetWorkInterface loginWithLoginName:_loginName.text pwd:_pwd.text finished:^(BOOL success, NSData *response)
-//     {
-//         hud.customView=[[UIImageView alloc]init];
-//         [hud hide:YES afterDelay:0.3];
-//         NSLog(@"------------登录:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
-//         if (success)
-//         {
-//             id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
-//             if ([object isKindOfClass:[NSDictionary class]])
-//             {
-//                 if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
-//                 {
-//                     [hud setHidden:YES];
-//                     
-//                     [self parseLoginDataWithDictionary:object];
-//                     
-//                     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-//                     [delegate.rootViewController showMainViewController];
-//
-//                     
-////                     MainViewController *main=[[MainViewController alloc]init];
-////                     [self presentViewController:main animated:YES completion:nil];
-//                     
-//                 }else
-//                 {
-//                     
-//                     hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
-//                 }
-//             }else
-//             {
-//                 
-//                 hud.labelText=kServiceReturnWrong;
-//             }
-//         }else
-//         {
-//             hud.labelText=kNetworkFailed;
-//         }
-//         
-//     }];
+                     
+//                     MainViewController *main=[[MainViewController alloc]init];
+//                     [self presentViewController:main animated:YES completion:nil];
+                     
+                 }else
+                 {
+                     
+                     hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                 }
+             }else
+             {
+                 
+                 hud.labelText=kServiceReturnWrong;
+             }
+         }else
+         {
+             hud.labelText=kNetworkFailed;
+         }
+         
+     }];
 
 }
 -(void)parseLoginDataWithDictionary:(NSDictionary*)dictionary
