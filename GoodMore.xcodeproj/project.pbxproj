@@ -16,6 +16,8 @@
 		1A2B6FFF1B4D3C29002FFD96 /* HistoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B6FFE1B4D3C29002FFD96 /* HistoryController.m */; };
 		1A2B70021B4D4253002FFD96 /* ShipHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B70011B4D4253002FFD96 /* ShipHistoryCell.m */; };
 		1A2B70051B4D4C12002FFD96 /* HistoryDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B70041B4D4C12002FFD96 /* HistoryDetailController.m */; };
+		1A88388B1B4E4A7E003BEB43 /* ShipOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A88388A1B4E4A7E003BEB43 /* ShipOrder.m */; };
+		1A8838911B4E54AA003BEB43 /* JoinShipController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8838901B4E54AA003BEB43 /* JoinShipController.m */; };
 		9302B5981B3AA6CE00596A80 /* MYView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9302B5971B3AA6CE00596A80 /* MYView.m */; };
 		9302B59B1B3AC2F300596A80 /* GoodsTransDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9302B59A1B3AC2F300596A80 /* GoodsTransDetailViewController.m */; };
 		9302B59E1B3AE1BE00596A80 /* ShipInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9302B59D1B3AE1BE00596A80 /* ShipInfoCell.m */; };
@@ -121,6 +123,10 @@
 		1A2B70011B4D4253002FFD96 /* ShipHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipHistoryCell.m; sourceTree = "<group>"; };
 		1A2B70031B4D4C12002FFD96 /* HistoryDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryDetailController.h; sourceTree = "<group>"; };
 		1A2B70041B4D4C12002FFD96 /* HistoryDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryDetailController.m; sourceTree = "<group>"; };
+		1A8838891B4E4A7E003BEB43 /* ShipOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipOrder.h; sourceTree = "<group>"; };
+		1A88388A1B4E4A7E003BEB43 /* ShipOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipOrder.m; sourceTree = "<group>"; };
+		1A88388F1B4E54AA003BEB43 /* JoinShipController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinShipController.h; sourceTree = "<group>"; };
+		1A8838901B4E54AA003BEB43 /* JoinShipController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinShipController.m; sourceTree = "<group>"; };
 		9302B5961B3AA6CE00596A80 /* MYView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYView.h; sourceTree = "<group>"; };
 		9302B5971B3AA6CE00596A80 /* MYView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYView.m; sourceTree = "<group>"; };
 		9302B5991B3AC2F300596A80 /* GoodsTransDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsTransDetailViewController.h; sourceTree = "<group>"; };
@@ -306,6 +312,15 @@
 			name = HhzView;
 			sourceTree = "<group>";
 		};
+		1A8838881B4E46AC003BEB43 /* HhzModel */ = {
+			isa = PBXGroup;
+			children = (
+				1A8838891B4E4A7E003BEB43 /* ShipOrder.h */,
+				1A88388A1B4E4A7E003BEB43 /* ShipOrder.m */,
+			);
+			name = HhzModel;
+			sourceTree = "<group>";
+		};
 		9384DDE11B26C10B001D539F /* mywallet */ = {
 			isa = PBXGroup;
 			children = (
@@ -351,6 +366,7 @@
 		93C4CA2D1B4CB7B600FE23DE /* myShip */ = {
 			isa = PBXGroup;
 			children = (
+				1A8838881B4E46AC003BEB43 /* HhzModel */,
 				1A2B6FF31B4CF08D002FFD96 /* HhzView */,
 				93C4CA2E1B4CB7DE00FE23DE /* MyShipViewController.h */,
 				93C4CA2F1B4CB7DE00FE23DE /* MyShipViewController.m */,
@@ -358,6 +374,8 @@
 				1A2B6FFE1B4D3C29002FFD96 /* HistoryController.m */,
 				1A2B70031B4D4C12002FFD96 /* HistoryDetailController.h */,
 				1A2B70041B4D4C12002FFD96 /* HistoryDetailController.m */,
+				1A88388F1B4E54AA003BEB43 /* JoinShipController.h */,
+				1A8838901B4E54AA003BEB43 /* JoinShipController.m */,
 			);
 			name = myShip;
 			path = transporting/myShip;
@@ -710,6 +728,7 @@
 				93CDA0A51B15B9200008DCC0 /* RegisterViewController.m in Sources */,
 				0ECD46611B4D0109002BA802 /* TransportingTableViewCell.m in Sources */,
 				931EFD041B4284930045752C /* WebViewViewController.m in Sources */,
+				1A88388B1B4E4A7E003BEB43 /* ShipOrder.m in Sources */,
 				939621421B18567D00CB730B /* TaskViewController.m in Sources */,
 				93C123961B391B5F002BB29C /* BanksListViewController.m in Sources */,
 				93CDA0AC1B15BBF20008DCC0 /* NavigationBar.m in Sources */,
@@ -776,6 +795,7 @@
 				1A2B6FF91B4D0441002FFD96 /* LogisticsCell.m in Sources */,
 				93CDA07F1B15B6750008DCC0 /* AppDelegate.m in Sources */,
 				938E975B1B2027420050FE4D /* RegularNumber.m in Sources */,
+				1A8838911B4E54AA003BEB43 /* JoinShipController.m in Sources */,
 				9302B59E1B3AE1BE00596A80 /* ShipInfoCell.m in Sources */,
 				93CDA07C1B15B6750008DCC0 /* main.m in Sources */,
 				93C1239C1B3933A7002BB29C /* CityModel.m in Sources */,

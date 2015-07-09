@@ -143,6 +143,12 @@ static NSString *upOutAccount_method = @"app/orders/upOutAccount";
 //升级为高级船
 static NSString *upShip_method = @"app/toPay/getPayInfo";
 
+//组队中
+static NSString *shipMakeTeam_methd = @"app/team/getMyIngTeam";
+
+//加入船队
+static NSString *shipInTeam_methd = @"app/team/joinTeam";
+
 @interface NetWorkInterface : NSObject
 
 /*
@@ -312,5 +318,15 @@ static NSString *upShip_method = @"app/toPay/getPayInfo";
 
 //升级为高级船
 +(void)upShipWithshipId:(int)shipId loginId:(int)loginId finished:(requestDidFinished)finish;
+
+//获取船队详细列表
++(void)shipMakeTeamWithLoginId:(int)loginId finished:(requestDidFinished)finish;
+
+//获取船队详细列表
++(void)joinInTeamWithLoginId:(int)loginId
+                        Code:(NSString *)code
+                   ShipOwnID:(int)shipOwnId
+                       Quote:(int)quote
+                    finished:(requestDidFinished)finish;
 @end
 

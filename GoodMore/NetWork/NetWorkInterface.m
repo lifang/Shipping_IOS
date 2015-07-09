@@ -381,4 +381,22 @@ static NSString *HTTP_GET = @"GET";
     NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,upShip_method];
     [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
 }
+
+//获取船队详细列表
++(void)shipMakeTeamWithLoginId:(int)loginId finished:(requestDidFinished)finish {
+    NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
+    [paramDic setObject:[NSNumber numberWithInt:loginId] forKey:@"loginId"];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,shipMakeTeam_methd];
+    [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
+}
+
++(void)joinInTeamWithLoginId:(int)loginId Code:(NSString *)code ShipOwnID:(int)shipOwnId Quote:(int)quote finished:(requestDidFinished)finish {
+    NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
+    [paramDic setObject:[NSNumber numberWithInt:loginId] forKey:@"loginId"];
+    [paramDic setObject:code forKey:@"code"];
+    [paramDic setObject:[NSNumber numberWithInt:shipOwnId] forKey:@"shipOwnerId"];
+    [paramDic setObject:[NSNumber numberWithInt:quote] forKey:@"quote"];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,shipInTeam_methd];
+    [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
+}
 @end

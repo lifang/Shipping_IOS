@@ -14,6 +14,8 @@
 #import "AppDelegate.h"
 #import "UIViewController+MMDrawerController.h"
 #import "HistoryDetailController.h"
+#import "NetWorkInterface.h"
+#import "JoinShipController.h"
 
 @interface MyShipViewController ()<TopButtonClickedDelegate,UITableViewDelegate,UITableViewDataSource,ShipDetailCellDelegate>
 
@@ -24,6 +26,12 @@
 @property(nonatomic,strong)UIView *headerView;
 
 @property(nonatomic,strong)HistoryController *historyVC;
+
+@property(nonatomic,strong)LogisticsCell *logisticCell;
+
+@property(nonatomic,strong)NSMutableArray *totalLastTime;
+
+@property(nonatomic,strong)NSTimer *timer;
 
 @end
 
@@ -61,19 +69,46 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToHistoryDetail) name:PushToHistoryDetailNotification object:nil];
     
+    _totalLastTime = [[NSMutableArray alloc]init];
+    [_totalLastTime addObject:@"120000"];
+    [self startTimer];
+    
     //设置导航栏View
     [self setupTopView];
-    //创建headerView
-    [self setupHeaderView];
-    //创建footerView
-    [self setupFooterView];
+    //获取船队信息
+    [self loadShipDetail];
 }
 
+-(void)startTimer {
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(refreshLessTime) userInfo:@"" repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:UITrackingRunLoopMode];
+}
+
+-(void)refreshLessTime {
+    NSUInteger time;
+    for (int i = 0; i < _totalLastTime.count; i++) {
+        time = [_totalLastTime[i] integerValue];
+        _logisticCell.endTimeLabel.text = [NSString stringWithFormat:@"%@",[self lessSecondToDay:--time]];
+        NSString *newTime = [NSString stringWithFormat:@"%i",time];
+        [_totalLastTime replaceObjectAtIndex:i withObject:newTime];
+    }
+}
+
+- (NSString *)lessSecondToDay:(NSUInteger)seconds
+{
+    NSUInteger day  = (NSUInteger)seconds/(24*3600);
+    NSUInteger hour = (NSUInteger)(seconds%(24*3600))/3600;
+    NSUInteger min  = (NSUInteger)(seconds%(3600))/60;
+    NSUInteger second = (NSUInteger)(seconds%60);
+    
+    NSString *time = [NSString stringWithFormat:@"%lu日%lu小时%lu分钟%lu秒",(unsigned long)day,(unsigned long)hour,(unsigned long)min,(unsigned long)second];
+    return time;
+    
+}
 //创建头部的View
 -(void)setupTopView {
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.tableView.backgroundColor = [UIColor whiteColor];
     
     UIView *topV = [[UIView alloc]init];
     topV.userInteractionEnabled = YES;
@@ -94,14 +129,15 @@
 
 //创建headerView
 -(void)setupHeaderView {
+    self.tableView.backgroundColor = [UIColor whiteColor];
     _headerView = [[UIView alloc]init];
     _headerView.frame = CGRectMake(0, 0, K_MainWidth, 250);
     _headerView.backgroundColor = [UIColor whiteColor];
     
-    LogisticsCell *logistCell = [[LogisticsCell alloc]init];
-    logistCell.successTeam.hidden = YES;
-    logistCell.frame = CGRectMake(0, 0, K_MainWidth, 250);
-    [_headerView addSubview:logistCell];
+    _logisticCell = [[LogisticsCell alloc]init];
+    _logisticCell.successTeam.hidden = YES;
+    _logisticCell.frame = CGRectMake(0, 0, K_MainWidth, 250);
+    [_headerView addSubview:_logisticCell];
     
     _tableView.tableHeaderView = _headerView;
 }
@@ -165,6 +201,64 @@
     _historyVC = [[HistoryController alloc]init];
     _historyVC.view.frame = CGRectMake(0, 60, K_MainWidth, K_MainHeight - 60);
     [self.view addSubview:_historyVC.view];
+}
+
+#pragma mark -- Request
+-(void)loadShipDetail {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText = @"加载中...";
+    [NetWorkInterface shipMakeTeamWithLoginId:88 finished:^(BOOL success, NSData *response) {
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        [hud hide:YES afterDelay:0.3f];
+        if (success) {
+            id object = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+            NSLog(@"!!%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+            if ([object isKindOfClass:[NSDictionary class]]) {
+                NSString *errorCode = [object objectForKey:@"code"];
+                if ([errorCode intValue] == RequestFail) {
+                    //返回错误代码
+                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                    UILabel *label = [[UILabel alloc]init];
+                    label.font = [UIFont systemFontOfSize:13];
+                    label.text = @"您还未加入任何船队！";
+                    label.textAlignment = NSTextAlignmentCenter;
+                    label.textColor = [UIColor blackColor];
+                    label.frame = CGRectMake(K_MainWidth / 4, K_MainHeight / 5, K_MainWidth / 2, 30);
+                    label.backgroundColor = [UIColor clearColor];
+                    [self.view addSubview:label];
+                    
+                    UIButton *btn = [[UIButton alloc]init];
+                    [btn setTitle:@"加入船队" forState:UIControlStateNormal];
+                    btn.titleLabel.font = [UIFont systemFontOfSize:13];
+                    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                    [btn setBackgroundImage:[UIImage imageNamed:@"lianglan"] forState:UIControlStateNormal];
+                    CALayer *readBtnLayer = [btn layer];
+                    [readBtnLayer setMasksToBounds:YES];
+                    [readBtnLayer setCornerRadius:4.0];
+                    btn.frame = CGRectMake(label.frame.origin.x - 20, CGRectGetMaxY(label.frame) + 10, K_MainWidth / 1.7, 35);
+                    [btn addTarget:self action:@selector(joinInShipTeam) forControlEvents:UIControlEventTouchUpInside];
+                    [self.view addSubview:btn];
+                }
+                else if ([errorCode intValue] == RequestSuccess) {
+                    [hud hide:YES];
+                  
+                    //创建headerView
+                    [self setupHeaderView];
+                    //创建footerView
+                    [self setupFooterView];
+                }
+            }
+            else {
+                //返回错误数据
+                hud.labelText = kServiceReturnWrong;
+            }
+        }
+        else {
+            hud.labelText = kNetworkFailed;
+        }
+
+    }];
 }
 
 #pragma mark -- ShipDtailCellDelegate
@@ -237,11 +331,22 @@
 
 #pragma mark -- Action
 -(void)dismissClicked {
-    
+    NSLog(@"解散船队");
 }
 
 -(void)grabClicked {
     NSLog(@"抢单");
+}
+
+-(void)joinInShipTeam {
+    NSLog(@"加入船队");
+    JoinShipController *joinVC = [[JoinShipController alloc]init];
+    joinVC.view.frame = CGRectMake(0, 0, 80, 80);
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:joinVC];
+    nav.navigationBarHidden = YES;
+    nav.modalPresentationStyle = UIModalPresentationCustom;
+    nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 -(void)pushToHistoryDetail {
