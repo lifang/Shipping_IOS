@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>B9DDAF41-F696-4395-883F-6BF957D98454</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>GoodMore</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>42F0F8E62374BC82FE1D1F28363B1DF39ADE4632</key>
 		<string>github.com:lifang/Shipping_IOS.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>GoodMore.xcodeproj/project.xcworkspace</string>
+	<string>GoodMore.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>42F0F8E62374BC82FE1D1F28363B1DF39ADE4632</key>
