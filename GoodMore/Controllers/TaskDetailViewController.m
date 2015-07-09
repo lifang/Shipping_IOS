@@ -26,10 +26,11 @@
     
     UIScrollView *_scrollView;
 }
-@property(nonatomic,strong)ShipRelation *shipRelation;
+
 @property(nonatomic,strong)BusinessOrders *businessOrder;
 @property(nonatomic,assign)BOOL isReceived;
-@property(nonatomic,strong)NSNumber *shipOrderRelation;
+@property(nonatomic,strong)NSNumber *singleShipCompleteNum;//几条船竞价
+@property(nonatomic,strong)NSNumber *canSingleShipComplete;//单条船能否接单
 @property(nonatomic,strong)NSString *code;//组队密码
 @end
 
@@ -63,73 +64,6 @@
 
 }
 
-//-(void)setFootView
-//{
-//    NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
-//    NSNumber *type=[userDefault objectForKey:@"type"];
-//    if ([type intValue]==1)
-//    {
-//        //高级船
-//        UIView *footView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight*0.4)];
-//        footView.backgroundColor=[UIColor clearColor];
-//        UIView *line=[[UIView alloc]initWithFrame:CGRectMake(10, 0.5, kScreenWidth-20, 0.5)];
-//        line.backgroundColor=kColor(201, 201, 201, 1);
-//        [footView addSubview:line];
-//        _receive=[UIButton buttonWithType:UIButtonTypeCustom];
-//        [_receive setTitle:@"组队接单" forState:UIControlStateNormal];
-//        [_receive setBackgroundColor:kMainColor];
-//        _receive.frame=CGRectMake(50, 30, kScreenWidth-100, 40);
-//        
-//        if (_canMT==0)
-//        {
-//            //不能组队接单
-//            _isReceived=YES;
-//            [_receive setTitle:@"已组队接单" forState:UIControlStateNormal];
-//            _receive.userInteractionEnabled=NO;
-//            _receive.backgroundColor=kGrayColor;
-//        }else if(_canMT==1)
-//        {
-//            //能组队接单
-//            _isReceived=NO;
-//            [_receive setTitle:@"组队接单" forState:UIControlStateNormal];
-//            _receive.userInteractionEnabled=YES;
-//            _receive.backgroundColor=kMainColor;
-//        }
-//
-//        
-//        _receive.layer.masksToBounds=YES;
-//        _receive.layer.cornerRadius=4;
-//        [_receive addTarget:self action:@selector(receive:) forControlEvents:UIControlEventTouchUpInside];
-//        [footView addSubview:_receive];
-//        _tableView.tableFooterView=footView;
-//
-//    }else
-//    {
-//        //普通船
-//        UIView *footView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight*0.4)];
-//        footView.backgroundColor=[UIColor clearColor];
-//        
-//        UILabel *remark=[[UILabel alloc]initWithFrame:CGRectMake(20, 20, kScreenWidth-20*2, 60)];
-//        remark.numberOfLines=0;
-//        remark.text=@"普通船无法组队接单,需要升级为高级船";
-//        remark.font=[UIFont systemFontOfSize:16];
-//        remark.textColor=kMainColor;
-//        [footView addSubview:remark];
-//        
-//        UIButton *upgrad=[UIButton buttonWithType:UIButtonTypeCustom];
-//        upgrad.frame=CGRectMake(80, 90, kScreenWidth-160, 40);
-//        upgrad.layer.cornerRadius=4;
-//        upgrad.layer.masksToBounds=YES;
-//        [upgrad setTitle:@"升级为高级船" forState:UIControlStateNormal];
-//        [upgrad setBackgroundColor:kMainColor];
-//        [upgrad addTarget:self action:@selector(upgrad:) forControlEvents:UIControlEventTouchUpInside];
-//        [footView addSubview:upgrad];
-//        _tableView.tableFooterView=footView;
-//    }
-//    
-//    
-//}
-
 -(void)setSubviews
 {
     CGFloat topSpace=10;
@@ -140,7 +74,7 @@
     CGFloat jianTouWidth=42;//箭头的长度
 
     UIView *Vline1=[[UIView alloc]initWithFrame:CGRectMake(10, topSpace, 1, kScreenHeight+100)];
-    Vline1.backgroundColor=kColor(201, 201, 201, 1);
+    Vline1.backgroundColor=kColor(213, 217, 218, 1.0);
     [_scrollView addSubview:Vline1];
     
     UIView *Vline2=[[UIView alloc]initWithFrame:CGRectMake(kScreenWidth-10, topSpace, 1, kScreenHeight+100)];
@@ -156,6 +90,7 @@
     [view1 addSubview:imav1];
     
     UILabel *company=[[UILabel alloc]initWithFrame:CGRectMake(10+17, (30-17)/2, 120, 17)];
+    company.font=[UIFont systemFontOfSize:15];
     company.text=_businessOrder.companyName;
     [view1 addSubview:company];
     
@@ -164,7 +99,9 @@
     [view1 addSubview:line1];
     
     UILabel *numShip=[[UILabel alloc]initWithFrame:CGRectMake(view1.bounds.size.width-80-10, (30-17)/2, 80, 17)];
-    numShip.text=@"8船竞价";
+    numShip.text=[NSString stringWithFormat:@"%@船竞价",_singleShipCompleteNum];
+    numShip.font=[UIFont systemFontOfSize:15];
+    numShip.textColor=kGrayColor;
     [view1 addSubview:numShip];
     
     [headView addSubview:view1];
@@ -177,10 +114,12 @@
     UILabel *fromCity=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace*2+12+10, topSpace+30+10,  cityWidth, 20)];
     fromCity.text=_businessOrder.beginPortName;
     fromCity.font=[UIFont boldSystemFontOfSize:20];
+    fromCity.textColor=kGrayColor;
     [headView addSubview:fromCity];
     
     UILabel *fromPort=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5, PortWidth, 20)];
     fromPort.text=_businessOrder.beginDockName;
+    fromPort.textColor=kGrayColor;
     fromPort.font=[UIFont systemFontOfSize:15];
     fromPort.textAlignment=NSTextAlignmentCenter;
     [headView addSubview:fromPort];
@@ -195,6 +134,7 @@
     
     UILabel *toCity=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace*2+12+10, topSpace+30+10, cityWidth, 20)];
     toCity.text=_businessOrder.endPortName;
+    toCity.textColor=kGrayColor;
     toCity.font=[UIFont boldSystemFontOfSize:20];
     [headView addSubview:toCity];
     
@@ -202,10 +142,11 @@
     toPort.text=_businessOrder.endDockName;
     toPort.textAlignment=NSTextAlignmentCenter;
     toPort.font=[UIFont systemFontOfSize:15];
+    toPort.textColor=kGrayColor;
     [headView addSubview:toPort];
 
     UIView *view2=[[UIView alloc]initWithFrame:CGRectMake(10, topSpace+30+10+20+5+20+10, kScreenWidth-10*2, 30)];
-    view2.backgroundColor=kColor(200, 233, 243, 1);
+    view2.backgroundColor=kColor(193, 230, 242, 1.0);
     [headView addSubview:view2];
     
     UILabel *endTime=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth/2, 30)];
@@ -232,6 +173,7 @@
     [headView addSubview:goodsName];
     
     UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5, 120, 20)];
+    name.textColor=kGrayColor;
     name.text=_businessOrder.companyName;
     [headView addSubview:name];
     
@@ -241,6 +183,7 @@
     [headView addSubview:goodsWeight];
     
     UILabel *weight=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5, 120, 20)];
+    weight.textColor=kGrayColor;
     weight.text=[NSString stringWithFormat:@"%@吨",_businessOrder.amount];
     [headView addSubview:weight];
 
@@ -252,6 +195,7 @@
     UILabel *price=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5, 120, 20)];
     double pay=[_businessOrder.maxPay doubleValue];
     price.text=[NSString stringWithFormat:@"￥%.2f元",pay];
+    price.textColor=kGrayColor;
     [headView addSubview:price];
     
     UILabel *loadTime=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20, 120, 20)];
@@ -261,6 +205,7 @@
     
     UILabel *loadT=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5, 120, 20)];
     loadT.text=_businessOrder.workTime;
+    loadT.textColor=kGrayColor;
     [headView addSubview:loadT];
 
     UILabel *loadtimeLimit=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20, 120, 20)];
@@ -270,6 +215,7 @@
     
     UILabel *loadlimit=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5, 120, 20)];
     loadlimit.text=[NSString stringWithFormat:@"%@天",_businessOrder.inDays];
+    loadlimit.textColor=kGrayColor;
     [headView addSubview:loadlimit];
     
     UILabel *unloadTimeLimit=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20, 120, 20)];
@@ -279,6 +225,7 @@
     
     UILabel *unloadLimit=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5, 120, 20)];
     unloadLimit.text=[NSString stringWithFormat:@"%@天",_businessOrder.outDays];
+    unloadLimit.textColor=kGrayColor;
     [headView addSubview:unloadLimit];
     
     UILabel *shipRule=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+10, kScreenWidth/2, 20)];
@@ -293,6 +240,7 @@
     
     UILabel *shipW1=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+5, 120, 20)];
     shipW1.text=[NSString stringWithFormat:@"%@天",_businessOrder.minAmount];
+    shipW1.textColor=kGrayColor;
     [headView addSubview:shipW1];
     
     UILabel *shipWeight2=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+5, 120, 20)];
@@ -302,6 +250,7 @@
     
     UILabel *shipW2=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+5, 120, 20)];
     shipW2.text=[NSString stringWithFormat:@"%@天",_businessOrder.maxAmount];
+    shipW2.textColor=kGrayColor;
     [headView addSubview:shipW2];
 
     UILabel *waterLevel=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+5, 120, 20)];
@@ -310,7 +259,8 @@
     [headView addSubview:waterLevel];
     
     UILabel *level=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+20+5+5, 120, 20)];
-    level.text=@"1m";
+    level.text=[NSString stringWithFormat:@"%@米",_businessOrder.waterEat];
+    level.textColor=kGrayColor;
     [headView addSubview:level];
     
     UILabel *shipCapacity=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+5, 120, 20)];
@@ -319,7 +269,8 @@
     [headView addSubview:shipCapacity];
     
     UILabel *capacity=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+20+5+5, 120, 20)];
-    capacity.text=@"300立方米";
+    capacity.text=[NSString stringWithFormat:@"%@立方米",_businessOrder.storage];
+    capacity.textColor=kGrayColor;
     [headView addSubview:capacity];
     
     UIView *line2=[[UIView alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+20+5+5+20+20, kScreenWidth-leftSpace*2, 1)];
@@ -420,52 +371,52 @@
 {
     
 }
-//升级为高级船
--(void)upgrad:(UIButton*)sender
-{
-    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.labelText=@"请耐心等待";
-    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
-    int loginId=[[userDefaults objectForKey:@"loginId"] intValue];
-    int shipOwnerId=[[userDefaults objectForKey:@"shipOwnerId"] intValue];
-    
-    [NetWorkInterface upShipWithshipId:shipOwnerId loginId:loginId finished:^(BOOL success, NSData *response) {
-        
-        hud.customView=[[UIImageView alloc]init];
-        [hud hide:YES afterDelay:0.3];
-        NSLog(@"------------升级为高级船----:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
-        if (success)
-        {
-            hud.customView=[[UIImageView alloc]init];
-            [hud hide:YES afterDelay:0.3];
-            id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
-            if ([object isKindOfClass:[NSDictionary class]])
-            {
-                if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
-                {
-                    [hud setHidden:YES];
-                    
-                    NSString *urlString=[object objectForKey:@"result"];
-                    WebViewViewController *webView=[[WebViewViewController alloc]init];
-                    webView.hidesBottomBarWhenPushed=YES;
-                    webView.urlString=urlString;
-                    [self.navigationController pushViewController:webView animated:YES];
-                    
-                }else
-                {
-                    hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
-                }
-            }else
-            {
-                hud.labelText=kServiceReturnWrong;
-            }
-        }else
-        {
-            hud.labelText=kNetworkFailed;
-        }
-        
-    }];
-}
+////升级为高级船
+//-(void)upgrad:(UIButton*)sender
+//{
+//    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+//    hud.labelText=@"请耐心等待";
+//    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+//    int loginId=[[userDefaults objectForKey:@"loginId"] intValue];
+//    int shipOwnerId=[[userDefaults objectForKey:@"shipOwnerId"] intValue];
+//    
+//    [NetWorkInterface upShipWithshipId:shipOwnerId loginId:loginId finished:^(BOOL success, NSData *response) {
+//        
+//        hud.customView=[[UIImageView alloc]init];
+//        [hud hide:YES afterDelay:0.3];
+//        NSLog(@"------------升级为高级船----:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+//        if (success)
+//        {
+//            hud.customView=[[UIImageView alloc]init];
+//            [hud hide:YES afterDelay:0.3];
+//            id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+//            if ([object isKindOfClass:[NSDictionary class]])
+//            {
+//                if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
+//                {
+//                    [hud setHidden:YES];
+//                    
+//                    NSString *urlString=[object objectForKey:@"result"];
+//                    WebViewViewController *webView=[[WebViewViewController alloc]init];
+//                    webView.hidesBottomBarWhenPushed=YES;
+//                    webView.urlString=urlString;
+//                    [self.navigationController pushViewController:webView animated:YES];
+//                    
+//                }else
+//                {
+//                    hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+//                }
+//            }else
+//            {
+//                hud.labelText=kServiceReturnWrong;
+//            }
+//        }else
+//        {
+//            hud.labelText=kNetworkFailed;
+//        }
+//        
+//    }];
+//}
 
 //组队接单
 -(IBAction)receive:(UIButton*)sender
@@ -573,13 +524,8 @@
     }
     NSDictionary *result=[dic objectForKey:@"result"];
     
-//    NSDictionary *shipRelation=[result objectForKey:@"shipRelation"];
-//    _shipOrderRelation=[result objectForKey:@"shipOrderRelation"];
-//    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-//    [user setObject:_shipOrderRelation forKey:@"shipOrderRelation"];
-//    [user synchronize];
-//    _shipRelation=[[ShipRelation alloc]initWithDictionary:shipRelation];
-    
+    _canSingleShipComplete=[result objectForKey:@"canSingleShipComplete"];
+    _singleShipCompleteNum=[result objectForKey:@"singleShipCompleteNum"];
     
     NSDictionary *businessOrder=[result objectForKey:@"businessOrder"];
     _businessOrder=[[BusinessOrders alloc]initWithDictionary:businessOrder];
