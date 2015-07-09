@@ -117,7 +117,7 @@
     [dismissShip setTitle:@"解散船队" forState:UIControlStateNormal];
     [dismissShip addTarget:self action:@selector(dismissClicked) forControlEvents:UIControlEventTouchUpInside];
     dismissShip.frame = CGRectMake(20, 22, K_MainWidth / 2.5, 40);
-    [dismissShip setBackgroundColor:kLightColor];
+    [dismissShip setBackgroundImage:[UIImage imageNamed:@"lianglan"] forState:UIControlStateNormal];
     CALayer *readBtnLayer1 = [dismissShip layer];
     [readBtnLayer1 setMasksToBounds:YES];
     [readBtnLayer1 setCornerRadius:3.0];
@@ -129,7 +129,7 @@
     [grabBtn setTitle:@"抢单" forState:UIControlStateNormal];
     [grabBtn addTarget:self action:@selector(grabClicked) forControlEvents:UIControlEventTouchUpInside];
     grabBtn.frame = CGRectMake(CGRectGetMaxX(dismissShip.frame) + 25, 22, K_MainWidth / 2.5, 40);
-    [grabBtn setBackgroundColor:kLightColor];
+    [grabBtn setBackgroundImage:[UIImage imageNamed:@"lanse"] forState:UIControlStateNormal];
     CALayer *readBtnLayer2 = [grabBtn layer];
     [readBtnLayer2 setMasksToBounds:YES];
     [readBtnLayer2 setCornerRadius:3.0];
