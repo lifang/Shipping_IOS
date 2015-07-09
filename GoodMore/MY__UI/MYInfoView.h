@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol MYInfoViewDelegate <NSObject>
 
+-(void)selectInfoWithIndex:(NSInteger)index;
+
+@end
 
 @interface MYInfoView : UIView<UITableViewDataSource,UITableViewDelegate>
 {
@@ -16,10 +20,10 @@
     NSArray *_data;
 }
 
-
-
 @property(nonatomic,strong)UILabel *name;
 @property(nonatomic,strong)UILabel *phone;
 @property(nonatomic,strong)UILabel *cash;
+
+@property(nonatomic,strong)id <MYInfoViewDelegate> delegate;
 
 @end

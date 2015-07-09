@@ -13,6 +13,10 @@
 #import "MBProgressHUD.h"
 #import "NetWorkInterface.h"
 #import "WebViewViewController.h"
+#import "UIViewController+MMDrawerController.h"
+#import "TaskViewController.h"
+#import "UIViewController+MMDrawerController.h"
+#import "AppDelegate.h"
 
 @interface SettingViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
@@ -22,6 +26,7 @@
     UIImageView *_icon1;
     UIButton *_promote;
     UIView *_backView;
+    UILabel *_bankNumber;
 }
 @end
 
@@ -30,9 +35,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title=@"我的信息";
-    UIBarButtonItem *rightItem=[[UIBarButtonItem alloc]initWithImage:kImageName(@"setting.png") style:UIBarButtonItemStyleDone target:self action:@selector(signOut:)];
-    self.navigationItem.rightBarButtonItem=rightItem;
+    self.title=@"我的资料";
+    UIBarButtonItem *leftItem=[[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+    self.navigationItem.leftBarButtonItem=leftItem;
     [self initStaticData];
     [self initAndLayoutUI];
     [self initBackView];
@@ -40,15 +45,20 @@
 }
 -(void)initStaticData
 {
-    _staticData=[[NSArray alloc]initWithObjects:@"姓名",@"船名",@"电话",@"修改密码", @"签证薄概况页照片",nil];
+    _staticData=[[NSArray alloc]initWithObjects:@"船主姓名",@"电话",@"修改密码", @"银行帐号",nil];
 }
 #pragma mark action
--(IBAction)signOut:(id)sender
+-(IBAction)showRight:(id)sender
 {
-    LoginViewController *loginVC=[[LoginViewController alloc]init];
-    loginVC.hidesBottomBarWhenPushed=YES;
-    self.navigationController.viewControllers=@[loginVC];
+    [self.mm_drawerController openDrawerSide:MMDrawerSideRight animated:YES completion:nil];
     
+}
+-(IBAction)back:(id)sender
+{
+    //返回主页面
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+
+    [self.mm_drawerController setCenterViewController:delegate.rootViewController.mainController withCloseAnimation:YES completion:nil];
 }
 //升级
 -(void)promote:(UIButton*)sender
@@ -84,13 +94,17 @@
      [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_tableView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
      [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
     
-      _icon1=[[UIImageView alloc]init];
-      _icon1.image=kImageName(@"upload.png");
+//      _icon1=[[UIImageView alloc]init];
+//      _icon1.image=kImageName(@"upload.png");
     
-    _promote=[UIButton buttonWithType:UIButtonTypeCustom];
-    [_promote setTitle:@"点击升级" forState:UIControlStateNormal];
-    [_promote setTitleColor:kMainColor forState:UIControlStateNormal];
-    [_promote addTarget:self action:@selector(promote:) forControlEvents:UIControlEventTouchUpInside];
+//    _promote=[UIButton buttonWithType:UIButtonTypeCustom];
+//    [_promote setTitle:@"点击升级" forState:UIControlStateNormal];
+//    [_promote setTitleColor:kMainColor forState:UIControlStateNormal];
+//    [_promote addTarget:self action:@selector(promote:) forControlEvents:UIControlEventTouchUpInside];
+    
+    _bankNumber=[[UILabel alloc]init];
+    _bankNumber.textAlignment=NSTextAlignmentRight;
+    _bankNumber.textColor=kGrayColor;
     
 }
 -(void)initBackView
@@ -225,36 +239,16 @@
 #pragma mark ---------UITableView--------------
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return _staticData.count;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
-    NSString *type=[userDefault objectForKey:@"type"];
-    
     UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     UIView *backView=[[UIView alloc]initWithFrame:cell.frame];
     cell.selectedBackgroundView=backView;
     cell.selectedBackgroundView.backgroundColor=[UIColor clearColor];
-    if (indexPath.row>4)
-    {
-        
-        if ([type intValue]==1)
-        {
-            //高级船
-            cell.textLabel.text=@"船舶级别:高级船";
-        }else if ([type intValue]==6)
-        {
-            //普通船
-            cell.textLabel.text=@"船舶级别:普通船";
-        }
-
-        
-        
-    }else
-    {
-        cell.textLabel.text=_staticData[indexPath.row];
-    }
+    
+     cell.textLabel.text=_staticData[indexPath.row];
     
     cell.textLabel.font=[UIFont systemFontOfSize:16];
     NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
@@ -268,43 +262,23 @@
             break;
         case 1:
         {
-             cell.detailTextLabel.text=[userDefaults objectForKey:@"shipName"];
+            cell.detailTextLabel.text=[userDefaults objectForKey:@"phone"];
             cell.detailTextLabel.font=[UIFont systemFontOfSize:14];
         }
             break;
         case 2:
         {
-            cell.detailTextLabel.text=[userDefaults objectForKey:@"phone"];
-            cell.detailTextLabel.font=[UIFont systemFontOfSize:14];
+           cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         }
             break;
         case 3:
         {
             cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+             _bankNumber.frame=CGRectMake(cell.bounds.size.width-160-30, (cell.bounds.size.height-30)/2, 160, 30);
+            [cell.contentView addSubview:_bankNumber];
         }
             break;
-        case 4:
-        {
-            _icon1.frame=CGRectMake(cell.bounds.size.width-30, (cell.bounds.size.height-20)/2, 20, 20);
-            [cell.contentView addSubview:_icon1];
-        }
-            break;
-        case 5:
-        {
-            if ([type intValue]==1)
-            {
-                //高级船
-                _promote.hidden=YES;
-            }else if ([type intValue]==6)
-            {
-                //普通船
-                _promote.frame=CGRectMake(cell.bounds.size.width-90, (cell.bounds.size.height-20)/2, 80, 20);
-                _promote.titleLabel.font=[UIFont systemFontOfSize:14];
-                [cell.contentView addSubview:_promote];            }
-
             
-        }
-            break;
             
         default:
             break;
@@ -315,16 +289,16 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.row==3)
+    if (indexPath.row==2)
     {
         SetNewPWDViewController*setN=[[SetNewPWDViewController alloc]init];
         setN.index=2;
         [self.navigationController pushViewController:setN animated:YES];
     }
-    if (indexPath.row==4)
+    if (indexPath.row==2)
     {
         //签证薄照片
-        [self showImageOption];
+        //[self showImageOption];
     }
 }
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {

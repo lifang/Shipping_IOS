@@ -22,21 +22,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor=[UIColor whiteColor];
-    
-//    UIBarButtonItem *rightItem=[[UIBarButtonItem alloc]initWithImage:kImageName(@"head_small.png") style:UIBarButtonItemStyleDone target:self action:@selector(showRight:)];
-//    self.navigationItem.rightBarButtonItem=rightItem;
-    
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"Right" style:UIBarButtonItemStylePlain target:self action:@selector(showRight:)];
-    self.navigationItem.rightBarButtonItem = rightItem;
+  
 
 
 }
 
--(IBAction)showRight:(id)sender
-{
-    [self.mm_drawerController openDrawerSide:MMDrawerSideRight animated:YES completion:nil];
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
