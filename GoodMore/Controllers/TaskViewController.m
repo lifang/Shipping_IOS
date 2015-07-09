@@ -398,7 +398,7 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     OrdersModel *order=_ordersArray[indexPath.row];
-
+    cell.successLabel.hidden=YES;
     cell.logistNameLabel.text=order.companyName;
 
     cell.startPlaceLabel.text=order.beginPortName;

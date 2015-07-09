@@ -284,7 +284,7 @@
     button1.layer.cornerRadius=4;
     button1.layer.masksToBounds=YES;
     [button1 setTitle:@"单船报价" forState:UIControlStateNormal];
-    [button1 setBackgroundColor:kMainColor];
+    [button1 setBackgroundColor:kColor(22, 168, 238, 1)];
     [button1 addTarget:self action:@selector(quotation:) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:button1];
     
@@ -371,52 +371,7 @@
 {
     
 }
-////升级为高级船
-//-(void)upgrad:(UIButton*)sender
-//{
-//    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-//    hud.labelText=@"请耐心等待";
-//    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
-//    int loginId=[[userDefaults objectForKey:@"loginId"] intValue];
-//    int shipOwnerId=[[userDefaults objectForKey:@"shipOwnerId"] intValue];
-//    
-//    [NetWorkInterface upShipWithshipId:shipOwnerId loginId:loginId finished:^(BOOL success, NSData *response) {
-//        
-//        hud.customView=[[UIImageView alloc]init];
-//        [hud hide:YES afterDelay:0.3];
-//        NSLog(@"------------升级为高级船----:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
-//        if (success)
-//        {
-//            hud.customView=[[UIImageView alloc]init];
-//            [hud hide:YES afterDelay:0.3];
-//            id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
-//            if ([object isKindOfClass:[NSDictionary class]])
-//            {
-//                if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
-//                {
-//                    [hud setHidden:YES];
-//                    
-//                    NSString *urlString=[object objectForKey:@"result"];
-//                    WebViewViewController *webView=[[WebViewViewController alloc]init];
-//                    webView.hidesBottomBarWhenPushed=YES;
-//                    webView.urlString=urlString;
-//                    [self.navigationController pushViewController:webView animated:YES];
-//                    
-//                }else
-//                {
-//                    hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
-//                }
-//            }else
-//            {
-//                hud.labelText=kServiceReturnWrong;
-//            }
-//        }else
-//        {
-//            hud.labelText=kNetworkFailed;
-//        }
-//        
-//    }];
-//}
+
 
 //组队接单
 -(IBAction)receive:(UIButton*)sender
