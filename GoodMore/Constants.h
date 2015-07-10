@@ -15,8 +15,8 @@
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
-
-
+#import "MBProgressHUD.h"
+#import "NetworkInterface.h"
 //UI主体颜色
 #define kMainColor [UIColor colorWithRed:3/255.0 green:127/255.0 blue:212/255.0 alpha:1.0]
 

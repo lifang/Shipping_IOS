@@ -26,12 +26,14 @@
 #import "SelectPortViewController.h"
 #import "RightViewController.h"
 
+
 @interface TaskViewController ()<UITableViewDataSource,UITableViewDelegate,RefreshDelegate,UITextFieldDelegate,UIAlertViewDelegate>
 {
     UITableView *_tableView;
     UIView *_backView;
     UITextField *_pwd;
-
+    NSTimer *_timer;
+    MZTimerLabel *timerLabel;
 }
 @property(nonatomic,strong)NSMutableArray *ordersArray;
 @property (nonatomic, strong) RefreshView *topRefreshView;
@@ -39,6 +41,8 @@
 @property (nonatomic, assign) BOOL reloading;
 @property (nonatomic, assign) CGFloat primaryOffsetY;
 @property (nonatomic, assign) int page;
+
+@property(nonatomic,strong)NSMutableArray *totalLastTime;
 @end
 
 @implementation TaskViewController
@@ -55,14 +59,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    //self.title=@"任务大厅";
+    
     _index=1;
     _ordersArray=[[NSMutableArray alloc]init];
+    
    
     [self initNavigation];
     [self initAndLayoutUI];
     [self initBackView];
-    //[self firstLoadData];
      _backView.hidden=YES;
     
     
@@ -78,21 +82,9 @@
     UIBarButtonItem *rightItem=[[UIBarButtonItem alloc]initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem=rightItem;
 
-//    UIButton *leftButton1=[UIButton buttonWithType:UIButtonTypeCustom];
-//    leftButton1.frame=CGRectMake(0, 0, 24, 24);
-//    [leftButton1 setBackgroundImage:kImageName(@"choose.png") forState:UIControlStateNormal];
-//    [leftButton1 addTarget:self action:@selector(selcetPort:) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem  *leftItem1=[[UIBarButtonItem alloc]initWithCustomView:leftButton1];
-//    
-//    UIButton *leftButton2=[UIButton buttonWithType:UIButtonTypeCustom];
-//    [leftButton2 setTitle:@"港口筛选" forState:UIControlStateNormal];
-//    leftButton2.titleLabel.font=[UIFont boldSystemFontOfSize:14];
-//    leftButton2.frame=CGRectMake(0, 0, 60, 24);
-//    [leftButton2 addTarget:self action:@selector(selcetPort:) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem  *leftItem2=[[UIBarButtonItem alloc]initWithCustomView:leftButton2];
 
     LocationButton *leftButton1=[LocationButton buttonWithType:UIButtonTypeCustom];
-    //leftButton1.backgroundColor=[UIColor redColor];
+    
     leftButton1.nameLabel.text=@"港口筛选";
     leftButton1.frame=CGRectMake(0, 0, kLocationButtonWidth, 24);
     [leftButton1 addTarget:self action:@selector(selcetPort:) forControlEvents:UIControlEventTouchUpInside];
@@ -101,21 +93,15 @@
     
     self.navigationItem.leftBarButtonItem=leftItem1;
 
-    //leftButton1.frame=CGRectMake(0, 0, 24, 24);
-
-    //[leftButton1 setBackgroundImage:kImageName(@"choose.png") forState:UIControlStateNormal];
-    //[leftButton1 addTarget:self action:@selector(selcetPort:) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem  *leftItem1=[[UIBarButtonItem alloc]initWithCustomView:leftButton1];
-//    
-//    self.navigationItem.leftBarButtonItem=leftItem1;
-    
 }
 #pragma mark action
 -(IBAction)selcetPort:(id)sender
 {
+    
     SelectPortViewController *selectPort=[[SelectPortViewController alloc]init];
     selectPort.hidesBottomBarWhenPushed=YES;
     [self.navigationController pushViewController:selectPort animated:YES];
+    
 }
 -(IBAction)showRight:(id)sender
 {
@@ -246,7 +232,7 @@
     [[NSScanner scannerWithString:[hexColor substringWithRange:range]] scanHexInt:&blue];
     return [UIColor colorWithRed:(float)(red/255.0f) green:(float)(green / 255.0f) blue:(float)(blue / 255.0f) alpha:1.0f];
 }
-//加入船队   18657152192
+//加入船队   
 -(void)joinTeam
 {
     if (!_pwd.text || [_pwd.text isEqualToString:@""])
@@ -374,11 +360,24 @@
     NSDictionary *result=[dic objectForKey:@"result"];
     NSArray *content=[result objectForKey:@"content"];
     [content enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL *stop) {
+        
         OrdersModel *order=[[OrdersModel alloc]initWithDictionary:obj];
+        
         [_ordersArray addObject:order];
     }];
     
+    
     [_tableView reloadData];
+}
+-(int)getTimeChaWithString:(NSString*)str
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date1 = [dateFormatter dateFromString:str];
+    NSDate *date2 = [NSDate date];
+    NSLog(@"%@",date1);
+    int seconds = [date2 timeIntervalSinceDate:date1];
+    return seconds;
 }
 #pragma mark ----------------UITableViewDelegate----------------------------
 
@@ -398,7 +397,7 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     OrdersModel *order=_ordersArray[indexPath.row];
-
+    cell.successLabel.hidden=YES;
     cell.logistNameLabel.text=order.companyName;
 
     cell.startPlaceLabel.text=order.beginPortName;
@@ -411,7 +410,14 @@
     cell.weightLabel.text=[NSString stringWithFormat:@"%@吨",order.amount];
     cell.dateLabel.text=order.workTime;
     cell.goodsLabel.text=order.cargos;
-    cell.endTimeLabel.text=order.showTime;
+    
+    int second = [self getTimeChaWithString:order.workTime];
+    
+    timerLabel=[[MZTimerLabel alloc]initWithLabel:cell.endTimeLabel andTimerType:MZTimerLabelTypeTimer];
+    [timerLabel setCountDownTime:second];
+    [timerLabel start];
+    
+    //cell.endTimeLabel.text=order.showTime;
     cell.marginLabel.text=@"保证金:200.00元";
     
     return cell;
@@ -597,15 +603,19 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
+//#pragma mark 倒计时
+//
+//-(void)startTimer
+//{
+//    _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(refreshLessTime) userInfo:nil repeats:YES];
+//    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:UITrackingRunLoopMode];
+//}
+//-(void)refreshLessTime
+//{
+//     NSUInteger time;
+//    for (int i=0; i<_totalLastTime.count; i++)
+//    {
+//        time = [[[_totalLastTime objectAtIndex:i] objectForKey:@"lastTime"]integerValue];
+//    }
+//}
 @end

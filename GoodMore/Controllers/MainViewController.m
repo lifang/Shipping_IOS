@@ -58,7 +58,7 @@
     [NavigationBar setNavigationBarStyle:taskNav];
     
     TransportingViewController *transVC=[[TransportingViewController alloc]init];
-    transVC.tabBarItem.title=@"运输中";
+    transVC.tabBarItem.title=@"运输任务";
     transVC.tabBarItem.image=[kImageName(@"trans_n.png")imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     transVC.tabBarItem.selectedImage=[kImageName(@"trans_h.png")imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UINavigationController *transNav=[[UINavigationController alloc]initWithRootViewController:transVC];

@@ -461,18 +461,18 @@
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //NSLog(@"-----------tag:%d",tableView.tag);
+    
     
     if (tableView.tag==10086)
     {
        ShipListModel *shipModel=_shipListArray[indexPath.row];
         
-        NSLog(@"111111111111111111111111111");
+    
         
         NSString *number=_localData[indexPath.row];
         if (number && ![number isEqualToString:@""])
         {
-             NSLog(@"2222222222222222222222222222222");
+            
             //已设置运费
             NSString *cellIdentifier=@"payFreigh1";
             ShipInfoCell1 *cell=[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -481,7 +481,7 @@
                 cell=[[ShipInfoCell1 alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
             }
             
-            NSLog(@"isLeader:222------%d",[shipModel.isLeader intValue]);
+           
             
             if ([shipModel.isLeader intValue]==1)
             {
@@ -508,7 +508,7 @@
             
         }else
         {
-            NSLog(@"3333333333333333333333333333");
+            
             //ShipListModel *shipModel=_shipListArray[indexPath.row];
             NSString *cellIdentifier=@"payFreigh";
             ShipInfoCell *cell=[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -516,7 +516,7 @@
             {
                 cell=[[ShipInfoCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
             }
-            NSLog(@"isLeader:3333------%d",[shipModel.isLeader intValue]);
+            
             if ([shipModel.isLeader intValue]==1)
             {
                 cell.headImageView.image=kImageName(@"headShip.png");
@@ -543,7 +543,7 @@
         
     }else
     {
-         NSLog(@"4444444444444444444444444444444");
+        
         NSString *cellIdentifier=@"list";
         UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell==nil)

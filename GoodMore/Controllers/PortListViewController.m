@@ -7,11 +7,13 @@
 //
 
 #import "PortListViewController.h"
-#import "Constants.h"
-
+#import "NetWorkInterface.h"
+#import "MBProgressHUD.h"
+#import "PortModel.h"
 @interface PortListViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_tableView;
+    NSMutableArray *_portArray;
 }
 @end
 
@@ -25,18 +27,22 @@
     {
         //装货港
         self.title=@"装货港";
+        [self initUI];
+        
     }else if (_index==1)
     {
         //卸货港
         self.title=@"卸货港";
+        _portArray=[[NSMutableArray alloc]initWithCapacity:0];
+       [self getPortList];
     }
     
-    [self initUI];
+   
 }
 -(void)initUI
 {
     _tableView=[[UITableView alloc]init];
-    _tableView.scrollEnabled=NO;
+    //_tableView.scrollEnabled=NO;
     _tableView.translatesAutoresizingMaskIntoConstraints=NO;
     _tableView.dataSource=self;
     _tableView.delegate=self;
@@ -64,7 +70,14 @@
 #pragma mark UITableView
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    if (_index==1)
+    {
+        return _portArray.count;
+    }else
+    {
+        return 4;
+    }
+    
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -75,23 +88,87 @@
     {
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndefier];
     }
-    cell.textLabel.text=@"10KM";
-    return cell;
+    if (_index==1)
+    {
+        PortModel *port = _portArray[indexPath.row];
+        cell.textLabel.text=port.name;
+    }else
+    {
+        cell.textLabel.text=@"10KM";
+
+    }
+        return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self.navigationController popViewControllerAnimated:YES];
     
-    if (_delegate && [_delegate respondsToSelector:@selector(getPortInfo:)])
+    UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(getPortInfoWithportInfo:index:)])
     {
         //BanksModel *bank=_banksArray[indexPath.row];
         //[_delegate getSelectBank:bank];
         
+        [_delegate getPortInfoWithportInfo:cell.textLabel.text index:_index];
+        
         [self.navigationController popViewControllerAnimated:YES];
     }
 
+}
+
+#pragma mark request
+-(void)getPortList
+{
+    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText=@"耐心等待";
+    
+    [NetWorkInterface getPortListWithfinished:^(BOOL success, NSData *response) {
+  
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        [hud hide:YES afterDelay:0.5f];
+        NSLog(@"------------港口列表:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+        if (success)
+        {
+            id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+            if ([object isKindOfClass:[NSDictionary class]])
+            {
+                if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
+                {
+                    [hud setHidden:YES];
+                    
+                    [self parsePortListWithDictionary:object];
+                    
+                }else
+                {
+                    hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                }
+            }else
+            {
+                hud.labelText=kServiceReturnWrong;
+            }
+        }else
+        {
+            hud.labelText=kNetworkFailed;
+        }
+        
+    }];
+
+}
+-(void)parsePortListWithDictionary:(NSDictionary*)dic
+{
+    if (![dic objectForKey:@"result"] || ![[dic objectForKey:@"result"] isKindOfClass:[NSArray class]]) {
+        return;
+    }
+    NSArray *result = [dic objectForKey:@"result"];
+    [result enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL *stop) {
+        PortModel *port=[[PortModel alloc]initWithDictionary:obj];
+        [_portArray addObject:port];
+    }];
+     [self initUI];
+    [_tableView reloadData];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

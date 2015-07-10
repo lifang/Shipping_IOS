@@ -37,7 +37,10 @@ typedef enum{
 #import "Constants.h"
 #import "NetworkRequest.h"
 #import "EncryptHelper.h"
-
+//到达装/卸货港签到
+static NSString *s_sign_method = @"app/shipBusiness/arrive";
+//运输中信息
+static NSString *s_details_method = @"app/shipBusiness/getTransIng";
 //注册
 static NSString *register_method = @"app/addNewShip";
 
@@ -149,7 +152,7 @@ static NSString *shipMakeTeam_methd = @"app/team/getMyIngTeam";
 //加入船队
 static NSString *shipInTeam_methd = @"app/team/joinTeam";
 //单船竞价
-static NSString *singleShipComplete_method= @"shipBusiness/singleComplete";
+static NSString *singleShipComplete_method= @"app/shipBusiness/singleComplete";
 
 //消息列表
 static NSString *messageList_method= @"app/messages/getList";
@@ -177,6 +180,8 @@ static NSString *historyShipTeam_method = @"app/team/getShipTeamListByShipOwnerI
 
 //历史船队详细信息
 static NSString *historyDetailShipTeam_method = @"app/team/getShipTeamInfoById";
+//获得港口列表
+static NSString *getPortList_method = @"common/getPortList";
 
 @interface NetWorkInterface : NSObject
 
@@ -194,8 +199,18 @@ static NSString *historyDetailShipTeam_method = @"app/team/getShipTeamInfoById";
  “shipName”://船名
  */
 //注册
++(void)registerWithLoginName:(NSString*)loginName pwd:(NSString*)pwd name:(NSString*)name shipNumber:(NSString*)shipNumber phone:(NSString*)phone volume:(NSString*)volume dentCode:(NSString*)dentCode builderTime:(NSString*)builderTime imgList:(int)imgList joinCode:(NSString*)joinCode shipName:(NSString*)shipName  finished:(requestDidFinished)finish;
+//运输中信息
++ (void) getdetailsWithloginid:(NSString *)loginid
+                      finished:(requestDidFinished)finish;
+
 +(void)registerWithLoginName:(NSString*)loginName pwd:(NSString*)pwd name:(NSString*)name  phone:(NSString*)phone  dentCode:(NSString*)dentCode  joinCode:(NSString*)joinCode  finished:(requestDidFinished)finish;
 
+//到达装/卸货港签到
++ (void)signWithid:(NSString *)idbumber
+             type:(NSString *)type
+          loginid:(NSString *)loginid
+         finished:(requestDidFinished)finish;
 //发送验证码 (注册)
 +(void)sendCodeWith:(NSString*)phone finished:(requestDidFinished)finish;
 
@@ -358,13 +373,13 @@ static NSString *historyDetailShipTeam_method = @"app/team/getShipTeamInfoById";
                        Quote:(int)quote
                     finished:(requestDidFinished)finish;
 //单船竞价
-+(void)singleShipCompletWithshipOwnerId:(int)shipOwnerId bsOrderId:(int)bsOrderId loginId:(int)loginId finished:(requestDidFinished)finish;
++(void)singleShipCompletWithshipOwnerId:(int)shipOwnerId bsOrderId:(int)bsOrderId loginId:(int)loginId quote:(int)quote finished:(requestDidFinished)finish;
 
 //消息列表
-+(void)getMessageListWith:(int)shipOwnerId finished:(requestDidFinished)finish;
++(void)getMessageListWithshipOwnerId:(int)shipOwnerId finished:(requestDidFinished)finish;
 
 //批量更新消息为已读
-+(void)uploadMessageStausWithStatus:(int)status loginId:(int)loginId idStr:(NSString*)idStr finished:(requestDidFinished)finish;
++(void)uploadMessageStausWithStatus:(int)status loginId:(int)loginId idStr:(NSArray*)idStr finished:(requestDidFinished)finish;
 
 //删除消息
 +(void)deleteMessageWithID:(int)ID finished:(requestDidFinished)finish;
@@ -391,5 +406,7 @@ static NSString *historyDetailShipTeam_method = @"app/team/getShipTeamInfoById";
 + (void)getHistoryDetailWithShipId:(int)ShipId
                             LoginId:(int)loginId
                             finished:(requestDidFinished)finish;
+//获得港口列表
++(void)getPortListWithfinished:(requestDidFinished)finish;
 @end
 

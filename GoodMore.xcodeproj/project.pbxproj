@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0ECD2ECA1B4E408000C65456 /* TransportingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD2EC91B4E408000C65456 /* TransportingModel.m */; };
 		0ECD46611B4D0109002BA802 /* TransportingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD46601B4D0109002BA802 /* TransportingTableViewCell.m */; };
 		0ECD46641B4D3B4A002BA802 /* LoadGoodsViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD46631B4D3B4A002BA802 /* LoadGoodsViewController2.m */; };
 		1A0769B11B4D5B1B00704269 /* HistoryDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A0769B01B4D5B1B00704269 /* HistoryDetailCell.m */; };
@@ -58,6 +59,8 @@
 		9396214C1B18615100CB730B /* EncryptHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9396214B1B18615100CB730B /* EncryptHelper.m */; };
 		9396214F1B18637D00CB730B /* NetWorkInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 9396214E1B18637D00CB730B /* NetWorkInterface.m */; };
 		939621531B186D0300CB730B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 939621521B186D0300CB730B /* MBProgressHUD.m */; };
+		93A6588A1B4E736D005AADA9 /* MultipleDeleteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A658891B4E736D005AADA9 /* MultipleDeleteCell.m */; };
+		93A658941B4E77AE005AADA9 /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A658931B4E77AE005AADA9 /* MessageViewController.m */; };
 		93B84E291B1ED21200EF2DB4 /* MytaskModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B84E281B1ED21200EF2DB4 /* MytaskModel.m */; };
 		93B84E2F1B1EE34C00EF2DB4 /* ShipRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B84E2E1B1EE34C00EF2DB4 /* ShipRelation.m */; };
 		93B84E321B1EE37000EF2DB4 /* BusinessOrders.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B84E311B1EE37000EF2DB4 /* BusinessOrders.m */; };
@@ -77,7 +80,6 @@
 		93C4CA471B4CEBB500FE23DE /* SelectPortViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C4CA461B4CEBB500FE23DE /* SelectPortViewController.m */; };
 		93C4CA4A1B4CF4FC00FE23DE /* PortListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C4CA491B4CF4FC00FE23DE /* PortListViewController.m */; };
 		93C4CA4D1B4D14F000FE23DE /* ShipInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C4CA4C1B4D14F000FE23DE /* ShipInfoViewController.m */; };
-		93C4CA511B4D540400FE23DE /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C4CA501B4D540400FE23DE /* MessageViewController.m */; };
 		93C89A721B1D3FD9008DF209 /* CommonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C89A711B1D3FD9008DF209 /* CommonViewController.m */; };
 		93C89A761B1D895D008DF209 /* PortModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C89A751B1D895D008DF209 /* PortModel.m */; };
 		93C89A791B1D9708008DF209 /* OrdersModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C89A781B1D9708008DF209 /* OrdersModel.m */; };
@@ -94,6 +96,9 @@
 		93E6EC6B1B4BE5D90082E990 /* CommonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6EC6A1B4BE5D90082E990 /* CommonCell.m */; };
 		93E6EC6F1B4BEDEA0082E990 /* TransportingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6EC6E1B4BEDEA0082E990 /* TransportingViewController.m */; };
 		93E6EC721B4BEF6B0082E990 /* MYInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6EC711B4BEF6B0082E990 /* MYInfoView.m */; };
+		93F08AE71B4F5E1600473237 /* MessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F08AE61B4F5E1600473237 /* MessageModel.m */; };
+		93F08AEA1B4F61D200473237 /* MessageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F08AE91B4F61D200473237 /* MessageDetailViewController.m */; };
+		93F08AEE1B4FEF8D00473237 /* MZTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F08AED1B4FEF8D00473237 /* MZTimerLabel.m */; };
 		93F673821B1C1E5900A4E34E /* TaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F673811B1C1E5900A4E34E /* TaskCell.m */; };
 		93F673851B1C6D3D00A4E34E /* TaskDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F673841B1C6D3D00A4E34E /* TaskDetailViewController.m */; };
 /* End PBXBuildFile section */
@@ -109,6 +114,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0ECD2EC81B4E408000C65456 /* TransportingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransportingModel.h; sourceTree = "<group>"; };
+		0ECD2EC91B4E408000C65456 /* TransportingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransportingModel.m; sourceTree = "<group>"; };
 		0ECD465F1B4D0109002BA802 /* TransportingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransportingTableViewCell.h; sourceTree = "<group>"; };
 		0ECD46601B4D0109002BA802 /* TransportingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransportingTableViewCell.m; sourceTree = "<group>"; };
 		0ECD46621B4D3B4A002BA802 /* LoadGoodsViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadGoodsViewController2.h; sourceTree = "<group>"; };
@@ -211,6 +218,10 @@
 		9396214E1B18637D00CB730B /* NetWorkInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetWorkInterface.m; sourceTree = "<group>"; };
 		939621511B186D0300CB730B /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		939621521B186D0300CB730B /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		93A658881B4E7366005AADA9 /* MultipleDeleteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultipleDeleteCell.h; sourceTree = "<group>"; };
+		93A658891B4E736D005AADA9 /* MultipleDeleteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipleDeleteCell.m; sourceTree = "<group>"; };
+		93A658921B4E77AE005AADA9 /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
+		93A658931B4E77AE005AADA9 /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
 		93B84E271B1ED21200EF2DB4 /* MytaskModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MytaskModel.h; sourceTree = "<group>"; };
 		93B84E281B1ED21200EF2DB4 /* MytaskModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MytaskModel.m; sourceTree = "<group>"; };
 		93B84E2D1B1EE34C00EF2DB4 /* ShipRelation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipRelation.h; sourceTree = "<group>"; };
@@ -249,8 +260,6 @@
 		93C4CA491B4CF4FC00FE23DE /* PortListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PortListViewController.m; sourceTree = "<group>"; };
 		93C4CA4B1B4D14F000FE23DE /* ShipInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipInfoViewController.h; sourceTree = "<group>"; };
 		93C4CA4C1B4D14F000FE23DE /* ShipInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipInfoViewController.m; sourceTree = "<group>"; };
-		93C4CA4F1B4D540400FE23DE /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
-		93C4CA501B4D540400FE23DE /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
 		93C89A701B1D3FD9008DF209 /* CommonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonViewController.h; sourceTree = "<group>"; };
 		93C89A711B1D3FD9008DF209 /* CommonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonViewController.m; sourceTree = "<group>"; };
 		93C89A741B1D895D008DF209 /* PortModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PortModel.h; sourceTree = "<group>"; };
@@ -285,6 +294,12 @@
 		93E6EC6E1B4BEDEA0082E990 /* TransportingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransportingViewController.m; sourceTree = "<group>"; };
 		93E6EC701B4BEF6B0082E990 /* MYInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYInfoView.h; sourceTree = "<group>"; };
 		93E6EC711B4BEF6B0082E990 /* MYInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYInfoView.m; sourceTree = "<group>"; };
+		93F08AE51B4F5E1600473237 /* MessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageModel.h; sourceTree = "<group>"; };
+		93F08AE61B4F5E1600473237 /* MessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageModel.m; sourceTree = "<group>"; };
+		93F08AE81B4F61D200473237 /* MessageDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageDetailViewController.h; sourceTree = "<group>"; };
+		93F08AE91B4F61D200473237 /* MessageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageDetailViewController.m; sourceTree = "<group>"; };
+		93F08AEC1B4FEF8D00473237 /* MZTimerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZTimerLabel.h; sourceTree = "<group>"; };
+		93F08AED1B4FEF8D00473237 /* MZTimerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZTimerLabel.m; sourceTree = "<group>"; };
 		93F673801B1C1E5900A4E34E /* TaskCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskCell.h; sourceTree = "<group>"; };
 		93F673811B1C1E5900A4E34E /* TaskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskCell.m; sourceTree = "<group>"; };
 		93F673831B1C6D3D00A4E34E /* TaskDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailViewController.h; sourceTree = "<group>"; };
@@ -310,6 +325,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0ECD2EC71B4E09ED00C65456 /* main */ = {
+			isa = PBXGroup;
+			children = (
+				93CDA0A01B15B8C80008DCC0 /* LoginViewController.h */,
+				93CDA0A11B15B8C80008DCC0 /* LoginViewController.m */,
+				938E97561B1FF8190050FE4D /* FindPwdViewController.h */,
+				938E97571B1FF8190050FE4D /* FindPwdViewController.m */,
+				93CDA0A31B15B9200008DCC0 /* RegisterViewController.h */,
+				93CDA0A41B15B9200008DCC0 /* RegisterViewController.m */,
+				9335142B1B3C09CA0059611B /* RegresultViewController.h */,
+				9335142C1B3C09CA0059611B /* RegresultViewController.m */,
+				9342EE9A1B1F0F43000BF13F /* SettingViewController.h */,
+				9342EE9B1B1F0F43000BF13F /* SettingViewController.m */,
+				9342EE9D1B1F1F95000BF13F /* SetNewPWDViewController.h */,
+				9342EE9E1B1F1F95000BF13F /* SetNewPWDViewController.m */,
+				9396213D1B18563A00CB730B /* MainViewController.h */,
+				9396213E1B18563A00CB730B /* MainViewController.m */,
+				939621401B18567D00CB730B /* TaskViewController.h */,
+				939621411B18567D00CB730B /* TaskViewController.m */,
+				939621431B1856A400CB730B /* MyTaskViewController.h */,
+				939621441B1856A400CB730B /* MyTaskViewController.m */,
+				9302B5991B3AC2F300596A80 /* GoodsTransDetailViewController.h */,
+				9302B59A1B3AC2F300596A80 /* GoodsTransDetailViewController.m */,
+				933514311B3D826F0059611B /* ShipTeamDetailViewController.h */,
+				933514321B3D826F0059611B /* ShipTeamDetailViewController.m */,
+				933514281B3B9AD60059611B /* PayFreightViewController.h */,
+				933514291B3B9AD60059611B /* PayFreightViewController.m */,
+				93F673831B1C6D3D00A4E34E /* DetailViewController.h */,
+				93F673841B1C6D3D00A4E34E /* DetailViewController.m */,
+				931EFD021B4284930045752C /* WebViewViewController.h */,
+				931EFD031B4284930045752C /* WebViewViewController.m */,
+				93C4CA3F1B4CC4DC00FE23DE /* RightViewController.h */,
+				93C4CA401B4CC4DC00FE23DE /* RightViewController.m */,
+			);
+			name = main;
+			sourceTree = "<group>";
+		};
 		1A2B6FF31B4CF08D002FFD96 /* HhzView */ = {
 			isa = PBXGroup;
 			children = (
@@ -431,6 +483,8 @@
 				939621411B18567D00CB730B /* TaskViewController.m */,
 				93C4CA451B4CEBB500FE23DE /* SelectPortViewController.h */,
 				93C4CA461B4CEBB500FE23DE /* SelectPortViewController.m */,
+				93C4CA481B4CF4FC00FE23DE /* PortListViewController.h */,
+				93C4CA491B4CF4FC00FE23DE /* PortListViewController.m */,
 				9342EE9E1B1F1F95000BF13F /* SetNewPWDViewController.m */,
 				9342EE9D1B1F1F95000BF13F /* SetNewPWDViewController.h */,
 				9342EE9A1B1F0F43000BF13F /* SettingViewController.h */,
@@ -445,14 +499,14 @@
 				93CDA0A01B15B8C80008DCC0 /* LoginViewController.h */,
 				93C4CA4B1B4D14F000FE23DE /* ShipInfoViewController.h */,
 				93C4CA4C1B4D14F000FE23DE /* ShipInfoViewController.m */,
-				93C4CA481B4CF4FC00FE23DE /* PortListViewController.h */,
-				93C4CA491B4CF4FC00FE23DE /* PortListViewController.m */,
 				93F673831B1C6D3D00A4E34E /* TaskDetailViewController.h */,
 				93F673841B1C6D3D00A4E34E /* TaskDetailViewController.m */,
 				93C4CA3F1B4CC4DC00FE23DE /* RightViewController.h */,
 				93C4CA401B4CC4DC00FE23DE /* RightViewController.m */,
-				93C4CA4F1B4D540400FE23DE /* MessageViewController.h */,
-				93C4CA501B4D540400FE23DE /* MessageViewController.m */,
+				93A658921B4E77AE005AADA9 /* MessageViewController.h */,
+				93A658931B4E77AE005AADA9 /* MessageViewController.m */,
+				93F08AE81B4F61D200473237 /* MessageDetailViewController.h */,
+				93F08AE91B4F61D200473237 /* MessageDetailViewController.m */,
 			);
 			name = task;
 			sourceTree = "<group>";
@@ -461,6 +515,8 @@
 			isa = PBXGroup;
 			children = (
 				93C89A741B1D895D008DF209 /* PortModel.h */,
+				0ECD2EC81B4E408000C65456 /* TransportingModel.h */,
+				0ECD2EC91B4E408000C65456 /* TransportingModel.m */,
 				93C89A751B1D895D008DF209 /* PortModel.m */,
 				93C89A771B1D9708008DF209 /* OrdersModel.h */,
 				93C89A781B1D9708008DF209 /* OrdersModel.m */,
@@ -488,6 +544,8 @@
 				93C123A01B3954DE002BB29C /* CityHandle.m */,
 				93C1239A1B3933A7002BB29C /* CityModel.h */,
 				93C1239B1B3933A7002BB29C /* CityModel.m */,
+				93F08AE51B4F5E1600473237 /* MessageModel.h */,
+				93F08AE61B4F5E1600473237 /* MessageModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -533,6 +591,7 @@
 				93C89A701B1D3FD9008DF209 /* CommonViewController.h */,
 				93C89A711B1D3FD9008DF209 /* CommonViewController.m */,
 				93C4CA311B4CC15200FE23DE /* MMDrawerController */,
+				93F08AEB1B4FEF8D00473237 /* ZMTimerLabel */,
 				939621501B186D0300CB730B /* HUD */,
 				93C89A7A1B1DAC47008DF209 /* Refresh */,
 				93C89A731B1D8938008DF209 /* Model */,
@@ -577,6 +636,7 @@
 		93CDA09F1B15B8B50008DCC0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0ECD2EC71B4E09ED00C65456 /* main */,
 				93C4CA4E1B4D533300FE23DE /* task */,
 				939621431B1856A400CB730B /* MyTaskViewController.h */,
 				939621441B1856A400CB730B /* MyTaskViewController.m */,
@@ -625,6 +685,15 @@
 			path = transporting;
 			sourceTree = "<group>";
 		};
+		93F08AEB1B4FEF8D00473237 /* ZMTimerLabel */ = {
+			isa = PBXGroup;
+			children = (
+				93F08AEC1B4FEF8D00473237 /* MZTimerLabel.h */,
+				93F08AED1B4FEF8D00473237 /* MZTimerLabel.m */,
+			);
+			path = ZMTimerLabel;
+			sourceTree = "<group>";
+		};
 		93F6737F1B1C1E1F00A4E34E /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -646,6 +715,8 @@
 				93E6EC6A1B4BE5D90082E990 /* CommonCell.m */,
 				0ECD465F1B4D0109002BA802 /* TransportingTableViewCell.h */,
 				0ECD46601B4D0109002BA802 /* TransportingTableViewCell.m */,
+				93A658881B4E7366005AADA9 /* MultipleDeleteCell.h */,
+				93A658891B4E736D005AADA9 /* MultipleDeleteCell.m */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -749,6 +820,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93F08AEA1B4F61D200473237 /* MessageDetailViewController.m in Sources */,
 				9396214F1B18637D00CB730B /* NetWorkInterface.m in Sources */,
 				93CDA0A51B15B9200008DCC0 /* RegisterViewController.m in Sources */,
 				0ECD46611B4D0109002BA802 /* TransportingTableViewCell.m in Sources */,
@@ -762,10 +834,12 @@
 				938EDE101B3E83AB00A0D201 /* ShipInfoCell1.m in Sources */,
 				1A2B70021B4D4253002FFD96 /* ShipHistoryCell.m in Sources */,
 				938E25371B2978FE003B7EC5 /* SureCashViewController.m in Sources */,
+				0ECD2ECA1B4E408000C65456 /* TransportingModel.m in Sources */,
 				935C4FB71B281A06004F292B /* NopayViewController.m in Sources */,
 				93C4CA3C1B4CC15200FE23DE /* MMDrawerController.m in Sources */,
 				1A2B6FFF1B4D3C29002FFD96 /* HistoryController.m in Sources */,
 				93B84E291B1ED21200EF2DB4 /* MytaskModel.m in Sources */,
+				93F08AE71B4F5E1600473237 /* MessageModel.m in Sources */,
 				9384DDE41B26C13D001D539F /* MyWalletViewController.m in Sources */,
 				93C89A7F1B1DAC47008DF209 /* CircleView.m in Sources */,
 				93C4CA441B4CE27600FE23DE /* LocationButton.m in Sources */,
@@ -774,6 +848,7 @@
 				1A883C7F1B4FBAB100AC858A /* PayForShipController.m in Sources */,
 				93C89A801B1DAC47008DF209 /* RefreshView.m in Sources */,
 				93F673851B1C6D3D00A4E34E /* TaskDetailViewController.m in Sources */,
+				93A658941B4E77AE005AADA9 /* MessageViewController.m in Sources */,
 				938E97581B1FF8190050FE4D /* FindPwdViewController.m in Sources */,
 				0ECD46641B4D3B4A002BA802 /* LoadGoodsViewController2.m in Sources */,
 				93C4CA301B4CB7DE00FE23DE /* MyShipViewController.m in Sources */,
@@ -811,8 +886,8 @@
 				9302B59B1B3AC2F300596A80 /* GoodsTransDetailViewController.m in Sources */,
 				1A2B6FF61B4CF0B8002FFD96 /* TopButton.m in Sources */,
 				935C4FBA1B282ED5004F292B /* AvaliblePayModel.m in Sources */,
+				93F08AEE1B4FEF8D00473237 /* MZTimerLabel.m in Sources */,
 				9386339D1B4110F50092F05E /* AddCollectionViewCell.m in Sources */,
-				93C4CA511B4D540400FE23DE /* MessageViewController.m in Sources */,
 				935C4FB41B281132004F292B /* WalletCell.m in Sources */,
 				1A2B6FFC1B4D2314002FFD96 /* ShipDetailCell.m in Sources */,
 				93C89A791B1D9708008DF209 /* OrdersModel.m in Sources */,
@@ -828,6 +903,7 @@
 				9302B59E1B3AE1BE00596A80 /* ShipInfoCell.m in Sources */,
 				93CDA07C1B15B6750008DCC0 /* main.m in Sources */,
 				93C1239C1B3933A7002BB29C /* CityModel.m in Sources */,
+				93A6588A1B4E736D005AADA9 /* MultipleDeleteCell.m in Sources */,
 				9342EE9C1B1F0F43000BF13F /* SettingViewController.m in Sources */,
 				938E24F91B292BEA003B7EC5 /* NoPayModel.m in Sources */,
 				1A8838941B4E6F30003BEB43 /* ShipTeam.m in Sources */,
