@@ -15,8 +15,8 @@
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
-
-
+#import "MBProgressHUD.h"
+#import "NetworkInterface.h"
 //UI主体颜色
 #define kMainColor [UIColor colorWithRed:3/255.0 green:127/255.0 blue:212/255.0 alpha:1.0]
 
@@ -31,9 +31,9 @@
 
 #define kImageName(name) [UIImage imageNamed:name]
 
-#define KServiceURL @"http://120.25.243.169:8888/HDDPlatForm/"
+//#define KServiceURL @"http://120.25.243.169:8888/HDDPlatForm/"
 
-//#define KServiceURL @"http://192.168.0.205:8080/HDDPlatForm/"
+#define KServiceURL @"http://192.168.0.205:8080/HDDPlatForm/"
 
 #define kAppVersionType  2   //版本更新
 

@@ -13,7 +13,7 @@
 #import "TransportingTableViewCell.h"
 #import "LoadGoodsViewController.h"
 #import "LoadGoodsViewController2.h"
-
+#import "TransportingModel.h"
 @interface TransportingViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) UIView *titleView;
 @property (nonatomic, strong) UILabel *titleLable;
@@ -27,9 +27,13 @@
 @property(nonatomic,strong)UILabel *weight;
 
 @property(nonatomic,strong)UILabel *loadTime;
+@property(nonatomic,strong)NSString *levelstatus;
+@property(nonatomic,strong)NSString *ids;
+@property(nonatomic,strong)NSString *shipRelationID;
 
 @property(nonatomic,strong)UILabel *goods;
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSMutableArray *dataItem;
 
 @end
 
@@ -39,7 +43,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"运输任务";
-    
+    _dataItem = [[NSMutableArray alloc] init];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshList:)
+                                                 name:RefreshListNotification
+                                               object:nil];
     self.view.backgroundColor=[UIColor whiteColor];
     
 //    UIBarButtonItem *rightItem=[[UIBarButtonItem alloc]initWithImage:kImageName(@"head_small.png") style:UIBarButtonItemStyleDone target:self action:@selector(showRight:)];
@@ -48,12 +56,26 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:kImageName(@"personal.png") style:UIBarButtonItemStyleDone target:self action:@selector(showRight:)];
     
     self.navigationItem.rightBarButtonItem = rightItem;
-
+    [self downloadGoodDetail];
     
-    [self initAndlayoutUI];
+    
     
 }
 #pragma mark - UI
+//- (void)loadDetails
+//{
+//    _titleLable.text = @"中宁物流";
+//    _fromCity.text = @"南通";
+//    _fromPort.text = @"马达加斯加";
+//    _toCity.text = @"芜湖";
+//    _toPort.text = @"安达曼";
+//    _price.text = @"12.00元";
+//    _weight.text = @"2000 吨";
+//    _loadTime.text = @"2015年12月7日装船";
+//    _goods.text = @"水泥";
+//
+//
+//}
 - (void)initAndlayoutUI
 {
     CGFloat topSpace=10;
@@ -74,7 +96,7 @@
     titleimageview.image = kImageName(@"company");
     
     _titleLable = [[UILabel alloc]initWithFrame:CGRectMake(45, 5, kScreenWidth/2-60, 20)];
-    _titleLable.text = @"中宁物流";
+//    _titleLable.text = @"中宁物流";
     _titleLable.font = [UIFont systemFontOfSize:14.0];
     [backview addSubview:_titleLable];
 
@@ -86,14 +108,12 @@
     _fromCity = [[UILabel alloc]initWithFrame:CGRectMake(leftSpace*2+12+10, topSpace+20+15,  cityWidth, 20)];
 //    _fromCity.font = [UIFont boldSystemFontOfSize:20];
     [_titleView addSubview:_fromCity];
-    _fromCity.text = @"南通";
 
     
     _fromPort=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace+10, topSpace+20+10+20+5, PortWidth, 20)];
     _fromPort.font=[UIFont systemFontOfSize:14];
     _fromPort.textAlignment=NSTextAlignmentCenter;
     [_titleView addSubview:_fromPort];
-    _fromPort.text = @"马达加斯加";
 
     
     UIImageView *jianTou= [[UIImageView alloc]initWithFrame:CGRectMake(0, 20+10+15, jianTouWidth, 3)];
@@ -108,14 +128,12 @@
     _toCity = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace*2+12+10, topSpace+20+15, cityWidth, 20)];
 //    _toCity.font = [UIFont boldSystemFontOfSize:20];
     [_titleView addSubview:_toCity];
-    _toCity.text = @"芜湖";
 
     
     _toPort = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+20+10+20+5, PortWidth, 20)];
     _toPort.textAlignment = NSTextAlignmentCenter;
     _toPort.font = [UIFont systemFontOfSize:14];
     [_titleView addSubview:_toPort];
-    _toPort.text = @"安达曼";
 
     
     UIView *hLine = [[UIView alloc]initWithFrame:CGRectMake(0, topSpace+20+10+20+20+4+5, kScreenWidth, 1)];
@@ -125,26 +143,22 @@
     _price = [[UILabel alloc]initWithFrame:CGRectMake(leftSpace*2, topSpace+20+10+20+20+4+5+5, 100, 20)];
     _price.textAlignment = NSTextAlignmentCenter;
     [_titleView addSubview:_price];
-    _price.text = @"12.00元";
     _price.textColor=kColor(251, 115, 0, 1);
 
     _weight = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace*2, topSpace+20+10+20+20+4+5+5, 100, 20)];
     _weight.textAlignment=NSTextAlignmentCenter;
     [_titleView addSubview:_weight];
-    _weight.text = @"2000 吨";
     _weight.textColor=kColor(251, 115, 0, 1);
     
     _loadTime = [[UILabel alloc]initWithFrame:CGRectMake(leftSpace*2, topSpace+20+10+20+20+4+5+20+5, PortWidth, 20)];
     _loadTime.font = [UIFont systemFontOfSize:10];
     _loadTime.textAlignment = NSTextAlignmentCenter;
     [_titleView addSubview:_loadTime];
-    _loadTime.text = @"2015年12月7日装船";
 
     _goods = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace*2, topSpace+20+10+20+20+4+1+5+20+5, PortWidth, 20)];
     _goods.font=[UIFont systemFontOfSize:12];
     _goods.textAlignment=NSTextAlignmentCenter;
     [_titleView addSubview:_goods];
-    _goods.text = @"水泥";
 
     UIView *vLine = [[UIView alloc]initWithFrame:CGRectMake(kScreenWidth/2+4, topSpace+20+10+20+20+4+5+5, 1, 40)];
     vLine.backgroundColor = kColor(201, 201, 201, 1);;
@@ -170,7 +184,8 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    
+    return [_levelstatus intValue];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -180,20 +195,62 @@
     if (cell == nil) {
         cell = [[TransportingTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    if(indexPath.row==0)
+    if(indexPath.row == 0)
     {
-        
-        [cell.selectButton setBackgroundImage:kImageName(@"imageHeight2") forState:UIControlStateNormal];
+        NSString *selectstrings=[NSString stringWithFormat:@"imageHeight%@",_levelstatus];
+        cell.selectButton.enabled = YES;
+
+        [cell.selectButton setBackgroundImage:kImageName(selectstrings) forState:UIControlStateNormal];
     }else
     {
-        NSString *selectstring=[NSString stringWithFormat:@"imageNormal%d",indexPath.row];
+        
+        int selectimage;
+        selectimage = [_levelstatus intValue]- indexPath.row;
+                       
+        NSString *selectstring=[NSString stringWithFormat:@"imageNormal%d",selectimage];
 
         [cell.selectButton setBackgroundImage:kImageName(selectstring) forState:UIControlStateNormal];
+        cell.selectButton.enabled = NO;
+        
+    }
+    if ([_levelstatus intValue]==5) {
+        if (indexPath.row == 1||indexPath.row == 3) {
+            cell.modifyButton.hidden=NO;
+            
+        }
+        else
+        {
+            cell.modifyButton.hidden = YES;
+            
+        }
+        
+    }
+    if ([_levelstatus intValue] < 5&&[_levelstatus intValue]>2) {
+        
+        if (indexPath.row==[_levelstatus intValue]-2)
+        {
+            cell.modifyButton.hidden = NO;
+
+        }
+        else
+        {
+            cell.modifyButton.hidden = YES;
+
+        }
 
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell.modifyButton addTarget:self action:@selector(nextview:) forControlEvents:UIControlEventTouchUpInside];
+    if ([_levelstatus intValue] < ArriveUnloading) {
+        cell.modifyButton.hidden = YES;
+
+    }
+    cell.detailLabel.text = [_dataItem objectAtIndex:indexPath.row];
     
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.modifyButton.tag = indexPath.row;
+    
+    [cell.modifyButton addTarget:self action:@selector(nextview:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.selectButton addTarget:self action:@selector(selectclick:) forControlEvents:UIControlEventTouchUpInside];
+
     return cell;
 }
 
@@ -223,10 +280,184 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.001f;
 }
+
+#pragma mark - Request
+
+- (void)downloadGoodDetail
+{
+    [_titleView removeFromSuperview];
+    
+    [self initAndlayoutUI];
+
+//    [self loadDetails];
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText = @"加载中...";
+    [NetWorkInterface getdetailsWithloginid:@"86" finished:^(BOOL success, NSData *response) {
+        
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        [hud hide:YES afterDelay:0.5f];
+        if (success) {
+            id object = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+            if ([object isKindOfClass:[NSDictionary class]]) {
+                NSString *errorCode = [object objectForKey:@"code"];
+                if ([errorCode intValue] == RequestFail) {
+                    //返回错误代码
+                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                }
+                else if ([errorCode intValue] == RequestSuccess) {
+                    
+                    [hud hide:YES];
+                    [_dataItem removeAllObjects];
+                    
+                              [self parseTerminalListWithDictionary:object];
+                }
+            }
+            else {
+                //返回错误数据
+                hud.labelText = kServiceReturnWrong;
+            }
+        }
+        else {
+            hud.labelText = kNetworkFailed;
+        }
+    }];
+
+}
+- (void)parseTerminalListWithDictionary:(NSDictionary *)dict {
+    if (![dict objectForKey:@"result"] || ![[dict objectForKey:@"result"] isKindOfClass:[NSDictionary class]])
+    {
+        return;
+    }
+    _levelstatus=[[dict objectForKey:@"result"] objectForKey:@"level"];
+    
+    _ids=[[dict objectForKey:@"result"] objectForKey:@"id"];
+    
+     TransportingModel *model = [[TransportingModel alloc] initWithParseDictionary:[dict objectForKey:@"result"]];
+    _titleLable.text = model.title;
+    _fromCity.text = model.fromCity;
+    _fromPort.text = model.fromPort;
+    _toCity.text = model.toCity;
+    _toPort.text = model.toPort;
+    _price.text = [NSString stringWithFormat:@"%@ 元",model.price];
+    _weight.text = [NSString stringWithFormat:@"%@ 吨",model.weight];;
+    _loadTime.text = model.loadTime;
+    _goods.text = model.goods;
+    _fromPort.text = model.beginDockName;
+    _toCity.text = model.ePortName;
+    if ([_levelstatus integerValue] == 1) {
+        _dataItem = [NSMutableArray arrayWithObjects:@"", nil];
+        
+    }
+    if ([_levelstatus integerValue] == 2) {
+_dataItem = [NSMutableArray arrayWithObjects:@"",[NSString stringWithFormat:@"我于%@到达装货港",model.toBPortTimeStr], nil];
+    }
+    if ([_levelstatus integerValue] == 3) {
+_dataItem = [NSMutableArray arrayWithObjects:@"",[NSString stringWithFormat:@"我于%@装货%@吨",model.inWriteTimeStr,model.weight],[NSString stringWithFormat:@"我于%@到达装货港",model.toBPortTimeStr], nil];
+    }
+    if ([_levelstatus integerValue] == 4) {
+_dataItem = [NSMutableArray arrayWithObjects:@"",[NSString stringWithFormat:@"我于%@到达卸货港",model.toEPortTimeStr],[NSString stringWithFormat:@"我于%@装货%@吨",model.inWriteTimeStr,model.weight],[NSString stringWithFormat:@"我于%@到达装货港",model.toBPortTimeStr], nil];
+    }
+    if ([_levelstatus integerValue] == 5) {
+_dataItem = [NSMutableArray arrayWithObjects:@"",[NSString stringWithFormat:@"我于%@卸货%@吨",model.outWriteTimeStr,model.weight],[NSString stringWithFormat:@"我于%@到达卸货港",model.toEPortTimeStr],[NSString stringWithFormat:@"我于%@装货%@吨",model.inWriteTimeStr,model.weight],[NSString stringWithFormat:@"我于%@到达装货港",model.toBPortTimeStr], nil];
+    }
+    
+    
+    [_tableView reloadData];
+    
+
+}
+- (void)refreshList:(NSNotification *)notification {
+    [self downloadGoodDetail];
+}
+- (void)selectclick:(UIButton *)send
+{
+    if([_levelstatus intValue] == Loading||[_levelstatus intValue] == Unloading)
+    {
+        LoadGoodsViewController *loadview = [[LoadGoodsViewController alloc]init];
+        loadview.index = [_levelstatus intValue];
+        loadview.shipRelationID = [_ids intValue];
+        loadview.hidesBottomBarWhenPushed=YES;
+
+        [self.navigationController pushViewController:loadview animated:YES];
+
+    
+    }
+    else
+    {
+        NSString *type ;
+        if([_levelstatus intValue] == Loading)
+        {
+        
+        type = @"2";
+        
+        }
+        else
+        {
+            type = @"1";
+
+        
+        }
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.labelText = @"加载中...";
+        [NetWorkInterface signWithid:_ids type:type loginid:@"86" finished:^(BOOL success, NSData *response) {
+            hud.customView = [[UIImageView alloc] init];
+            hud.mode = MBProgressHUDModeCustomView;
+            [hud hide:YES afterDelay:0.5f];
+            if (success) {
+                id object = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+                if ([object isKindOfClass:[NSDictionary class]]) {
+                    NSString *errorCode = [object objectForKey:@"code"];
+                    if ([errorCode intValue] == RequestFail) {
+                        //返回错误代码
+                        hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                    }
+                    else if ([errorCode intValue] == RequestSuccess) {
+                        [hud hide:YES];
+                        [self downloadGoodDetail];
+                        
+                        //                [self parseGoodDetailDateWithDictionary:object];
+                    }
+                }
+                else {
+                    //返回错误数据
+                    hud.labelText = kServiceReturnWrong;
+                }
+            }
+            else {
+                hud.labelText = kNetworkFailed;
+            }
+        }];
+
+    
+    }
+    
+}
 #pragma mark - Action
-- (void)nextview:(UIButton*)sender
+
+
+- (void)nextview:(UIButton *)sender
 {
     LoadGoodsViewController *loadview = [[LoadGoodsViewController alloc]init];
+    if ([_levelstatus intValue] == Complete) {
+        if(sender.tag == 1)
+        {
+            loadview.index = 4;
+        }
+        if(sender.tag == 3)
+        {
+            loadview.index = 2;
+        }
+
+    }
+    if ([_levelstatus intValue] < Complete) {
+     
+            loadview.index = 2;
+
+    }
+    loadview.hidesBottomBarWhenPushed=YES;
+    
     [self.navigationController pushViewController:loadview animated:YES];
     
 

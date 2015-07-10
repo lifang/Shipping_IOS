@@ -37,7 +37,10 @@ typedef enum{
 #import "Constants.h"
 #import "NetworkRequest.h"
 #import "EncryptHelper.h"
-
+//到达装/卸货港签到
+static NSString *s_sign_method = @"app/shipBusiness/arrive";
+//运输中信息
+static NSString *s_details_method = @"app/shipBusiness/getTransIng";
 //注册
 static NSString *register_method = @"app/addNewShip";
 
@@ -160,7 +163,16 @@ static NSString *upShip_method = @"app/toPay/getPayInfo";
  */
 //注册
 +(void)registerWithLoginName:(NSString*)loginName pwd:(NSString*)pwd name:(NSString*)name shipNumber:(NSString*)shipNumber phone:(NSString*)phone volume:(NSString*)volume dentCode:(NSString*)dentCode builderTime:(NSString*)builderTime imgList:(int)imgList joinCode:(NSString*)joinCode shipName:(NSString*)shipName  finished:(requestDidFinished)finish;
+//运输中信息
++ (void) getdetailsWithloginid:(NSString *)loginid
+                      finished:(requestDidFinished)finish;
 
+
+//到达装/卸货港签到
++ (void)signWithid:(NSString *)idbumber
+             type:(NSString *)type
+          loginid:(NSString *)loginid
+         finished:(requestDidFinished)finish;
 //发送验证码 (注册)
 +(void)sendCodeWith:(NSString*)phone finished:(requestDidFinished)finish;
 

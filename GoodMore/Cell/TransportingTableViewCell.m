@@ -35,19 +35,22 @@
     
     
     _detailLabel = [[UILabel alloc] init];
-    _detailLabel.frame = CGRectMake(kScreenWidth/2-80, 90, kScreenWidth/2-100, 60);
+    _detailLabel.frame = CGRectMake(kScreenWidth/2+80, 50, kScreenWidth/2-100, 90);
+    _detailLabel.numberOfLines = 0;
     
     _detailLabel.backgroundColor = [UIColor clearColor];
     _detailLabel.font = [UIFont systemFontOfSize:12.f];
     [self.contentView addSubview:_detailLabel];
     
-    _modifyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _modifyButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _modifyButton.frame = CGRectMake(kScreenWidth/2+80, 140, 60, 30);
     _modifyButton.backgroundColor = kColor(3, 184, 242, 1);
 //    [_modifyButton setImage:kImageName(@"people") forState:UIControlStateNormal];
-
+    [_modifyButton setTitle:@"修改" forState:UIControlStateNormal];
+    [_modifyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.contentView addSubview:_modifyButton];
-    
+    _modifyButton.layer.cornerRadius = 4.0;
+
     _selectButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _selectButton.frame = CGRectMake(kScreenWidth/2-62.5, 50, 133, 133);
 //    [_selectButton setBackgroundImage:kImageName(@"imageHeight2") forState:UIControlStateNormal];
