@@ -12,6 +12,7 @@
 #import "NetWorkInterface.h"
 #import "AddCollectionViewCell.h"
 #import "ImageCollectionViewCell.h"
+#import "TransportingViewController.h"
 @interface LoadGoodsViewController ()<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UITextFieldDelegate>
 {
     UITextField *_num;
@@ -31,8 +32,16 @@
     [super viewDidLoad];
     
     self.view.backgroundColor=[UIColor whiteColor];
-  
+    if (_index==2) {
         self.title=@"装货";
+
+    }
+    else
+    {
+        self.title=@"卸货";
+
+    
+    }
    
     
     _imageArray=[[NSMutableArray alloc]initWithCapacity:0];
@@ -66,9 +75,18 @@
 //    [self.view addSubview:goodsWeight];
 //    
     _num=[[UITextField alloc]initWithFrame:CGRectMake(leftSpace, topSpace, (kScreenWidth-leftSpace*2)*0.8, 30)];
-    _num.placeholder=@"请输入装货重量";
     _num.delegate=self;
-    
+    if (_index==2) {
+        _num.placeholder=@"请输入装货重量";
+        
+    }
+    else
+    {
+        _num.placeholder=@"请输入卸货重量";
+        
+        
+    }
+
     _num.contentVerticalAlignment=UIControlContentHorizontalAlignmentCenter;
     
     _num.clearButtonMode=UITextFieldViewModeWhileEditing;
@@ -119,7 +137,7 @@
     //kScreenHeight-bottomSpace-40
     UIButton *commit=[UIButton buttonWithType:UIButtonTypeCustom];
     commit.frame=CGRectMake(leftSpace*2, kScreenHeight-bottomSpace-110-64, kScreenWidth-leftSpace*4, 40);
-    [commit setTitle:@"提交" forState:UIControlStateNormal];
+    [commit setTitle:@"确认" forState:UIControlStateNormal];
     [commit addTarget:self action:@selector(commitInfo:) forControlEvents:UIControlEventTouchUpInside];
     [commit setBackgroundColor:kMainColor];
     commit.layer.cornerRadius=4;
@@ -151,10 +169,10 @@
 -(void)commitInfo:(UIButton*)sender
 {
     switch (_index) {
-        case 1:
+        case 2:
             [self upInGoods];
             break;
-        case 2:
+        case 4:
             [self upOutGoods];
             break;
             
@@ -213,7 +231,8 @@
                 }
                 else if ([errorCode intValue] == RequestSuccess) {
                     hud.labelText = @"提交成功";
-                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:RefreshListNotification object:nil];
+
                     [self.navigationController popToRootViewControllerAnimated:YES];
                     
                 }
@@ -273,7 +292,8 @@
                 }
                 else if ([errorCode intValue] == RequestSuccess) {
                     hud.labelText = @"提交成功";
-                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:RefreshListNotification object:nil];
+
                     [self.navigationController popToRootViewControllerAnimated:YES];
                     
                 }
@@ -440,7 +460,7 @@
 {
     if (_imageArray.count==0)
     {
-        return 11;
+        return 1;
     }else
     {
         return _imageArray.count + 1;

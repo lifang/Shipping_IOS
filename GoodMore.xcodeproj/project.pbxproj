@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0ECD2ECA1B4E408000C65456 /* TransportingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD2EC91B4E408000C65456 /* TransportingModel.m */; };
 		0ECD46611B4D0109002BA802 /* TransportingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD46601B4D0109002BA802 /* TransportingTableViewCell.m */; };
 		0ECD46641B4D3B4A002BA802 /* LoadGoodsViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD46631B4D3B4A002BA802 /* LoadGoodsViewController2.m */; };
 		1A0769B11B4D5B1B00704269 /* HistoryDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A0769B01B4D5B1B00704269 /* HistoryDetailCell.m */; };
@@ -108,6 +109,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0ECD2EC81B4E408000C65456 /* TransportingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransportingModel.h; sourceTree = "<group>"; };
+		0ECD2EC91B4E408000C65456 /* TransportingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransportingModel.m; sourceTree = "<group>"; };
 		0ECD465F1B4D0109002BA802 /* TransportingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransportingTableViewCell.h; sourceTree = "<group>"; };
 		0ECD46601B4D0109002BA802 /* TransportingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransportingTableViewCell.m; sourceTree = "<group>"; };
 		0ECD46621B4D3B4A002BA802 /* LoadGoodsViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadGoodsViewController2.h; sourceTree = "<group>"; };
@@ -307,6 +310,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0ECD2EC71B4E09ED00C65456 /* main */ = {
+			isa = PBXGroup;
+			children = (
+				93CDA0A01B15B8C80008DCC0 /* LoginViewController.h */,
+				93CDA0A11B15B8C80008DCC0 /* LoginViewController.m */,
+				938E97561B1FF8190050FE4D /* FindPwdViewController.h */,
+				938E97571B1FF8190050FE4D /* FindPwdViewController.m */,
+				93CDA0A31B15B9200008DCC0 /* RegisterViewController.h */,
+				93CDA0A41B15B9200008DCC0 /* RegisterViewController.m */,
+				9335142B1B3C09CA0059611B /* RegresultViewController.h */,
+				9335142C1B3C09CA0059611B /* RegresultViewController.m */,
+				9342EE9A1B1F0F43000BF13F /* SettingViewController.h */,
+				9342EE9B1B1F0F43000BF13F /* SettingViewController.m */,
+				9342EE9D1B1F1F95000BF13F /* SetNewPWDViewController.h */,
+				9342EE9E1B1F1F95000BF13F /* SetNewPWDViewController.m */,
+				9396213D1B18563A00CB730B /* MainViewController.h */,
+				9396213E1B18563A00CB730B /* MainViewController.m */,
+				939621401B18567D00CB730B /* TaskViewController.h */,
+				939621411B18567D00CB730B /* TaskViewController.m */,
+				939621431B1856A400CB730B /* MyTaskViewController.h */,
+				939621441B1856A400CB730B /* MyTaskViewController.m */,
+				9302B5991B3AC2F300596A80 /* GoodsTransDetailViewController.h */,
+				9302B59A1B3AC2F300596A80 /* GoodsTransDetailViewController.m */,
+				933514311B3D826F0059611B /* ShipTeamDetailViewController.h */,
+				933514321B3D826F0059611B /* ShipTeamDetailViewController.m */,
+				933514281B3B9AD60059611B /* PayFreightViewController.h */,
+				933514291B3B9AD60059611B /* PayFreightViewController.m */,
+				93F673831B1C6D3D00A4E34E /* DetailViewController.h */,
+				93F673841B1C6D3D00A4E34E /* DetailViewController.m */,
+				931EFD021B4284930045752C /* WebViewViewController.h */,
+				931EFD031B4284930045752C /* WebViewViewController.m */,
+				93C4CA3F1B4CC4DC00FE23DE /* RightViewController.h */,
+				93C4CA401B4CC4DC00FE23DE /* RightViewController.m */,
+			);
+			name = main;
+			sourceTree = "<group>";
+		};
 		1A2B6FF31B4CF08D002FFD96 /* HhzView */ = {
 			isa = PBXGroup;
 			children = (
@@ -450,6 +490,8 @@
 			isa = PBXGroup;
 			children = (
 				93C89A741B1D895D008DF209 /* PortModel.h */,
+				0ECD2EC81B4E408000C65456 /* TransportingModel.h */,
+				0ECD2EC91B4E408000C65456 /* TransportingModel.m */,
 				93C89A751B1D895D008DF209 /* PortModel.m */,
 				93C89A771B1D9708008DF209 /* OrdersModel.h */,
 				93C89A781B1D9708008DF209 /* OrdersModel.m */,
@@ -569,6 +611,7 @@
 		93CDA09F1B15B8B50008DCC0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0ECD2EC71B4E09ED00C65456 /* main */,
 				93C4CA4E1B4D533300FE23DE /* task */,
 				939621431B1856A400CB730B /* MyTaskViewController.h */,
 				939621441B1856A400CB730B /* MyTaskViewController.m */,
@@ -766,6 +809,7 @@
 				938EDE101B3E83AB00A0D201 /* ShipInfoCell1.m in Sources */,
 				1A2B70021B4D4253002FFD96 /* ShipHistoryCell.m in Sources */,
 				938E25371B2978FE003B7EC5 /* SureCashViewController.m in Sources */,
+				0ECD2ECA1B4E408000C65456 /* TransportingModel.m in Sources */,
 				935C4FB71B281A06004F292B /* NopayViewController.m in Sources */,
 				93C4CA3C1B4CC15200FE23DE /* MMDrawerController.m in Sources */,
 				1A2B6FFF1B4D3C29002FFD96 /* HistoryController.m in Sources */,

@@ -7,6 +7,16 @@
 //
 
 #import "CommonViewController.h"
+typedef enum {
+    ArriveLoading = 1,
+    Loading,
+    ArriveUnloading,
+    Unloading,
+    Complete,
+}Status;
+
+
+static NSString *RefreshListNotification = @"RefreshListNotification";
 
 @interface TransportingViewController : CommonViewController
 

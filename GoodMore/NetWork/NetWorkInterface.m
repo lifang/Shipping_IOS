@@ -29,8 +29,45 @@ static NSString *HTTP_GET = @"GET";
     }
     [request start];
 }
+//运输中 信息）
++ (void)getdetailsWithloginid:(NSString *)loginid finished:(requestDidFinished)finish
+{
+
+    NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] init];
+    [paramDict setObject:[NSNumber numberWithInt:[loginid intValue]] forKey:@"loginId"];
+    //url
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@",KServiceURL,s_details_method];
+    [[self class] requestWithURL:urlString
+                          params:paramDict
+                      httpMethod:HTTP_POST
+                        finished:finish];
+    
 
 
+
+}
+//到达装/卸货港签到
++ (void)signWithid:(NSString *)idbumber
+             type:(NSString *)type
+          loginid:(NSString *)loginid
+         finished:(requestDidFinished)finish
+{
+
+    NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] init];
+    [paramDict setObject:[NSNumber numberWithInt:[idbumber intValue]] forKey:@"id"];
+    [paramDict setObject:[NSNumber numberWithInt:[type intValue]]  forKey:@"type"];
+    [paramDict setObject:[NSNumber numberWithInt:[loginid intValue]] forKey:@"loginId"];
+    //url
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@",KServiceURL,s_sign_method];
+    [[self class] requestWithURL:urlString
+                          params:paramDict
+                      httpMethod:HTTP_POST
+                        finished:finish];
+
+
+
+
+}
 //注册
 +(void)registerWithLoginName:(NSString*)loginName pwd:(NSString*)pwd name:(NSString*)name  phone:(NSString*)phone  dentCode:(NSString*)dentCode  joinCode:(NSString*)joinCode  finished:(requestDidFinished)finish
 {
