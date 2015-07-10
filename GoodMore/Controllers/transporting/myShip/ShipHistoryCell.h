@@ -33,4 +33,6 @@
 /** 保证金 */
 @property(nonatomic,strong)UILabel *marginLabel;
 
+@property(nonatomic,strong)UILabel *successLabel;
+
 @end

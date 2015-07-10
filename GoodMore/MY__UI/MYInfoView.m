@@ -21,7 +21,7 @@
 }
 -(void)initData
 {
-    _data=[[NSArray alloc]initWithObjects:@"我的资料",@"船舶情况",@"我的钱包",@"我的消息", nil];
+    _data=[[NSArray alloc]initWithObjects:@"我的资料",@"船舶情况",@"我的钱包",@"我的消息",@"退出登录", nil];
 }
 -(void)initUI
 {
@@ -40,7 +40,7 @@
     CGFloat topSpace=30;
     UIView *headView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height*0.3)];
     UIImageView *imageView=[[UIImageView alloc]initWithFrame:CGRectMake((self.bounds.size.width-40)/2, topSpace, 40, 40)];
-    imageView.image=[UIImage imageNamed:@"1.png"];
+    imageView.image=[UIImage imageNamed:@"head_big.png"];
     [headView addSubview:imageView];
     _name=[[UILabel alloc]initWithFrame:CGRectMake((self.bounds.size.width-60)/2, topSpace+40, 60, 20)];
     _name.textColor=[UIColor whiteColor];
@@ -93,28 +93,12 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch (indexPath.row)
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(selectInfoWithIndex:)])
     {
-        case 0:
-            //我的资料
-            NSLog(@"-----index:%ld",(long)indexPath.row);
-            break;
-        case 1:
-            //船舶情况
-            NSLog(@"-----index:%ld",(long)indexPath.row);
-            break;
-        case 2:
-            //我的钱包
-            NSLog(@"-----index:%ld",(long)indexPath.row);
-            break;
-        case 3:
-            //我的消息
-            NSLog(@"-----index:%ld",(long)indexPath.row);
-            break;
-            
-        default:
-            break;
+        [_delegate selectInfoWithIndex:indexPath.row];
     }
+    
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {

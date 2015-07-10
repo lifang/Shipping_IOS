@@ -215,7 +215,7 @@
         
     }
     
-    [NetWorkInterface upInAccountWithID:_shipRelationID inAccount:[_num.text intValue] loginId:86 imgUrlList:string finished:^(BOOL success, NSData *response) {
+    [NetWorkInterface upInAccountWithID:_shipRelationID inAccount:[_num.text intValue] loginId:[loginId intValue] imgUrlList:string finished:^(BOOL success, NSData *response) {
         
         NSLog(@"提交装货信息---%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
         hud.customView = [[UIImageView alloc] init];
@@ -319,7 +319,7 @@
     NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
     NSString *loginId=[userDefault objectForKey:@"loginId"];
     
-    [NetWorkInterface uploadSingleImageWithImage:image loginId:@"86" finished:^(BOOL success, NSData *response) {
+    [NetWorkInterface uploadSingleImageWithImage:image loginId:loginId finished:^(BOOL success, NSData *response) {
         NSLog(@"上传一张图片---%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
         hud.customView = [[UIImageView alloc] init];
         hud.mode = MBProgressHUDModeCustomView;

@@ -26,7 +26,9 @@
 
 @implementation AppDelegate
 
-
++ (AppDelegate *)shareAppDelegate {
+    return (AppDelegate *)[UIApplication sharedApplication].delegate;
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
@@ -52,7 +54,7 @@
     
     [self getUserLocation];
     
-    
+
     _timer = [NSTimer scheduledTimerWithTimeInterval:15*60 target:self selector:@selector(getUserLocation) userInfo:nil repeats:YES];
     
     [self.window makeKeyAndVisible];

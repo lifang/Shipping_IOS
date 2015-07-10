@@ -286,13 +286,13 @@
 -(IBAction)commit:(UIButton*)sender
 {
 
-    if (!_name.text || [_name.text isEqualToString:@""] ||  !_shipName.text || [_shipName.text isEqualToString:@""] || !_volume.text || [_volume.text isEqualToString:@""] || !_year.text || [_year.text isEqualToString:@""] || !_inviteNum.text || [_inviteNum.text isEqualToString:@""] || !_phoneNum.text || [_phoneNum.text isEqualToString:@""] || !_dentcode.text || [_dentcode.text isEqualToString:@""] || !_pwd.text || [_pwd.text isEqualToString:@""] || !_sure.text || [_sure.text isEqualToString:@""] )
+    if (!_name.text || [_name.text isEqualToString:@""] || !_phoneNum.text || [_phoneNum.text isEqualToString:@""] || !_dentcode.text || [_dentcode.text isEqualToString:@""] || !_pwd.text || [_pwd.text isEqualToString:@""] || !_sure.text || [_sure.text isEqualToString:@""] )
     {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         hud.customView = [[UIImageView alloc] init];
         hud.mode = MBProgressHUDModeCustomView;
         [hud hide:YES afterDelay:1.f];
-        hud.labelText = @"所有输入不能为空";
+        hud.labelText = @"输入不能为空";
     }else if (![_dentcode.text isEqualToString:_codeNumber])
     {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
@@ -313,8 +313,7 @@
         MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         hud.labelText=@"正在提交";
         
-        [NetWorkInterface registerWithLoginName:_phoneNum.text pwd:_pwd.text name:_name.text shipNumber:_shipName.text phone:_phoneNum.text volume:_volume.text dentCode:_dentcode.text builderTime:_year.text imgList:_imgList joinCode:_inviteNum.text shipName:_shipName.text finished:^(BOOL success, NSData *response) {
-            
+        [NetWorkInterface registerWithLoginName:_phoneNum.text pwd:_pwd.text name:_name.text phone:_phoneNum.text dentCode:_dentcode.text joinCode:_inviteNum.text finished:^(BOOL success, NSData *response) {
             hud.customView = [[UIImageView alloc] init];
             hud.mode = MBProgressHUDModeCustomView;
             [hud hide:YES afterDelay:0.5f];
@@ -327,8 +326,11 @@
                     if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
                     {
                         [hud setHidden:YES];
-                        RegresultViewController *regResult=[[RegresultViewController alloc]init];
-                        [self.navigationController pushViewController:regResult animated:YES];
+                        
+                        LoginViewController *login=[[LoginViewController alloc]init];
+                        [self.navigationController pushViewController:login animated:YES];
+//                        RegresultViewController *regResult=[[RegresultViewController alloc]init];
+//                        [self.navigationController pushViewController:regResult animated:YES];
                         
                     }else
                     {

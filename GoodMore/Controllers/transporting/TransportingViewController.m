@@ -48,6 +48,8 @@
                                              selector:@selector(refreshList:)
                                                  name:RefreshListNotification
                                                object:nil];
+    
+
     self.view.backgroundColor=[UIColor whiteColor];
     
 //    UIBarButtonItem *rightItem=[[UIBarButtonItem alloc]initWithImage:kImageName(@"head_small.png") style:UIBarButtonItemStyleDone target:self action:@selector(showRight:)];
@@ -58,6 +60,8 @@
     self.navigationItem.rightBarButtonItem = rightItem;
     [self downloadGoodDetail];
     
+
+
     
     
 }
@@ -285,15 +289,13 @@
 
 - (void)downloadGoodDetail
 {
-    [_titleView removeFromSuperview];
-    
-    [self initAndlayoutUI];
+   
 
 //    [self loadDetails];
-    
+    NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.labelText = @"加载中...";
-    [NetWorkInterface getdetailsWithloginid:@"86" finished:^(BOOL success, NSData *response) {
+    [NetWorkInterface getdetailsWithloginid:[userDefault objectForKey:@"loginId"] finished:^(BOOL success, NSData *response) {
         
         hud.customView = [[UIImageView alloc] init];
         hud.mode = MBProgressHUDModeCustomView;
@@ -310,8 +312,10 @@
                     
                     [hud hide:YES];
                     [_dataItem removeAllObjects];
+                    [_titleView removeFromSuperview];
                     
-                              [self parseTerminalListWithDictionary:object];
+                    [self initAndlayoutUI];
+                    [self parseTerminalListWithDictionary:object];
                 }
             }
             else {
@@ -397,11 +401,12 @@ _dataItem = [NSMutableArray arrayWithObjects:@"",[NSString stringWithFormat:@"�
         {
             type = @"1";
 
-        
         }
+        NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
+
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         hud.labelText = @"加载中...";
-        [NetWorkInterface signWithid:_ids type:type loginid:@"86" finished:^(BOOL success, NSData *response) {
+        [NetWorkInterface signWithid:_ids type:type loginid:[userDefault objectForKey:@"loginId"] finished:^(BOOL success, NSData *response) {
             hud.customView = [[UIImageView alloc] init];
             hud.mode = MBProgressHUDModeCustomView;
             [hud hide:YES afterDelay:0.5f];
@@ -466,6 +471,7 @@ _dataItem = [NSMutableArray arrayWithObjects:@"",[NSString stringWithFormat:@"�
 {
     [self.mm_drawerController openDrawerSide:MMDrawerSideRight animated:YES completion:nil];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

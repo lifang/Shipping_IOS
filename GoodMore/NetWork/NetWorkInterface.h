@@ -146,6 +146,23 @@ static NSString *upOutAccount_method = @"app/orders/upOutAccount";
 //升级为高级船
 static NSString *upShip_method = @"app/toPay/getPayInfo";
 
+//组队中
+static NSString *shipMakeTeam_methd = @"app/team/getMyIngTeam";
+
+//加入船队
+static NSString *shipInTeam_methd = @"app/team/joinTeam";
+//单船竞价
+static NSString *singleShipComplete_method= @"shipBusiness/singleComplete";
+
+//消息列表
+static NSString *messageList_method= @"app/messages/getList";
+
+//批量更新消息为已读
+static NSString *uploadMessageStatus_method= @"app/messages/upStatus";
+
+//删除消息
+static NSString *deleteMessage_method = @"app/messages/delById";
+
 @interface NetWorkInterface : NSObject
 
 /*
@@ -167,6 +184,7 @@ static NSString *upShip_method = @"app/toPay/getPayInfo";
 + (void) getdetailsWithloginid:(NSString *)loginid
                       finished:(requestDidFinished)finish;
 
++(void)registerWithLoginName:(NSString*)loginName pwd:(NSString*)pwd name:(NSString*)name  phone:(NSString*)phone  dentCode:(NSString*)dentCode  joinCode:(NSString*)joinCode  finished:(requestDidFinished)finish;
 
 //到达装/卸货港签到
 + (void)signWithid:(NSString *)idbumber
@@ -193,7 +211,7 @@ static NSString *upShip_method = @"app/toPay/getPayInfo";
  mlon
 */
 //任务大厅
-+(void)getOrderListWithPage:(int)page status:(int)status keys:(NSString*)keys mLat1:(double)mLat1 mLon1:(double)mLon1 finished:(requestDidFinished)finish;
++(void)getOrderListWithPage:(int)page status:(int)status keys:(NSString*)keys mLat1:(double)mLat1 mLon1:(double)mLon1 portId:(int)portId distance:(NSString*)distance finished:(requestDidFinished)finish;
 
 
 
@@ -324,5 +342,26 @@ static NSString *upShip_method = @"app/toPay/getPayInfo";
 
 //升级为高级船
 +(void)upShipWithshipId:(int)shipId loginId:(int)loginId finished:(requestDidFinished)finish;
+
+//获取船队详细列表
++(void)shipMakeTeamWithLoginId:(int)loginId finished:(requestDidFinished)finish;
+
+//获取船队详细列表
++(void)joinInTeamWithLoginId:(int)loginId
+                        Code:(NSString *)code
+                   ShipOwnID:(int)shipOwnId
+                       Quote:(int)quote
+                    finished:(requestDidFinished)finish;
+//单船竞价
++(void)singleShipCompletWithshipOwnerId:(int)shipOwnerId bsOrderId:(int)bsOrderId loginId:(int)loginId finished:(requestDidFinished)finish;
+
+//消息列表
++(void)getMessageListWithshipOwnerId:(int)shipOwnerId finished:(requestDidFinished)finish;
+
+//批量更新消息为已读
++(void)uploadMessageStausWithStatus:(int)status loginId:(int)loginId idStr:(NSString*)idStr finished:(requestDidFinished)finish;
+
+//删除消息
++(void)deleteMessageWithID:(int)ID finished:(requestDidFinished)finish;
 @end
 

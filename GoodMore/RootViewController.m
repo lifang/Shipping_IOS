@@ -23,16 +23,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    
-   
-//    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
-//    if (![userDefaults objectForKey:@"loginName"])
-//    {
-//        [self showLoginViewController];
-//    }else
-//    {
-//        [self showMainViewController];
-//    }
     UIImageView *bg=[[UIImageView alloc]initWithImage:kImageName(@"bg")];
     bg.frame=CGRectMake(0, 0, kScreenWidth, kScreenHeight);
     UIImageView *smallBG=[[UIImageView alloc]initWithImage:kImageName(@"smallBG")];
@@ -112,10 +102,10 @@
         [self addChildViewController:_loginNav];
         [NavigationBar setNavigationBarStyle:_loginNav];
     }
-    if (_registerViewController) {
-        [_registerViewController.view removeFromSuperview];
-        [_registerViewController removeFromParentViewController];
-        _registerViewController = nil;
+    if (_menuController) {
+        [_menuController.view removeFromSuperview];
+        [_menuController removeFromParentViewController];
+        _menuController = nil;
     }
 
 }
@@ -178,8 +168,8 @@
         _menuController= [[MMDrawerController alloc] initWithCenterViewController:_mainController
                                                          leftDrawerViewController:nil
                                                         rightDrawerViewController:_messageController];
-        [_menuController setMaximumRightDrawerWidth:180];
-        [_menuController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+        [_menuController setMaximumRightDrawerWidth:kScreenWidth/2];
+        [_menuController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
         [_menuController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeTapCenterView | MMCloseDrawerGestureModePanningCenterView | MMCloseDrawerGestureModeTapNavigationBar];
         [_menuController setCenterHiddenInteractionMode:MMDrawerOpenCenterInteractionModeNone];
         _menuController.view.frame = self.view.bounds;

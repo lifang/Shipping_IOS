@@ -28,7 +28,7 @@
     CGFloat jianTouWidth=42;//箭头的长度
     
     UIView *headView=[[UIView alloc]initWithFrame:CGRectMake(0, topSpace, kScreenWidth, 20)];
-    headView.backgroundColor=[UIColor lightGrayColor];
+    headView.backgroundColor=kColor(217, 220, 221, 1);
     UIImageView *imageView1=[[UIImageView alloc]initWithFrame:CGRectMake(leftSpace, (20-17)/2, 17, 17)];
     imageView1.image=kImageName(@"company.png");
     [headView addSubview:imageView1];
@@ -72,7 +72,7 @@
     [self.contentView addSubview:_toPort];
     
     UIView *hLine=[[UIView alloc]initWithFrame:CGRectMake(0, topSpace+20+10+20+20+4+5, kScreenWidth, 1)];
-    hLine.backgroundColor=kColor(201, 201, 201, 1);;
+    hLine.backgroundColor=kColor(201, 201, 201, 1);
     [self.contentView addSubview:hLine];
     
     _price=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace*2, topSpace+20+10+20+20+4+5+5, 100, 20)];
@@ -94,11 +94,12 @@
     [self.contentView addSubview:_goods];
     
     UIView *vLine=[[UIView alloc]initWithFrame:CGRectMake(kScreenWidth/2, topSpace+20+10+20+20+4+5+5, 1, 40)];
-    vLine.backgroundColor=kColor(201, 201, 201, 1);;
+    vLine.backgroundColor=kColor(201, 201, 201, 1);
     [self.contentView addSubview:vLine];
     
     UIView *footView=[[UIView alloc]initWithFrame:CGRectMake(0, topSpace+20+10+20+20+4+1+5+20+20+5, kScreenWidth, 20)];
-    footView.backgroundColor=[UIColor greenColor];
+    footView.backgroundColor=kColor(200, 233, 243, 1);
+    
     _endTime=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth/2, 20)];
     _endTime.textAlignment=NSTextAlignmentCenter;
     _endTime.font=[UIFont systemFontOfSize:12];
