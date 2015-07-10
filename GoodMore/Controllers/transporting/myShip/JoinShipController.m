@@ -9,7 +9,7 @@
 #import "JoinShipController.h"
 
 @interface JoinShipController ()
-
+@property(nonatomic,strong)UITextField *passwordField;
 @property(nonatomic,strong)UITextField *moneyField;
 
 @property(nonatomic,assign)int money;
@@ -36,22 +36,27 @@
     label1.frame = CGRectMake(10, 20, 100, 10);
     [whiteView addSubview:label1];
     
-    UITextField *passwordField = [[UITextField alloc]init];
-    passwordField.backgroundColor = [UIColor clearColor];
-    passwordField.frame = CGRectMake(label1.frame.origin.x + 20, CGRectGetMaxY(label1.frame) + 5, whiteView.frame.size.width / 1.5, 30);
-    CALayer *readBtnLayer = [passwordField layer];
+    _passwordField = [[UITextField alloc]init];
+    _passwordField.font = [UIFont systemFontOfSize:13];
+    _passwordField.backgroundColor = [UIColor clearColor];
+    _passwordField.frame = CGRectMake(label1.frame.origin.x + 20, CGRectGetMaxY(label1.frame) + 5, whiteView.frame.size.width / 1.5, 30);
+    _passwordField.leftViewMode = UITextFieldViewModeAlways;
+    UIView *v = [[UIView alloc]init];
+    v.frame = CGRectMake(0, 0, 10, 30);
+    _passwordField.leftView = v;
+    CALayer *readBtnLayer = [_passwordField layer];
     [readBtnLayer setMasksToBounds:YES];
     [readBtnLayer setCornerRadius:4.0];
     [readBtnLayer setBorderWidth:1.0];
     [readBtnLayer setBorderColor:kColor(188, 188, 188, 0.7).CGColor];
-    [whiteView addSubview:passwordField];
+    [whiteView addSubview:_passwordField];
     
     UILabel *label2 = [[UILabel alloc]init];
     label2.backgroundColor = [UIColor clearColor];
     label2.font = [UIFont systemFontOfSize:11];
     label2.text = @"你的报价:";
     label1.font = [UIFont systemFontOfSize:11];
-    label2.frame = CGRectMake(10, CGRectGetMaxY(passwordField.frame) + 5, 100, 10);
+    label2.frame = CGRectMake(10, CGRectGetMaxY(_passwordField.frame) + 5, 100, 10);
     [whiteView addSubview:label2];
     
     UIButton *reduceBtn = [[UIButton alloc]init];
@@ -65,7 +70,7 @@
     [readBtnLayer2 setCornerRadius:2.0];
     [readBtnLayer2 setBorderWidth:1.0];
     [readBtnLayer2 setBorderColor:kColor(188, 188, 188, 0.7).CGColor];
-    reduceBtn.frame = CGRectMake(passwordField.frame.origin.x, CGRectGetMaxY(label2.frame) + 10, passwordField.frame.size.width / 4, 30);
+    reduceBtn.frame = CGRectMake(_passwordField.frame.origin.x, CGRectGetMaxY(label2.frame) + 10, _passwordField.frame.size.width / 4, 30);
     [whiteView addSubview:reduceBtn];
     
     _moneyField = [[UITextField alloc]init];
@@ -93,7 +98,7 @@
     [readBtnLayer4 setCornerRadius:2.0];
     [readBtnLayer4 setBorderWidth:1.0];
     [readBtnLayer4 setBorderColor:kColor(188, 188, 188, 0.7).CGColor];
-    addBtn.frame = CGRectMake(CGRectGetMaxX(_moneyField.frame) + 5, CGRectGetMaxY(label2.frame) + 10, passwordField.frame.size.width / 4, 30);
+    addBtn.frame = CGRectMake(CGRectGetMaxX(_moneyField.frame) + 5, CGRectGetMaxY(label2.frame) + 10, _passwordField.frame.size.width / 4, 30);
     [whiteView addSubview:addBtn];
     
     UIView *line = [[UIView alloc]init];
@@ -126,58 +131,65 @@
 
 #pragma mark -- Action
 -(void)reduceClicked {
+    [_passwordField resignFirstResponder];
     _money -=1;
     NSString *money = [NSString stringWithFormat:@"%d",_money];
     _moneyField.text = [NSString stringWithFormat:@"%@.00",money];
 }
 
 -(void)addBtnClicked {
+    [_passwordField resignFirstResponder];
     _money +=1;
     NSString *money = [NSString stringWithFormat:@"%d",_money];
     _moneyField.text = [NSString stringWithFormat:@"%@.00",money];
 }
 
 -(void)cancelClicked {
+    [_passwordField resignFirstResponder];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)sureClicked {
-//    [self joinShipTeam];
+    [_passwordField resignFirstResponder];
+    [self joinShipTeam];
 }
 
 #pragma mark - Request
-//-(void)joinShipTeam {
-//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-//    hud.labelText = @"加载中...";
-//    [NetWorkInterface joinInTeamWithLoginId:88 Code:@"374785" ShipOwnID:<#(int)#> Quote:<#(int)#> finished:^(BOOL success, NSData *response) {
-//        hud.customView = [[UIImageView alloc] init];
-//        hud.mode = MBProgressHUDModeCustomView;
-//        [hud hide:YES afterDelay:0.3f];
-//        if (success) {
-//            id object = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
-//            NSLog(@"!!%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
-//            if ([object isKindOfClass:[NSDictionary class]]) {
-//                NSString *errorCode = [object objectForKey:@"code"];
-//                if ([errorCode intValue] == RequestFail) {
-//                    //返回错误代码
-//                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
-//                }
-//                else if ([errorCode intValue] == RequestSuccess) {
-//                    [hud hide:YES];
-//        
-//                }
-//            }
-//            else {
-//                //返回错误数据
-//                hud.labelText = kServiceReturnWrong;
-//            }
-//        }
-//        else {
-//            hud.labelText = kNetworkFailed;
-//        }
-//        
-//    }];
-//
-//}
+-(void)joinShipTeam {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText = @"加载中...";
+    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+    int shipOwerId = [[userDefaults objectForKey:@"shipOwnerId"] intValue];
+    int loginId = [[userDefaults objectForKey:@"loginId"] intValue];
+    [NetWorkInterface joinInTeamWithLoginId:loginId Code:_passwordField.text ShipOwnID:shipOwerId Quote:_money finished:^(BOOL success, NSData *response) {
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        [hud hide:YES afterDelay:0.3f];
+        if (success) {
+            id object = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+            NSLog(@"!!%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+            if ([object isKindOfClass:[NSDictionary class]]) {
+                NSString *errorCode = [object objectForKey:@"code"];
+                if ([errorCode intValue] == RequestFail) {
+                    //返回错误代码
+                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                }
+                else if ([errorCode intValue] == RequestSuccess) {
+                    [hud hide:YES];
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }
+            }
+            else {
+                //返回错误数据
+                hud.labelText = kServiceReturnWrong;
+            }
+        }
+        else {
+            hud.labelText = kNetworkFailed;
+        }
+        
+    }];
+
+}
 
 @end

@@ -143,16 +143,29 @@
         [readBtnLayer setMasksToBounds:YES];
         [readBtnLayer setCornerRadius:2.0];
         [readBtnLayer setBorderWidth:1.0];
-        if ([reuseIdentifier isEqualToString:@"1"]) {
+        if ([reuseIdentifier isEqualToString:@"historyCell1"]) {
             _successLabel.text = @"组队成功";
             _successLabel.textColor = kLightColor;
             _successLabel.font = [UIFont systemFontOfSize:13];
             [readBtnLayer setBorderColor:kLightColor.CGColor];
-        }else{
+        }
+        if ([reuseIdentifier isEqualToString:@"historyCell2"]){
             _successLabel.text = @"组队失败";
             _successLabel.textColor = kColor(73, 76, 73, 1.0);
             _successLabel.font = [UIFont systemFontOfSize:13];
             [readBtnLayer setBorderColor:kColor(73, 76, 73, 1.0).CGColor];
+        }
+        if ([reuseIdentifier isEqualToString:@"historyCell3"]){
+            _successLabel.text = @"计算运费";
+            _successLabel.textColor = [UIColor orangeColor];
+            _successLabel.font = [UIFont systemFontOfSize:13];
+            [readBtnLayer setBorderColor:[UIColor orangeColor].CGColor];
+        }
+        if ([reuseIdentifier isEqualToString:@"historyCell4"]){
+            _successLabel.text = @"完成";
+            _successLabel.textColor = [UIColor greenColor];
+            _successLabel.font = [UIFont systemFontOfSize:13];
+            [readBtnLayer setBorderColor:[UIColor greenColor].CGColor];
         }
         _successLabel.frame = CGRectMake(K_MainWidth - 80, _logistNameLabel.frame.origin.y + 20, 60, 20);
         [self.contentView addSubview:_successLabel];
@@ -216,4 +229,17 @@
     line.frame = CGRectMake(K_MainWidth / 2, CGRectGetMaxY(topV.frame) + 20, 1, height);
     [self.contentView addSubview:line];
 }
+
+-(void)setContentWithShipOrderModel:(ShipOrder *)shipOrderModel {
+    _logistNameLabel.text = shipOrderModel.companyName;
+    _startPlaceLabel.text = shipOrderModel.beginPortName;
+    _startPortLabel.text = shipOrderModel.beginDockName;
+    _endPlaceLabel.text = shipOrderModel.endPortName;
+    _endPortLabel.text = shipOrderModel.endDockName;
+    _moneyLabel.text = [NSString stringWithFormat:@"%@.00元",shipOrderModel.maxPay];
+    _dateLabel.text = shipOrderModel.workTime;
+    _weightLabel.text = [NSString stringWithFormat:@"%@吨",shipOrderModel.amount];
+    _goodsLabel.text = shipOrderModel.cargos;
+}
+
 @end

@@ -30,6 +30,7 @@
         _leftTopView = [[UIImageView alloc]init];
         _leftTopView.image = [UIImage imageNamed:@"headShip"];
         _leftTopView.frame = CGRectMake(12, 8, 15, 15);
+        _leftTopView.hidden = YES;
         [self.contentView addSubview:_leftTopView];
         
         _logistNameLabel = [[UILabel alloc]init];
@@ -55,6 +56,7 @@
         [self.contentView addSubview:_phoneNumLabel];
         
         _priceLabel = [[UILabel alloc]init];
+        _priceLabel.hidden = YES;
         _priceLabel.text = @"￥2.00";
         _priceLabel.font = [UIFont systemFontOfSize:13];
         [self.contentView addSubview:_priceLabel];
@@ -65,10 +67,20 @@
         [self.contentView addSubview:line];
         
         _deleteBtn = [[UIButton alloc]init];
+        if ([reuseIdentifier isEqualToString:@"cell1"] || [reuseIdentifier isEqualToString:@"cell3"]) {
+            _deleteBtn.hidden = YES;
+        }
         _deleteBtn.titleLabel.font = [UIFont systemFontOfSize:13];
         [_deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
+        if ([reuseIdentifier isEqualToString:@"cell2"]) {
+            [_deleteBtn setTitle:@"同意" forState:UIControlStateNormal];
+        }
         [_deleteBtn setTitleColor:kColor(235, 88, 16, 1.0) forState:UIControlStateNormal];
-        [_deleteBtn addTarget:self action:@selector(deleteClicked) forControlEvents:UIControlEventTouchUpInside];
+        if ([reuseIdentifier isEqualToString:@"cell2"]) {
+            [_deleteBtn addTarget:self action:@selector(agreenClicked) forControlEvents:UIControlEventTouchUpInside];
+        }else{
+            [_deleteBtn addTarget:self action:@selector(deleteClicked) forControlEvents:UIControlEventTouchUpInside];
+        }
         [self.contentView addSubview:_deleteBtn];
         
     }
@@ -81,12 +93,18 @@
     }
 }
 
+-(void)agreenClicked {
+    if (_delegate && [_delegate respondsToSelector:@selector(agreenWithSelectedID:)]) {
+        [_delegate agreenWithSelectedID:_selectedID];
+    }
+}
+
 -(void)layoutSubviews {
     [super layoutSubviews];
     
     _logistNameLabel.frame = CGRectMake(CGRectGetMaxX(_leftTopView.frame), CGRectGetMaxY(_leftTopView.frame) - 5, 120,30);
     
-    _weightLabel.frame = CGRectMake(_logistNameLabel.frame.origin.x + 2, CGRectGetMaxY(_logistNameLabel.frame) - 8, 120, 20);
+    _weightLabel.frame = CGRectMake(_logistNameLabel.frame.origin.x , CGRectGetMaxY(_logistNameLabel.frame) - 8, 120, 20);
     
     _nameLabel.frame = CGRectMake(CGRectGetMaxX(_logistNameLabel.frame) - 40, _logistNameLabel.frame.origin.y, 200, 30);
     
@@ -96,6 +114,53 @@
     
     _deleteBtn.frame = CGRectMake(CGRectGetMaxX(_priceLabel.frame) - 40, _priceLabel.frame.origin.y, 40, 30);
     
+}
+
+-(void)setContentWithShipInTeamModel:(ShipInTeam *)shipInTeamModel AndMyShipModel:(MyShipModel *)myshipModel{
+    if ([myshipModel.isTeamLeader isEqualToString:@"1"]) {
+        _priceLabel.hidden = NO;
+        if ([shipInTeamModel.isLeader isEqualToString:@"1"]) {
+            _leftTopView.hidden = NO;
+        }
+        if ([shipInTeamModel.isSelf isEqualToString:@"1"]) {
+            
+        }else{
+            _deleteBtn.hidden = NO;
+        }
+    }else{
+        if ([shipInTeamModel.isLeader isEqualToString:@"1"]) {
+            _leftTopView.hidden = NO;
+        }
+        if ([shipInTeamModel.isSelf isEqualToString:@"1"]) {
+            [_deleteBtn setTitle:@"退出" forState:UIControlStateNormal];
+            _deleteBtn.hidden = NO;
+        }else{
+            _deleteBtn.hidden = YES;
+        }
+    }
+    _logistNameLabel.text = shipInTeamModel.shipName;
+    _weightLabel.text = [NSString stringWithFormat:@"%@吨",shipInTeamModel.volume];
+    _nameLabel.text = shipInTeamModel.name;
+    _phoneNumLabel.text = shipInTeamModel.phone;
+    _priceLabel.text = [NSString stringWithFormat:@"￥%@.00",shipInTeamModel.submitMoney];
+}
+
+-(void)setContentWithShipnoInTeamModel:(ShipInTeam *)shipInTeamModel {
+    _priceLabel.hidden = NO;
+    _logistNameLabel.text = shipInTeamModel.shipName;
+    _weightLabel.text = [NSString stringWithFormat:@"%@吨",shipInTeamModel.volume];
+    _nameLabel.text = shipInTeamModel.name;
+    _phoneNumLabel.text = shipInTeamModel.phone;
+    _priceLabel.text = [NSString stringWithFormat:@"￥%@.00",shipInTeamModel.submitMoney];
+}
+
+-(void)setContentWithShipRankTeamModel:(ShipInTeam *)shipInTeamModel {
+    _priceLabel.hidden = NO;
+    _logistNameLabel.text = shipInTeamModel.shipName;
+    _weightLabel.text = [NSString stringWithFormat:@"%@吨",shipInTeamModel.volume];
+    _nameLabel.text = shipInTeamModel.name;
+    _phoneNumLabel.text = shipInTeamModel.phone;
+    _priceLabel.text = [NSString stringWithFormat:@"￥%@.00",shipInTeamModel.submitMoney];
 }
 
 @end

@@ -160,6 +160,24 @@ static NSString *uploadMessageStatus_method= @"app/messages/upStatus";
 //删除消息
 static NSString *deleteMessage_method = @"app/messages/delById";
 
+//船长同意加入
+static NSString *agreenJoin_method = @"app/team/applyManage";
+
+//删除船
+static NSString *deletedShip_method = @"app/team/delFromTeam";
+
+//解散船队
+static NSString *dismissShipTeam_method = @"app/team/breakTeam";
+
+//解散船队
+static NSString *grapShipTeam_method = @"app/team/getOrder";
+
+//历史船队列表
+static NSString *historyShipTeam_method = @"app/team/getShipTeamListByShipOwnerId";
+
+//历史船队详细信息
+static NSString *historyDetailShipTeam_method = @"app/team/getShipTeamInfoById";
+
 @interface NetWorkInterface : NSObject
 
 /*
@@ -350,5 +368,28 @@ static NSString *deleteMessage_method = @"app/messages/delById";
 
 //删除消息
 +(void)deleteMessageWithID:(int)ID finished:(requestDidFinished)finish;
+
+//船长同意加入船队申请
++(void)agreenJoinWithSelectedID:(int)selectedId Status:(int)status LoginID:(int)loginid finished:(requestDidFinished)finish;
+
+//删除船队
++(void)deletedshipWithshipTeamID:(int)shipTeamId delShipId:(int)shipID LoginID:(int)loginid finished:(requestDidFinished)finish;
+
+//解散船队
++(void)dismissshipWithshipTeamID:(int)shipTeamId LoginId:(int)loginId ShipOwnerId:(int)shipOwnerId finished:(requestDidFinished)finish;
+
+//抢单
++(void)grapshipWithshipTeamID:(int)shipTeamId LoginId:(int)loginId ShipOwnerId:(int)shipOwnerId finished:(requestDidFinished)finish;
+
+//历史船队列表
++ (void)getHistoryListWithShipOwnerId:(int)shipOwnerId
+                               Status:(int)status
+                                 page:(int)page
+                             finished:(requestDidFinished)finish;
+
+//历史船队详细信息
++ (void)getHistoryDetailWithShipId:(int)ShipId
+                            LoginId:(int)loginId
+                            finished:(requestDidFinished)finish;
 @end
 

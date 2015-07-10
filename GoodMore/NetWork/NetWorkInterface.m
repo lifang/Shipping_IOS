@@ -438,4 +438,64 @@ static NSString *HTTP_GET = @"GET";
     NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,deleteMessage_method];
     [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
 }
+//同意船申请
++(void)agreenJoinWithSelectedID:(int)selectedId Status:(int)status LoginID:(int)loginid finished:(requestDidFinished)finish {
+    NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
+    [paramDic setObject:[NSNumber numberWithInt:selectedId] forKey:@"id"];
+    [paramDic setObject:[NSNumber numberWithInt:status] forKey:@"status"];
+    [paramDic setObject:[NSNumber numberWithInt:loginid] forKey:@"loginId"];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,agreenJoin_method];
+    [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
+}
+//删除船
++(void)deletedshipWithshipTeamID:(int)shipTeamId delShipId:(int)shipID LoginID:(int)loginid finished:(requestDidFinished)finish {
+    NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
+    [paramDic setObject:[NSNumber numberWithInt:shipTeamId] forKey:@"shipTeamId"];
+    [paramDic setObject:[NSNumber numberWithInt:shipID] forKey:@"delShipId"];
+    [paramDic setObject:[NSNumber numberWithInt:loginid] forKey:@"loginId"];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,deletedShip_method];
+    [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
+}
+//解散船队
++(void)dismissshipWithshipTeamID:(int)shipTeamId LoginId:(int)loginId ShipOwnerId:(int)shipOwnerId finished:(requestDidFinished)finish {
+    NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
+    [paramDic setObject:[NSNumber numberWithInt:shipTeamId] forKey:@"shipTeamId"];
+    [paramDic setObject:[NSNumber numberWithInt:shipOwnerId] forKey:@"shipOwnerId"];
+    [paramDic setObject:[NSNumber numberWithInt:loginId] forKey:@"loginId"];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,dismissShipTeam_method];
+    [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
+}
+//抢单
++(void)grapshipWithshipTeamID:(int)shipTeamId LoginId:(int)loginId ShipOwnerId:(int)shipOwnerId finished:(requestDidFinished)finish {
+    NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
+    [paramDic setObject:[NSNumber numberWithInt:shipTeamId] forKey:@"shipTeamId"];
+    [paramDic setObject:[NSNumber numberWithInt:shipOwnerId] forKey:@"shipOwnerId"];
+    [paramDic setObject:[NSNumber numberWithInt:loginId] forKey:@"loginId"];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,grapShipTeam_method];
+    [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
+}
+
+//历史船队列表
++(void)getHistoryListWithShipOwnerId:(int)shipOwnerId
+                              Status:(int)status
+                                page:(int)page
+                            finished:(requestDidFinished)finish {
+    NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
+    [paramDic setObject:[NSNumber numberWithInt:page] forKey:@"page"];
+    [paramDic setObject:[NSNumber numberWithInt:shipOwnerId] forKey:@"shipOwnerId"];
+    [paramDic setObject:[NSNumber numberWithInt:status] forKey:@"status"];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,historyShipTeam_method];
+    [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
+}
+
+//获得历史详情
++(void)getHistoryDetailWithShipId:(int)shipId LoginId:(int)loginId finished:(requestDidFinished)finish {
+    NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
+    [paramDic setObject:[NSNumber numberWithInt:shipId] forKey:@"id"];
+    [paramDic setObject:[NSNumber numberWithInt:loginId] forKey:@"loginId"];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,historyDetailShipTeam_method];
+    [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
+}
+
+
 @end

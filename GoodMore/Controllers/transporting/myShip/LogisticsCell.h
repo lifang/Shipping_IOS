@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyShipModel.h"
 
 @interface LogisticsCell : UITableViewCell
 /** 物流名字 */
@@ -37,5 +38,9 @@
 @property(nonatomic,strong)UILabel *shipWeightLabel;
 /** 组队成功 */
 @property(nonatomic,strong)UILabel *successTeam;
+
+-(void)setContentWithMyshipModel:(MyShipModel *)myshipModel;
+
+-(void)setContentWithShipOrderModel:(ShipOrder *)shipOrderModel AndAllAccount:(NSString *)allAccount;
 
 @end

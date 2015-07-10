@@ -18,6 +18,11 @@
 		1A2B70051B4D4C12002FFD96 /* HistoryDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B70041B4D4C12002FFD96 /* HistoryDetailController.m */; };
 		1A88388B1B4E4A7E003BEB43 /* ShipOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A88388A1B4E4A7E003BEB43 /* ShipOrder.m */; };
 		1A8838911B4E54AA003BEB43 /* JoinShipController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8838901B4E54AA003BEB43 /* JoinShipController.m */; };
+		1A8838941B4E6F30003BEB43 /* ShipTeam.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8838931B4E6F30003BEB43 /* ShipTeam.m */; };
+		1A8838971B4E6F9F003BEB43 /* ShipInTeam.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8838961B4E6F9F003BEB43 /* ShipInTeam.m */; };
+		1A88389A1B4E7038003BEB43 /* MyShipModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8838991B4E7038003BEB43 /* MyShipModel.m */; };
+		1A883C7F1B4FBAB100AC858A /* PayForShipController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A883C7E1B4FBAB100AC858A /* PayForShipController.m */; };
+		1A883C821B4FD8B500AC858A /* PayNumberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A883C811B4FD8B500AC858A /* PayNumberCell.m */; };
 		9302B5981B3AA6CE00596A80 /* MYView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9302B5971B3AA6CE00596A80 /* MYView.m */; };
 		9302B59B1B3AC2F300596A80 /* GoodsTransDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9302B59A1B3AC2F300596A80 /* GoodsTransDetailViewController.m */; };
 		9302B59E1B3AE1BE00596A80 /* ShipInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9302B59D1B3AE1BE00596A80 /* ShipInfoCell.m */; };
@@ -127,6 +132,16 @@
 		1A88388A1B4E4A7E003BEB43 /* ShipOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipOrder.m; sourceTree = "<group>"; };
 		1A88388F1B4E54AA003BEB43 /* JoinShipController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinShipController.h; sourceTree = "<group>"; };
 		1A8838901B4E54AA003BEB43 /* JoinShipController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinShipController.m; sourceTree = "<group>"; };
+		1A8838921B4E6F30003BEB43 /* ShipTeam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipTeam.h; sourceTree = "<group>"; };
+		1A8838931B4E6F30003BEB43 /* ShipTeam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipTeam.m; sourceTree = "<group>"; };
+		1A8838951B4E6F9F003BEB43 /* ShipInTeam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipInTeam.h; sourceTree = "<group>"; };
+		1A8838961B4E6F9F003BEB43 /* ShipInTeam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipInTeam.m; sourceTree = "<group>"; };
+		1A8838981B4E7038003BEB43 /* MyShipModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyShipModel.h; sourceTree = "<group>"; };
+		1A8838991B4E7038003BEB43 /* MyShipModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyShipModel.m; sourceTree = "<group>"; };
+		1A883C7D1B4FBAB100AC858A /* PayForShipController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayForShipController.h; sourceTree = "<group>"; };
+		1A883C7E1B4FBAB100AC858A /* PayForShipController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayForShipController.m; sourceTree = "<group>"; };
+		1A883C801B4FD8B500AC858A /* PayNumberCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayNumberCell.h; sourceTree = "<group>"; };
+		1A883C811B4FD8B500AC858A /* PayNumberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayNumberCell.m; sourceTree = "<group>"; };
 		9302B5961B3AA6CE00596A80 /* MYView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYView.h; sourceTree = "<group>"; };
 		9302B5971B3AA6CE00596A80 /* MYView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYView.m; sourceTree = "<group>"; };
 		9302B5991B3AC2F300596A80 /* GoodsTransDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsTransDetailViewController.h; sourceTree = "<group>"; };
@@ -308,6 +323,8 @@
 				1A2B70011B4D4253002FFD96 /* ShipHistoryCell.m */,
 				1A0769AF1B4D5B1B00704269 /* HistoryDetailCell.h */,
 				1A0769B01B4D5B1B00704269 /* HistoryDetailCell.m */,
+				1A883C801B4FD8B500AC858A /* PayNumberCell.h */,
+				1A883C811B4FD8B500AC858A /* PayNumberCell.m */,
 			);
 			name = HhzView;
 			sourceTree = "<group>";
@@ -317,6 +334,12 @@
 			children = (
 				1A8838891B4E4A7E003BEB43 /* ShipOrder.h */,
 				1A88388A1B4E4A7E003BEB43 /* ShipOrder.m */,
+				1A8838921B4E6F30003BEB43 /* ShipTeam.h */,
+				1A8838931B4E6F30003BEB43 /* ShipTeam.m */,
+				1A8838951B4E6F9F003BEB43 /* ShipInTeam.h */,
+				1A8838961B4E6F9F003BEB43 /* ShipInTeam.m */,
+				1A8838981B4E7038003BEB43 /* MyShipModel.h */,
+				1A8838991B4E7038003BEB43 /* MyShipModel.m */,
 			);
 			name = HhzModel;
 			sourceTree = "<group>";
@@ -376,6 +399,8 @@
 				1A2B70041B4D4C12002FFD96 /* HistoryDetailController.m */,
 				1A88388F1B4E54AA003BEB43 /* JoinShipController.h */,
 				1A8838901B4E54AA003BEB43 /* JoinShipController.m */,
+				1A883C7D1B4FBAB100AC858A /* PayForShipController.h */,
+				1A883C7E1B4FBAB100AC858A /* PayForShipController.m */,
 			);
 			name = myShip;
 			path = transporting/myShip;
@@ -746,6 +771,7 @@
 				93C4CA441B4CE27600FE23DE /* LocationButton.m in Sources */,
 				93C4CA4A1B4CF4FC00FE23DE /* PortListViewController.m in Sources */,
 				93F673821B1C1E5900A4E34E /* TaskCell.m in Sources */,
+				1A883C7F1B4FBAB100AC858A /* PayForShipController.m in Sources */,
 				93C89A801B1DAC47008DF209 /* RefreshView.m in Sources */,
 				93F673851B1C6D3D00A4E34E /* TaskDetailViewController.m in Sources */,
 				938E97581B1FF8190050FE4D /* FindPwdViewController.m in Sources */,
@@ -757,6 +783,7 @@
 				93CDA0A21B15B8C80008DCC0 /* LoginViewController.m in Sources */,
 				1A2B70051B4D4C12002FFD96 /* HistoryDetailController.m in Sources */,
 				93B84E321B1EE37000EF2DB4 /* BusinessOrders.m in Sources */,
+				1A8838971B4E6F9F003BEB43 /* ShipInTeam.m in Sources */,
 				93C4CA4D1B4D14F000FE23DE /* ShipInfoViewController.m in Sources */,
 				93B84E2F1B1EE34C00EF2DB4 /* ShipRelation.m in Sources */,
 				938633A01B4116D50092F05E /* ImageCollectionViewCell.m in Sources */,
@@ -764,6 +791,7 @@
 				93CDA0821B15B6750008DCC0 /* RootViewController.m in Sources */,
 				938E253A1B29B00A003B7EC5 /* BankInfoViewController.m in Sources */,
 				93C89A721B1D3FD9008DF209 /* CommonViewController.m in Sources */,
+				1A883C821B4FD8B500AC858A /* PayNumberCell.m in Sources */,
 				933514331B3D826F0059611B /* ShipTeamDetailViewController.m in Sources */,
 				93C123A11B3954DE002BB29C /* CityHandle.m in Sources */,
 				93C4CA471B4CEBB500FE23DE /* SelectPortViewController.m in Sources */,
@@ -776,6 +804,7 @@
 				93E6EC6F1B4BEDEA0082E990 /* TransportingViewController.m in Sources */,
 				93C4CA3B1B4CC15200FE23DE /* MMDrawerBarButtonItem.m in Sources */,
 				9335142D1B3C09CA0059611B /* RegresultViewController.m in Sources */,
+				1A88389A1B4E7038003BEB43 /* MyShipModel.m in Sources */,
 				939621531B186D0300CB730B /* MBProgressHUD.m in Sources */,
 				938E25021B295009003B7EC5 /* NoPayDetailModel.m in Sources */,
 				933514301B3C1FD70059611B /* LoadGoodsViewController.m in Sources */,
@@ -801,6 +830,7 @@
 				93C1239C1B3933A7002BB29C /* CityModel.m in Sources */,
 				9342EE9C1B1F0F43000BF13F /* SettingViewController.m in Sources */,
 				938E24F91B292BEA003B7EC5 /* NoPayModel.m in Sources */,
+				1A8838941B4E6F30003BEB43 /* ShipTeam.m in Sources */,
 				93C123991B3920F3002BB29C /* BanksModel.m in Sources */,
 				93C4CA411B4CC4DC00FE23DE /* RightViewController.m in Sources */,
 				933514361B3D8BB40059611B /* ShipListModel.m in Sources */,
