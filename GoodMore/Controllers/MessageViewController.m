@@ -11,8 +11,11 @@
 #import "RefreshView.h"
 #import "MultipleDeleteCell.h"
 #import "NetWorkInterface.h"
+#import "MessageModel.h"
+#import "MessageDetailViewController.h"
+#import "UIViewController+MMDrawerController.h"
 
-@interface MessageViewController ()<UITableViewDataSource,UITableViewDelegate,RefreshDelegate>
+@interface MessageViewController ()<UITableViewDataSource,UITableViewDelegate,RefreshDelegate,UIAlertViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -42,6 +45,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"我的消息";
+    
+    UIBarButtonItem *leftItem=[[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+    self.navigationItem.leftBarButtonItem=leftItem;
+    
     _messageItems = [[NSMutableArray alloc] init];
     _selectedItem = [[NSMutableDictionary alloc] init];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑"
@@ -51,6 +58,11 @@
     self.navigationItem.rightBarButtonItem = rightItem;
     [self initAndLayoutUI];
     [self firstLoadData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshMessageList:)
+                                                 name:RefreshMessageListNotification
+                                               object:nil];
 
 }
 - (void)setIsMultiDelete:(BOOL)isMultiDelete {
@@ -180,7 +192,7 @@
                 {
                     [hud setHidden:YES];
                     
-                    //[self parseLoginDataWithDictionary:object];
+                    [self parseMessageListDataWithDictionary:object];
                     
                     
                 }else
@@ -199,7 +211,31 @@
         }
     }];
 }
+-(void)parseMessageListDataWithDictionary:(NSDictionary *)dic
+{
+    if (![dic objectForKey:@"result"] || ![[dic objectForKey:@"result"] isKindOfClass:[NSDictionary class]]) {
+        return;
+    }
+    
+    id result =[[dic objectForKey:@"result"] objectForKey:@"result"];
+    if ([result isKindOfClass:[NSArray class]])
+    {
+        [result enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL *stop) {
+            MessageModel *messageModel=[[MessageModel alloc]initWithDictionary:obj];
+            [_messageItems addObject:messageModel];
+        }];
+    }
+    
+    [_tableView reloadData];
+}
 #pragma mark - Action
+-(IBAction)back:(id)sender
+{
+    //返回主页面
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    
+    [self.mm_drawerController setCenterViewController:delegate.rootViewController.mainController withCloseAnimation:YES completion:nil];
+}
 
 - (IBAction)showEdit:(id)sender {
     if (!_isMultiDelete && _tableView.isEditing) {
@@ -209,7 +245,7 @@
 }
 //标记为已读
 - (IBAction)setReadAll:(id)sender {
-    //[self setReadStatusForSelectedMessages];
+    [self setReadStatusForSelectedMessages];
 }
 //删除
 - (IBAction)deleteMessage:(id)sender {
@@ -222,7 +258,128 @@
     [alert show];
 }
 
+//获取多选状态下选中的消息id数组
+- (NSArray *)messagesIDForEditRows {
+    NSMutableArray *IDs = [[NSMutableArray alloc] init];
+    for (NSNumber *index in _selectedItem) {
+        if ([index intValue] < [_messageItems count]) {
+            MessageModel *model = [_messageItems objectAtIndex:[index intValue]];
+            [IDs addObject:[NSNumber numberWithInt:[model.ID intValue]]];
+        }
+    }
+    return IDs;
+}
 
+//单删
+- (void)deleteSingleMessageWithIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"--------indexPath:%@",indexPath);
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText = @"提交中...";
+    
+    MessageModel *message=_messageItems[indexPath.row];
+    
+    
+    
+    [NetWorkInterface deleteMessageWithID:[message.ID intValue] finished:^(BOOL success, NSData *response) {
+    
+    //[NetworkInterface messageDeleteSingleWithToken:delegate.token userID:delegate.userID messageID:model.messageID finished:^(BOOL success, NSData *response) {
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        [hud hide:YES afterDelay:0.5f];
+        if (success) {
+            id object = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+            if ([object isKindOfClass:[NSDictionary class]]) {
+                NSString *errorCode = [object objectForKey:@"code"];
+                if ([errorCode intValue] == RequestFail) {
+                    //返回错误代码
+                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                }
+                else if ([errorCode intValue] == RequestSuccess) {
+                    hud.labelText = @"删除成功";
+                    
+                    [_messageItems removeAllObjects];
+                    
+                    [self firstLoadData];
+                    
+//                    [_messageItems removeObject:model];
+//                    [_tableView beginUpdates];
+//                    [_tableView deleteRowsAtIndexPaths:@[indexPath+] withRowAnimation:UITableViewRowAnimationAutomatic];
+//                    [_tableView endUpdates];
+                }
+            }
+            else {
+                //返回错误数据
+                hud.labelText = kServiceReturnWrong;
+            }
+        }
+        else {
+            hud.labelText = kNetworkFailed;
+        }
+    }];
+}
+
+
+//标记已读
+-(void)setReadStatusForSelectedMessages
+{
+    NSArray *messageID=[self messagesIDForEditRows];
+    if ([messageID count] <= 0) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        [hud hide:YES afterDelay:1.f];
+        hud.labelText = @"请选择需要标注的消息";
+        return;
+    }
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText = @"提交中...";
+    NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
+    NSNumber *loginId=[userDefault objectForKey:@"loginId"];
+    [NetWorkInterface uploadMessageStausWithStatus:1 loginId:[loginId intValue] idStr:messageID finished:^(BOOL success, NSData *response) {
+    
+        NSLog(@"----标记为已读---!!%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+        
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        [hud hide:YES afterDelay:0.5f];
+        if (success) {
+            id object = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+            if ([object isKindOfClass:[NSDictionary class]]) {
+                NSString *errorCode = [object objectForKey:@"code"];
+                if ([errorCode intValue] == RequestFail) {
+                    //返回错误代码
+                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                }
+                else if ([errorCode intValue] == RequestSuccess) {
+                    hud.labelText = @"标注成功";
+                    [self updateMessageStautsForRead];
+                }
+            }
+            else {
+                //返回错误数据
+                hud.labelText = kServiceReturnWrong;
+            }
+        }
+        else {
+            hud.labelText = kNetworkFailed;
+        }
+    }];
+
+}
+//标注已读后更新状态
+- (void)updateMessageStautsForRead {
+    for (NSNumber *index in _selectedItem) {
+        if ([index intValue] < [_messageItems count]) {
+            MessageModel *model = [_messageItems objectAtIndex:[index intValue]];
+            model.status =[NSNumber numberWithInt:1];
+        }
+    }
+    self.isMultiDelete = NO;
+    [_tableView reloadData];
+}
 #pragma mark - UITableView
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -230,7 +387,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return _messageItems.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -239,22 +396,24 @@
     if (cell == nil) {
         cell = [[MultipleDeleteCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:messageIdentifier];
     }
-    //MessageModel *message = [_messageItems objectAtIndex:indexPath.row];
-    cell.textLabel.text = @"通知通知!!";
-    //cell.detailTextLabel.text = message.messageTime;
+    MessageModel *message = [_messageItems objectAtIndex:indexPath.row];
+    cell.textLabel.text =message.title;
+    if ([message.status intValue]==0)
+    {
+        //未读消息
+         cell.textLabel.textColor = [UIColor blackColor];
+    }else
+    {
+        //已读消息
+        cell.textLabel.textColor = kColor(108, 108, 108, 1);
+
+    }
+    
     cell.textLabel.font = [UIFont systemFontOfSize:14.f];
-    cell.detailTextLabel.font = [UIFont systemFontOfSize:12.f];
-    cell.detailTextLabel.textColor = kColor(108, 108, 108, 1);
-//    if (message.messageRead) {
-//        cell.textLabel.textColor = kColor(108, 108, 108, 1);
-//    }
-//    else {
-//        cell.textLabel.textColor = [UIColor blackColor];
-//    }
+  
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
-
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_isMultiDelete) {
         return UITableViewCellEditingStyleDelete | UITableViewCellEditingStyleInsert;
@@ -263,13 +422,40 @@
         return UITableViewCellEditingStyleDelete;
     }
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (!_isMultiDelete) {
+     
+       
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        MessageDetailViewController *messageDetail=[[MessageDetailViewController alloc]init];
+        messageDetail.message=_messageItems[indexPath.row];
+        [self.navigationController pushViewController:messageDetail animated:YES];
+    }
+    else {
+        [_selectedItem setObject:[NSNumber numberWithBool:YES] forKey:[NSNumber numberWithInteger:indexPath.row]];
+        
+    }
+
+    
+}
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (_isMultiDelete) {
+        [_selectedItem removeObjectForKey:[NSNumber numberWithInteger:indexPath.row]];
+    }
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 0.001f;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         _deletePath = indexPath;
+        NSLog(@"删除indexPath:%@",_deletePath);
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示信息"
                                                         message:@"确认删除消息？"
                                                        delegate:self
@@ -382,7 +568,7 @@
 #pragma mark - 上下拉刷新
 //下拉刷新
 - (void)pullDownToLoadData {
-    //[self firstLoadData];
+    [self firstLoadData];
 }
 
 //上拉加载
@@ -398,6 +584,16 @@
         [_messageItems removeObject:message];
     }
     [_tableView reloadData];
+}
+
+#pragma mark -----UIAlertView
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != alertView.cancelButtonIndex)
+    {
+        
+        [self deleteSingleMessageWithIndexPath:_deletePath];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -400,12 +400,13 @@ static NSString *HTTP_GET = @"GET";
     [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
 }
 //单船竞价
-+(void)singleShipCompletWithshipOwnerId:(int)shipOwnerId bsOrderId:(int)bsOrderId loginId:(int)loginId finished:(requestDidFinished)finish
++(void)singleShipCompletWithshipOwnerId:(int)shipOwnerId bsOrderId:(int)bsOrderId loginId:(int)loginId quote:(int)quote finished:(requestDidFinished)finish
 {
     NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
     [paramDic setObject:[NSNumber numberWithInt:shipOwnerId] forKey:@"shipOwnerId"];
     [paramDic setObject:[NSNumber numberWithInt:bsOrderId] forKey:@"bsOrderId"];
     [paramDic setObject:[NSNumber numberWithInt:loginId] forKey:@"loginId"];
+    [paramDic setObject:[NSNumber numberWithInt:quote] forKey:@"quote"];
     NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,singleShipComplete_method];
     [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
 
@@ -420,7 +421,7 @@ static NSString *HTTP_GET = @"GET";
 
 }
 //批量更新消息为已读
-+(void)uploadMessageStausWithStatus:(int)status loginId:(int)loginId idStr:(NSString*)idStr finished:(requestDidFinished)finish
++(void)uploadMessageStausWithStatus:(int)status loginId:(int)loginId idStr:(NSArray*)idStr finished:(requestDidFinished)finish
 {
     NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
     [paramDic setObject:[NSNumber numberWithInt:status] forKey:@"status"];
@@ -437,5 +438,11 @@ static NSString *HTTP_GET = @"GET";
     [paramDic setObject:[NSNumber numberWithInt:ID] forKey:@"id"];
     NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,deleteMessage_method];
     [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
+}
+//获得港口列表
++(void)getPortListWithfinished:(requestDidFinished)finish
+{
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,getPortList_method];
+    [[self class] requestWithURL:urlString params:nil httpMethod:HTTP_GET finished:finish];
 }
 @end

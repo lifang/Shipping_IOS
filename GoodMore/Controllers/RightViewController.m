@@ -63,6 +63,7 @@
         {
             //船舶情况
             ShipInfoViewController *shipInfo=[[ShipInfoViewController alloc]init];
+            shipInfo.type=@"noPush";
             UINavigationController *shiNav=[[UINavigationController alloc]initWithRootViewController:shipInfo];
             [NavigationBar setNavigationBarStyle:shiNav];
             [self.mm_drawerController setCenterViewController:shiNav withCloseAnimation:YES completion:nil];
