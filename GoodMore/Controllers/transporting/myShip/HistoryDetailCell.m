@@ -27,6 +27,7 @@
         self.selectedBackgroundView = v2;
         
         _leftTopView = [[UIImageView alloc]init];
+        _leftTopView.hidden = YES;
         _leftTopView.image = [UIImage imageNamed:@"headShip"];
         _leftTopView.frame = CGRectMake(12, 8, 15, 15);
         [self.contentView addSubview:_leftTopView];
@@ -69,4 +70,15 @@
     _phoneNumLabel.frame = CGRectMake(CGRectGetMaxX(_logistNameLabel.frame) - 40, CGRectGetMaxY(_weightLabel.frame) , 240, 20);
     
 }
+
+-(void)setContentWithShipInTeamModel:(ShipInTeam *)shipInTeamModel {
+    if ([shipInTeamModel.isLeader isEqualToString:@"1"]) {
+        _leftTopView.hidden = NO;
+    }
+    _logistNameLabel.text = shipInTeamModel.shipNumber;
+    _nameLabel.text = shipInTeamModel.name;
+    _weightLabel.text = [NSString stringWithFormat:@"%@吨",shipInTeamModel.volume];
+    _phoneNumLabel.text = shipInTeamModel.phone;
+}
+
 @end

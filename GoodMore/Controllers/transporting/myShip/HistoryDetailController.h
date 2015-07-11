@@ -10,4 +10,6 @@
 
 @interface HistoryDetailController : CommonViewController
 
+@property(nonatomic,strong)NSString *shipID;
+
 @end

@@ -42,7 +42,16 @@
 @property(nonatomic,strong)NSString *companyName;
 @property(nonatomic,strong)NSString *beginDockName;
 @property(nonatomic,strong)NSString *endDockName;
+
 @property(nonatomic,strong)NSString *timeLeft;
+@property(nonatomic,assign)int relationStatus;
+@property(nonatomic,strong)NSString *inAccount;
+@property(nonatomic,strong)NSString *inWriteTimeStr;
+@property(nonatomic,strong)NSString *outWriteTimeStr;
+@property(nonatomic,strong)NSString *outAccount;
+@property(nonatomic,strong)NSString *quote;
+@property(nonatomic,strong)NSString *payMoney;
+
 
 -(instancetype)initWithDictionary:(NSDictionary*)dictionary;
 @end

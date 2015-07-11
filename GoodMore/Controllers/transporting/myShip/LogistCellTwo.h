@@ -1,15 +1,15 @@
 //
-//  LogisticsCell.h
+//  LogistCellTwo.h
 //  GoodMore
 //
-//  Created by 黄含章 on 15/7/8.
+//  Created by 黄含章 on 15/7/11.
 //  Copyright (c) 2015年 comdosoft. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "MyShipModel.h"
 
-@interface LogisticsCell : UITableViewCell
+@interface LogistCellTwo : UITableViewCell
 /** 物流名字 */
 @property(nonatomic,strong)UILabel *logistNameLabel;
 /** 开始地 */
@@ -40,7 +40,4 @@
 @property(nonatomic,strong)UILabel *successTeam;
 
 -(void)setContentWithMyshipModel:(MyShipModel *)myshipModel;
-
--(void)setContentWithShipOrderModel:(ShipOrder *)shipOrderModel AndAllAccount:(NSString *)allAccount;
-
 @end

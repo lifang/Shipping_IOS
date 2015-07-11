@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-
+static NSString *PushTotransportationNotification = @"PushTotransportationNotification";
 
 @interface MainViewController : UITabBarController
 

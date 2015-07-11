@@ -8,7 +8,7 @@
 
 #import "MyShipViewController.h"
 #import "TopButton.h"
-#import "LogisticsCell.h"
+#import "LogistCellTwo.h"
 #import "ShipDetailCell.h"
 #import "HistoryController.h"
 #import "AppDelegate.h"
@@ -16,6 +16,8 @@
 #import "HistoryDetailController.h"
 #import "NetWorkInterface.h"
 #import "JoinShipController.h"
+#import "MyShipModel.h"
+#import "PayForShipController.h"
 
 @interface MyShipViewController ()<TopButtonClickedDelegate,UITableViewDelegate,UITableViewDataSource,ShipDetailCellDelegate>
 
@@ -27,11 +29,21 @@
 
 @property(nonatomic,strong)HistoryController *historyVC;
 
-@property(nonatomic,strong)LogisticsCell *logisticCell;
+@property(nonatomic,strong)LogistCellTwo *logisticCell;
 
-@property(nonatomic,strong)NSMutableArray *totalLastTime;
+@property(nonatomic,strong)MyShipModel *myshipModel;
 
-@property(nonatomic,strong)NSTimer *timer;
+@property(nonatomic,strong)NSMutableArray *shipNoInTeamData;
+
+@property(nonatomic,strong)NSMutableArray *shipNumbersData;
+
+@property(nonatomic,strong)NSMutableArray *shipRankData;
+
+@property(nonatomic,strong)UIButton *dismissBtn;
+
+@property(nonatomic,strong)UIButton *grabBtn;
+
+@property(nonatomic,assign)int weight;
 
 @end
 
@@ -67,44 +79,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToHistoryDetail) name:PushToHistoryDetailNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToHistoryDetail:) name:PushToHistoryDetailNotification object:nil];
     
-    _totalLastTime = [[NSMutableArray alloc]init];
-    [_totalLastTime addObject:@"120000"];
-    [self startTimer];
-    
+    _shipNoInTeamData = [[NSMutableArray alloc]init];
+    _shipNumbersData = [[NSMutableArray alloc]init];
+    _shipRankData = [[NSMutableArray alloc]init];
+    self.weight = 0;
     //设置导航栏View
     [self setupTopView];
+    [self setupHeaderView];
     //获取船队信息
     [self loadShipDetail];
 }
 
--(void)startTimer {
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(refreshLessTime) userInfo:@"" repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:UITrackingRunLoopMode];
-}
-
--(void)refreshLessTime {
-    NSUInteger time;
-    for (int i = 0; i < _totalLastTime.count; i++) {
-        time = [_totalLastTime[i] integerValue];
-        _logisticCell.endTimeLabel.text = [NSString stringWithFormat:@"%@",[self lessSecondToDay:--time]];
-        NSString *newTime = [NSString stringWithFormat:@"%i",time];
-        [_totalLastTime replaceObjectAtIndex:i withObject:newTime];
-    }
-}
-
-- (NSString *)lessSecondToDay:(NSUInteger)seconds
-{
-    NSUInteger day  = (NSUInteger)seconds/(24*3600);
-    NSUInteger hour = (NSUInteger)(seconds%(24*3600))/3600;
-    NSUInteger min  = (NSUInteger)(seconds%(3600))/60;
-    NSUInteger second = (NSUInteger)(seconds%60);
-    
-    NSString *time = [NSString stringWithFormat:@"%lu日%lu小时%lu分钟%lu秒",(unsigned long)day,(unsigned long)hour,(unsigned long)min,(unsigned long)second];
-    return time;
-    
-}
 //创建头部的View
 -(void)setupTopView {
     
@@ -129,49 +116,48 @@
 
 //创建headerView
 -(void)setupHeaderView {
-    self.tableView.backgroundColor = [UIColor whiteColor];
     _headerView = [[UIView alloc]init];
     _headerView.frame = CGRectMake(0, 0, K_MainWidth, 250);
     _headerView.backgroundColor = [UIColor whiteColor];
-    
-    _logisticCell = [[LogisticsCell alloc]init];
-    _logisticCell.successTeam.hidden = YES;
-    _logisticCell.frame = CGRectMake(0, 0, K_MainWidth, 250);
-    [_headerView addSubview:_logisticCell];
-    
-    _tableView.tableHeaderView = _headerView;
 }
 
 //创建footerView
 -(void)setupFooterView {
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    _logisticCell = [[LogistCellTwo alloc]initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"zuduizhong"];
+    _logisticCell.successTeam.hidden = YES;
+    _logisticCell.frame = CGRectMake(0, 0, K_MainWidth, 250);
+    [_logisticCell setContentWithMyshipModel:_myshipModel];
+    [_headerView addSubview:_logisticCell];
+    _tableView.tableHeaderView = _headerView;
     
     UIView *footerV = [[UIView alloc]init];
     footerV.frame = CGRectMake(0, CGRectGetMaxY(_tableView.frame), K_MainWidth, 72);
     footerV.backgroundColor = [UIColor whiteColor];
     
-    UIButton *dismissShip = [[UIButton alloc]init];
-    [dismissShip setTitle:@"解散船队" forState:UIControlStateNormal];
-    [dismissShip addTarget:self action:@selector(dismissClicked) forControlEvents:UIControlEventTouchUpInside];
-    dismissShip.frame = CGRectMake(20, 22, K_MainWidth / 2.5, 40);
-    [dismissShip setBackgroundImage:[UIImage imageNamed:@"lianglan"] forState:UIControlStateNormal];
-    CALayer *readBtnLayer1 = [dismissShip layer];
+    _dismissBtn = [[UIButton alloc]init];
+    [_dismissBtn setTitle:@"解散船队" forState:UIControlStateNormal];
+    [_dismissBtn addTarget:self action:@selector(dismissClicked) forControlEvents:UIControlEventTouchUpInside];
+    _dismissBtn.frame = CGRectMake(20, 22, K_MainWidth / 2.5, 40);
+    [_dismissBtn setBackgroundImage:[UIImage imageNamed:@"lianglan"] forState:UIControlStateNormal];
+    CALayer *readBtnLayer1 = [_dismissBtn layer];
     [readBtnLayer1 setMasksToBounds:YES];
     [readBtnLayer1 setCornerRadius:3.0];
 //    [readBtnLayer1 setBorderWidth:1.0];
 //    [readBtnLayer1 setBorderColor:[kColor(163, 163, 163, 1.0) CGColor]];
-    [footerV addSubview:dismissShip];
+    [footerV addSubview:_dismissBtn];
     
-    UIButton *grabBtn = [[UIButton alloc]init];
-    [grabBtn setTitle:@"抢单" forState:UIControlStateNormal];
-    [grabBtn addTarget:self action:@selector(grabClicked) forControlEvents:UIControlEventTouchUpInside];
-    grabBtn.frame = CGRectMake(CGRectGetMaxX(dismissShip.frame) + 25, 22, K_MainWidth / 2.5, 40);
-    [grabBtn setBackgroundImage:[UIImage imageNamed:@"lanse"] forState:UIControlStateNormal];
-    CALayer *readBtnLayer2 = [grabBtn layer];
+    _grabBtn = [[UIButton alloc]init];
+    [_grabBtn setTitle:@"抢单" forState:UIControlStateNormal];
+    [_grabBtn addTarget:self action:@selector(grabClicked) forControlEvents:UIControlEventTouchUpInside];
+    _grabBtn.frame = CGRectMake(CGRectGetMaxX(_dismissBtn.frame) + 25, 22, K_MainWidth / 2.5, 40);
+    [_grabBtn setBackgroundImage:[UIImage imageNamed:@"lanse"] forState:UIControlStateNormal];
+    CALayer *readBtnLayer2 = [_grabBtn layer];
     [readBtnLayer2 setMasksToBounds:YES];
     [readBtnLayer2 setCornerRadius:3.0];
     //    [readBtnLayer1 setBorderWidth:1.0];
     //    [readBtnLayer1 setBorderColor:[kColor(163, 163, 163, 1.0) CGColor]];
-    [footerV addSubview:grabBtn];
+    [footerV addSubview:_grabBtn];
     
     [self.view addSubview:footerV];
 }
@@ -204,10 +190,14 @@
 }
 
 #pragma mark -- Request
+
+//获得船队数据
 -(void)loadShipDetail {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.labelText = @"加载中...";
-    [NetWorkInterface shipMakeTeamWithLoginId:88 finished:^(BOOL success, NSData *response) {
+    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+    int loginId = [[userDefaults objectForKey:@"loginId"] intValue];
+    [NetWorkInterface shipMakeTeamWithLoginId:loginId finished:^(BOOL success, NSData *response) {
         hud.customView = [[UIImageView alloc] init];
         hud.mode = MBProgressHUDModeCustomView;
         [hud hide:YES afterDelay:0.3f];
@@ -217,8 +207,12 @@
             if ([object isKindOfClass:[NSDictionary class]]) {
                 NSString *errorCode = [object objectForKey:@"code"];
                 if ([errorCode intValue] == RequestFail) {
-                    //返回错误代码
-                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                    [_tableView removeFromSuperview];
+                    [_headerView removeFromSuperview];
+                    [_dismissBtn removeFromSuperview];
+                    [_grabBtn removeFromSuperview];
+//                    //返回错误代码
+//                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
                     UILabel *label = [[UILabel alloc]init];
                     label.font = [UIFont systemFontOfSize:13];
                     label.text = @"您还未加入任何船队！";
@@ -242,11 +236,8 @@
                 }
                 else if ([errorCode intValue] == RequestSuccess) {
                     [hud hide:YES];
-                  
-                    //创建headerView
-                    [self setupHeaderView];
-                    //创建footerView
-                    [self setupFooterView];
+                    
+                    [self parseTradeDataWithDictionary:object];
                 }
             }
             else {
@@ -261,31 +252,273 @@
     }];
 }
 
+//解析字典
+- (void)parseTradeDataWithDictionary:(NSDictionary *)dict {
+    
+    if (![dict objectForKey:@"result"] || ![[dict objectForKey:@"result"] isKindOfClass:[NSDictionary class]]) {
+        return;
+    }
+    [_shipNoInTeamData removeAllObjects];
+    [_shipNumbersData removeAllObjects];
+    [_shipRankData removeAllObjects];
+    _myshipModel = [[MyShipModel alloc]initWithParseDictionary:[dict objectForKey:@"result"]];
+    
+    if (![[dict objectForKey:@"result"] objectForKey:@"shipInTeam"] && ![[[dict objectForKey:@"result"] objectForKey:@"shipInTeam"]isKindOfClass:[NSArray class]]) {
+        return;
+    }
+    NSArray *shipInTeamArray = [[dict objectForKey:@"result"] objectForKey:@"shipInTeam"];
+    for (int i = 0; i < shipInTeamArray.count; i++) {
+        if (!shipInTeamArray[i] || [shipInTeamArray[i] isKindOfClass:[NSDictionary class]]) {
+            ShipInTeam *shipTeamModel = [[ShipInTeam alloc]initWithParseDictionary:shipInTeamArray[i]];
+            [_shipNumbersData addObject:shipTeamModel];
+        }
+    }
+    
+    if ([[dict objectForKey:@"result"] objectForKey:@"shipNoInTeam"] && [[[dict objectForKey:@"result"] objectForKey:@"shipNoInTeam"]isKindOfClass:[NSArray class]]) {
+        NSArray *shipnoInTeamArray = [[dict objectForKey:@"result"] objectForKey:@"shipNoInTeam"];
+        for (int i = 0; i < shipnoInTeamArray.count; i++) {
+            if (!shipnoInTeamArray[i] || [shipnoInTeamArray[i] isKindOfClass:[NSDictionary class]]) {
+                ShipInTeam *shipTeamModel = [[ShipInTeam alloc]initWithParseDictionary:shipnoInTeamArray[i]];
+                [_shipNoInTeamData addObject:shipTeamModel];
+            }
+        }
+    }
+    
+    if ([[dict objectForKey:@"result"] objectForKey:@"singleShipList"] && [[[dict objectForKey:@"result"] objectForKey:@"singleShipList"]isKindOfClass:[NSArray class]]) {
+        NSArray *singleShipArray = [[dict objectForKey:@"result"] objectForKey:@"singleShipList"];
+        for (int i = 0; i < singleShipArray.count; i++) {
+            if (!singleShipArray[i] || [singleShipArray[i] isKindOfClass:[NSDictionary class]]) {
+                ShipInTeam *shipTeamModel = [[ShipInTeam alloc]initWithParseDictionary:singleShipArray[i]];
+                [_shipRankData addObject:shipTeamModel];
+            }
+        }
+    }
+    
+    //创建footerView
+    [self setupFooterView];
+    
+    [self.tableView reloadData];
+}
+
+//同意船请求
+-(void)agreenRequestWithSelctedId:(NSString *)selectedID {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText = @"加载中...";
+    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+    int loginId = [[userDefaults objectForKey:@"loginId"] intValue];
+    [NetWorkInterface agreenJoinWithSelectedID:[selectedID intValue] Status:1 LoginID:loginId finished:^(BOOL success, NSData *response) {
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        [hud hide:YES afterDelay:0.3f];
+        if (success) {
+            id object = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+            NSLog(@"!!%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+            if ([object isKindOfClass:[NSDictionary class]]) {
+                NSString *errorCode = [object objectForKey:@"code"];
+                if ([errorCode intValue] == RequestFail) {
+                    
+                }
+                else if ([errorCode intValue] == RequestSuccess) {
+                    //返回错误代码
+                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                    [hud hide:YES];
+                    [self loadShipDetail];
+                }
+            }
+            else {
+                //返回错误数据
+                hud.labelText = kServiceReturnWrong;
+            }
+        }
+        else {
+            hud.labelText = kNetworkFailed;
+        }
+        
+    }];
+
+}
+
+//删除船请求
+-(void)deleteRequestWithSelectedID:(NSString *)selectedID {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText = @"加载中...";
+    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+    int loginId = [[userDefaults objectForKey:@"loginId"] intValue];
+    [NetWorkInterface deletedshipWithshipTeamID:[_myshipModel.shipTeam.shipTeamID intValue] delShipId:[selectedID intValue] LoginID:loginId finished:^(BOOL success, NSData *response) {
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        [hud hide:YES afterDelay:0.3f];
+        if (success) {
+            id object = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+            NSLog(@"!!%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+            if ([object isKindOfClass:[NSDictionary class]]) {
+                NSString *errorCode = [object objectForKey:@"code"];
+                if ([errorCode intValue] == RequestFail) {
+                    
+                }
+                else if ([errorCode intValue] == RequestSuccess) {
+                    //返回错误代码
+                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                    [hud hide:YES];
+                    [self loadShipDetail];
+                }
+            }
+            else {
+                //返回错误数据
+                hud.labelText = kServiceReturnWrong;
+            }
+        }
+        else {
+            hud.labelText = kNetworkFailed;
+        }
+        
+    }];
+}
+
+//解散船队请求
+-(void)dissmissShipRequest {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText = @"加载中...";
+    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+    int loginId = [[userDefaults objectForKey:@"loginId"] intValue];
+    NSString *shipOwerId = [userDefaults objectForKey:@"shipOwnerId"];
+    [NetWorkInterface dismissshipWithshipTeamID:[_myshipModel.shipTeam.shipTeamID intValue] LoginId:loginId ShipOwnerId:[shipOwerId intValue] finished:^(BOOL success, NSData *response) {
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        [hud hide:YES afterDelay:0.3f];
+        if (success) {
+            id object = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+            NSLog(@"!!%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+            if ([object isKindOfClass:[NSDictionary class]]) {
+                NSString *errorCode = [object objectForKey:@"code"];
+                if ([errorCode intValue] == RequestFail) {
+                    
+                }
+                else if ([errorCode intValue] == RequestSuccess) {
+                    //返回错误代码
+                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                    [hud hide:YES];
+                    [self loadShipDetail];
+                }
+            }
+            else {
+                //返回错误数据
+                hud.labelText = kServiceReturnWrong;
+            }
+        }
+        else {
+            hud.labelText = kNetworkFailed;
+        }
+        
+    }];
+}
+
+//抢单
+-(void)grapRequest {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText = @"加载中...";
+    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+    int loginId = [[userDefaults objectForKey:@"loginId"] intValue];
+    NSString *shipOwerId=[userDefaults objectForKey:@"shipOwnerId"];
+    [NetWorkInterface grapshipWithshipTeamID:[_myshipModel.shipTeam.shipTeamID intValue] LoginId:loginId ShipOwnerId:[shipOwerId intValue] finished:^(BOOL success, NSData *response) {
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        [hud hide:YES afterDelay:0.3f];
+        if (success) {
+            id object = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+            NSLog(@"!!%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+            if ([object isKindOfClass:[NSDictionary class]]) {
+                NSString *errorCode = [object objectForKey:@"code"];
+                if ([errorCode intValue] == RequestFail) {
+                    //返回错误代码
+                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                    hud.labelFont = [UIFont systemFontOfSize:10];
+                    [hud hide:YES afterDelay:0.3f];
+                }
+                else if ([errorCode intValue] == RequestSuccess) {
+                    //返回错误代码
+                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                    [hud hide:YES];
+                    [self loadShipDetail];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:PushTotransportationNotification object:nil userInfo:nil];
+                }
+            }
+            else {
+                //返回错误数据
+                hud.labelText = kServiceReturnWrong;
+            }
+        }
+        else {
+            hud.labelText = kNetworkFailed;
+        }
+        
+    }];
+}
+
 #pragma mark -- ShipDtailCellDelegate
 -(void)deleteDataWithSelectedID:(NSString *)selectedID {
     NSLog(@"删除了id%@",selectedID);
+    [self deleteRequestWithSelectedID:selectedID];
+}
+
+-(void)agreenWithSelectedID:(NSString *)selectedID {
+    NSLog(@"同意了id%@",selectedID);
+    [self agreenRequestWithSelctedId:selectedID];
 }
 
 #pragma mark -- TableViewDelegate
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
-}
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return 10;
+    if ([_myshipModel.isTeamLeader isEqualToString:@"1"]) {
+        return 3;
     }else{
         return 1;
     }
 }
 
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (section == 0) {
+        return _shipNumbersData.count;
+    }else{
+        if (section == 1) {
+            return _shipNoInTeamData.count;
+        }else{
+            return _shipRankData.count;
+        }
+    }
+}
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    ShipDetailCell *cell = [[ShipDetailCell alloc]initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"cell"];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.delegate = self;
-    return cell;
+    if (indexPath.section == 0) {
+        ShipDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
+        cell = [[ShipDetailCell alloc]initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"cell1"];
+        ShipInTeam *shipInTeamModel = [_shipNumbersData objectAtIndex:indexPath.row];
+        _weight = _weight + [shipInTeamModel.volume intValue];
+        cell.selectedID = shipInTeamModel.ID;
+        [cell setContentWithShipInTeamModel:shipInTeamModel AndMyShipModel:_myshipModel];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.delegate = self;
+        return cell;
+    }else if (indexPath.section == 1)
+    {
+        ShipDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
+        cell = [[ShipDetailCell alloc]initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"cell2"];
+        ShipInTeam *shipnoInTeamModel = [_shipNoInTeamData objectAtIndex:indexPath.row];
+        cell.selectedID = shipnoInTeamModel.ID;
+        [cell setContentWithShipnoInTeamModel:shipnoInTeamModel];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.delegate = self;
+        return cell;
+    }else{
+        ShipDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell3"];
+        cell = [[ShipDetailCell alloc]initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"cell3"];
+        ShipInTeam *shipnoRankModel = [_shipRankData objectAtIndex:indexPath.row];
+        cell.selectedID = shipnoRankModel.ID;
+        [cell setContentWithShipRankTeamModel:shipnoRankModel];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.delegate = self;
+        return cell;
+    }
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -331,11 +564,51 @@
 
 #pragma mark -- Action
 -(void)dismissClicked {
+    if (![_myshipModel.isTeamLeader isEqualToString:@"1"]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.labelText = @"对不起，您不是船长！";
+        [hud hide:YES afterDelay:0.3f];
+        return;
+    }
     NSLog(@"解散船队");
+    [self dissmissShipRequest];
 }
 
 -(void)grabClicked {
     NSLog(@"抢单");
+    if (![_myshipModel.isTeamLeader isEqualToString:@"1"]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.labelText = @"对不起，您不是船长！";
+        [hud hide:YES afterDelay:0.3f];
+        return;
+    }
+    
+    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+    NSString *shipName=[userDefaults objectForKey:@"shipName"];
+    if (shipName) {
+        [self grapRequest];
+    }else {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.labelText = @"请补全信息！";
+        [hud hide:YES afterDelay:0.3f];
+        return;
+    }
+//    if (_weight <= [_myshipModel.shipTeam.allAccount intValue]) {
+    
+//    }else{
+//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+//        hud.customView = [[UIImageView alloc] init];
+//        hud.mode = MBProgressHUDModeCustomView;
+//        hud.labelText = @"对不起，船队吨位不达标！";
+//        [hud hide:YES afterDelay:0.3f];
+//        return;
+//    }
 }
 
 -(void)joinInShipTeam {
@@ -349,8 +622,16 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
--(void)pushToHistoryDetail {
+//-(void)pushToPayForShip:(NSNotification *)notification {
+//    PayForShipController *payVC = [[PayForShipController alloc]init];
+//    payVC.shipID = [notification.userInfo objectForKey:@"shipID"];
+//    payVC.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:payVC animated:YES];
+//}
+
+-(void)pushToHistoryDetail:(NSNotification *)notification {
     HistoryDetailController *historyVC = [[HistoryDetailController alloc]init];
+    historyVC.shipID = [notification.userInfo objectForKey:@"shipID"];
     historyVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:historyVC animated:YES];
 }

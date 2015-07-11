@@ -7,12 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyShipModel.h"
+
 //点击协议
 @protocol ShipDetailCellDelegate <NSObject>
 
 @optional
 
 -(void)deleteDataWithSelectedID:(NSString *)selectedID;
+
+-(void)agreenWithSelectedID:(NSString *)selectedID;
 
 @end
 #define ShipDetailCellHeight 80
@@ -37,4 +41,9 @@
 
 @property(nonatomic,weak)id<ShipDetailCellDelegate> delegate;
 
+-(void)setContentWithShipInTeamModel:(ShipInTeam *)shipInTeamModel AndMyShipModel:(MyShipModel *)myshipModel;
+
+-(void)setContentWithShipnoInTeamModel:(ShipInTeam *)shipInTeamModel;
+
+-(void)setContentWithShipRankTeamModel:(ShipInTeam *)shipInTeamModel;
 @end

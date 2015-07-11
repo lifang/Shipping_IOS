@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyShipModel.h"
 
 @interface ShipHistoryCell : UITableViewCell
 
@@ -34,5 +35,9 @@
 @property(nonatomic,strong)UILabel *marginLabel;
 
 @property(nonatomic,strong)UILabel *successLabel;
+
+@property(nonatomic,strong)UILabel *quatLabel;
+
+-(void)setContentWithShipOrderModel:(ShipOrder *)shipOrderModel;
 
 @end
