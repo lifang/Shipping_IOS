@@ -14,6 +14,8 @@
 #import "LoadGoodsViewController.h"
 #import "LoadGoodsViewController2.h"
 #import "TransportingModel.h"
+
+#import "DetailsListViewController.h"
 @interface TransportingViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) UIView *titleView;
 @property (nonatomic, strong) UILabel *titleLable;
@@ -54,9 +56,11 @@
     
 //    UIBarButtonItem *rightItem=[[UIBarButtonItem alloc]initWithImage:kImageName(@"head_small.png") style:UIBarButtonItemStyleDone target:self action:@selector(showRight:)];
 //    self.navigationItem.rightBarButtonItem=rightItem;
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithTitle:@"历史记录" style:UIBarButtonItemStyleDone target:self action:@selector(leftClick:)];
     
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:kImageName(@"personal.png") style:UIBarButtonItemStyleDone target:self action:@selector(showRight:)];
-    
+    self.navigationItem.leftBarButtonItem = leftItem;
+
     self.navigationItem.rightBarButtonItem = rightItem;
     [self downloadGoodDetail];
     
@@ -440,7 +444,14 @@ _dataItem = [NSMutableArray arrayWithObjects:@"",[NSString stringWithFormat:@"�
     
 }
 #pragma mark - Action
+- (void)leftClick:(id)send
+{
+    DetailsListViewController *detailsV = [[DetailsListViewController alloc]init];
+    [self.navigationController pushViewController:detailsV animated:YES];
+    detailsV.hidesBottomBarWhenPushed = YES;
+    
 
+}
 
 - (void)nextview:(UIButton *)sender
 {

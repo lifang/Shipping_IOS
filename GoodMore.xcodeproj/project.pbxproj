@@ -10,6 +10,10 @@
 		0ECD2ECA1B4E408000C65456 /* TransportingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD2EC91B4E408000C65456 /* TransportingModel.m */; };
 		0ECD46611B4D0109002BA802 /* TransportingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD46601B4D0109002BA802 /* TransportingTableViewCell.m */; };
 		0ECD46641B4D3B4A002BA802 /* LoadGoodsViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD46631B4D3B4A002BA802 /* LoadGoodsViewController2.m */; };
+		0ECE854A1B4FEC7500CFBC22 /* RefreshViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECE85491B4FEC7500CFBC22 /* RefreshViewController.m */; };
+		0ECE854D1B4FECFD00CFBC22 /* DetailsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECE854C1B4FECFD00CFBC22 /* DetailsListViewController.m */; };
+		0ED175E81B50A9BD00D85F40 /* ListDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED175E71B50A9BD00D85F40 /* ListDetailsViewController.m */; };
+		0ED175EB1B50AAC700D85F40 /* DetailsListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED175EA1B50AAC700D85F40 /* DetailsListTableViewCell.m */; };
 		1A0769B11B4D5B1B00704269 /* HistoryDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A0769B01B4D5B1B00704269 /* HistoryDetailCell.m */; };
 		1A2B6FF61B4CF0B8002FFD96 /* TopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B6FF51B4CF0B8002FFD96 /* TopButton.m */; };
 		1A2B6FF91B4D0441002FFD96 /* LogisticsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B6FF81B4D0441002FFD96 /* LogisticsCell.m */; };
@@ -112,6 +116,14 @@
 		0ECD46601B4D0109002BA802 /* TransportingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransportingTableViewCell.m; sourceTree = "<group>"; };
 		0ECD46621B4D3B4A002BA802 /* LoadGoodsViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadGoodsViewController2.h; sourceTree = "<group>"; };
 		0ECD46631B4D3B4A002BA802 /* LoadGoodsViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadGoodsViewController2.m; sourceTree = "<group>"; };
+		0ECE85481B4FEC7500CFBC22 /* RefreshViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefreshViewController.h; sourceTree = "<group>"; };
+		0ECE85491B4FEC7500CFBC22 /* RefreshViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefreshViewController.m; sourceTree = "<group>"; };
+		0ECE854B1B4FECFD00CFBC22 /* DetailsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsListViewController.h; sourceTree = "<group>"; };
+		0ECE854C1B4FECFD00CFBC22 /* DetailsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsListViewController.m; sourceTree = "<group>"; };
+		0ED175E61B50A9BD00D85F40 /* ListDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListDetailsViewController.h; sourceTree = "<group>"; };
+		0ED175E71B50A9BD00D85F40 /* ListDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListDetailsViewController.m; sourceTree = "<group>"; };
+		0ED175E91B50AAC700D85F40 /* DetailsListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsListTableViewCell.h; sourceTree = "<group>"; };
+		0ED175EA1B50AAC700D85F40 /* DetailsListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsListTableViewCell.m; sourceTree = "<group>"; };
 		1A0769AF1B4D5B1B00704269 /* HistoryDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryDetailCell.h; sourceTree = "<group>"; };
 		1A0769B01B4D5B1B00704269 /* HistoryDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryDetailCell.m; sourceTree = "<group>"; };
 		1A2B6FF21B4CED3C002FFD96 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -304,38 +316,21 @@
 		0ECD2EC71B4E09ED00C65456 /* main */ = {
 			isa = PBXGroup;
 			children = (
-				93CDA0A01B15B8C80008DCC0 /* LoginViewController.h */,
-				93CDA0A11B15B8C80008DCC0 /* LoginViewController.m */,
-				938E97561B1FF8190050FE4D /* FindPwdViewController.h */,
-				938E97571B1FF8190050FE4D /* FindPwdViewController.m */,
-				93CDA0A31B15B9200008DCC0 /* RegisterViewController.h */,
-				93CDA0A41B15B9200008DCC0 /* RegisterViewController.m */,
-				9335142B1B3C09CA0059611B /* RegresultViewController.h */,
-				9335142C1B3C09CA0059611B /* RegresultViewController.m */,
-				9342EE9A1B1F0F43000BF13F /* SettingViewController.h */,
-				9342EE9B1B1F0F43000BF13F /* SettingViewController.m */,
-				9342EE9D1B1F1F95000BF13F /* SetNewPWDViewController.h */,
-				9342EE9E1B1F1F95000BF13F /* SetNewPWDViewController.m */,
-				9396213D1B18563A00CB730B /* MainViewController.h */,
-				9396213E1B18563A00CB730B /* MainViewController.m */,
-				939621401B18567D00CB730B /* TaskViewController.h */,
-				939621411B18567D00CB730B /* TaskViewController.m */,
-				939621431B1856A400CB730B /* MyTaskViewController.h */,
-				939621441B1856A400CB730B /* MyTaskViewController.m */,
-				9302B5991B3AC2F300596A80 /* GoodsTransDetailViewController.h */,
-				9302B59A1B3AC2F300596A80 /* GoodsTransDetailViewController.m */,
-				933514311B3D826F0059611B /* ShipTeamDetailViewController.h */,
-				933514321B3D826F0059611B /* ShipTeamDetailViewController.m */,
-				933514281B3B9AD60059611B /* PayFreightViewController.h */,
-				933514291B3B9AD60059611B /* PayFreightViewController.m */,
-				93F673831B1C6D3D00A4E34E /* DetailViewController.h */,
-				93F673841B1C6D3D00A4E34E /* DetailViewController.m */,
-				931EFD021B4284930045752C /* WebViewViewController.h */,
-				931EFD031B4284930045752C /* WebViewViewController.m */,
-				93C4CA3F1B4CC4DC00FE23DE /* RightViewController.h */,
-				93C4CA401B4CC4DC00FE23DE /* RightViewController.m */,
 			);
 			name = main;
+			sourceTree = "<group>";
+		};
+		0ECE85431B4FE80F00CFBC22 /* details */ = {
+			isa = PBXGroup;
+			children = (
+				0ECE85481B4FEC7500CFBC22 /* RefreshViewController.h */,
+				0ECE85491B4FEC7500CFBC22 /* RefreshViewController.m */,
+				0ECE854B1B4FECFD00CFBC22 /* DetailsListViewController.h */,
+				0ECE854C1B4FECFD00CFBC22 /* DetailsListViewController.m */,
+				0ED175E61B50A9BD00D85F40 /* ListDetailsViewController.h */,
+				0ED175E71B50A9BD00D85F40 /* ListDetailsViewController.m */,
+			);
+			name = details;
 			sourceTree = "<group>";
 		};
 		1A2B6FF31B4CF08D002FFD96 /* HhzView */ = {
@@ -636,6 +631,7 @@
 		93E6EC6C1B4BEDB10082E990 /* transporting */ = {
 			isa = PBXGroup;
 			children = (
+				0ECE85431B4FE80F00CFBC22 /* details */,
 				9335142E1B3C1FD70059611B /* LoadGoodsViewController.h */,
 				9335142F1B3C1FD70059611B /* LoadGoodsViewController.m */,
 				0ECD46621B4D3B4A002BA802 /* LoadGoodsViewController2.h */,
@@ -667,6 +663,8 @@
 				93E6EC6A1B4BE5D90082E990 /* CommonCell.m */,
 				0ECD465F1B4D0109002BA802 /* TransportingTableViewCell.h */,
 				0ECD46601B4D0109002BA802 /* TransportingTableViewCell.m */,
+				0ED175E91B50AAC700D85F40 /* DetailsListTableViewCell.h */,
+				0ED175EA1B50AAC700D85F40 /* DetailsListTableViewCell.m */,
 				93A658881B4E7366005AADA9 /* MultipleDeleteCell.h */,
 				93A658891B4E736D005AADA9 /* MultipleDeleteCell.m */,
 			);
@@ -783,6 +781,7 @@
 				938EDE0D1B3E535400A0D201 /* ShipTeamModel.m in Sources */,
 				9302B5981B3AA6CE00596A80 /* MYView.m in Sources */,
 				938EDE101B3E83AB00A0D201 /* ShipInfoCell1.m in Sources */,
+				0ED175E81B50A9BD00D85F40 /* ListDetailsViewController.m in Sources */,
 				1A2B70021B4D4253002FFD96 /* ShipHistoryCell.m in Sources */,
 				938E25371B2978FE003B7EC5 /* SureCashViewController.m in Sources */,
 				0ECD2ECA1B4E408000C65456 /* TransportingModel.m in Sources */,
@@ -803,7 +802,9 @@
 				93C4CA301B4CB7DE00FE23DE /* MyShipViewController.m in Sources */,
 				93C123931B38F90A002BB29C /* MoneyNumModel.m in Sources */,
 				1A0769B11B4D5B1B00704269 /* HistoryDetailCell.m in Sources */,
+				0ECE854A1B4FEC7500CFBC22 /* RefreshViewController.m in Sources */,
 				9396214C1B18615100CB730B /* EncryptHelper.m in Sources */,
+				0ED175EB1B50AAC700D85F40 /* DetailsListTableViewCell.m in Sources */,
 				93CDA0A21B15B8C80008DCC0 /* LoginViewController.m in Sources */,
 				1A2B70051B4D4C12002FFD96 /* HistoryDetailController.m in Sources */,
 				93B84E321B1EE37000EF2DB4 /* BusinessOrders.m in Sources */,
@@ -838,6 +839,7 @@
 				93C89A791B1D9708008DF209 /* OrdersModel.m in Sources */,
 				939621451B1856A400CB730B /* MyTaskViewController.m in Sources */,
 				938E24FF1B29347E003B7EC5 /* NoPayDetailCell.m in Sources */,
+				0ECE854D1B4FECFD00CFBC22 /* DetailsListViewController.m in Sources */,
 				93C4CA3E1B4CC15200FE23DE /* UIViewController+MMDrawerController.m in Sources */,
 				938E24FC1B29342E003B7EC5 /* NoPayDetailViewController.m in Sources */,
 				9335142A1B3B9AD60059611B /* PayFreightViewController.m in Sources */,

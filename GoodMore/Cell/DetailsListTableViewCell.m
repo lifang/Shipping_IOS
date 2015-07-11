@@ -1,14 +1,14 @@
 //
-//  ShipHistoryCell.m
+//  DetailsListTableViewCell.m
 //  GoodMore
 //
-//  Created by 黄含章 on 15/7/8.
+//  Created by comdosoft on 15/7/11.
 //  Copyright (c) 2015年 comdosoft. All rights reserved.
 //
 
-#import "ShipHistoryCell.h"
+#import "DetailsListTableViewCell.h"
 
-@interface ShipHistoryCell()
+@interface DetailsListTableViewCell()
 
 @property(nonatomic,strong)UIImageView *logistLogo;
 
@@ -24,8 +24,17 @@
 
 @end
 
-@implementation ShipHistoryCell
+@implementation DetailsListTableViewCell
 
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
@@ -69,7 +78,7 @@
         
         _startPlaceLabel = [[UILabel alloc]init];
         _startPlaceLabel.text = @"南通";
-//        _startPlaceLabel.font = [UIFont systemFontOfSize:20];
+        //        _startPlaceLabel.font = [UIFont systemFontOfSize:20];
         _startPlaceLabel.textColor = kColor(101, 101, 101, 1.0);
         [self.contentView addSubview:_startPlaceLabel];
         
@@ -82,7 +91,7 @@
         
         _endPlaceLabel = [[UILabel alloc]init];
         _endPlaceLabel.text = @"芜湖";
-//        _endPlaceLabel.font = [UIFont systemFontOfSize:20];
+        //        _endPlaceLabel.font = [UIFont systemFontOfSize:20];
         _endPlaceLabel.textColor = kColor(101, 101, 101, 1.0);
         [self.contentView addSubview:_endPlaceLabel];
         
@@ -122,7 +131,7 @@
         _blueView = [[UIView alloc]init];
         _blueView.backgroundColor = kColor(193, 230, 242, 1.0);
         [self.contentView addSubview:_blueView];
-
+        
         
         _endTimeLabel = [[UILabel alloc]init];
         _endTimeLabel.textAlignment = NSTextAlignmentCenter;
@@ -216,4 +225,5 @@
     line.frame = CGRectMake(K_MainWidth / 2, CGRectGetMaxY(topV.frame) + 20, 1, height);
     [self.contentView addSubview:line];
 }
+
 @end
