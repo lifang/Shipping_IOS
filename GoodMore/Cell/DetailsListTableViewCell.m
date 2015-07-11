@@ -44,15 +44,15 @@
         grayView.frame = CGRectMake(10, 13, K_MainWidth - 20, 34);
         [self.contentView addSubview:grayView];
         
-        UIView *leftLine = [[UIView alloc]init];
-        leftLine.backgroundColor = kColor(213, 217, 218, 1.0);
-        leftLine.frame = CGRectMake(10, 47, 1, 160);
-        [self.contentView addSubview:leftLine];
+//        UIView *leftLine = [[UIView alloc]init];
+//        leftLine.backgroundColor = kColor(213, 217, 218, 1.0);
+//        leftLine.frame = CGRectMake(10, 47, 1, 160);
+//        [self.contentView addSubview:leftLine];
         
-        UIView *rightLine = [[UIView alloc]init];
-        rightLine.backgroundColor = kColor(213, 217, 218, 1.0);
-        rightLine.frame = CGRectMake(K_MainWidth - 11, 47, 1, 160);
-        [self.contentView addSubview:rightLine];
+//        UIView *rightLine = [[UIView alloc]init];
+//        rightLine.backgroundColor = kColor(213, 217, 218, 1.0);
+//        rightLine.frame = CGRectMake(K_MainWidth - 11, 47, 1, 160);
+//        [self.contentView addSubview:rightLine];
         
         _logistLogo = [[UIImageView alloc]init];
         _logistLogo.image = [UIImage imageNamed:@"company"];
@@ -75,7 +75,11 @@
         _logistNameLabel.font = [UIFont systemFontOfSize:15];
         _logistNameLabel.text = @"中宁物流";
         [self.contentView addSubview:_logistNameLabel];
-        
+        _statusLable = [[UILabel alloc]init];
+        _statusLable.text = @"芜湖";
+        //        _endPlaceLabel.font = [UIFont systemFontOfSize:20];
+        _statusLable.textColor = kColor(101, 101, 101, 1.0);
+        [self.contentView addSubview:_statusLable];
         _startPlaceLabel = [[UILabel alloc]init];
         _startPlaceLabel.text = @"南通";
         //        _startPlaceLabel.font = [UIFont systemFontOfSize:20];
@@ -104,67 +108,67 @@
         
         _moneyLabel = [[UILabel alloc]init];
         _moneyLabel.textColor = kColor(250, 98, 14, 1.0);
-        _moneyLabel.font = [UIFont systemFontOfSize:18];
+        _moneyLabel.font = [UIFont systemFontOfSize:16];
         _moneyLabel.text = @"12.00 元";
         [self.contentView addSubview:_moneyLabel];
         
         _dateLabel = [[UILabel alloc]init];
         _dateLabel.textAlignment = NSTextAlignmentCenter;
-        _dateLabel.textColor = kColor(110, 110, 110, 1.0);
+//        _dateLabel.textColor = kColor(110, 110, 110, 1.0);
         _dateLabel.font = [UIFont systemFontOfSize:12];
         _dateLabel.text = @"2015年7月5日装船";
         [self.contentView addSubview:_dateLabel];
         
         _weightLabel = [[UILabel alloc]init];
         _weightLabel.textColor = kColor(250, 98, 14, 1.0);
-        _weightLabel.font = [UIFont systemFontOfSize:18];
+        _weightLabel.font = [UIFont systemFontOfSize:16];
         _weightLabel.text = @"2000 吨";
         [self.contentView addSubview:_weightLabel];
         
         _goodsLabel = [[UILabel alloc]init];
         _goodsLabel.textAlignment = NSTextAlignmentCenter;
-        _goodsLabel.textColor = kColor(110, 110, 110, 1.0);
+//        _goodsLabel.textColor = kColor(110, 110, 110, 1.0);
         _goodsLabel.font = [UIFont systemFontOfSize:12];
         _goodsLabel.text = @"水泥";
         [self.contentView addSubview:_goodsLabel];
         
-        _blueView = [[UIView alloc]init];
-        _blueView.backgroundColor = kColor(193, 230, 242, 1.0);
-        [self.contentView addSubview:_blueView];
-        
-        
+//        _blueView = [[UIView alloc]init];
+//        _blueView.backgroundColor = kColor(193, 230, 242, 1.0);
+//        [self.contentView addSubview:_blueView];
+//        
+//        
         _endTimeLabel = [[UILabel alloc]init];
         _endTimeLabel.textAlignment = NSTextAlignmentCenter;
         _endTimeLabel.font = [UIFont systemFontOfSize:12];
-        _endTimeLabel.text = @"2小时53分36秒后结束";
+//        _endTimeLabel.text = @"2小时53分36秒后结束";
         [self.contentView addSubview:_endTimeLabel];
-        
+//
         _marginLabel = [[UILabel alloc]init];
         _marginLabel.textAlignment = NSTextAlignmentCenter;
         _marginLabel.font = [UIFont systemFontOfSize:12];
         _marginLabel.text = @"保证金：200.00元";
         [self.contentView addSubview:_marginLabel];
-        
-        _successLabel = [[UILabel alloc]init];
-        _successLabel.textAlignment = NSTextAlignmentCenter;
-        _successLabel.backgroundColor = [UIColor clearColor];
-        CALayer *readBtnLayer = [_successLabel layer];
-        [readBtnLayer setMasksToBounds:YES];
-        [readBtnLayer setCornerRadius:2.0];
-        [readBtnLayer setBorderWidth:1.0];
-        if ([reuseIdentifier isEqualToString:@"1"]) {
-            _successLabel.text = @"组队成功";
-            _successLabel.textColor = kLightColor;
-            _successLabel.font = [UIFont systemFontOfSize:13];
-            [readBtnLayer setBorderColor:kLightColor.CGColor];
-        }else{
-            _successLabel.text = @"组队失败";
-            _successLabel.textColor = kColor(73, 76, 73, 1.0);
-            _successLabel.font = [UIFont systemFontOfSize:13];
-            [readBtnLayer setBorderColor:kColor(73, 76, 73, 1.0).CGColor];
-        }
-        _successLabel.frame = CGRectMake(K_MainWidth - 80, _logistNameLabel.frame.origin.y + 20, 60, 20);
-        [self.contentView addSubview:_successLabel];
+//
+//        _successLabel = [[UILabel alloc]init];
+//        _successLabel.textAlignment = NSTextAlignmentCenter;
+//        _successLabel.backgroundColor = [UIColor clearColor];
+//        CALayer *readBtnLayer = [_successLabel layer];
+//        [readBtnLayer setMasksToBounds:YES];
+//        [readBtnLayer setCornerRadius:2.0];
+//        [readBtnLayer setBorderWidth:1.0];
+//        if ([reuseIdentifier isEqualToString:@"1"]) {
+//            _successLabel.text = @"组队成功";
+//            _successLabel.textColor = kLightColor;
+//            _successLabel.font = [UIFont systemFontOfSize:13];
+//            [readBtnLayer setBorderColor:kLightColor.CGColor];
+//        }else{
+//            _successLabel.text = @"组队失败";
+//            _successLabel.textColor = kColor(73, 76, 73, 1.0);
+//            _successLabel.font = [UIFont systemFontOfSize:13];
+//            [readBtnLayer setBorderColor:kColor(73, 76, 73, 1.0).CGColor];
+//        }
+//        _successLabel.frame = CGRectMake(K_MainWidth - 80, _logistNameLabel.frame.origin.y + 20, 60, 20);
+//        [self.contentView addSubview:_successLabel];
     }
     return self;
 }
@@ -176,6 +180,8 @@
     _logistNameLabel.frame = CGRectMake(CGRectGetMaxX(_logistLogo.frame) + 5, _logistLogo.frame.origin.y, 120, 20);
     
     [self drawLineWithTopView:_logistNameLabel];
+    _statusLable.frame = CGRectMake(kScreenWidth/2 + 40,  20, 100, 20);
+    _statusLable.textAlignment =  NSTextAlignmentRight;
     
     _startLogo.frame = CGRectMake(_logistNameLabel.frame.origin.x - 10, CGRectGetMaxY(_logistNameLabel.frame) + 20, 14, 15);
     
@@ -195,19 +201,19 @@
     
     [self drawLineWithTopV:_endPortLabel AndHeight:50];
     
-    _moneyLabel.frame = CGRectMake(_startLogo.frame.origin.x + 10, CGRectGetMaxY(_startPortLabel.frame) + 15, 120, 30);
+    _moneyLabel.frame = CGRectMake(_startLogo.frame.origin.x + 10, CGRectGetMaxY(_startPortLabel.frame) + 15, 120, 20);
     
-    _weightLabel.frame = CGRectMake(_endLogo.frame.origin.x , CGRectGetMaxY(_endPortLabel.frame) + 15, 120, 30);
+    _weightLabel.frame = CGRectMake(_endLogo.frame.origin.x , CGRectGetMaxY(_endPortLabel.frame) + 15, 120, 20);
     
     _dateLabel.frame = CGRectMake(0, CGRectGetMaxY(_moneyLabel.frame) + 2, K_MainWidth / 2, 15);
     
-    _goodsLabel.frame = CGRectMake(K_MainWidth / 2 , CGRectGetMaxY(_moneyLabel.frame) + 2, K_MainWidth / 2, 15);
+    _goodsLabel.frame = CGRectMake(K_MainWidth / 2 , CGRectGetMaxY(_moneyLabel.frame) , K_MainWidth / 2, 20);
     
     _blueView.frame = CGRectMake(10, CGRectGetMaxY(_goodsLabel.frame) + 15, K_MainWidth - 20, 30);
     
-    _endTimeLabel.frame = CGRectMake(0, CGRectGetMaxY(_goodsLabel.frame) + 22, K_MainWidth / 2, 15);
+    _endTimeLabel.frame = CGRectMake(0, CGRectGetMaxY(_goodsLabel.frame) , K_MainWidth / 2, 20);
     
-    _marginLabel.frame = CGRectMake(K_MainWidth / 2 , CGRectGetMaxY(_goodsLabel.frame) + 22, K_MainWidth / 2, 15);
+    _marginLabel.frame = CGRectMake(K_MainWidth / 2 , CGRectGetMaxY(_goodsLabel.frame) , K_MainWidth / 2, 15);
     
 }
 

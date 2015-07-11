@@ -11,6 +11,7 @@
 #import "OrdersModel.h"
 #import "ShipHistoryCell.h"
 #import "DetailsListTableViewCell.h"
+#import "ListDetailsViewController.h"
 @interface DetailsListViewController ()
 @property(nonatomic,strong)NSMutableArray *ordersArray;
 
@@ -49,6 +50,26 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     OrdersModel *order = _ordersArray[indexPath.row];
+    if (order.relationStatus  == 3) {
+        cell.statusLable.text = @"已完成";
+        
+    }
+    if (order.relationStatus  == 0) {
+        cell.statusLable.text = @"组队中";
+        
+    }
+    if (order.relationStatus  == 1) {
+        cell.statusLable.text = @"失败";
+        
+    }
+    if (order.relationStatus  == 2) {
+        cell.statusLable.text = @"执行中";
+        
+    }
+    if (order.relationStatus  == 4) {
+        cell.statusLable.text = @"竞价中";
+        
+    }
     cell.successLabel.hidden = YES;
     cell.logistNameLabel.text = order.companyName;
     
@@ -57,13 +78,14 @@
     
     cell.endPlaceLabel.text = order.endPortName;
     cell.endPortLabel.text = order.endDockName;
-    double price = [order.maxPay doubleValue];
-    cell.moneyLabel.text = [NSString stringWithFormat:@"%.2f元",price];
-    cell.weightLabel.text = [NSString stringWithFormat:@"%@吨",order.amount];
-    cell.dateLabel.text = order.workTime;
-    cell.goodsLabel.text = order.cargos;
-    cell.endTimeLabel.text = order.showTime;
-    cell.marginLabel.text = @"保证金:200.00元";
+//    double price = [order.maxPay doubleValue];
+    cell.moneyLabel.text = [NSString stringWithFormat:@"进价%.2f元",[order.quote floatValue]];
+    cell.weightLabel.text = [NSString stringWithFormat:@"运费%@元",order.payMoney];
+    cell.dateLabel.text = [NSString stringWithFormat:@"装货%@吨",order.inAccount];
+    cell.goodsLabel.text = [NSString stringWithFormat:@"装货时间:%@",order.inWriteTimeStr];
+    cell.endTimeLabel.text = [NSString stringWithFormat:@"卸货%@吨",order.outAccount];
+    cell.marginLabel.text = [NSString stringWithFormat:@"卸货时间:%@",order.outWriteTimeStr];
+
     
     return cell;
 }
@@ -74,6 +96,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    ListDetailsViewController *details = [[ListDetailsViewController alloc]init];
+    OrdersModel *order = _ordersArray[indexPath.row];
+    details.ID = [order.ID intValue];
+    NSLog(@"%@",order.ID);
+    
+//    [self.navigationController pushViewController:details animated:YES];
+    
+    
+    
    
 }
 #pragma mark - Request

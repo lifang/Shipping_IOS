@@ -447,8 +447,9 @@ _dataItem = [NSMutableArray arrayWithObjects:@"",[NSString stringWithFormat:@"æˆ
 - (void)leftClick:(id)send
 {
     DetailsListViewController *detailsV = [[DetailsListViewController alloc]init];
-    [self.navigationController pushViewController:detailsV animated:YES];
     detailsV.hidesBottomBarWhenPushed = YES;
+
+    [self.navigationController pushViewController:detailsV animated:YES];
     
 
 }

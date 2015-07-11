@@ -9,5 +9,9 @@
 #import "CommonViewController.h"
 
 @interface ListDetailsViewController : CommonViewController
+@property(nonatomic,assign)NSInteger selectedIndex;
 
+@property(nonatomic,assign)int ID;
+
+@property(nonatomic,assign)int canMT;//记录能否组队接单
 @end

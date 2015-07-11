@@ -33,5 +33,6 @@
 @property(nonatomic,strong)UILabel *marginLabel;
 
 @property(nonatomic,strong)UILabel *successLabel;
+@property(nonatomic,strong)UILabel *statusLable;
 
 @end

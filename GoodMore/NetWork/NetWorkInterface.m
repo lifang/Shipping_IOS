@@ -141,6 +141,18 @@ static NSString *HTTP_GET = @"GET";
 }
 
 //货单详情
++ (void)ListDetailWithID:(int)ID loginId:(int)loginId shipOwnerId:(int)shipOwnerId finished:(requestDidFinished)finish
+{
+
+    NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
+    [paramDic setObject:[NSNumber numberWithInt:ID] forKey:@"bsOrderId"];
+    [paramDic setObject:[NSNumber numberWithInt:loginId] forKey:@"loginId"];
+    [paramDic setObject:[NSNumber numberWithInt:shipOwnerId] forKey:@"shipOwnerId"];
+
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,listDetail_method];
+    [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
+
+}
 +(void)OrderDetailWithID:(int)ID loginId:(int)loginId finished:(requestDidFinished)finish
 {
     
