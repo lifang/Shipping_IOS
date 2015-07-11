@@ -40,7 +40,10 @@
 @end
 
 @implementation MessageViewController
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -171,45 +174,70 @@
 #pragma mark - Request
 -(void)firstLoadData
 {
+    _page=1;
+    [self downloadDataWithPage:_page isMore:NO];
+}
+- (void)downloadDataWithPage:(int)page isMore:(BOOL)isMore
+{
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.labelText = @"加载中...";
     NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
     NSNumber *shipOwnerId=[userDefaults objectForKey:@"shipOwnerId"];
     
-    [NetWorkInterface getMessageListWithshipOwnerId:[shipOwnerId intValue] finished:^(BOOL success, NSData *response) {
+    [NetWorkInterface getMessageListWithshipOwnerId:[shipOwnerId intValue] page:page finished:^(BOOL success, NSData *response) {
+   
         hud.customView = [[UIImageView alloc] init];
         hud.mode = MBProgressHUDModeCustomView;
         [hud hide:YES afterDelay:0.3f];
         
-        if (success)
-        {
-            NSLog(@"----消息列表---!!%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+         NSLog(@"------------消息列表:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+        
+        if (success) {
             
-            id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
-            if ([object isKindOfClass:[NSDictionary class]])
-            {
-                if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
-                {
-                    [hud setHidden:YES];
-                    
-                    [self parseMessageListDataWithDictionary:object];
-                    
-                    
-                }else
-                {
-                    
-                    hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+            id object = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+            if ([object isKindOfClass:[NSDictionary class]]) {
+                NSString *errorCode = [object objectForKey:@"code"];
+                if ([errorCode intValue] == RequestFail) {
+                    //返回错误代码
+                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
                 }
-            }else
-            {
-                
-                hud.labelText=kServiceReturnWrong;
+                else if ([errorCode intValue] == RequestSuccess)
+                {
+                    if (!isMore)
+                    {
+                        [_messageItems removeAllObjects];
+                    }
+                    id list = [[object objectForKey:@"result"] objectForKey:@"content"];
+                    if ([list isKindOfClass:[NSArray class]] && [list count] > 0)
+                    {
+                        //有数据
+                        self.page++;
+                        [hud hide:YES];
+                    }
+                    else
+                    {
+                        //无数据
+                        hud.labelText = @"没有更多数据了...";
+                    }
+                    [self parseMessageListDataWithDictionary:object];
+                }
             }
-        }else
-        {
-            hud.labelText=kNetworkFailed;
+            else {
+                //返回错误数据
+                hud.labelText = kServiceReturnWrong;
+            }
+        }
+        else {
+            hud.labelText = kNetworkFailed;
+        }
+        if (!isMore) {
+            [self refreshViewFinishedLoadingWithDirection:PullFromTop];
+        }
+        else {
+            [self refreshViewFinishedLoadingWithDirection:PullFromBottom];
         }
     }];
+
 }
 -(void)parseMessageListDataWithDictionary:(NSDictionary *)dic
 {
@@ -217,12 +245,13 @@
         return;
     }
     
-    id result =[[dic objectForKey:@"result"] objectForKey:@"result"];
-    if ([result isKindOfClass:[NSArray class]])
+    id content =[[dic objectForKey:@"result"] objectForKey:@"content"];
+    if ([content isKindOfClass:[NSArray class]])
     {
-        [result enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL *stop) {
+        [content enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL *stop) {
             MessageModel *messageModel=[[MessageModel alloc]initWithDictionary:obj];
             [_messageItems addObject:messageModel];
+            NSLog(@"------message:%lu",(unsigned long)_messageItems.count);
         }];
     }
     
@@ -431,6 +460,7 @@
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         MessageDetailViewController *messageDetail=[[MessageDetailViewController alloc]init];
         messageDetail.message=_messageItems[indexPath.row];
+        
         [self.navigationController pushViewController:messageDetail animated:YES];
     }
     else {
@@ -573,7 +603,7 @@
 
 //上拉加载
 - (void)pullUpToLoadData {
-    //[self downloadDataWithPage:self.page isMore:YES];
+    [self downloadDataWithPage:self.page isMore:YES];
 }
 
 #pragma mark - NSNotification

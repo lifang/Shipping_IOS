@@ -7,6 +7,7 @@
 //
 
 #import "MessageDetailViewController.h"
+#import "NetWorkInterface.h"
 
 @interface MessageDetailViewController ()
 
@@ -20,7 +21,8 @@
     self.title=@"消息详情";
     self.view.backgroundColor=[UIColor whiteColor];
     
-    [self initUI];
+    [self changeMessageStatus];
+    
     
 }
 -(void)initUI
@@ -34,7 +36,7 @@
     [self.view addSubview:title];
     
     UILabel *time=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30, kScreenWidth-leftSpace*2, 20)];
-    time.text=_message.updateTime;
+    time.text=_message.createTime;
     time.font=[UIFont systemFontOfSize:12];
     time.textColor=[UIColor grayColor];
     [self.view addSubview:time];
@@ -51,6 +53,48 @@
     content.editable=NO;
     content.font=[UIFont systemFontOfSize:16];
     [self.view addSubview:content];
+}
+-(void)changeMessageStatus
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText = @"加载中...";
+    NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
+    NSNumber *loginId=[userDefault objectForKey:@"loginId"];
+
+    NSNumber *ID=_message.ID;
+    NSArray *messageID=[[NSArray alloc]initWithObjects:ID, nil];
+    [NetWorkInterface uploadMessageStausWithStatus:1 loginId:[loginId intValue] idStr:messageID finished:^(BOOL success, NSData *response) {
+        
+        NSLog(@"----标记为已读---!!%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+        
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        [hud hide:YES afterDelay:0.3f];
+        if (success) {
+            id object = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+            if ([object isKindOfClass:[NSDictionary class]]) {
+                NSString *errorCode = [object objectForKey:@"code"];
+                if ([errorCode intValue] == RequestFail) {
+                    //返回错误代码
+                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                }
+                else if ([errorCode intValue] == RequestSuccess) {
+                    //hud.labelText = @"标注成功";
+                    //[self updateMessageStautsForRead];
+                    
+                    [self initUI];
+                }
+            }
+            else {
+                //返回错误数据
+                hud.labelText = kServiceReturnWrong;
+            }
+        }
+        else {
+            hud.labelText = kNetworkFailed;
+        }
+    }];
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

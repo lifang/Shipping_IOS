@@ -184,6 +184,9 @@ static NSString *historyDetailShipTeam_method = @"app/team/getShipTeamInfoById";
 //获得港口列表
 static NSString *getPortList_method = @"common/getPortList";
 
+//距离列表
+static NSString *getDistanceList_method = @"app/util/getDistanceList";
+
 @interface NetWorkInterface : NSObject
 
 /*
@@ -379,10 +382,10 @@ static NSString *getPortList_method = @"common/getPortList";
                        Quote:(int)quote
                     finished:(requestDidFinished)finish;
 //单船竞价
-+(void)singleShipCompletWithshipOwnerId:(int)shipOwnerId bsOrderId:(int)bsOrderId loginId:(int)loginId quote:(int)quote finished:(requestDidFinished)finish;
++(void)singleShipCompletWithshipOwnerId:(int)shipOwnerId bsOrderId:(int)bsOrderId loginId:(int)loginId quote:(double)quote finished:(requestDidFinished)finish;
 
 //消息列表
-+(void)getMessageListWithshipOwnerId:(int)shipOwnerId finished:(requestDidFinished)finish;
++(void)getMessageListWithshipOwnerId:(int)shipOwnerId page:(int)page finished:(requestDidFinished)finish;
 
 //批量更新消息为已读
 +(void)uploadMessageStausWithStatus:(int)status loginId:(int)loginId idStr:(NSArray*)idStr finished:(requestDidFinished)finish;
@@ -414,5 +417,8 @@ static NSString *getPortList_method = @"common/getPortList";
                             finished:(requestDidFinished)finish;
 //获得港口列表
 +(void)getPortListWithfinished:(requestDidFinished)finish;
+
+//获得距离列表
++(void)getDictanceListWithfinished:(requestDidFinished)finish;
 @end
 

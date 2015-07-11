@@ -8,6 +8,14 @@
 
 #import "CommonViewController.h"
 
+@protocol SelectPortDelegate <NSObject>
+
+-(void)selectPortWithportId:(int)portId distance:(NSString*)distance;
+
+@end
+
 @interface SelectPortViewController : CommonViewController
+
+@property(nonatomic,strong)id<SelectPortDelegate>delegate;
 
 @end

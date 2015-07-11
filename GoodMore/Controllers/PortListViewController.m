@@ -14,7 +14,9 @@
 {
     UITableView *_tableView;
     NSMutableArray *_portArray;
+    NSMutableArray *_distanceArray;
 }
+@property(nonatomic,assign)int portID;
 @end
 
 @implementation PortListViewController
@@ -26,14 +28,17 @@
     if (_index==0)
     {
         //装货港
-        self.title=@"装货港";
+        self.title=@"距离";
+        _distanceArray=[[NSMutableArray alloc]initWithCapacity:0];
         [self initUI];
+        [self getDistanceList];
         
     }else if (_index==1)
     {
         //卸货港
         self.title=@"卸货港";
         _portArray=[[NSMutableArray alloc]initWithCapacity:0];
+        [self initUI];
        [self getPortList];
     }
     
@@ -75,7 +80,7 @@
         return _portArray.count;
     }else
     {
-        return 4;
+        return _distanceArray.count;
     }
     
 }
@@ -94,7 +99,7 @@
         cell.textLabel.text=port.name;
     }else
     {
-        cell.textLabel.text=@"10KM";
+        cell.textLabel.text=_distanceArray[indexPath.row];;
 
     }
         return cell;
@@ -104,21 +109,103 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    switch (_index)
+    {
+        case 0:
+        {
+            
+        }
+            break;
+        case 1:
+        {
+            PortModel *port = _portArray[indexPath.row];
+            _portID=[port.ID intValue];
+           
+        }
+            break;
+
+            
+        default:
+            break;
+    }
+    
     UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
     
-    if (_delegate && [_delegate respondsToSelector:@selector(getPortInfoWithportInfo:index:)])
+    if (_delegate && [_delegate respondsToSelector:@selector(getPortInfoWithportInfo:portID:index:)])
     {
-        //BanksModel *bank=_banksArray[indexPath.row];
-        //[_delegate getSelectBank:bank];
         
-        [_delegate getPortInfoWithportInfo:cell.textLabel.text index:_index];
+        [_delegate getPortInfoWithportInfo:cell.textLabel.text portID:_portID index:_index];
         
         [self.navigationController popViewControllerAnimated:YES];
     }
 
 }
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 
 #pragma mark request
+//获得距离列表
+-(void)getDistanceList
+{
+    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText=@"耐心等待";
+    
+    [NetWorkInterface getDictanceListWithfinished:^(BOOL success, NSData *response) {
+        
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        [hud hide:YES afterDelay:0.5f];
+        NSLog(@"------------距离列表:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+        if (success)
+        {
+            id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+            if ([object isKindOfClass:[NSDictionary class]])
+            {
+                if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
+                {
+                    [hud setHidden:YES];
+                    
+                    [self parseDistanceListWithDictionary:object];
+                    
+                }else
+                {
+                    hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                }
+            }else
+            {
+                hud.labelText=kServiceReturnWrong;
+            }
+        }else
+        {
+            hud.labelText=kNetworkFailed;
+        }
+        
+    }];
+
+}
+-(void)parseDistanceListWithDictionary:(NSDictionary*)dic
+{
+    if (![dic objectForKey:@"result"] || ![[dic objectForKey:@"result"] isKindOfClass:[NSArray class]]) {
+        return;
+    }
+    NSArray *result=[dic objectForKey:@"result"];
+    [result enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL *stop) {
+        NSString *distance=[obj objectForKey:@"content"];
+        [_distanceArray addObject:distance];
+    }];
+    [_tableView reloadData];
+
+}
+//获得港口列表
 -(void)getPortList
 {
     MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
@@ -167,7 +254,7 @@
         PortModel *port=[[PortModel alloc]initWithDictionary:obj];
         [_portArray addObject:port];
     }];
-     [self initUI];
+     //[self initUI];
     [_tableView reloadData];
 }
 - (void)didReceiveMemoryWarning {

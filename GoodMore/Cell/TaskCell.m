@@ -8,186 +8,215 @@
 
 #import "TaskCell.h"
 #import "Constants.h"
+
+
+@interface TaskCell ()
+
+@property(nonatomic,strong)UIImageView *logistLogo;
+
+@property(nonatomic,strong)UIImageView *startLogo;
+
+@property(nonatomic,strong)UIImageView *endLogo;
+
+@property(nonatomic,strong)UIImageView *jiantouV;
+
+@property(nonatomic,strong)UIView *blueView;
+
+@property(nonatomic,strong)UIView *grayView;
+
+@end
+
 @implementation TaskCell
 
--(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self=[super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self)
-    {
-        [self initUI];
+-(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        
+        UIView *grayView = [[UIView alloc]init];
+        grayView.backgroundColor = kColor(213, 217, 218, 1.0);
+        grayView.frame = CGRectMake(10, 13, K_MainWidth - 20, 34);
+        [self.contentView addSubview:grayView];
+        
+        UIView *leftLine = [[UIView alloc]init];
+        leftLine.backgroundColor = kColor(213, 217, 218, 1.0);
+        leftLine.frame = CGRectMake(10, 47, 1, 160);
+        [self.contentView addSubview:leftLine];
+        
+        UIView *rightLine = [[UIView alloc]init];
+        rightLine.backgroundColor = kColor(213, 217, 218, 1.0);
+        rightLine.frame = CGRectMake(K_MainWidth - 11, 47, 1, 160);
+        [self.contentView addSubview:rightLine];
+        
+        _logistLogo = [[UIImageView alloc]init];
+        _logistLogo.image = [UIImage imageNamed:@"company"];
+        _logistLogo.frame = CGRectMake(20, 18, 20, 20);
+        [self.contentView addSubview:_logistLogo];
+        
+        _startLogo = [[UIImageView alloc]init];
+        _startLogo.image = [UIImage imageNamed:@"from"];
+        [self.contentView addSubview:_startLogo];
+        
+        _endLogo = [[UIImageView alloc]init];
+        _endLogo.image = [UIImage imageNamed:@"to"];
+        [self.contentView addSubview:_endLogo];
+        
+        _jiantouV = [[UIImageView alloc]init];
+        _jiantouV.image = [UIImage imageNamed:@"jianTou"];
+        [self.contentView addSubview:_jiantouV];
+        
+        _logistNameLabel = [[UILabel alloc]init];
+        _logistNameLabel.font = [UIFont systemFontOfSize:15];
+        //_logistNameLabel.text = @"中宁物流";
+        [self.contentView addSubview:_logistNameLabel];
+        
+        _startPlaceLabel = [[UILabel alloc]init];
+       // _startPlaceLabel.text = @"南通";
+        _startPlaceLabel.font = [UIFont systemFontOfSize:16];
+        _startPlaceLabel.textColor = kColor(101, 101, 101, 1.0);
+        [self.contentView addSubview:_startPlaceLabel];
+        
+        _startPortLabel = [[UILabel alloc]init];
+        _startPortLabel.textAlignment = NSTextAlignmentCenter;
+       // _startPortLabel.text = @"马达加斯加港口";
+        _startPortLabel.font = [UIFont systemFontOfSize:10];
+        _startPortLabel.textColor = kColor(116, 116, 116, 1.0);
+        [self.contentView addSubview:_startPortLabel];
+        
+        _endPlaceLabel = [[UILabel alloc]init];
+        _endPlaceLabel.text = @"芜湖";
+        _endPlaceLabel.font = [UIFont systemFontOfSize:16];
+        _endPlaceLabel.textColor = kColor(101, 101, 101, 1.0);
+        [self.contentView addSubview:_endPlaceLabel];
+        
+        _endPortLabel = [[UILabel alloc]init];
+        _endPortLabel.textAlignment = NSTextAlignmentCenter;
+        //_endPortLabel.text = @"安达曼港口";
+        _endPortLabel.font = [UIFont systemFontOfSize:10];
+        _endPortLabel.textColor = kColor(116, 116, 116, 1.0);
+        [self.contentView addSubview:_endPortLabel];
+        
+        _moneyLabel = [[UILabel alloc]init];
+        _moneyLabel.textColor = kColor(250, 98, 14, 1.0);
+        _moneyLabel.font = [UIFont systemFontOfSize:18];
+        //_moneyLabel.text = @"12.00 元";
+        [self.contentView addSubview:_moneyLabel];
+        
+        _dateLabel = [[UILabel alloc]init];
+        _dateLabel.textAlignment = NSTextAlignmentCenter;
+        _dateLabel.textColor = kColor(110, 110, 110, 1.0);
+        _dateLabel.font = [UIFont systemFontOfSize:12];
+        //_dateLabel.text = @"2015年7月5日装船";
+        [self.contentView addSubview:_dateLabel];
+        
+        _weightLabel = [[UILabel alloc]init];
+        _weightLabel.textColor = kColor(250, 98, 14, 1.0);
+        _weightLabel.font = [UIFont systemFontOfSize:18];
+        //_weightLabel.text = @"2000 吨";
+        [self.contentView addSubview:_weightLabel];
+        
+        _goodsLabel = [[UILabel alloc]init];
+        _goodsLabel.textAlignment = NSTextAlignmentCenter;
+        _goodsLabel.textColor = kColor(110, 110, 110, 1.0);
+        _goodsLabel.font = [UIFont systemFontOfSize:12];
+        //_goodsLabel.text = @"水泥";
+        [self.contentView addSubview:_goodsLabel];
+        
+        _blueView = [[UIView alloc]init];
+        _blueView.backgroundColor = kColor(193, 230, 242, 1.0);
+        [self.contentView addSubview:_blueView];
+        
+        
+        _endTimeLabel = [[UILabel alloc]init];
+        _endTimeLabel.textAlignment = NSTextAlignmentCenter;
+        _endTimeLabel.font = [UIFont systemFontOfSize:12];
+        //_endTimeLabel.text = @"2小时53分36秒后结束";
+        [self.contentView addSubview:_endTimeLabel];
+        
+        _marginLabel = [[UILabel alloc]init];
+        _marginLabel.textAlignment = NSTextAlignmentCenter;
+        _marginLabel.font = [UIFont systemFontOfSize:12];
+        //_marginLabel.text = @"保证金：200.00元";
+        [self.contentView addSubview:_marginLabel];
+        
+        _successLabel = [[UILabel alloc]init];
+        _successLabel.textAlignment = NSTextAlignmentCenter;
+        _successLabel.backgroundColor = [UIColor clearColor];
+        CALayer *readBtnLayer = [_successLabel layer];
+        [readBtnLayer setMasksToBounds:YES];
+        [readBtnLayer setCornerRadius:2.0];
+        [readBtnLayer setBorderWidth:1.0];
+        if ([reuseIdentifier isEqualToString:@"1"]) {
+            _successLabel.text = @"组队成功";
+            _successLabel.textColor = kLightColor;
+            _successLabel.font = [UIFont systemFontOfSize:13];
+            [readBtnLayer setBorderColor:kLightColor.CGColor];
+        }else{
+            _successLabel.text = @"组队失败";
+            _successLabel.textColor = kColor(73, 76, 73, 1.0);
+            _successLabel.font = [UIFont systemFontOfSize:13];
+            [readBtnLayer setBorderColor:kColor(73, 76, 73, 1.0).CGColor];
+        }
+        _successLabel.frame = CGRectMake(K_MainWidth - 80, _logistNameLabel.frame.origin.y + 20, 60, 20);
+        [self.contentView addSubview:_successLabel];
     }
     return self;
 }
--(void)initUI
-{
-    CGFloat topSpace=10;
-    CGFloat leftSpace=20;
-    CGFloat bottomSpace=10;
-    //CGFloat rightSpace=20;
+
+-(void)layoutSubviews {
     
-    //地标图
-    CGFloat size=15;
-    CGFloat hSpace=3;
-    CGFloat vSpace=10;
+    [super layoutSubviews];
     
-    //地点框长度
-    CGFloat width = 160;
-    CGFloat height = 20;
+    _logistNameLabel.frame = CGRectMake(CGRectGetMaxX(_logistLogo.frame) + 5, _logistLogo.frame.origin.y, 120, 20);
     
-    //大横向间距
-    CGFloat hSpaceBig= 3;
-    //小label的尺寸
-    CGFloat lWidth=80;
-    CGFloat lHeight=20;
+    [self drawLineWithTopView:_logistNameLabel];
     
-    UILabel *label1=[[UILabel alloc]init];
-    label1.translatesAutoresizingMaskIntoConstraints=NO;
-    label1.text=@"从";
-    label1.textColor=kGrayColor;
-    label1.textAlignment=NSTextAlignmentRight;
-    label1.font=[UIFont systemFontOfSize:12];
-    [self.contentView addSubview:label1];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:label1 attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:topSpace]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:label1 attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:leftSpace]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:label1 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:leftSpace]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:label1 attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:leftSpace]];
+    _startLogo.frame = CGRectMake(_logistNameLabel.frame.origin.x - 10, CGRectGetMaxY(_logistNameLabel.frame) + 20, 14, 15);
     
-    UIImageView *imageView1=[[UIImageView alloc]init];
-    imageView1.translatesAutoresizingMaskIntoConstraints=NO;
-    imageView1.image=kImageName(@"from.png");
-    [self.contentView addSubview:imageView1];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView1 attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:label1 attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView1 attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:label1 attribute:NSLayoutAttributeRight multiplier:1.0 constant:hSpace]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView1 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:size]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView1 attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:size]];
+    _startPlaceLabel.frame = CGRectMake(CGRectGetMaxX(_startLogo.frame) + 8, _startLogo.frame.origin.y - 7, 120, 30);
     
-    _fromLabel=[[UILabel alloc]init];
-    _fromLabel.translatesAutoresizingMaskIntoConstraints=NO;
-    _fromLabel.textAlignment=NSTextAlignmentLeft;
-    _fromLabel.textColor=kGrayColor;
-    //_fromLabel.backgroundColor=[UIColor redColor];
-    [self.contentView addSubview:_fromLabel];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_fromLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:topSpace]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_fromLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:imageView1 attribute:NSLayoutAttributeRight multiplier:1.0 constant:hSpace]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_fromLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:width]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_fromLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:height]];
+    _startPortLabel.frame = CGRectMake(0, CGRectGetMaxY(_startPlaceLabel.frame) + 2, K_MainWidth / 2, 15);
     
-    _statusBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    _statusBtn.translatesAutoresizingMaskIntoConstraints=NO;
-    //_statusBtn.backgroundColor=[UIColor orangeColor];
-    [_statusBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-    _statusBtn.titleLabel.font=[UIFont systemFontOfSize:12];
-    [self.contentView addSubview:_statusBtn];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_statusBtn attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:topSpace]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_statusBtn attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_statusBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:70]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_statusBtn attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:20]];
+    _jiantouV.frame = CGRectMake(K_MainWidth / 2 - 15, CGRectGetMaxY(_startPlaceLabel.frame) - 10, 50, 4);
     
+    _endLogo.frame = CGRectMake(CGRectGetMaxX(_jiantouV.frame) + 15, _startLogo.frame.origin.y, 14, 15);
     
-    UILabel *label2=[[UILabel alloc]init];
-    label2.translatesAutoresizingMaskIntoConstraints=NO;
-    label2.text=@"至";
-    label2.textColor=kGrayColor;
-    label2.textAlignment=NSTextAlignmentRight;
-    label2.font=[UIFont systemFontOfSize:12];
-    [self.contentView addSubview:label2];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:label2 attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:label1 attribute:NSLayoutAttributeBottom multiplier:1.0 constant:vSpace]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:label2 attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:leftSpace]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:label2 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:leftSpace]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:label2 attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:leftSpace]];
+    _endPlaceLabel.frame = CGRectMake(CGRectGetMaxX(_endLogo.frame) + 8, _endLogo.frame.origin.y - 7, 120, 30);
     
-    UIImageView *imageView2=[[UIImageView alloc]init];
-    imageView2.translatesAutoresizingMaskIntoConstraints=NO;
-    imageView2.image=kImageName(@"to.png");
-    [self.contentView addSubview:imageView2];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView2 attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:label2 attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView2 attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:label2 attribute:NSLayoutAttributeRight multiplier:1.0 constant:hSpace]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView2 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:size]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView2 attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:size]];
+    _endPortLabel.frame = CGRectMake(K_MainWidth / 2 + 10, CGRectGetMaxY(_endPlaceLabel.frame) + 2, K_MainWidth / 2, 15);
     
-    _toLabel=[[UILabel alloc]init];
-    _toLabel.translatesAutoresizingMaskIntoConstraints=NO;
-    _toLabel.textAlignment=NSTextAlignmentLeft;
-    _toLabel.textColor=kGrayColor;
-    //_toLabel.backgroundColor=[UIColor redColor];
-    [self.contentView addSubview:_toLabel];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_toLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:label2 attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_toLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:imageView2 attribute:NSLayoutAttributeRight multiplier:1.0 constant:hSpace]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_toLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:width]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_toLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:height]];
+    [self drawLineWithTopView:_endPortLabel];
     
-    UIImageView *imageView3=[[UIImageView alloc]init];
-    imageView3.translatesAutoresizingMaskIntoConstraints=NO;
-    imageView3.image=kImageName(@"what.png");
-    [self.contentView addSubview:imageView3];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView3 attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-bottomSpace]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView3 attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:label2 attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView3 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:size]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView3 attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:size]];
+    [self drawLineWithTopV:_endPortLabel AndHeight:50];
     
-    _whatLabel=[[UILabel alloc]init];
-    _whatLabel.translatesAutoresizingMaskIntoConstraints=NO;
-    //_whatLabel.backgroundColor=[UIColor redColor];
-    _whatLabel.textAlignment=NSTextAlignmentLeft;
-    _whatLabel.textColor=kGrayColor;
-    _whatLabel.font=[UIFont systemFontOfSize:12];
-    [self.contentView addSubview:_whatLabel];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whatLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:imageView3 attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whatLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:imageView3 attribute:NSLayoutAttributeRight multiplier:1.0 constant:5]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whatLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:lWidth]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whatLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:lHeight]];
+    _moneyLabel.frame = CGRectMake(_startLogo.frame.origin.x + 10, CGRectGetMaxY(_startPortLabel.frame) + 15, 120, 30);
     
-    UIImageView *imageView4=[[UIImageView alloc]init];
-    imageView4.translatesAutoresizingMaskIntoConstraints=NO;
-    imageView4.image=kImageName(@"weight.png");
-    [self.contentView addSubview:imageView4];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView4 attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-bottomSpace]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView4 attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_whatLabel attribute:NSLayoutAttributeRight multiplier:1.0 constant:hSpaceBig]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView4 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:size]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:imageView4 attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:size]];
+    _weightLabel.frame = CGRectMake(_endLogo.frame.origin.x , CGRectGetMaxY(_endPortLabel.frame) + 15, 120, 30);
     
-    _moneyLabel=[[UILabel alloc]init];
-    _moneyLabel.translatesAutoresizingMaskIntoConstraints=NO;
-    //_moneyLabel.backgroundColor=[UIColor redColor];
-    _moneyLabel.textAlignment=NSTextAlignmentLeft;
-    _moneyLabel.textColor=kGrayColor;
-    _moneyLabel.font=[UIFont systemFontOfSize:12];
-    [self.contentView addSubview:_moneyLabel];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_moneyLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:imageView4 attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_moneyLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:imageView4 attribute:NSLayoutAttributeRight multiplier:1.0 constant:5]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_moneyLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:lWidth]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_moneyLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:lHeight]];
+    _dateLabel.frame = CGRectMake(0, CGRectGetMaxY(_moneyLabel.frame) + 2, K_MainWidth / 2, 15);
     
-    _distanceImV=[[UIImageView alloc]init];
-    _distanceImV.translatesAutoresizingMaskIntoConstraints=NO;
-    //imageView5.image=kImageName(@"where.png");
-    [self.contentView addSubview:_distanceImV];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_distanceImV attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-bottomSpace]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_distanceImV attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_moneyLabel attribute:NSLayoutAttributeRight multiplier:1.0 constant:hSpaceBig]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_distanceImV attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:size]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_distanceImV attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:size]];
+    _goodsLabel.frame = CGRectMake(K_MainWidth / 2 , CGRectGetMaxY(_moneyLabel.frame) + 2, K_MainWidth / 2, 15);
     
-    _whereLabel=[[UILabel alloc]init];
-    _whereLabel.translatesAutoresizingMaskIntoConstraints=NO;
-    //_whereLabel.backgroundColor=[UIColor redColor];
-    _whereLabel.textAlignment=NSTextAlignmentLeft;
-    _whereLabel.textColor=kGrayColor;
-    _whereLabel.font=[UIFont systemFontOfSize:12];
-    [self.contentView addSubview:_whereLabel];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whereLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_distanceImV attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whereLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_distanceImV attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whereLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:lWidth]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_whereLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:lHeight]];
-}
-- (void)awakeFromNib {
-    // Initialization code
+    _blueView.frame = CGRectMake(10, CGRectGetMaxY(_goodsLabel.frame) + 15, K_MainWidth - 20, 30);
+    
+    _endTimeLabel.frame = CGRectMake(0, CGRectGetMaxY(_goodsLabel.frame) + 22, K_MainWidth / 2, 15);
+    
+    _marginLabel.frame = CGRectMake(K_MainWidth / 2 , CGRectGetMaxY(_goodsLabel.frame) + 22, K_MainWidth / 2, 15);
+    
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+-(void)drawLineWithTopView:(UIView *)topView {
+    
+    UIView *line = [[UIView alloc]init];
+    line.backgroundColor = kColor(219, 223, 214, 1.0);
+    line.frame = CGRectMake(20, CGRectGetMaxY(topView.frame) + 8, self.frame.size.width - 40, 1);
+    [self.contentView addSubview:line];
+}
 
-    // Configure the view for the selected state
+-(void)drawLineWithTopV:(UIView *)topV AndHeight:(NSInteger)height {
+    UIView *line = [[UIView alloc]init];
+    line.backgroundColor = kColor(219, 223, 214, 1.0);
+    line.frame = CGRectMake(K_MainWidth / 2, CGRectGetMaxY(topV.frame) + 20, 1, height);
+    [self.contentView addSubview:line];
 }
 
 @end

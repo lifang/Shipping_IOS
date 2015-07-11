@@ -18,16 +18,13 @@
 
 #import "WebViewViewController.h"
 
-//#import "CommonCell.h"
-#import "ShipHistoryCell.h"
-
 #import "UIViewController+MMDrawerController.h"
 #import "LocationButton.h"
 #import "SelectPortViewController.h"
 #import "RightViewController.h"
 
 
-@interface TaskViewController ()<UITableViewDataSource,UITableViewDelegate,RefreshDelegate,UITextFieldDelegate,UIAlertViewDelegate>
+@interface TaskViewController ()<UITableViewDataSource,UITableViewDelegate,RefreshDelegate,UITextFieldDelegate,UIAlertViewDelegate,SelectPortDelegate>
 {
     UITableView *_tableView;
     UIView *_backView;
@@ -43,6 +40,8 @@
 @property (nonatomic, assign) int page;
 
 @property(nonatomic,strong)NSMutableArray *totalLastTime;
+
+@property(nonatomic,assign)int portID;
 @end
 
 @implementation TaskViewController
@@ -62,15 +61,13 @@
     
     _index=1;
     _ordersArray=[[NSMutableArray alloc]init];
-    
+    _totalLastTime=[[NSMutableArray alloc]init];
    
     [self initNavigation];
     [self initAndLayoutUI];
     [self initBackView];
      _backView.hidden=YES;
     
-    
-
 }
 
 -(void)initNavigation
@@ -100,6 +97,7 @@
     
     SelectPortViewController *selectPort=[[SelectPortViewController alloc]init];
     selectPort.hidesBottomBarWhenPushed=YES;
+    selectPort.delegate=self;
     [self.navigationController pushViewController:selectPort animated:YES];
     
 }
@@ -303,7 +301,16 @@
     double latitude=[[user objectForKey:@"latitude"] doubleValue];
     double longitude=[[user objectForKey:@"longitude"] doubleValue];
     
-    [NetWorkInterface getOrderListWithPage:page status:0 keys:@"" mLat1:latitude mLon1:longitude portId:-1 distance:@"" finished:^(BOOL success, NSData *response) {
+    if ( _portID==0)
+    {
+        _portID=-1;
+    }
+    if (_distance==nil)
+    {
+        _distance=@"";
+    }
+    
+    [NetWorkInterface getOrderListWithPage:page status:0 keys:@"" mLat1:latitude mLon1:longitude portId:_portID distance:_distance finished:^(BOOL success, NSData *response) {
     
     //[NetWorkInterface getOrderListWithPage:page status:0 keys:@"" mLat1:latitude mLon1:longitude finished:^(BOOL success, NSData *response) {
          NSLog(@"!!---------------任务大厅:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
@@ -359,14 +366,23 @@
     }
     NSDictionary *result=[dic objectForKey:@"result"];
     NSArray *content=[result objectForKey:@"content"];
+    
+    [_totalLastTime removeAllObjects];
+    
     [content enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL *stop) {
         
         OrdersModel *order=[[OrdersModel alloc]initWithDictionary:obj];
         
+//        int time=[self getTimeChaWithString:order.showTime];
+//        NSString *shiCha=[NSString stringWithFormat:@"%d",time];
+//    
+//        [_totalLastTime addObject:shiCha];
+    
         [_ordersArray addObject:order];
     }];
     
-    
+   
+
     [_tableView reloadData];
 }
 -(int)getTimeChaWithString:(NSString*)str
@@ -389,10 +405,10 @@
 {
     
     static NSString *cellIndetifier =@"taskCell";
-    ShipHistoryCell*cell=[tableView dequeueReusableCellWithIdentifier:cellIndetifier];
+    TaskCell*cell=[tableView dequeueReusableCellWithIdentifier:cellIndetifier];
     if (cell==nil)
     {
-        cell=[[ShipHistoryCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndetifier];
+        cell=[[TaskCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndetifier];
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -410,15 +426,20 @@
     cell.weightLabel.text=[NSString stringWithFormat:@"%@吨",order.amount];
     cell.dateLabel.text=order.workTime;
     cell.goodsLabel.text=order.cargos;
+//    
+//    NSLog(@"======表----%lu---",(unsigned long)_totalLastTime.count);
+//
+//    
+//    int second = [_totalLastTime[indexPath.row] intValue];
+//    
+//    NSLog(@"-----表上-----%d",second);
+//    
+//    timerLabel=[[MZTimerLabel alloc]initWithLabel:cell.endTimeLabel andTimerType:MZTimerLabelTypeTimer];
+//    [timerLabel setCountDownTime:second];
+//    [timerLabel start];
     
-    int second = [self getTimeChaWithString:order.workTime];
-    
-    timerLabel=[[MZTimerLabel alloc]initWithLabel:cell.endTimeLabel andTimerType:MZTimerLabelTypeTimer];
-    [timerLabel setCountDownTime:second];
-    [timerLabel start];
-    
-    //cell.endTimeLabel.text=order.showTime;
-    cell.marginLabel.text=@"保证金:200.00元";
+    cell.endTimeLabel.text=order.timeLeft;
+    //cell.marginLabel.text=@"保证金:200.00元";
     
     return cell;
         
@@ -531,6 +552,9 @@
 #pragma mark - 上下拉刷新
 //下拉刷新
 - (void)pullDownToLoadData {
+    
+    [_totalLastTime removeAllObjects];
+    NSLog(@"======刷新----%lu---",(unsigned long)_totalLastTime.count);
     [self firstLoadData];
 }
 
@@ -599,6 +623,13 @@
     
 }
 
+#pragma mark SelectPortDelegate
+-(void)selectPortWithportId:(int)portId distance:(NSString *)distance
+{
+    NSLog(@"id:%d  distance:%@",portId,distance);
+    _portID=portId;
+    _distance=distance;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

@@ -41,6 +41,7 @@
 @property(nonatomic,strong)NSNumber *inDays;
 @property(nonatomic,strong)NSNumber *outDays;
 @property(nonatomic,strong)NSNumber *endDockId;
+@property(nonatomic,strong)NSString *timeLeft;
 
 -(instancetype)initWithDictionary:(NSDictionary*)dictionary;
 @end

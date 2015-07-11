@@ -42,6 +42,8 @@
 @property(nonatomic,strong)NSString *companyName;
 @property(nonatomic,strong)NSString *beginDockName;
 @property(nonatomic,strong)NSString *endDockName;
+
+@property(nonatomic,strong)NSString *timeLeft;
 @property(nonatomic,assign)int relationStatus;
 @property(nonatomic,strong)NSString *inAccount;
 @property(nonatomic,strong)NSString *inWriteTimeStr;

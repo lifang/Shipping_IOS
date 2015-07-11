@@ -52,45 +52,45 @@
 
 @implementation MyTaskViewController
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [self.navigationController setNavigationBarHidden:YES];
-    
-}
--(void)viewWillDisappear:(BOOL)animated
-{
-    [self.navigationController setNavigationBarHidden:NO];
-}
+//-(void)viewWillAppear:(BOOL)animated
+//{
+//    [self.navigationController setNavigationBarHidden:YES];
+//    
+//}
+//-(void)viewWillDisappear:(BOOL)animated
+//{
+//    [self.navigationController setNavigationBarHidden:NO];
+//}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
-    _type=[userDefault objectForKey:@"type"];
-
-    if ([_type intValue]==1)
-    {
-        //高级船
-        _ShipTeamStatus=ShipTeamStatusAll;
-        _goodsTransportStatus=GoodsTransportStatusAll;
-        
-        //_staticData=[[NSArray alloc]initWithObjects:@"全部",@"选船中",@"被拒绝",@"执行中",@"已完成", nil];
-        _mytaskArray=[[NSMutableArray alloc]init];
-        [self initStaticData];
-        [self initAndLayoutUI];
-        [self initNavigation];
-        [self shipTeamListfirstLoadData];
-        
-    }else if ([_type intValue]==6)
-    {
-        //普通船
-        _goodsTransportStatus=GoodsTransportStatusAll;
-        _statusArray2=[[NSArray alloc]initWithObjects:@"全部",@"组队中",@"组队失败",@"执行中",@"完成", nil];
-        _mytaskArray=[[NSMutableArray alloc]init];
-        _currentButton.tag=777;
-        [self initAndLayoutUI];
-        [self initGoodsTransportNav];
-        [self goodsTransportListfirstLoadData];
-    }
+//    NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
+//    _type=[userDefault objectForKey:@"type"];
+//
+//    if ([_type intValue]==1)
+//    {
+//        //高级船
+//        _ShipTeamStatus=ShipTeamStatusAll;
+//        _goodsTransportStatus=GoodsTransportStatusAll;
+//        
+//        //_staticData=[[NSArray alloc]initWithObjects:@"全部",@"选船中",@"被拒绝",@"执行中",@"已完成", nil];
+//        _mytaskArray=[[NSMutableArray alloc]init];
+//        [self initStaticData];
+//        [self initAndLayoutUI];
+//        [self initNavigation];
+//        [self shipTeamListfirstLoadData];
+//        
+//    }else if ([_type intValue]==6)
+//    {
+//        //普通船
+//        _goodsTransportStatus=GoodsTransportStatusAll;
+//        _statusArray2=[[NSArray alloc]initWithObjects:@"全部",@"组队中",@"组队失败",@"执行中",@"完成", nil];
+//        _mytaskArray=[[NSMutableArray alloc]init];
+//        _currentButton.tag=777;
+//        [self initAndLayoutUI];
+//        [self initGoodsTransportNav];
+//        [self goodsTransportListfirstLoadData];
+//    }
     
 }
 -(void)initStaticData
@@ -231,197 +231,197 @@
 
 #pragma mark -------------------------UITableViewDelegate--------------------
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    
-    return [_mytaskArray count];
-}
-
--(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    if ([_type intValue]==6)
-    {
-        //普通船
-        
-        static NSString *cellIndetifier =@"taskCell";
-        TaskCell*cell=[tableView dequeueReusableCellWithIdentifier:cellIndetifier];
-        if (cell==nil)
-        {
-            cell=[[TaskCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndetifier];
-        }
-        MytaskModel *myTask=_mytaskArray[indexPath.row];
-        cell.fromLabel.text=myTask.beginPortName;
-        cell.toLabel.text=myTask.endPortName;
-        cell.whatLabel.text=myTask.cargos;
-        
-        cell.moneyLabel.text=[NSString stringWithFormat:@"%@吨",myTask.amount];
-        cell.distanceImV.image=kImageName(@"where.png");
-        cell.whereLabel.text=myTask.longDistance;
-        //[cell.statusBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-
-        switch ([myTask.relationStatus intValue])
-        {
-            case 0:
-                [cell.statusBtn setTitle:@"组队中" forState:UIControlStateNormal];
-                break;
-            case 1:
-                [cell.statusBtn setTitle:@"组队失败" forState:UIControlStateNormal];
-                break;
-            case 2:
-                [cell.statusBtn setTitle:@"执行中" forState:UIControlStateNormal];
-                break;
-            case 3:
-                [cell.statusBtn setTitle:@"已完成" forState:UIControlStateNormal];
-                break;
-                
-            default:
-                break;
-        }
-        
-        return cell;
-
-        
-    }else if([_type intValue]==1)
-    {
-        //高级船
-        static NSString *cellIndetifier =@"taskCell";
-        TaskCell*cell=[tableView dequeueReusableCellWithIdentifier:cellIndetifier];
-        if (cell==nil)
-        {
-            cell=[[TaskCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndetifier];
-        }
-        MytaskModel *myTask=_mytaskArray[indexPath.row];
-        cell.fromLabel.text=myTask.beginPortName;
-        cell.toLabel.text=myTask.endPortName;
-        cell.whatLabel.text=myTask.cargos;
-        
-        cell.moneyLabel.text=[NSString stringWithFormat:@"%@吨",myTask.amount];
-        cell.distanceImV.image=kImageName(@"where.png");
-        cell.whereLabel.text=myTask.longDistance;
-        
-        if (_currentButton.tag==666)
-        {
-            cell.distanceImV.hidden=YES;
-        }else
-        {
-            cell.distanceImV.hidden=NO;
-        }
-        
-        if (_currentButton.tag==666)
-        {
-            
-            switch ([myTask.status intValue])
-            {
-                case 0:
-                    [cell.statusBtn setTitle:@"组队中" forState:UIControlStateNormal];
-                    break;
-                case 1:
-                    [cell.statusBtn setTitle:@"组队成功" forState:UIControlStateNormal];
-                    break;
-                case 2:
-                    [cell.statusBtn setTitle:@"组队失败" forState:UIControlStateNormal];
-                    break;
-                case 3:
-                    [cell.statusBtn setTitle:@"计算运费" forState:UIControlStateNormal];
-                    break;
-                case 4:
-                    [cell.statusBtn setTitle:@"完成" forState:UIControlStateNormal];
-                    break;
-                    
-                default:
-                    break;
-            }
-            
-        }else
-        {
-            switch ([myTask.relationStatus intValue])
-            {
-                case 0:
-                    [cell.statusBtn setTitle:@"组队中" forState:UIControlStateNormal];
-                    break;
-                case 1:
-                    [cell.statusBtn setTitle:@"组队失败" forState:UIControlStateNormal];
-                    break;
-                case 2:
-                    [cell.statusBtn setTitle:@"执行中" forState:UIControlStateNormal];
-                    break;
-                case 3:
-                    [cell.statusBtn setTitle:@"已完成" forState:UIControlStateNormal];
-                    break;
-                    
-                default:
-                    break;
-            }
-            
-        }
-        return cell;
-
-        
-    }else
-    {
-        return nil;
-    }
-    
-    
-
-}
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-     if ([_type intValue]==6)
-    {
-        //普通船
-        MytaskModel *myTask=_mytaskArray[indexPath.row];
-        GoodsTransDetailViewController *goodsTrans=[[GoodsTransDetailViewController alloc]init];
-        goodsTrans.status=[myTask.relationStatus intValue];
-        goodsTrans.ID=[myTask.ID intValue];
-        goodsTrans.hidesBottomBarWhenPushed=YES;
-        [self.navigationController pushViewController:goodsTrans animated:YES];
-    }else if([_type intValue]==1)
-    {
-        if (_currentButton.tag==666)
-        {
-            //管理团队
-            ShipTeamDetailViewController *shipTeam=[[ShipTeamDetailViewController alloc]init];
-            MytaskModel *myTask=_mytaskArray[indexPath.row];
-            shipTeam.status=[myTask.status intValue];
-            shipTeam.ID=[myTask.ID intValue];
-            shipTeam.hidesBottomBarWhenPushed=YES;
-            [self.navigationController pushViewController:shipTeam animated:YES];
-            
-        }else if (_currentButton.tag==777)
-        {
-            //货物运输
-            MytaskModel *myTask=_mytaskArray[indexPath.row];
-            GoodsTransDetailViewController *goodsTrans=[[GoodsTransDetailViewController alloc]init];
-            goodsTrans.status=[myTask.relationStatus intValue];
-            goodsTrans.ID=[myTask.ID intValue];
-            goodsTrans.hidesBottomBarWhenPushed=YES;
-            [self.navigationController pushViewController:goodsTrans animated:YES];
-        }
-
-    }else{
-        return;
-    }
-    
-}
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView.tag==111)
-    {
-        if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
-            [tableView setSeparatorInset:UIEdgeInsetsZero];
-        }
-        if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
-            [tableView setLayoutMargins:UIEdgeInsetsZero];
-        }
-        if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-            [cell setLayoutMargins:UIEdgeInsetsZero];
-        }
-
-    }
-}
+//-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+//{
+//    
+//    return [_mytaskArray count];
+//}
+//
+//-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    
+//    if ([_type intValue]==6)
+//    {
+//        //普通船
+//        
+//        static NSString *cellIndetifier =@"taskCell";
+//        TaskCell*cell=[tableView dequeueReusableCellWithIdentifier:cellIndetifier];
+//        if (cell==nil)
+//        {
+//            cell=[[TaskCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndetifier];
+//        }
+//        MytaskModel *myTask=_mytaskArray[indexPath.row];
+//        cell.fromLabel.text=myTask.beginPortName;
+//        cell.toLabel.text=myTask.endPortName;
+//        cell.whatLabel.text=myTask.cargos;
+//        
+//        cell.moneyLabel.text=[NSString stringWithFormat:@"%@吨",myTask.amount];
+//        cell.distanceImV.image=kImageName(@"where.png");
+//        cell.whereLabel.text=myTask.longDistance;
+//        //[cell.statusBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+//
+//        switch ([myTask.relationStatus intValue])
+//        {
+//            case 0:
+//                [cell.statusBtn setTitle:@"组队中" forState:UIControlStateNormal];
+//                break;
+//            case 1:
+//                [cell.statusBtn setTitle:@"组队失败" forState:UIControlStateNormal];
+//                break;
+//            case 2:
+//                [cell.statusBtn setTitle:@"执行中" forState:UIControlStateNormal];
+//                break;
+//            case 3:
+//                [cell.statusBtn setTitle:@"已完成" forState:UIControlStateNormal];
+//                break;
+//                
+//            default:
+//                break;
+//        }
+//        
+//        return cell;
+//
+//        
+//    }else if([_type intValue]==1)
+//    {
+//        //高级船
+//        static NSString *cellIndetifier =@"taskCell";
+//        TaskCell*cell=[tableView dequeueReusableCellWithIdentifier:cellIndetifier];
+//        if (cell==nil)
+//        {
+//            cell=[[TaskCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndetifier];
+//        }
+//        MytaskModel *myTask=_mytaskArray[indexPath.row];
+//        cell.fromLabel.text=myTask.beginPortName;
+//        cell.toLabel.text=myTask.endPortName;
+//        cell.whatLabel.text=myTask.cargos;
+//        
+//        cell.moneyLabel.text=[NSString stringWithFormat:@"%@吨",myTask.amount];
+//        cell.distanceImV.image=kImageName(@"where.png");
+//        cell.whereLabel.text=myTask.longDistance;
+//        
+//        if (_currentButton.tag==666)
+//        {
+//            cell.distanceImV.hidden=YES;
+//        }else
+//        {
+//            cell.distanceImV.hidden=NO;
+//        }
+//        
+//        if (_currentButton.tag==666)
+//        {
+//            
+//            switch ([myTask.status intValue])
+//            {
+//                case 0:
+//                    [cell.statusBtn setTitle:@"组队中" forState:UIControlStateNormal];
+//                    break;
+//                case 1:
+//                    [cell.statusBtn setTitle:@"组队成功" forState:UIControlStateNormal];
+//                    break;
+//                case 2:
+//                    [cell.statusBtn setTitle:@"组队失败" forState:UIControlStateNormal];
+//                    break;
+//                case 3:
+//                    [cell.statusBtn setTitle:@"计算运费" forState:UIControlStateNormal];
+//                    break;
+//                case 4:
+//                    [cell.statusBtn setTitle:@"完成" forState:UIControlStateNormal];
+//                    break;
+//                    
+//                default:
+//                    break;
+//            }
+//            
+//        }else
+//        {
+//            switch ([myTask.relationStatus intValue])
+//            {
+//                case 0:
+//                    [cell.statusBtn setTitle:@"组队中" forState:UIControlStateNormal];
+//                    break;
+//                case 1:
+//                    [cell.statusBtn setTitle:@"组队失败" forState:UIControlStateNormal];
+//                    break;
+//                case 2:
+//                    [cell.statusBtn setTitle:@"执行中" forState:UIControlStateNormal];
+//                    break;
+//                case 3:
+//                    [cell.statusBtn setTitle:@"已完成" forState:UIControlStateNormal];
+//                    break;
+//                    
+//                default:
+//                    break;
+//            }
+//            
+//        }
+//        return cell;
+//
+//        
+//    }else
+//    {
+//        return nil;
+//    }
+//    
+//    
+//
+//}
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    
+//     if ([_type intValue]==6)
+//    {
+//        //普通船
+//        MytaskModel *myTask=_mytaskArray[indexPath.row];
+//        GoodsTransDetailViewController *goodsTrans=[[GoodsTransDetailViewController alloc]init];
+//        goodsTrans.status=[myTask.relationStatus intValue];
+//        goodsTrans.ID=[myTask.ID intValue];
+//        goodsTrans.hidesBottomBarWhenPushed=YES;
+//        [self.navigationController pushViewController:goodsTrans animated:YES];
+//    }else if([_type intValue]==1)
+//    {
+//        if (_currentButton.tag==666)
+//        {
+//            //管理团队
+//            ShipTeamDetailViewController *shipTeam=[[ShipTeamDetailViewController alloc]init];
+//            MytaskModel *myTask=_mytaskArray[indexPath.row];
+//            shipTeam.status=[myTask.status intValue];
+//            shipTeam.ID=[myTask.ID intValue];
+//            shipTeam.hidesBottomBarWhenPushed=YES;
+//            [self.navigationController pushViewController:shipTeam animated:YES];
+//            
+//        }else if (_currentButton.tag==777)
+//        {
+//            //货物运输
+//            MytaskModel *myTask=_mytaskArray[indexPath.row];
+//            GoodsTransDetailViewController *goodsTrans=[[GoodsTransDetailViewController alloc]init];
+//            goodsTrans.status=[myTask.relationStatus intValue];
+//            goodsTrans.ID=[myTask.ID intValue];
+//            goodsTrans.hidesBottomBarWhenPushed=YES;
+//            [self.navigationController pushViewController:goodsTrans animated:YES];
+//        }
+//
+//    }else{
+//        return;
+//    }
+//    
+//}
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (tableView.tag==111)
+//    {
+//        if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+//            [tableView setSeparatorInset:UIEdgeInsetsZero];
+//        }
+//        if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+//            [tableView setLayoutMargins:UIEdgeInsetsZero];
+//        }
+//        if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+//            [cell setLayoutMargins:UIEdgeInsetsZero];
+//        }
+//
+//    }
+//}
 
 -(void)changeShipTeamStatusWithIndex:(NSInteger)index
 {

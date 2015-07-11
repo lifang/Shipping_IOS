@@ -35,6 +35,8 @@
 @property(nonatomic,strong)NSNumber *singleShipCompleteNum;//几条船竞价
 @property(nonatomic,strong)NSNumber *canSingleShipComplete;//单条船能否接单
 @property(nonatomic,strong)NSString *code;//组队密码
+@property(nonatomic,assign)double price;//记录报价
+
 @end
 
 @implementation TaskDetailViewController
@@ -72,8 +74,8 @@
     CGFloat topSpace=10;
     CGFloat leftSpace=20;
 
-    CGFloat cityWidth=100;
-    CGFloat PortWidth=kScreenWidth/3;//港口label的宽度
+    CGFloat cityWidth=160;
+    CGFloat PortWidth=(kScreenWidth-leftSpace*2)/2;//港口label的宽度
     CGFloat jianTouWidth=42;//箭头的长度
 
     UIView *Vline1=[[UIView alloc]initWithFrame:CGRectMake(10, topSpace, 1, kScreenHeight+100)];
@@ -116,14 +118,15 @@
     
     UILabel *fromCity=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace*2+12+10, topSpace+30+10,  cityWidth, 20)];
     fromCity.text=_businessOrder.beginPortName;
-    fromCity.font=[UIFont boldSystemFontOfSize:20];
+    fromCity.font=[UIFont boldSystemFontOfSize:16];
     fromCity.textColor=kGrayColor;
     [headView addSubview:fromCity];
     
     UILabel *fromPort=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5, PortWidth, 20)];
     fromPort.text=_businessOrder.beginDockName;
+    //fromPort.backgroundColor=[UIColor redColor];
     fromPort.textColor=kGrayColor;
-    fromPort.font=[UIFont systemFontOfSize:15];
+    fromPort.font=[UIFont systemFontOfSize:12];
     fromPort.textAlignment=NSTextAlignmentCenter;
     [headView addSubview:fromPort];
     
@@ -138,13 +141,14 @@
     UILabel *toCity=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace*2+12+10, topSpace+30+10, cityWidth, 20)];
     toCity.text=_businessOrder.endPortName;
     toCity.textColor=kGrayColor;
-    toCity.font=[UIFont boldSystemFontOfSize:20];
+    toCity.font=[UIFont boldSystemFontOfSize:16];
     [headView addSubview:toCity];
     
-    UILabel *toPort=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5, PortWidth, 20)];
+    UILabel *toPort=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2, topSpace+30+10+20+5, PortWidth, 20)];
+    //toPort.backgroundColor=[UIColor blueColor];
     toPort.text=_businessOrder.endDockName;
     toPort.textAlignment=NSTextAlignmentCenter;
-    toPort.font=[UIFont systemFontOfSize:15];
+    toPort.font=[UIFont systemFontOfSize:12];
     toPort.textColor=kGrayColor;
     [headView addSubview:toPort];
 
@@ -153,7 +157,7 @@
     [headView addSubview:view2];
     
     UILabel *endTime=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth/2, 30)];
-    endTime.text=@"2小时53分45秒后结束";
+    endTime.text=_businessOrder.timeLeft;
     endTime.textAlignment=NSTextAlignmentCenter;
     endTime.font=[UIFont systemFontOfSize:12];
     [view2 addSubview:endTime];
@@ -334,7 +338,7 @@
     [whiteView addSubview:_shipPwd];
     
     UILabel *remark=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+30, whiteView.bounds.size.width-leftSpace*2, 30)];
-    remark.text=@"在我的任务中可以管理船队";
+    remark.text=@"在\"我的任务\"中可以管理船队";
     remark.textAlignment=NSTextAlignmentCenter;
     remark.font=[UIFont systemFontOfSize:14];
     remark.textColor=[self colorWithHexString:@"757474"];
@@ -421,16 +425,22 @@
 //减小报价
 -(void)reduce:(UIButton*)btn
 {
+    _price=[_priceNumber.text doubleValue];
+    _price = _price - 0.01 ;
+    _priceNumber.text=[NSString stringWithFormat:@"%.2f",_price];
     
 }
 //增加报价
 -(void)add:(UIButton*)btn
 {
-    
+    _price=[_priceNumber.text doubleValue];
+    _price += 0.01;
+    _priceNumber.text=[NSString stringWithFormat:@"%.2f",_price];
 }
 //报价确认
 -(void)priceSureBTN:(UIButton*)btn
 {
+   
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     NSString *shipName=[user objectForKey:@"shipName"];
     
@@ -441,7 +451,7 @@
         NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
         NSNumber *shipOwnerId=[userDefault objectForKey:@"shipOwnerId"];
         NSNumber *loginId=[userDefault objectForKey:@"loginId"];
-        [NetWorkInterface singleShipCompletWithshipOwnerId:[shipOwnerId intValue] bsOrderId:[_businessOrder.ID intValue] loginId:[loginId intValue] quote:[_priceNumber.text intValue] finished:^(BOOL success, NSData *response) {
+        [NetWorkInterface singleShipCompletWithshipOwnerId:[shipOwnerId intValue] bsOrderId:[_businessOrder.ID intValue] loginId:[loginId intValue] quote:_price finished:^(BOOL success, NSData *response) {
             
             hud.customView=[[UIImageView alloc]init];
             [hud hide:YES afterDelay:0.3];

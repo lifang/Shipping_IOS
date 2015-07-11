@@ -10,13 +10,29 @@
 
 @interface TaskCell : UITableViewCell
 
-@property(nonatomic,strong)UILabel *fromLabel;
-@property(nonatomic,strong)UILabel *toLabel;
-@property(nonatomic,strong)UIButton *statusBtn;
-@property(nonatomic,strong)UILabel *whatLabel;
+/** 物流名字 */
+@property(nonatomic,strong)UILabel *logistNameLabel;
+/** 开始地 */
+@property(nonatomic,strong)UILabel *startPlaceLabel;
+/** 开始港口 */
+@property(nonatomic,strong)UILabel *startPortLabel;
+/** 结束地 */
+@property(nonatomic,strong)UILabel *endPlaceLabel;
+/** 结束港口 */
+@property(nonatomic,strong)UILabel *endPortLabel;
+/** 运费 */
 @property(nonatomic,strong)UILabel *moneyLabel;
-@property(nonatomic,strong)UILabel *whereLabel;
+/** 装船时间 */
+@property(nonatomic,strong)UILabel *dateLabel;
+/** 货物重量 */
+@property(nonatomic,strong)UILabel *weightLabel;
+/** 货物种类 */
+@property(nonatomic,strong)UILabel *goodsLabel;
+/** 结束倒计时 */
+@property(nonatomic,strong)UILabel *endTimeLabel;
+/** 保证金 */
+@property(nonatomic,strong)UILabel *marginLabel;
 
-@property(nonatomic,strong)UIImageView *distanceImV;
+@property(nonatomic,strong)UILabel *successLabel;
 
 @end
