@@ -24,12 +24,23 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title=@"船舶情况";
+     self.title=@"船舶情况";
     
-    UIBarButtonItem *leftItem=[[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
-    self.navigationItem.leftBarButtonItem=leftItem;
+    NSLog(@"----type---:%@",_type);
+    if ([_type isEqualToString:@"isPush"])
+    {
+        
+    }else if ([_type isEqualToString:@"noPush"])
+    {
+        
+        UIBarButtonItem *leftItem=[[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+        self.navigationItem.leftBarButtonItem=leftItem;
+    }
+    
+   
+   
 
-    _staticData=[[NSArray alloc]initWithObjects:@"船名",@"载重",@"签证薄概况页照片", nil];
+    _staticData=[[NSArray alloc]initWithObjects:@"船名",@"载重",@"船舶号",@"船舶长度",@"吃水",@"签证薄概况页照片", nil];
     
     [self initUI];
 }
@@ -101,10 +112,26 @@
             break;
         case 2:
         {
+            
+        }
+            break;
+        case 3:
+        {
+            
+        }
+            break;
+
+        case 4:
+        {
+            
+        }
+            break;
+
+        case 5:
+        {
             cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         }
             break;
-            
         default:
             break;
     }
@@ -113,7 +140,7 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row==2)
+    if (indexPath.row==5)
     {
         [self showImageOption];
     }
@@ -166,7 +193,7 @@
 //保存
 -(void)save:(UIButton*)sender
 {
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(IBAction)back:(id)sender
 {

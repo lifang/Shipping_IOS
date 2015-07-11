@@ -437,12 +437,13 @@ static NSString *HTTP_GET = @"GET";
     [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
 }
 //单船竞价
-+(void)singleShipCompletWithshipOwnerId:(int)shipOwnerId bsOrderId:(int)bsOrderId loginId:(int)loginId finished:(requestDidFinished)finish
++(void)singleShipCompletWithshipOwnerId:(int)shipOwnerId bsOrderId:(int)bsOrderId loginId:(int)loginId quote:(int)quote finished:(requestDidFinished)finish
 {
     NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
     [paramDic setObject:[NSNumber numberWithInt:shipOwnerId] forKey:@"shipOwnerId"];
     [paramDic setObject:[NSNumber numberWithInt:bsOrderId] forKey:@"bsOrderId"];
     [paramDic setObject:[NSNumber numberWithInt:loginId] forKey:@"loginId"];
+    [paramDic setObject:[NSNumber numberWithInt:quote] forKey:@"quote"];
     NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,singleShipComplete_method];
     [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
 
@@ -457,7 +458,7 @@ static NSString *HTTP_GET = @"GET";
 
 }
 //批量更新消息为已读
-+(void)uploadMessageStausWithStatus:(int)status loginId:(int)loginId idStr:(NSString*)idStr finished:(requestDidFinished)finish
++(void)uploadMessageStausWithStatus:(int)status loginId:(int)loginId idStr:(NSArray*)idStr finished:(requestDidFinished)finish
 {
     NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
     [paramDic setObject:[NSNumber numberWithInt:status] forKey:@"status"];
@@ -474,5 +475,71 @@ static NSString *HTTP_GET = @"GET";
     [paramDic setObject:[NSNumber numberWithInt:ID] forKey:@"id"];
     NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,deleteMessage_method];
     [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
+}
+//同意船申请
++(void)agreenJoinWithSelectedID:(int)selectedId Status:(int)status LoginID:(int)loginid finished:(requestDidFinished)finish {
+    NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
+    [paramDic setObject:[NSNumber numberWithInt:selectedId] forKey:@"id"];
+    [paramDic setObject:[NSNumber numberWithInt:status] forKey:@"status"];
+    [paramDic setObject:[NSNumber numberWithInt:loginid] forKey:@"loginId"];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,agreenJoin_method];
+    [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
+}
+//删除船
++(void)deletedshipWithshipTeamID:(int)shipTeamId delShipId:(int)shipID LoginID:(int)loginid finished:(requestDidFinished)finish {
+    NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
+    [paramDic setObject:[NSNumber numberWithInt:shipTeamId] forKey:@"shipTeamId"];
+    [paramDic setObject:[NSNumber numberWithInt:shipID] forKey:@"delShipId"];
+    [paramDic setObject:[NSNumber numberWithInt:loginid] forKey:@"loginId"];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,deletedShip_method];
+    [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
+}
+//解散船队
++(void)dismissshipWithshipTeamID:(int)shipTeamId LoginId:(int)loginId ShipOwnerId:(int)shipOwnerId finished:(requestDidFinished)finish {
+    NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
+    [paramDic setObject:[NSNumber numberWithInt:shipTeamId] forKey:@"shipTeamId"];
+    [paramDic setObject:[NSNumber numberWithInt:shipOwnerId] forKey:@"shipOwnerId"];
+    [paramDic setObject:[NSNumber numberWithInt:loginId] forKey:@"loginId"];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,dismissShipTeam_method];
+    [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
+}
+//抢单
++(void)grapshipWithshipTeamID:(int)shipTeamId LoginId:(int)loginId ShipOwnerId:(int)shipOwnerId finished:(requestDidFinished)finish {
+    NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
+    [paramDic setObject:[NSNumber numberWithInt:shipTeamId] forKey:@"shipTeamId"];
+    [paramDic setObject:[NSNumber numberWithInt:shipOwnerId] forKey:@"shipOwnerId"];
+    [paramDic setObject:[NSNumber numberWithInt:loginId] forKey:@"loginId"];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,grapShipTeam_method];
+    [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
+}
+
+//历史船队列表
++(void)getHistoryListWithShipOwnerId:(int)shipOwnerId
+                              Status:(int)status
+                                page:(int)page
+                            finished:(requestDidFinished)finish {
+    NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
+    [paramDic setObject:[NSNumber numberWithInt:page] forKey:@"page"];
+    [paramDic setObject:[NSNumber numberWithInt:shipOwnerId] forKey:@"shipOwnerId"];
+    [paramDic setObject:[NSNumber numberWithInt:status] forKey:@"status"];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,historyShipTeam_method];
+    [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
+}
+
+//获得历史详情
++(void)getHistoryDetailWithShipId:(int)shipId LoginId:(int)loginId finished:(requestDidFinished)finish {
+    NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
+    [paramDic setObject:[NSNumber numberWithInt:shipId] forKey:@"id"];
+    [paramDic setObject:[NSNumber numberWithInt:loginId] forKey:@"loginId"];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,historyDetailShipTeam_method];
+    [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
+}
+
+
+//获得港口列表
++(void)getPortListWithfinished:(requestDidFinished)finish
+{
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,getPortList_method];
+    [[self class] requestWithURL:urlString params:nil httpMethod:HTTP_GET finished:finish];
 }
 @end

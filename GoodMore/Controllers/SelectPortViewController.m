@@ -9,7 +9,7 @@
 #import "SelectPortViewController.h"
 #import "Constants.h"
 #import "PortListViewController.h"
-@interface SelectPortViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface SelectPortViewController ()<UITableViewDataSource,UITableViewDelegate,PortListDelegate>
 {
     UITableView *_tableView;
     UILabel *_loadPort;
@@ -115,7 +115,20 @@
 {
     PortListViewController *portList=[[PortListViewController alloc]init];
     portList.index=indexPath.row;
+    portList.delegate=self;
     [self.navigationController pushViewController:portList animated:YES];
+}
+#pragma mark PortListDelegate
+-(void)getPortInfoWithportInfo:(NSString *)portInfo index:(NSInteger)index
+{
+    if (index==0)
+    {
+        _loadPort.text=portInfo;
+    }else
+    {
+         _unLoadPort.text=portInfo;
+    }
+   
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

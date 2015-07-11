@@ -29,6 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToTransportation) name:PushTotransportationNotification object:nil];
     
     [self initControllers];
     
@@ -36,9 +37,12 @@
 //    s.frame=CGRectMake(kScreenWidth/2+40, 15, 20, 20);
 //    //[self.tabBarController.view addSubview:s];
 //    [self.tabBar addSubview:s];
-    
-    
 }
+
+-(void)pushToTransportation {
+    self.selectedIndex = 1;
+}
+
 -(void)initControllers
 {
     
@@ -54,7 +58,7 @@
     [NavigationBar setNavigationBarStyle:taskNav];
     
     TransportingViewController *transVC=[[TransportingViewController alloc]init];
-    transVC.tabBarItem.title=@"运输中";
+    transVC.tabBarItem.title=@"运输任务";
     transVC.tabBarItem.image=[kImageName(@"trans_n.png")imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     transVC.tabBarItem.selectedImage=[kImageName(@"trans_h.png")imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UINavigationController *transNav=[[UINavigationController alloc]initWithRootViewController:transVC];

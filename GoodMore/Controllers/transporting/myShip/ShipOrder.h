@@ -18,12 +18,29 @@
 
 @property(nonatomic,strong)NSString *beginDockName;
 
-@property(nonatomic,strong)NSString *endPortName;
-
 @property(nonatomic,strong)NSString *endDockName;
+
+@property(nonatomic,strong)NSString *endPortName;
 
 @property(nonatomic,strong)NSString *cargos;
 
+@property(nonatomic,strong)NSString *workTime;
 
+@property(nonatomic,strong)NSString *storage;
 
+@property(nonatomic,strong)NSString *maxPay;
+//总运货量
+@property(nonatomic,strong)NSString *amount;
+
+@property(nonatomic,strong)NSString *companyName;
+
+@property(nonatomic,strong)NSString *teamStatus;
+
+@property(nonatomic,strong)NSString *code;
+
+@property(nonatomic,strong)NSString *status;
+
+@property(nonatomic,assign)double allPay;
+
+- (id)initWithParseDictionary:(NSDictionary *)dict;
 @end

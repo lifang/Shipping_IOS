@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyShipModel.h"
 
 #define HistoryDetailCellHeight 80
 
@@ -21,5 +22,7 @@
 @property(nonatomic,strong)UILabel *nameLabel;
 
 @property(nonatomic,strong)UILabel *phoneNumLabel;
+
+-(void)setContentWithShipInTeamModel:(ShipInTeam *)shipInTeamModel;
 
 @end

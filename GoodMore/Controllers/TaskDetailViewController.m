@@ -14,8 +14,9 @@
 #import "BusinessOrders.h"
 #import "MyTaskViewController.h"
 #import "WebViewViewController.h"
+#import "ShipInfoViewController.h"
 
-@interface TaskDetailViewController ()
+@interface TaskDetailViewController ()<UIAlertViewDelegate>
 {
     UITableView *_tableView;
     UILabel *_fromLabel;
@@ -23,7 +24,8 @@
     UIButton *_receive;
     UIView *_backView;
     UILabel *_shipPwd;
-    
+    UIView *_priceView;
+    UILabel *_priceNumber;
     UIScrollView *_scrollView;
 }
 
@@ -345,6 +347,60 @@
     [sureBTN addTarget:self action:@selector(sureBTN:) forControlEvents:UIControlEventTouchUpInside];
     [whiteView addSubview:sureBTN];
 }
+-(void)initPriceView
+{
+    CGFloat width=kScreenWidth;
+    CGFloat height=kScreenHeight;
+    CGFloat leftSpace=20;
+    CGFloat topSpace=20;
+    CGFloat bottomSpace=10;
+    //CGFloat vSpace=5;
+    
+    _priceView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, width, height)];
+    _priceView.backgroundColor=[UIColor colorWithRed:95/255.0 green:114/255.0 blue:114/255.0 alpha:0.5];
+    [self.view addSubview:_priceView];
+    
+    UIView *whiteView=[[UIView alloc]initWithFrame:CGRectMake((width-width*0.8)/2, 100, width*0.8, height*0.3)];
+    whiteView.backgroundColor=[UIColor whiteColor];
+    [_priceView addSubview:whiteView];
+    
+    UILabel *title=[[UILabel alloc]init];
+    title.font=[UIFont systemFontOfSize:16];
+    title.text=@"请报价!";
+    title.textAlignment=NSTextAlignmentCenter;
+    title.textColor=[UIColor blackColor];
+    title.frame=CGRectMake(leftSpace, topSpace, whiteView.bounds.size.width-leftSpace*2, 30);
+    [whiteView addSubview:title];
+    
+    UIButton *reduceBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    reduceBtn.frame=CGRectMake(leftSpace*2, (whiteView.bounds.size.height-34)/2, 34, 34);
+    [reduceBtn setBackgroundImage:kImageName(@"reduceBtn.png") forState:UIControlStateNormal];
+    [reduceBtn addTarget:self action:@selector(reduce:) forControlEvents:UIControlEventTouchUpInside];
+    [whiteView addSubview:reduceBtn];
+    
+    _priceNumber=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace*2+34+10, (whiteView.bounds.size.height-30)/2, whiteView.bounds.size.width-leftSpace*2*2-34*2-10*2, 30)];
+    _priceNumber.backgroundColor=kColor(231, 230, 230, 1);
+    _priceNumber.text=@"1.00";
+    _priceNumber.font=[UIFont systemFontOfSize:14];
+    _priceNumber.textAlignment=NSTextAlignmentCenter;
+    [whiteView addSubview:_priceNumber];
+    
+    UIButton *addBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    addBtn.frame=CGRectMake(whiteView.bounds.size.width-leftSpace*2-34, (whiteView.bounds.size.height-34)/2, 34, 34);
+    [addBtn setBackgroundImage:kImageName(@"addBtn.png") forState:UIControlStateNormal];
+    [addBtn addTarget:self action:@selector(add:) forControlEvents:UIControlEventTouchUpInside];
+    [whiteView addSubview:addBtn];
+
+
+    UIButton *sureBTN=[UIButton buttonWithType:UIButtonTypeCustom];
+    sureBTN.frame=CGRectMake((width*0.8-60)/2, height*0.3-bottomSpace-30, 60, 30);
+    sureBTN.titleLabel.font=[UIFont systemFontOfSize:16];
+    [sureBTN setTitle:@"确定" forState:UIControlStateNormal];
+    [sureBTN setTitleColor:[self colorWithHexString:@"757474"] forState:UIControlStateNormal];
+    [sureBTN addTarget:self action:@selector(priceSureBTN:) forControlEvents:UIControlEventTouchUpInside];
+    [whiteView addSubview:sureBTN];
+    
+}
 //RGB 颜色转换
 -(UIColor *)colorWithHexString:(NSString *)hexColor
 {
@@ -361,6 +417,81 @@
 }
 
 #pragma mark -- action --
+//减小报价
+-(void)reduce:(UIButton*)btn
+{
+    
+}
+//增加报价
+-(void)add:(UIButton*)btn
+{
+    
+}
+//报价确认
+-(void)priceSureBTN:(UIButton*)btn
+{
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    NSString *shipName=[user objectForKey:@"shipName"];
+    
+    if (shipName && ![shipName isEqualToString:@""])
+    {
+        MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.labelText=@"竞价中...";
+        NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
+        NSNumber *shipOwnerId=[userDefault objectForKey:@"shipOwnerId"];
+        NSNumber *loginId=[userDefault objectForKey:@"loginId"];
+        [NetWorkInterface singleShipCompletWithshipOwnerId:[shipOwnerId intValue] bsOrderId:[_businessOrder.ID intValue] loginId:[loginId intValue] quote:[_priceNumber.text intValue] finished:^(BOOL success, NSData *response) {
+            
+            hud.customView=[[UIImageView alloc]init];
+            [hud hide:YES afterDelay:0.3];
+            
+            NSLog(@"------------单船竞价----:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+            
+            if (success)
+            {
+                hud.customView=[[UIImageView alloc]init];
+                [hud hide:YES afterDelay:0.3];
+                id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+                if ([object isKindOfClass:[NSDictionary class]])
+                {
+                    if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
+                    {
+                        [hud setHidden:YES];
+                        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"操作成功" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
+                        [alert show];
+                        
+                    }else
+                    {
+                        
+                        //hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                        hud.customView = [[UIImageView alloc] init];
+                        hud.mode = MBProgressHUDModeCustomView;
+                        [hud hide:YES afterDelay:1.f];
+                        hud.labelText = [object objectForKey:@"message"];
+                    }
+                }else
+                {
+                    hud.labelText=kServiceReturnWrong;
+                }
+            }else
+            {
+                hud.labelText=kNetworkFailed;
+            }
+            
+        }];
+        
+        [_priceView removeFromSuperview];
+
+    }else
+    {
+        //信息不完全
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"信息不完全,去完善船舶信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+        alert.tag=1;
+        [alert show];
+    }
+}
+
 -(void)sureBTN:(UIButton*)btn
 {
     _backView.hidden=YES;
@@ -369,6 +500,7 @@
 //单船报价
 -(void)quotation:(UIButton*)sender
 {
+    [self initPriceView];
     
 }
 
@@ -376,16 +508,23 @@
 //组队接单
 -(IBAction)receive:(UIButton*)sender
 {
+//    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"信息不完全,去完善船舶信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+//    [alert show];
     
-    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.labelText=@"接单中...";
-    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
-    int loginId=[[userDefaults objectForKey:@"loginId"] intValue];
-    int shipOwnerId=[[userDefaults objectForKey:@"shipOwnerId"] intValue];
-
-    NSString *ordersList = [NSString stringWithFormat:@"%@",_businessOrder.ID];
-    [NetWorkInterface makeTeamWithorderId:[ordersList intValue] loginId:loginId shipOwnerId:shipOwnerId finished:^(BOOL success, NSData *response) {
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    NSString *shipName=[user objectForKey:@"shipName"];
+    
+    if ( shipName && ![shipName isEqualToString:@""])
+    {
+        MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.labelText=@"接单中...";
+        NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+        int loginId=[[userDefaults objectForKey:@"loginId"] intValue];
+        int shipOwnerId=[[userDefaults objectForKey:@"shipOwnerId"] intValue];
         
+        NSString *ordersList = [NSString stringWithFormat:@"%@",_businessOrder.ID];
+        [NetWorkInterface makeTeamWithorderId:[ordersList intValue] loginId:loginId shipOwnerId:shipOwnerId finished:^(BOOL success, NSData *response) {
+            
             hud.customView=[[UIImageView alloc]init];
             [hud hide:YES afterDelay:0.3];
             NSLog(@"------------组队接单----:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
@@ -407,6 +546,7 @@
                     }else
                     {
                         hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                        
                     }
                 }else
                 {
@@ -419,6 +559,14 @@
             
         }];
 
+    }else
+    {
+        //信息不完全
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"信息不完全,去完善船舶信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+        [alert show];
+
+    }
+    
    
     
 }
@@ -495,6 +643,18 @@
     _backView.hidden=YES;
 }
 
+#pragma mark UIAlertViewDelegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != alertView.cancelButtonIndex)
+    {
+        ShipInfoViewController *shipInfo=[[ShipInfoViewController alloc]init];
+        shipInfo.type=@"isPush";
+        shipInfo.hidesBottomBarWhenPushed=YES;
+        [self.navigationController pushViewController:shipInfo animated:YES];
+    }
+   
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

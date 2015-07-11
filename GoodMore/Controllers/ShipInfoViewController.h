@@ -10,4 +10,6 @@
 
 @interface ShipInfoViewController : CommonViewController
 
+@property(nonatomic,strong)NSString *type;
+
 @end

@@ -22,6 +22,9 @@
 
 @property(nonatomic,strong)UIView *grayView;
 
+@property(nonatomic,strong)NSMutableArray *totalLastTime;
+
+@property(nonatomic,strong)NSTimer *timer;
 @end
 
 @implementation LogisticsCell
@@ -29,6 +32,8 @@
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        
+        _totalLastTime = [[NSMutableArray alloc]init];
         
         _logistLogo = [[UIImageView alloc]init];
         _logistLogo.image = [UIImage imageNamed:@"company"];
@@ -115,7 +120,6 @@
         _endTimeLabel = [[UILabel alloc]init];
         _endTimeLabel.textAlignment = NSTextAlignmentCenter;
         _endTimeLabel.font = [UIFont systemFontOfSize:12];
-        _endTimeLabel.text = @"2小时53分36秒后结束";
         [self.contentView addSubview:_endTimeLabel];
         
         _marginLabel = [[UILabel alloc]init];
@@ -148,11 +152,24 @@
             _successTeam.textColor = kLightColor;
             _successTeam.font = [UIFont systemFontOfSize:13];
             [readBtnLayer setBorderColor:kLightColor.CGColor];
-        }else{
+        }
+        if ([reuseIdentifier isEqualToString:@"2"]){
             _successTeam.text = @"组队失败";
             _successTeam.textColor = kColor(73, 76, 73, 1.0);
             _successTeam.font = [UIFont systemFontOfSize:13];
             [readBtnLayer setBorderColor:kColor(73, 76, 73, 1.0).CGColor];
+        }
+        if ([reuseIdentifier isEqualToString:@"3"]){
+            _successTeam.text = @"计算运费";
+            _successTeam.textColor = [UIColor orangeColor];
+            _successTeam.font = [UIFont systemFontOfSize:13];
+            [readBtnLayer setBorderColor:[UIColor orangeColor].CGColor];
+        }
+        if ([reuseIdentifier isEqualToString:@"4"]){
+            _successTeam.text = @"完成";
+            _successTeam.textColor = [UIColor greenColor];
+            _successTeam.font = [UIFont systemFontOfSize:13];
+            [readBtnLayer setBorderColor:[UIColor greenColor].CGColor];
         }
         _successTeam.frame = CGRectMake(K_MainWidth - 80, _logistNameLabel.frame.origin.y + 15, 60, 20);
         [self.contentView addSubview:_successTeam];
@@ -222,4 +239,78 @@
     [self.contentView addSubview:line];
 }
 
+-(void)setContentWithMyshipModel:(MyShipModel *)myshipModel {
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date1 = [dateFormatter dateFromString:myshipModel.shipOder.workTime];
+    NSDate *date2 = [NSDate date];
+    NSLog(@"%@",date1);
+    int seconds = [date2 timeIntervalSinceDate:date1];
+    [_totalLastTime addObject:[NSString stringWithFormat:@"%d",seconds]];
+    [self startTimer];
+    
+    _endTimeLabel.text = [self lessSecondToDay:seconds];
+    _logistNameLabel.text = myshipModel.shipOder.companyName;
+    _startPlaceLabel.text = myshipModel.shipOder.beginPortName;
+    _startPortLabel.text = myshipModel.shipOder.beginDockName;
+    _endPlaceLabel.text = myshipModel.shipOder.endPortName;
+    _endPortLabel.text = myshipModel.shipOder.endDockName;
+    _moneyLabel.text = [NSString stringWithFormat:@"%@.00元",myshipModel.shipOder.maxPay];
+    _dateLabel.text = myshipModel.shipOder.workTime;
+    _weightLabel.text = [NSString stringWithFormat:@"%@吨",myshipModel.shipOder.amount];
+    _goodsLabel.text = myshipModel.shipOder.cargos;
+    _shipPasswordLabel.text = [NSString stringWithFormat:@"船队密码:%@",myshipModel.shipTeam.code];
+    _shipWeightLabel.text = [NSString stringWithFormat:@"船队吨位:%@吨",myshipModel.shipTeam.allAccount];
+}
+
+-(void)setContentWithShipOrderModel:(ShipOrder *)shipOrderModel AndAllAccount:(NSString *)allAccount {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date1 = [dateFormatter dateFromString:shipOrderModel.workTime];
+    NSDate *date2 = [NSDate date];
+    NSLog(@"%@",date1);
+    int seconds = [date2 timeIntervalSinceDate:date1];
+    [_totalLastTime addObject:[NSString stringWithFormat:@"%d",seconds]];
+    [self startTimer];
+    
+    _endTimeLabel.text = [self lessSecondToDay:seconds];
+    _logistNameLabel.text = shipOrderModel.companyName;
+    _startPlaceLabel.text = shipOrderModel.beginPortName;
+    _startPortLabel.text = shipOrderModel.beginDockName;
+    _endPlaceLabel.text = shipOrderModel.endPortName;
+    _endPortLabel.text = shipOrderModel.endDockName;
+    _moneyLabel.text = [NSString stringWithFormat:@"%@.00元",shipOrderModel.maxPay];
+    _dateLabel.text = shipOrderModel.workTime;
+    _weightLabel.text = [NSString stringWithFormat:@"%@吨",shipOrderModel.amount];
+    _goodsLabel.text = shipOrderModel.cargos;
+    _shipPasswordLabel.text = [NSString stringWithFormat:@"船队密码:%@",shipOrderModel.code];
+    _shipWeightLabel.text = [NSString stringWithFormat:@"船队吨位:%@吨",allAccount];
+}
+
+-(void)startTimer {
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(refreshLessTime) userInfo:@"" repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:UITrackingRunLoopMode];
+}
+
+-(void)refreshLessTime {
+    NSUInteger time;
+    for (int i = 0; i < _totalLastTime.count; i++) {
+        time = [_totalLastTime[i] integerValue];
+        _endTimeLabel.text = [NSString stringWithFormat:@"%@",[self lessSecondToDay:--time]];
+        NSString *newTime = [NSString stringWithFormat:@"%i",time];
+        [_totalLastTime replaceObjectAtIndex:i withObject:newTime];
+    }
+}
+
+- (NSString *)lessSecondToDay:(NSUInteger)seconds
+{
+    NSUInteger day  = (NSUInteger)seconds/(24*3600);
+    NSUInteger hour = (NSUInteger)(seconds%(24*3600))/3600;
+    NSUInteger min  = (NSUInteger)(seconds%(3600))/60;
+    NSUInteger second = (NSUInteger)(seconds%60);
+    
+    NSString *time = [NSString stringWithFormat:@"%lu日%lu小时%lu分钟%lu秒",(unsigned long)day,(unsigned long)hour,(unsigned long)min,(unsigned long)second];
+    return time;
+}
 @end
