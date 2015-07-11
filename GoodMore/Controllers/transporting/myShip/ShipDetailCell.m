@@ -121,6 +121,7 @@
         _priceLabel.hidden = NO;
         if ([shipInTeamModel.isLeader isEqualToString:@"1"]) {
             _leftTopView.hidden = NO;
+            _priceLabel.hidden = YES;
         }
         if ([shipInTeamModel.isSelf isEqualToString:@"1"]) {
             

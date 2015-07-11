@@ -15,6 +15,8 @@
 #import "MyTaskViewController.h"
 #import "WebViewViewController.h"
 #import "ShipInfoViewController.h"
+#import "MyShipViewController.h"
+#import "MainViewController.h"
 
 @interface TaskDetailViewController ()<UIAlertViewDelegate>
 {
@@ -537,6 +539,8 @@
 -(void)sureBTN:(UIButton*)btn
 {
     _backView.hidden=YES;
+    [[NSNotificationCenter defaultCenter] postNotificationName:JiedanchenggongShipNotification object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:PushTomyShipNotification object:nil userInfo:nil];
 }
 
 //单船报价

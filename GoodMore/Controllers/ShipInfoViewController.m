@@ -31,7 +31,15 @@
 @end
 
 @implementation ShipInfoViewController
-
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    //    for (UIView *v in self.navigationController.navigationBar.subviews) {
+    //        if ([NSStringFromClass(v.class) isEqualToString:@"_UINavigationBarBackground"]) {
+    //            [v removeFromSuperview];
+    //        }
+    //    }
+    self.navigationController.navigationBarHidden = NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

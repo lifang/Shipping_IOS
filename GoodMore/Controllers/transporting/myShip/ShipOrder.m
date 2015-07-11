@@ -11,7 +11,7 @@
 @implementation ShipOrder
 - (id)initWithParseDictionary:(NSDictionary *)dict {
     if (self = [super init]) {
-        if ([dict objectForKey:@"id"]) {
+        if ([dict objectForKey:@"applyNumbers"]) {
             _applyNumbers = [NSString stringWithFormat:@"%@",[dict objectForKey:@"applyNumbers"]];
         }else
         {
@@ -26,52 +26,52 @@
         if ([dict objectForKey:@"beginPortName"]) {
             _beginPortName = [NSString stringWithFormat:@"%@",[dict objectForKey:@"beginPortName"]];
         }else{
-            _beginPortName = @"";
+            _beginPortName = @"-";
         }
         if ([dict objectForKey:@"endPortName"]) {
             _endPortName = [NSString stringWithFormat:@"%@",[dict objectForKey:@"endPortName"]];
         }else{
-            _endPortName = @"";
+            _endPortName = @"-";
         }
         if ([dict objectForKey:@"cargos"]) {
             _cargos = [NSString stringWithFormat:@"%@",[dict objectForKey:@"cargos"]];
         }else{
-            _cargos = @"";
+            _cargos = @"-";
         }
         if ([dict objectForKey:@"workTime"]) {
             _workTime = [NSString stringWithFormat:@"%@",[dict objectForKey:@"workTime"]];
         }else{
-            _workTime = @"";
+            _workTime = @"-";
         }
         if ([dict objectForKey:@"storage"]) {
             _storage = [NSString stringWithFormat:@"%@",[dict objectForKey:@"storage"]];
         }else{
-            _storage = @"";
+            _storage = @"-";
         }
         if ([dict objectForKey:@"companyName"]) {
             _companyName = [NSString stringWithFormat:@"%@",[dict objectForKey:@"companyName"]];
         }else{
-            _companyName = @"";
+            _companyName = @"-";
         }
         if ([dict objectForKey:@"beginDockName"]) {
             _beginDockName = [NSString stringWithFormat:@"%@",[dict objectForKey:@"beginDockName"]];
         }else{
-            _beginDockName = @"";
+            _beginDockName = @"-";
         }
         if ([dict objectForKey:@"endDockName"]) {
             _endDockName = [NSString stringWithFormat:@"%@",[dict objectForKey:@"endDockName"]];
         }else{
-            _endDockName = @"";
+            _endDockName = @"-";
         }
         if ([dict objectForKey:@"maxPay"]) {
             _maxPay = [NSString stringWithFormat:@"%@",[dict objectForKey:@"maxPay"]];
         }else{
-            _maxPay = @"";
+            _maxPay = @"-";
         }
         if ([dict objectForKey:@"amount"]) {
             _amount = [NSString stringWithFormat:@"%@",[dict objectForKey:@"amount"]];
         }else{
-            _amount = @"";
+            _amount = @"-";
         }
         if ([dict objectForKey:@"teamStatus"]) {
             _teamStatus = [NSString stringWithFormat:@"%@",[dict objectForKey:@"teamStatus"]];

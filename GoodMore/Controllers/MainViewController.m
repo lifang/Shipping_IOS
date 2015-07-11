@@ -31,6 +31,8 @@
     // Do any additional setup after loading the view.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToTransportation) name:PushTotransportationNotification object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushTomyShipNotification) name:PushTomyShipNotification object:nil];
+    
     [self initControllers];
     
 //    UIImageView *s=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"to.png"]];
@@ -41,6 +43,10 @@
 
 -(void)pushToTransportation {
     self.selectedIndex = 1;
+}
+
+-(void)pushTomyShipNotification {
+    self.selectedIndex = 2;
 }
 
 -(void)initControllers

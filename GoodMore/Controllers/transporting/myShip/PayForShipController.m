@@ -302,6 +302,14 @@
     NSString *selected = [NSString stringWithFormat:@"%ld",button.tag];
     NSLog(@"%d",[[_reMoneyDic objectForKey:selected] intValue]);
     _nowPay = _allPay - [_payTextField.text doubleValue] + [[_reMoneyDic objectForKey:selected] intValue];
+    if (_nowPay < 0) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.labelText = @"对不起，可分配金额不足！";
+        [hud hide:YES afterDelay:1.0f];
+        return;
+    }
     _allPay = _nowPay;
     _undistributedLabel.text = [NSString stringWithFormat:@"未分配金额:￥%.2f",_allPay];
     [_backView removeFromSuperview];
@@ -319,7 +327,7 @@
         hud.customView = [[UIImageView alloc] init];
         hud.mode = MBProgressHUDModeCustomView;
         hud.labelText = @"对不起，可分配金额不足！";
-        [hud hide:YES afterDelay:0.3f];
+        [hud hide:YES afterDelay:1.0f];
         return;
     }
     NSLog(@"%d",button.tag);
@@ -333,6 +341,7 @@
     
     _nowPay = _allPay - [_payTextField.text doubleValue];
     _allPay = _nowPay;
+    
     _undistributedLabel.text = [NSString stringWithFormat:@"未分配金额:￥%.2f",_allPay];
     [_backView removeFromSuperview];
 }
