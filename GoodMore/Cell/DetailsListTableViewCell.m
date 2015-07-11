@@ -216,7 +216,6 @@
     _marginLabel.frame = CGRectMake(K_MainWidth / 2 , CGRectGetMaxY(_goodsLabel.frame) , K_MainWidth / 2, 15);
     
 }
-
 -(void)drawLineWithTopView:(UIView *)topView {
     
     UIView *line = [[UIView alloc]init];

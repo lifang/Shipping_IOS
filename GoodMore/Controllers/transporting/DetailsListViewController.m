@@ -123,7 +123,7 @@
 //    double latitude=[[user objectForKey:@"latitude"] doubleValue];
 //    double longitude=[[user objectForKey:@"longitude"] doubleValue];
 //    [[user objectForKey:@"loginId"] integerValue]
-    [NetWorkInterface getGoodsTransportListWithPage:page status:-1 shipOwerId:63 finished:^(BOOL success, NSData *response) {
+    [NetWorkInterface getGoodsTransportListWithPage:page status:-1 shipOwerId:[[user objectForKey:@"shipOwnerId"] integerValue]finished:^(BOOL success, NSData *response) {
    
         //[NetWorkInterface getOrderListWithPage:page status:0 keys:@"" mLat1:latitude mLon1:longitude finished:^(BOOL success, NSData *response) {
         NSLog(@"!!---------------任务大厅:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
