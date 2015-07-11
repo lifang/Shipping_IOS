@@ -98,15 +98,15 @@
     company.text=_businessOrder.companyName;
     [view1 addSubview:company];
     
-    UIView *line1=[[UIView alloc]initWithFrame:CGRectMake(view1.bounds.size.width-10-80-10, (30-17)/2, 1, 17)];
-    line1.backgroundColor=kColor(201, 201, 201, 1);
-    [view1 addSubview:line1];
+//    UIView *line1=[[UIView alloc]initWithFrame:CGRectMake(view1.bounds.size.width-10-80-10, (30-17)/2, 1, 17)];
+//    line1.backgroundColor=kColor(201, 201, 201, 1);
+//    [view1 addSubview:line1];
     
-    UILabel *numShip=[[UILabel alloc]initWithFrame:CGRectMake(view1.bounds.size.width-80-10, (30-17)/2, 80, 17)];
-    numShip.text=[NSString stringWithFormat:@"%@船竞价",_singleShipCompleteNum];
-    numShip.font=[UIFont systemFontOfSize:15];
-    numShip.textColor=kGrayColor;
-    [view1 addSubview:numShip];
+//    UILabel *numShip=[[UILabel alloc]initWithFrame:CGRectMake(view1.bounds.size.width-80-10, (30-17)/2, 80, 17)];
+//    numShip.text=[NSString stringWithFormat:@"%@船竞价",_singleShipCompleteNum];
+//    numShip.font=[UIFont systemFontOfSize:15];
+//    numShip.textColor=kGrayColor;
+//    [view1 addSubview:numShip];
     
     [headView addSubview:view1];
     
@@ -121,7 +121,7 @@
     fromCity.textColor=kGrayColor;
     [headView addSubview:fromCity];
     
-    UILabel *fromPort=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5, PortWidth, 20)];
+    UILabel *fromPort=[[UILabel alloc]initWithFrame:CGRectMake(0, topSpace+30+10+20+5, PortWidth, 20)];
     fromPort.text=_businessOrder.beginDockName;
     //fromPort.backgroundColor=[UIColor redColor];
     fromPort.textColor=kGrayColor;
@@ -194,7 +194,7 @@
     [headView addSubview:weight];
 
     UILabel *goodsPrice=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20, 120, 20)];
-    goodsPrice.text=@"限价";
+    goodsPrice.text=@"竞价";
     goodsPrice.font=[UIFont boldSystemFontOfSize:18];
     [headView addSubview:goodsPrice];
     
@@ -220,7 +220,14 @@
     [headView addSubview:loadtimeLimit];
     
     UILabel *loadlimit=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5, 120, 20)];
-    loadlimit.text=[NSString stringWithFormat:@"%@天",_businessOrder.inDays];
+    if ([_businessOrder.inDays intValue] == 0)
+    {
+        loadlimit.text=@"-天";
+    }else
+    {
+        loadlimit.text=[NSString stringWithFormat:@"%@天",_businessOrder.inDays];
+    }
+    
     loadlimit.textColor=kGrayColor;
     [headView addSubview:loadlimit];
     
@@ -230,7 +237,14 @@
     [headView addSubview:unloadTimeLimit];
     
     UILabel *unloadLimit=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5, 120, 20)];
-    unloadLimit.text=[NSString stringWithFormat:@"%@天",_businessOrder.outDays];
+    if ([_businessOrder.outDays intValue]==0)
+    {
+        unloadTimeLimit.text=@"-天";
+    }else
+    {
+        unloadLimit.text=[NSString stringWithFormat:@"%@天",_businessOrder.outDays];
+    }
+    
     unloadLimit.textColor=kGrayColor;
     [headView addSubview:unloadLimit];
     
@@ -245,7 +259,14 @@
     [headView addSubview:shipWeight1];
     
     UILabel *shipW1=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+5, 120, 20)];
-    shipW1.text=[NSString stringWithFormat:@"%@天",_businessOrder.minAmount];
+    if ([_businessOrder.minAmount intValue]==0)
+    {
+        shipW1.text=@"-米";
+    }else
+    {
+         shipW1.text=[NSString stringWithFormat:@"%@天",_businessOrder.minAmount];
+    }
+   
     shipW1.textColor=kGrayColor;
     [headView addSubview:shipW1];
     
@@ -255,7 +276,13 @@
     [headView addSubview:shipWeight2];
     
     UILabel *shipW2=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+5, 120, 20)];
-    shipW2.text=[NSString stringWithFormat:@"%@天",_businessOrder.maxAmount];
+    if ([_businessOrder.maxAmount intValue]==0)
+    {
+        shipW2.text=@"-吨";
+    }else{
+        shipW2.text=[NSString stringWithFormat:@"%@吨",_businessOrder.maxAmount];
+    }
+    
     shipW2.textColor=kGrayColor;
     [headView addSubview:shipW2];
 
@@ -265,17 +292,31 @@
     [headView addSubview:waterLevel];
     
     UILabel *level=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+20+5+5, 120, 20)];
-    level.text=[NSString stringWithFormat:@"%@米",_businessOrder.waterEat];
+    if ([_businessOrder.waterEat intValue]==0)
+    {
+        level.text=@"-米";
+    }else
+    {
+        level.text=[NSString stringWithFormat:@"%@米",_businessOrder.waterEat];
+    }
+    
     level.textColor=kGrayColor;
     [headView addSubview:level];
     
     UILabel *shipCapacity=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+5, 120, 20)];
+    
     shipCapacity.text=@"船容";
     shipCapacity.font=[UIFont boldSystemFontOfSize:18];
     [headView addSubview:shipCapacity];
     
     UILabel *capacity=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+20+5+5, 120, 20)];
-    capacity.text=[NSString stringWithFormat:@"%@立方米",_businessOrder.storage];
+    if ([_businessOrder.storage intValue]==0)
+    {
+        capacity.text=@"-立方米";
+    }else{
+        capacity.text=[NSString stringWithFormat:@"%@立方米",_businessOrder.storage];
+    }
+    
     capacity.textColor=kGrayColor;
     [headView addSubview:capacity];
     
@@ -384,7 +425,8 @@
     
     _priceNumber=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace*2+34+10, (whiteView.bounds.size.height-30)/2, whiteView.bounds.size.width-leftSpace*2*2-34*2-10*2, 30)];
     _priceNumber.backgroundColor=kColor(231, 230, 230, 1);
-    _priceNumber.text=@"1.00";
+    double pay=[_businessOrder.maxPay doubleValue];
+    _priceNumber.text=[NSString stringWithFormat:@"%.2f",pay];
     _priceNumber.font=[UIFont systemFontOfSize:14];
     _priceNumber.textAlignment=NSTextAlignmentCenter;
     [whiteView addSubview:_priceNumber];
@@ -425,26 +467,22 @@
 -(void)reduce:(UIButton*)btn
 {
     _price=[_priceNumber.text doubleValue];
-    _price = _price - 0.01 ;
+    _price = _price - 0.1 ;
     _priceNumber.text=[NSString stringWithFormat:@"%.2f",_price];
     
 }
 //增加报价
 -(void)add:(UIButton*)btn
 {
+
     _price=[_priceNumber.text doubleValue];
-    _price += 0.01;
+    
+    _price += 0.1;
     _priceNumber.text=[NSString stringWithFormat:@"%.2f",_price];
 }
 //报价确认
 -(void)priceSureBTN:(UIButton*)btn
 {
-   
-    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-    NSString *shipName=[user objectForKey:@"shipName"];
-    
-    if (shipName && ![shipName isEqualToString:@""])
-    {
         MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         hud.labelText=@"竞价中...";
         NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
@@ -493,13 +531,7 @@
         
         [_priceView removeFromSuperview];
 
-    }else
-    {
-        //信息不完全
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"信息不完全,去完善船舶信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
-        alert.tag=1;
-        [alert show];
-    }
+    
 }
 
 -(void)sureBTN:(UIButton*)btn
@@ -510,7 +542,21 @@
 //单船报价
 -(void)quotation:(UIButton*)sender
 {
-    [self initPriceView];
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    NSString *shipName=[user objectForKey:@"shipName"];
+
+    if (shipName && ![shipName isEqualToString:@""])
+    {
+        [self initPriceView];
+    }else
+    {
+        //信息不完全
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"信息不完全,去完善船舶信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+        alert.tag=1;
+        [alert show];
+
+    }
+    
     
 }
 

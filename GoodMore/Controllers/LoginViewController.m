@@ -243,6 +243,12 @@
     NSString *phone=[result objectForKey:@"phone"];
     NSString *loginName=[result objectForKey:@"loginName"];
     NSString *shipName=[result objectForKey:@"shipName"];
+    NSString *builderTime=[result objectForKey:@"builderTime"];
+    NSLog(@"------%@",builderTime);
+    NSString *moneyCanGet=[result objectForKey:@"moneyCanGet"];
+    NSString *volume=[result objectForKey:@"volume"];
+    NSString *length=[result objectForKey:@"length"];
+    NSString *waterEat=[result objectForKey:@"waterEat"];
     //NSString *pwd=[result objectForKey:@"pwd"];
     
     //NSLog(@"-------登录loginName---%@",loginName);
@@ -256,6 +262,11 @@
     [userDefault setObject:phone forKey:@"phone"];
     [userDefault setObject:loginName forKey:@"loginName"];
     [userDefault setObject:shipName forKey:@"shipName"];
+    [userDefault setObject:builderTime forKey:@"builderTime"];
+    [userDefault setObject:moneyCanGet forKey:@"moneyCanGet"];
+    [userDefault setObject:volume forKey:@"volume"];
+    [userDefault setObject:length forKey:@"length"];
+    [userDefault setObject:waterEat forKey:@"waterEat"];
     //[userDefault setObject:pwd forKey:@"pwd"];
     [userDefault setObject:_pwd.text forKey:@"pwd"];
     [userDefault synchronize];

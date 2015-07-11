@@ -187,6 +187,9 @@ static NSString *getPortList_method = @"common/getPortList";
 //距离列表
 static NSString *getDistanceList_method = @"app/util/getDistanceList";
 
+//保存船信息
+static NSString *completeShipInfo_method = @"app/completeInfo";
+
 @interface NetWorkInterface : NSObject
 
 /*
@@ -420,5 +423,8 @@ static NSString *getDistanceList_method = @"app/util/getDistanceList";
 
 //获得距离列表
 +(void)getDictanceListWithfinished:(requestDidFinished)finish;
+
+//保存船信息
++(void)completeShipInfoWithShipID:(int)shipID loginId:(int)loginId shipNumber:(NSString*)shipNumber volume:(int)volume builderTime:(NSString*)builderTime shipName:(NSString*)shipName length:(double)length waterEat:(double)waterEat finished:(requestDidFinished)finish;
 @end
 

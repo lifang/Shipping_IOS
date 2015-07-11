@@ -36,12 +36,13 @@
     NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
     NSString *name=[userDefault objectForKey:@"name"];
     NSString *phone=[userDefault objectForKey:@"phone"];
+    NSString *moneyCanGet=[userDefault objectForKey:@"moneyCanGet"];
     MYInfoView *view=[[MYInfoView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth/2, kScreenHeight)];
     view.delegate=self;
     view.name.text=name;
     view.phone.text=phone;
-    view.cash.text=@"$20000";
-    view.cash.textColor=[UIColor blueColor];
+    view.cash.text=[NSString stringWithFormat:@"￥%@",moneyCanGet];
+    view.cash.textColor=kMainColor;
     [self.view addSubview:view];
 }
 #pragma mark MYInfoViewDelegate

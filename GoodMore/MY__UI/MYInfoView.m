@@ -27,7 +27,7 @@
 {
     _tableView=[[UITableView alloc]initWithFrame:self.frame];
     _tableView.scrollEnabled=NO;
-    _tableView.backgroundColor=[UIColor blackColor];
+    _tableView.backgroundColor=kColor(36, 36, 36, 1.0);
     _tableView.dataSource=self;
     _tableView.delegate=self;
     _tableView.rowHeight=40;
@@ -85,7 +85,7 @@
     UIView *backView=[[UIView alloc]initWithFrame:cell.frame];
     cell.selectedBackgroundView=backView;
     
-    cell.backgroundColor=[UIColor blackColor];
+    cell.backgroundColor=kColor(36, 36, 36, 1.0);
     cell.textLabel.text=_data[indexPath.row];
     cell.textLabel.textColor=[UIColor whiteColor];
     return cell;

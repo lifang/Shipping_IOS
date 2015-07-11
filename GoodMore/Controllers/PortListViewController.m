@@ -80,7 +80,7 @@
         return _portArray.count;
     }else
     {
-        return _distanceArray.count;
+        return _distanceArray.count+1;
     }
     
 }
@@ -99,7 +99,14 @@
         cell.textLabel.text=port.name;
     }else
     {
-        cell.textLabel.text=_distanceArray[indexPath.row];;
+        if (indexPath.row==0)
+        {
+            cell.textLabel.text=@"全部";
+        }else
+        {
+            cell.textLabel.text=_distanceArray[indexPath.row-1];
+        }
+        
 
     }
         return cell;

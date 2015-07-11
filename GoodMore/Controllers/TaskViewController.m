@@ -60,6 +60,7 @@
     
     
     _index=1;
+    _distance=@"";
     _ordersArray=[[NSMutableArray alloc]init];
     _totalLastTime=[[NSMutableArray alloc]init];
    
@@ -305,7 +306,7 @@
     {
         _portID=-1;
     }
-    if (_distance==nil)
+    if ([_distance isEqualToString:@"未选择"] || [_distance isEqualToString:@"全部"])
     {
         _distance=@"";
     }
