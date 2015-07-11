@@ -11,7 +11,7 @@
 
 @protocol PortListDelegate <NSObject>
 
--(void)getPortInfoWithportInfo:(NSString *)portInfo index:(NSInteger)index;
+-(void)getPortInfoWithportInfo:(NSString *)portInfo portID:(int)portID index:(NSInteger)index;
 
 @end
 

@@ -16,4 +16,9 @@ static NSString *PortListNotification = @"PortListNotification";
 @interface TaskViewController : CommonViewController
 
 @property(nonatomic,assign)NSInteger index;
+
+@property(nonatomic,assign)int portId;
+
+@property(nonatomic,strong)NSString *distance;
+
 @end
