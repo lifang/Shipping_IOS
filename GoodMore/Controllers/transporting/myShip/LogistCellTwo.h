@@ -1,16 +1,15 @@
 //
-//  ShipHistoryCell.h
+//  LogistCellTwo.h
 //  GoodMore
 //
-//  Created by 黄含章 on 15/7/8.
+//  Created by 黄含章 on 15/7/11.
 //  Copyright (c) 2015年 comdosoft. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "MyShipModel.h"
 
-@interface ShipHistoryCell : UITableViewCell
-
+@interface LogistCellTwo : UITableViewCell
 /** 物流名字 */
 @property(nonatomic,strong)UILabel *logistNameLabel;
 /** 开始地 */
@@ -33,11 +32,12 @@
 @property(nonatomic,strong)UILabel *endTimeLabel;
 /** 保证金 */
 @property(nonatomic,strong)UILabel *marginLabel;
+/** 船队密码 */
+@property(nonatomic,strong)UILabel *shipPasswordLabel;
+/** 船队吨位 */
+@property(nonatomic,strong)UILabel *shipWeightLabel;
+/** 组队成功 */
+@property(nonatomic,strong)UILabel *successTeam;
 
-@property(nonatomic,strong)UILabel *successLabel;
-
-@property(nonatomic,strong)UILabel *quatLabel;
-
--(void)setContentWithShipOrderModel:(ShipOrder *)shipOrderModel;
-
+-(void)setContentWithMyshipModel:(MyShipModel *)myshipModel;
 @end

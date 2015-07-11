@@ -29,6 +29,8 @@
 @property(nonatomic,strong)NSString *storage;
 
 @property(nonatomic,strong)NSString *maxPay;
+
+@property(nonatomic,assign)double quote;
 //总运货量
 @property(nonatomic,strong)NSString *amount;
 

@@ -26,6 +26,12 @@
         else{
             _allAccount = @"";
         }
+        if ([dict objectForKey:@"timeLeft"]) {
+            _timeLeft = [NSString stringWithFormat:@"%@",[dict objectForKey:@"timeLeft"]];
+        }
+        else{
+            _timeLeft = @"";
+        }
     }
     return self;
 }

@@ -8,7 +8,7 @@
 
 #import "MyShipViewController.h"
 #import "TopButton.h"
-#import "LogisticsCell.h"
+#import "LogistCellTwo.h"
 #import "ShipDetailCell.h"
 #import "HistoryController.h"
 #import "AppDelegate.h"
@@ -29,7 +29,7 @@
 
 @property(nonatomic,strong)HistoryController *historyVC;
 
-@property(nonatomic,strong)LogisticsCell *logisticCell;
+@property(nonatomic,strong)LogistCellTwo *logisticCell;
 
 @property(nonatomic,strong)MyShipModel *myshipModel;
 
@@ -80,7 +80,6 @@
     [super viewDidLoad];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToHistoryDetail:) name:PushToHistoryDetailNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToPayForShip:) name:PushToPayForShipNotification object:nil];
     
     _shipNoInTeamData = [[NSMutableArray alloc]init];
     _shipNumbersData = [[NSMutableArray alloc]init];
@@ -125,7 +124,7 @@
 //创建footerView
 -(void)setupFooterView {
     self.tableView.backgroundColor = [UIColor whiteColor];
-    _logisticCell = [[LogisticsCell alloc]init];
+    _logisticCell = [[LogistCellTwo alloc]initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"zuduizhong"];
     _logisticCell.successTeam.hidden = YES;
     _logisticCell.frame = CGRectMake(0, 0, K_MainWidth, 250);
     [_logisticCell setContentWithMyshipModel:_myshipModel];

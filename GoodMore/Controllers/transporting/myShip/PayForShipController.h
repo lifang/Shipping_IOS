@@ -8,6 +8,7 @@
 
 #import "CommonViewController.h"
 #import "ShipOrder.h"
+#import "HistoryController.h"
 
 @interface PayForShipController : CommonViewController
 

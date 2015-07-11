@@ -89,6 +89,9 @@
         if ([dict objectForKey:@"allPay"]) {
             _allPay = [[dict objectForKey:@"allPay"] doubleValue];
         }
+        if ([dict objectForKey:@"quote"]) {
+            _quote = [[dict objectForKey:@"quote"] doubleValue];
+        }
     }
     return self;
 }

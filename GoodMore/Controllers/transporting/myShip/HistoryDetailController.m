@@ -61,25 +61,28 @@
     self.navigationController.navigationBarHidden = NO;
 }
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"任务详情";
     self.view.backgroundColor = [UIColor whiteColor];
     _shipNumberData = [[NSMutableArray alloc]init];
+
     //获取数据
     [self LoadDetailRequest];
 }
 
+
 //创建headerView
 -(void)setupHeaderView {
     UIView *headerView = [[UIView alloc]init];
-    headerView.frame = CGRectMake(0, 0, K_MainWidth, 250);
+    headerView.frame = CGRectMake(0, 0, K_MainWidth, 220);
     headerView.backgroundColor = [UIColor whiteColor];
     
     NSString *Identifer = [NSString stringWithFormat:@"%@",_shipOder.status];
     LogisticsCell *logistCell = [[LogisticsCell alloc]initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:Identifer];
-    logistCell.frame = CGRectMake(0, 0, K_MainWidth, 250);
     [headerView addSubview:logistCell];
     [logistCell setContentWithShipOrderModel:_shipOder AndAllAccount:_allAcconnt];
     _tableView.tableHeaderView = headerView;

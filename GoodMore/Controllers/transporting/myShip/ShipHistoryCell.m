@@ -22,6 +22,8 @@
 
 @property(nonatomic,strong)UIView *grayView;
 
+@property(nonatomic,strong)NSString *reseIdenfiers;
+
 @end
 
 @implementation ShipHistoryCell
@@ -29,7 +31,7 @@
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        
+        _reseIdenfiers = reuseIdentifier;
         UIView *grayView = [[UIView alloc]init];
         grayView.backgroundColor = kColor(213, 217, 218, 1.0);
         grayView.frame = CGRectMake(10, 13, K_MainWidth - 20, 34);
@@ -37,12 +39,12 @@
         
         UIView *leftLine = [[UIView alloc]init];
         leftLine.backgroundColor = kColor(213, 217, 218, 1.0);
-        leftLine.frame = CGRectMake(10, 47, 1, 160);
+        leftLine.frame = CGRectMake(10, 47, 1, 130);
         [self.contentView addSubview:leftLine];
         
         UIView *rightLine = [[UIView alloc]init];
         rightLine.backgroundColor = kColor(213, 217, 218, 1.0);
-        rightLine.frame = CGRectMake(K_MainWidth - 11, 47, 1, 160);
+        rightLine.frame = CGRectMake(K_MainWidth - 11, 47, 1, 130);
         [self.contentView addSubview:rightLine];
         
         _logistLogo = [[UIImageView alloc]init];
@@ -93,11 +95,19 @@
         _endPortLabel.textColor = kColor(116, 116, 116, 1.0);
         [self.contentView addSubview:_endPortLabel];
         
+        _quatLabel = [[UILabel alloc]init];
+        _quatLabel.textAlignment = NSTextAlignmentRight;
+        _quatLabel.textColor = kLightColor;
+        _quatLabel.font = [UIFont systemFontOfSize:18];
+        _quatLabel.text = @"12.00 元/";
+        [self.contentView addSubview:_quatLabel];
+        
         _moneyLabel = [[UILabel alloc]init];
         _moneyLabel.textColor = kColor(250, 98, 14, 1.0);
         _moneyLabel.font = [UIFont systemFontOfSize:18];
         _moneyLabel.text = @"12.00 元";
         [self.contentView addSubview:_moneyLabel];
+        
         
         _dateLabel = [[UILabel alloc]init];
         _dateLabel.textAlignment = NSTextAlignmentCenter;
@@ -119,22 +129,26 @@
         _goodsLabel.text = @"水泥";
         [self.contentView addSubview:_goodsLabel];
         
-        _blueView = [[UIView alloc]init];
-        _blueView.backgroundColor = kColor(193, 230, 242, 1.0);
-        [self.contentView addSubview:_blueView];
-
-        
-        _endTimeLabel = [[UILabel alloc]init];
-        _endTimeLabel.textAlignment = NSTextAlignmentCenter;
-        _endTimeLabel.font = [UIFont systemFontOfSize:12];
-        _endTimeLabel.text = @"2小时53分36秒后结束";
-        [self.contentView addSubview:_endTimeLabel];
-        
-        _marginLabel = [[UILabel alloc]init];
-        _marginLabel.textAlignment = NSTextAlignmentCenter;
-        _marginLabel.font = [UIFont systemFontOfSize:12];
-        _marginLabel.text = @"保证金：200.00元";
-        [self.contentView addSubview:_marginLabel];
+        if ([_reseIdenfiers isEqualToString:@"taskCell"]) {
+            _blueView = [[UIView alloc]init];
+            _blueView.backgroundColor = kColor(193, 230, 242, 1.0);
+            [self.contentView addSubview:_blueView];
+            
+            
+            _endTimeLabel = [[UILabel alloc]init];
+            _endTimeLabel.textAlignment = NSTextAlignmentCenter;
+            _endTimeLabel.font = [UIFont systemFontOfSize:12];
+            _endTimeLabel.text = @"2小时53分36秒后结束";
+            [self.contentView addSubview:_endTimeLabel];
+            
+            _marginLabel = [[UILabel alloc]init];
+            _marginLabel.textAlignment = NSTextAlignmentCenter;
+            _marginLabel.font = [UIFont systemFontOfSize:12];
+            _marginLabel.text = @"保证金：200.00元";
+            [self.contentView addSubview:_marginLabel];
+        }else{
+            
+        }
         
         _successLabel = [[UILabel alloc]init];
         _successLabel.textAlignment = NSTextAlignmentCenter;
@@ -199,20 +213,27 @@
     
     [self drawLineWithTopV:_endPortLabel AndHeight:50];
     
-    _moneyLabel.frame = CGRectMake(_startLogo.frame.origin.x + 10, CGRectGetMaxY(_startPortLabel.frame) + 15, 120, 30);
+    _quatLabel.frame = CGRectMake(- 30, CGRectGetMaxY(_startPortLabel.frame) + 15, 120, 30);
+    
+    _moneyLabel.frame = CGRectMake(CGRectGetMaxX(_quatLabel.frame), CGRectGetMaxY(_startPortLabel.frame) + 15, 120, 30);
     
     _weightLabel.frame = CGRectMake(_endLogo.frame.origin.x , CGRectGetMaxY(_endPortLabel.frame) + 15, 120, 30);
     
     _dateLabel.frame = CGRectMake(0, CGRectGetMaxY(_moneyLabel.frame) + 2, K_MainWidth / 2, 15);
     
     _goodsLabel.frame = CGRectMake(K_MainWidth / 2 , CGRectGetMaxY(_moneyLabel.frame) + 2, K_MainWidth / 2, 15);
+     if ([_reseIdenfiers isEqualToString:@"taskCell"]) {
+         _blueView.frame = CGRectMake(10, CGRectGetMaxY(_goodsLabel.frame) + 15, K_MainWidth - 20, 30);
+         
+         _endTimeLabel.frame = CGRectMake(0, CGRectGetMaxY(_goodsLabel.frame) + 22, K_MainWidth / 2, 15);
+         
+         _marginLabel.frame = CGRectMake(K_MainWidth / 2 , CGRectGetMaxY(_goodsLabel.frame) + 22, K_MainWidth / 2, 15);
+     }
     
-    _blueView.frame = CGRectMake(10, CGRectGetMaxY(_goodsLabel.frame) + 15, K_MainWidth - 20, 30);
-    
-    _endTimeLabel.frame = CGRectMake(0, CGRectGetMaxY(_goodsLabel.frame) + 22, K_MainWidth / 2, 15);
-    
-    _marginLabel.frame = CGRectMake(K_MainWidth / 2 , CGRectGetMaxY(_goodsLabel.frame) + 22, K_MainWidth / 2, 15);
-    
+    UIView *bottomLine = [[UIView alloc]init];
+    bottomLine.backgroundColor = kColor(213, 217, 218, 1.0);
+    bottomLine.frame = CGRectMake(10, CGRectGetMaxY(_goodsLabel.frame) + 16, K_MainWidth - 20, 1);
+    [self.contentView addSubview:bottomLine];
 }
 
 -(void)drawLineWithTopView:(UIView *)topView {
@@ -237,7 +258,8 @@
     _endPlaceLabel.text = shipOrderModel.endPortName;
     _endPortLabel.text = shipOrderModel.endDockName;
     _moneyLabel.text = [NSString stringWithFormat:@"%@.00元",shipOrderModel.maxPay];
-    _dateLabel.text = shipOrderModel.workTime;
+    _quatLabel.text = [NSString stringWithFormat:@"%.2f元/",shipOrderModel.quote];
+    _dateLabel.text = [NSString stringWithFormat:@"%@装船",shipOrderModel.workTime];
     _weightLabel.text = [NSString stringWithFormat:@"%@吨",shipOrderModel.amount];
     _goodsLabel.text = shipOrderModel.cargos;
 }

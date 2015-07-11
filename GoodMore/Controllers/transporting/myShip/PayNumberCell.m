@@ -73,6 +73,14 @@
         [_setBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
         [self.contentView addSubview:_setBtn];
         
+        _resetBtn = [[UIButton alloc]init];
+        [_resetBtn addTarget:self action:@selector(resetClicked) forControlEvents:UIControlEventTouchUpInside];
+        _resetBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+        [_resetBtn setTitle:@"重置运费" forState:UIControlStateNormal];
+        [_resetBtn setBackgroundColor:[UIColor clearColor]];
+        [_resetBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        [self.contentView addSubview:_resetBtn];
+        
     }
     return self;
 }
@@ -88,14 +96,32 @@
     
     _phoneNumLabel.frame = CGRectMake(CGRectGetMaxX(_weightLabel.frame) - 42, CGRectGetMaxY(_logistNameLabel.frame) - 8, 240, 20);
     
-    _priceLabel.frame = CGRectMake(K_MainWidth - 100, CGRectGetMaxY(_logistNameLabel.frame) - 25, 100, 30);
+    _priceLabel.frame = CGRectMake(K_MainWidth - 62, CGRectGetMaxY(_logistNameLabel.frame) - 35, 100, 30);
     
     _setBtn.frame = CGRectMake(K_MainWidth - 75, CGRectGetMaxY(_logistNameLabel.frame) - 20, 70, 20);
+    
+    _resetBtn.frame = CGRectMake(K_MainWidth - 75, CGRectGetMaxY(_logistNameLabel.frame) - 10, 70, 20);
 }
 
 -(void)setClicked {
     if (_delegate && [_delegate respondsToSelector:@selector(setClickedWithIndex:)]) {
         [_delegate setClickedWithIndex:_index];
     }
+}
+
+-(void)resetClicked {
+    if (_delegate && [_delegate respondsToSelector:@selector(resetClickedWithIndex:)]) {
+        [_delegate resetClickedWithIndex:_index];
+    }
+}
+
+-(void)setPayNumContentWithShipInTeamModel:(ShipInTeam *)shipInTeamModel {
+    if ([shipInTeamModel.isLeader isEqualToString:@"1"]) {
+        _leftTopView.hidden = NO;
+    }
+    _logistNameLabel.text = shipInTeamModel.shipNumber;
+    _nameLabel.text = shipInTeamModel.name;
+    _weightLabel.text = [NSString stringWithFormat:@"%@吨",shipInTeamModel.volume];
+    _phoneNumLabel.text = shipInTeamModel.phone;
 }
 @end
