@@ -12,7 +12,7 @@
 @property(nonatomic,strong)UITextField *passwordField;
 @property(nonatomic,strong)UITextField *moneyField;
 
-@property(nonatomic,assign)int money;
+@property(nonatomic,assign)double money;
 
 @end
 
@@ -21,7 +21,7 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    self.money = 1;
+    self.money = 1.00;
     self.view.backgroundColor = kColor(144, 144, 144, 0.7);
     
     UIView *whiteView = [[UIView alloc]init];
@@ -132,16 +132,16 @@
 #pragma mark -- Action
 -(void)reduceClicked {
     [_passwordField resignFirstResponder];
-    _money -=1;
-    NSString *money = [NSString stringWithFormat:@"%d",_money];
-    _moneyField.text = [NSString stringWithFormat:@"%@.00",money];
+    _money -= 0.1;
+    NSString *money = [NSString stringWithFormat:@"%.2f",_money];
+    _moneyField.text = money;
 }
 
 -(void)addBtnClicked {
     [_passwordField resignFirstResponder];
-    _money +=1;
-    NSString *money = [NSString stringWithFormat:@"%d",_money];
-    _moneyField.text = [NSString stringWithFormat:@"%@.00",money];
+    _money += 0.1;
+    NSString *money = [NSString stringWithFormat:@"%.2f",_money];
+    _moneyField.text = money;
 }
 
 -(void)cancelClicked {

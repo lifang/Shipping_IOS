@@ -21,34 +21,34 @@
             _shipName = [NSString stringWithFormat:@"%@",[dict objectForKey:@"shipName"]];
         }else
         {
-            _shipName = @"";
+            _shipName = @"-";
         }
         if ([dict objectForKey:@"shipNumber"]) {
             _shipNumber = [NSString stringWithFormat:@"%@",[dict objectForKey:@"shipNumber"]];
         }else
         {
-            _shipNumber = @"";
+            _shipNumber = @"-";
         }
         if ([dict objectForKey:@"name"]) {
             _name = [NSString stringWithFormat:@"%@",[dict objectForKey:@"name"]];
         }
         else{
-            _name = @"";
+            _name = @"-";
         }
         if ([dict objectForKey:@"volume"]) {
             _volume = [NSString stringWithFormat:@"%@",[dict objectForKey:@"volume"]];
         }else{
-            _volume = @"";
+            _volume = @"-";
         }
         if ([dict objectForKey:@"phone"]) {
             _phone = [NSString stringWithFormat:@"%@",[dict objectForKey:@"phone"]];
         }else{
-            _phone = @"";
+            _phone = @"-";
         }
         if ([dict objectForKey:@"submitMoney"]) {
             _submitMoney = [NSString stringWithFormat:@"%@",[dict objectForKey:@"submitMoney"]];
         }else{
-            _submitMoney = @"";
+            _submitMoney = @"-";
         }
         if ([dict objectForKey:@"isLeader"]) {
             _isLeader = [NSString stringWithFormat:@"%@",[dict objectForKey:@"isLeader"]];

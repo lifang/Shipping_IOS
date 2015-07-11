@@ -19,7 +19,7 @@
 #import "MyShipModel.h"
 #import "PayForShipController.h"
 
-@interface MyShipViewController ()<TopButtonClickedDelegate,UITableViewDelegate,UITableViewDataSource,ShipDetailCellDelegate>
+@interface MyShipViewController ()<TopButtonClickedDelegate,UITableViewDelegate,UITableViewDataSource,ShipDetailCellDelegate,UIAlertViewDelegate>
 
 @property(nonatomic,strong)UITableView *tableView;
 
@@ -49,19 +49,6 @@
 
 @implementation MyShipViewController
 
--(UITableView *)tableView {
-    if (!_tableView) {
-        _tableView = [[UITableView alloc]init];
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        _tableView.tag = TableViewTypeTeam;
-        _tableView.frame = CGRectMake(0, 60, K_MainWidth, K_MainHeight - 60 * 3.2);
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [self.view addSubview:_tableView];
-    }
-    return _tableView;
-}
-
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 //    for (UIView *v in self.navigationController.navigationBar.subviews) {
@@ -70,6 +57,8 @@
 //        }
 //    }
     self.navigationController.navigationBarHidden = YES;
+    //获取船队信息
+    [self.tableView reloadData];
 }
 
 - (void)dealloc {
@@ -81,15 +70,29 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToHistoryDetail:) name:PushToHistoryDetailNotification object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadViews) name:JiedanchenggongShipNotification object:nil];
+    
+    [self loadViews];
+   
+
+}
+
+-(void)loadViews {
+    _tableView = [[UITableView alloc]init];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.tag = TableViewTypeTeam;
+    _tableView.frame = CGRectMake(0, 60, K_MainWidth, K_MainHeight - 60 * 3.2);
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:_tableView];
     _shipNoInTeamData = [[NSMutableArray alloc]init];
     _shipNumbersData = [[NSMutableArray alloc]init];
     _shipRankData = [[NSMutableArray alloc]init];
     self.weight = 0;
+    [self loadShipDetail];
     //设置导航栏View
     [self setupTopView];
     [self setupHeaderView];
-    //获取船队信息
-    [self loadShipDetail];
 }
 
 //创建头部的View
@@ -130,7 +133,7 @@
     [_logisticCell setContentWithMyshipModel:_myshipModel];
     [_headerView addSubview:_logisticCell];
     _tableView.tableHeaderView = _headerView;
-    
+ 
     UIView *footerV = [[UIView alloc]init];
     footerV.frame = CGRectMake(0, CGRectGetMaxY(_tableView.frame), K_MainWidth, 72);
     footerV.backgroundColor = [UIColor whiteColor];
@@ -530,8 +533,14 @@
         firstLabel.text =@"船队成员";
     }else if (section == 1) {
         firstLabel.text =@"待审核";
+        if (_shipNoInTeamData.count == 0) {
+            firstLabel.text =@"待审核(无)";
+        }
     }else {
         firstLabel.text =@"单船报价";
+        if (_shipRankData.count == 0) {
+            firstLabel.text =@"单船报价(无)";
+        }
     }
     firstLabel.textColor = kColor(115, 114, 114, 1.0);
     firstLabel.frame = CGRectMake(20, 5, 100, 20);
@@ -573,7 +582,15 @@
         return;
     }
     NSLog(@"解散船队");
-    [self dissmissShipRequest];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"确定要解散船队吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+    alert.delegate = self;
+    [alert show];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex != alertView.cancelButtonIndex) {
+        [self dissmissShipRequest];
+    }
 }
 
 -(void)grabClicked {

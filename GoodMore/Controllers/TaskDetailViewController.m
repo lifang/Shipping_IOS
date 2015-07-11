@@ -15,6 +15,7 @@
 #import "MyTaskViewController.h"
 #import "WebViewViewController.h"
 #import "ShipInfoViewController.h"
+#import "MyShipViewController.h"
 
 @interface TaskDetailViewController ()<UIAlertViewDelegate>
 {
@@ -542,6 +543,7 @@
                         _code=[object objectForKey:@"result"];
                         _shipPwd.text=[NSString stringWithFormat:@"组队密码:%@",_code];
                         [self changeStatus];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:JiedanchenggongShipNotification object:nil userInfo:nil];
                         
                     }else
                     {
