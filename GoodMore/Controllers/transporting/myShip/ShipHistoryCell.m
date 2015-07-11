@@ -71,7 +71,7 @@
         
         _startPlaceLabel = [[UILabel alloc]init];
         _startPlaceLabel.text = @"南通";
-        _startPlaceLabel.font = [UIFont systemFontOfSize:20];
+//        _startPlaceLabel.font = [UIFont systemFontOfSize:20];
         _startPlaceLabel.textColor = kColor(101, 101, 101, 1.0);
         [self.contentView addSubview:_startPlaceLabel];
         
@@ -84,7 +84,7 @@
         
         _endPlaceLabel = [[UILabel alloc]init];
         _endPlaceLabel.text = @"芜湖";
-        _endPlaceLabel.font = [UIFont systemFontOfSize:20];
+//        _endPlaceLabel.font = [UIFont systemFontOfSize:20];
         _endPlaceLabel.textColor = kColor(101, 101, 101, 1.0);
         [self.contentView addSubview:_endPlaceLabel];
         
@@ -201,7 +201,7 @@
     
     _startPortLabel.frame = CGRectMake(0, CGRectGetMaxY(_startPlaceLabel.frame) + 2, K_MainWidth / 2, 15);
     
-    _jiantouV.frame = CGRectMake(K_MainWidth / 2 - 15, CGRectGetMaxY(_startPlaceLabel.frame) - 10, 50, 4);
+    _jiantouV.frame = CGRectMake(K_MainWidth / 2 - 15, CGRectGetMaxY(_startPlaceLabel.frame) - 5, 50, 4);
     
     _endLogo.frame = CGRectMake(CGRectGetMaxX(_jiantouV.frame) + 15, _startLogo.frame.origin.y, 14, 15);
     

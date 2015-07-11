@@ -16,6 +16,13 @@
     {
         [self setValuesForKeysWithDictionary:dictionary];
         self.ID=[dictionary objectForKey:@"id"];
+        self.payMoney = [dictionary objectForKey:@"payMoney"];
+        self.quote = [dictionary objectForKey:@"quote"];
+        self.outAccount = [dictionary objectForKey:@"outAccount"];
+        self.outWriteTimeStr = [dictionary objectForKey:@"outWriteTimeStr"];
+        self.inAccount = [dictionary objectForKey:@"inAccount"];
+        self.inWriteTimeStr = [dictionary objectForKey:@"inWriteTimeStr"];
+
     }
     return self;
 }

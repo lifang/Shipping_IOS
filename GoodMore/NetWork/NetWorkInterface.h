@@ -68,6 +68,7 @@ static NSString *bindOerder_method= @"app/orders/bindOrder";
 
 //查看货单详情
 static NSString *orderDetail_method = @"app/orders/getInfo";
+static NSString *listDetail_method = @"app/orders/getMyOrderListDetail";
 
 //版本更新
 static NSString *updataApp_method = @"app/index/getVersion";
@@ -240,6 +241,11 @@ static NSString *getPortList_method = @"common/getPortList";
  loginId 登录ID
  */
 //货单详情
++(void)ListDetailWithID:(int)ID
+                 loginId:(int)loginId
+             shipOwnerId:(int)shipOwnerId
+                finished:(requestDidFinished)finish;
+
 +(void)OrderDetailWithID:(int)ID loginId:(int)loginId finished:(requestDidFinished)finish;
 
 
