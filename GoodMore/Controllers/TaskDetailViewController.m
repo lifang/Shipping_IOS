@@ -507,6 +507,8 @@
 -(void)sureBTN:(UIButton*)btn
 {
     _backView.hidden=YES;
+    [[NSNotificationCenter defaultCenter] postNotificationName:JiedanchenggongShipNotification object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:PushTomyShipNotification object:nil userInfo:nil];
 }
 
 //单船报价
@@ -554,8 +556,6 @@
                         _code=[object objectForKey:@"result"];
                         _shipPwd.text=[NSString stringWithFormat:@"组队密码:%@",_code];
                         [self changeStatus];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:JiedanchenggongShipNotification object:nil userInfo:nil];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:PushTomyShipNotification object:nil userInfo:nil];
                         
                     }else
                     {

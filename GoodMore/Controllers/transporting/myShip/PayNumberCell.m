@@ -55,6 +55,7 @@
         [self.contentView addSubview:_phoneNumLabel];
         
         _priceLabel = [[UILabel alloc]init];
+        _priceLabel.textAlignment = NSTextAlignmentCenter;
         _priceLabel.hidden = YES;
         _priceLabel.text = @"￥2.00";
         _priceLabel.font = [UIFont systemFontOfSize:13];
@@ -62,7 +63,7 @@
         
         UIView *line = [[UIView alloc]init];
         line.backgroundColor = kColor(201, 201, 201, 0.6);
-        line.frame = CGRectMake(K_MainWidth / 4 * 3.1, 20, 1, 40);
+        line.frame = CGRectMake(K_MainWidth / 4 * 2.8, 20, 1, 40);
         [self.contentView addSubview:line];
         
         _setBtn = [[UIButton alloc]init];
@@ -96,11 +97,11 @@
     
     _phoneNumLabel.frame = CGRectMake(CGRectGetMaxX(_weightLabel.frame) - 42, CGRectGetMaxY(_logistNameLabel.frame) - 8, 240, 20);
     
-    _priceLabel.frame = CGRectMake(K_MainWidth - 62, CGRectGetMaxY(_logistNameLabel.frame) - 35, 100, 30);
+    _priceLabel.frame = CGRectMake(K_MainWidth - 112, CGRectGetMaxY(_logistNameLabel.frame) - 35, 100, 30);
     
     _setBtn.frame = CGRectMake(K_MainWidth - 75, CGRectGetMaxY(_logistNameLabel.frame) - 20, 70, 20);
     
-    _resetBtn.frame = CGRectMake(K_MainWidth - 75, CGRectGetMaxY(_logistNameLabel.frame) - 10, 70, 20);
+    _resetBtn.frame = CGRectMake(K_MainWidth - 95, CGRectGetMaxY(_logistNameLabel.frame) - 10, 70, 20);
 }
 
 -(void)setClicked {

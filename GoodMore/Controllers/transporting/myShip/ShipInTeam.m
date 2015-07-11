@@ -45,8 +45,8 @@
         }else{
             _phone = @"-";
         }
-        if ([dict objectForKey:@"submitMoney"]) {
-            _submitMoney = [NSString stringWithFormat:@"%@",[dict objectForKey:@"submitMoney"]];
+        if ([dict objectForKey:@"quote"]) {
+            _submitMoney = [NSString stringWithFormat:@"%@",[dict objectForKey:@"quote"]];
         }else{
             _submitMoney = @"-";
         }

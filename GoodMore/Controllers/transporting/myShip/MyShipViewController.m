@@ -18,6 +18,7 @@
 #import "JoinShipController.h"
 #import "MyShipModel.h"
 #import "PayForShipController.h"
+#import "ShipInfoViewController.h"
 
 @interface MyShipViewController ()<TopButtonClickedDelegate,UITableViewDelegate,UITableViewDataSource,ShipDetailCellDelegate,UIAlertViewDelegate>
 
@@ -82,7 +83,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.tag = TableViewTypeTeam;
-    _tableView.frame = CGRectMake(0, 60, K_MainWidth, K_MainHeight - 60 * 3.2);
+    _tableView.frame = CGRectMake(0, 60, K_MainWidth, K_MainHeight - 60 * 2.2);
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
     _shipNoInTeamData = [[NSMutableArray alloc]init];
@@ -134,35 +135,38 @@
     [_headerView addSubview:_logisticCell];
     _tableView.tableHeaderView = _headerView;
  
-    UIView *footerV = [[UIView alloc]init];
-    footerV.frame = CGRectMake(0, CGRectGetMaxY(_tableView.frame), K_MainWidth, 72);
-    footerV.backgroundColor = [UIColor whiteColor];
-    
-    _dismissBtn = [[UIButton alloc]init];
-    [_dismissBtn setTitle:@"解散船队" forState:UIControlStateNormal];
-    [_dismissBtn addTarget:self action:@selector(dismissClicked) forControlEvents:UIControlEventTouchUpInside];
-    _dismissBtn.frame = CGRectMake(20, 22, K_MainWidth / 2.5, 40);
-    [_dismissBtn setBackgroundImage:[UIImage imageNamed:@"lianglan"] forState:UIControlStateNormal];
-    CALayer *readBtnLayer1 = [_dismissBtn layer];
-    [readBtnLayer1 setMasksToBounds:YES];
-    [readBtnLayer1 setCornerRadius:3.0];
-//    [readBtnLayer1 setBorderWidth:1.0];
-//    [readBtnLayer1 setBorderColor:[kColor(163, 163, 163, 1.0) CGColor]];
-    [footerV addSubview:_dismissBtn];
-    
-    _grabBtn = [[UIButton alloc]init];
-    [_grabBtn setTitle:@"抢单" forState:UIControlStateNormal];
-    [_grabBtn addTarget:self action:@selector(grabClicked) forControlEvents:UIControlEventTouchUpInside];
-    _grabBtn.frame = CGRectMake(CGRectGetMaxX(_dismissBtn.frame) + 25, 22, K_MainWidth / 2.5, 40);
-    [_grabBtn setBackgroundImage:[UIImage imageNamed:@"lanse"] forState:UIControlStateNormal];
-    CALayer *readBtnLayer2 = [_grabBtn layer];
-    [readBtnLayer2 setMasksToBounds:YES];
-    [readBtnLayer2 setCornerRadius:3.0];
-    //    [readBtnLayer1 setBorderWidth:1.0];
-    //    [readBtnLayer1 setBorderColor:[kColor(163, 163, 163, 1.0) CGColor]];
-    [footerV addSubview:_grabBtn];
-    
-    [self.view addSubview:footerV];
+    if ([_myshipModel.isTeamLeader isEqualToString:@"1"]) {
+        
+        _tableView.frame = CGRectMake(0, 60, K_MainWidth, K_MainHeight - 60 * 3.2);
+        UIView *footerV = [[UIView alloc]init];
+        footerV.frame = CGRectMake(0, CGRectGetMaxY(_tableView.frame), K_MainWidth, 72);
+        footerV.backgroundColor = [UIColor whiteColor];
+        _dismissBtn = [[UIButton alloc]init];
+        [_dismissBtn setTitle:@"解散船队" forState:UIControlStateNormal];
+        [_dismissBtn addTarget:self action:@selector(dismissClicked) forControlEvents:UIControlEventTouchUpInside];
+        _dismissBtn.frame = CGRectMake(20, 22, K_MainWidth / 2.5, 40);
+        [_dismissBtn setBackgroundImage:[UIImage imageNamed:@"lianglan"] forState:UIControlStateNormal];
+        CALayer *readBtnLayer1 = [_dismissBtn layer];
+        [readBtnLayer1 setMasksToBounds:YES];
+        [readBtnLayer1 setCornerRadius:3.0];
+        //    [readBtnLayer1 setBorderWidth:1.0];
+        //    [readBtnLayer1 setBorderColor:[kColor(163, 163, 163, 1.0) CGColor]];
+        [footerV addSubview:_dismissBtn];
+        
+        _grabBtn = [[UIButton alloc]init];
+        [_grabBtn setTitle:@"抢单" forState:UIControlStateNormal];
+        [_grabBtn addTarget:self action:@selector(grabClicked) forControlEvents:UIControlEventTouchUpInside];
+        _grabBtn.frame = CGRectMake(CGRectGetMaxX(_dismissBtn.frame) + 25, 22, K_MainWidth / 2.5, 40);
+        [_grabBtn setBackgroundImage:[UIImage imageNamed:@"lanse"] forState:UIControlStateNormal];
+        CALayer *readBtnLayer2 = [_grabBtn layer];
+        [readBtnLayer2 setMasksToBounds:YES];
+        [readBtnLayer2 setCornerRadius:3.0];
+        //    [readBtnLayer1 setBorderWidth:1.0];
+        //    [readBtnLayer1 setBorderColor:[kColor(163, 163, 163, 1.0) CGColor]];
+        [footerV addSubview:_grabBtn];
+        
+        [self.view addSubview:footerV];
+    }
 }
 
 #pragma mark -- TopBtnDelegate
@@ -583,14 +587,27 @@
     }
     NSLog(@"解散船队");
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"确定要解散船队吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+    alert.tag = 111;
     alert.delegate = self;
     [alert show];
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex != alertView.cancelButtonIndex) {
-        [self dissmissShipRequest];
+    if (alertView.tag == 111) {
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            [self dissmissShipRequest];
+        }
     }
+    
+    if (alertView.tag == 222) {
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            ShipInfoViewController *shipInfo=[[ShipInfoViewController alloc]init];
+            shipInfo.type=@"isPush";
+            shipInfo.hidesBottomBarWhenPushed=YES;
+            [self.navigationController pushViewController:shipInfo animated:YES];
+        }
+    }
+    
 }
 
 -(void)grabClicked {
@@ -630,13 +647,24 @@
 
 -(void)joinInShipTeam {
     NSLog(@"加入船队");
-    JoinShipController *joinVC = [[JoinShipController alloc]init];
-    joinVC.view.frame = CGRectMake(0, 0, 80, 80);
-    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:joinVC];
-    nav.navigationBarHidden = YES;
-    nav.modalPresentationStyle = UIModalPresentationCustom;
-    nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self presentViewController:nav animated:YES completion:nil];
+    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+    NSString *shipName=[userDefaults objectForKey:@"shipName"];
+    NSLog(@"%@",shipName);
+    if (shipName) {
+        JoinShipController *joinVC = [[JoinShipController alloc]init];
+        joinVC.view.frame = CGRectMake(0, 0, 80, 80);
+        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:joinVC];
+        nav.navigationBarHidden = YES;
+        nav.modalPresentationStyle = UIModalPresentationCustom;
+        nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        [self presentViewController:nav animated:YES completion:nil];
+        
+    }else {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"您的船队信息不完全，请先完善信息！" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
+        alert.tag = 222;
+        alert.delegate = self;
+        [alert show];
+    }
 }
 
 //-(void)pushToPayForShip:(NSNotification *)notification {

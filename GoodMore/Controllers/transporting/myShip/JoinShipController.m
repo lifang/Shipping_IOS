@@ -37,6 +37,7 @@
     [whiteView addSubview:label1];
     
     _passwordField = [[UITextField alloc]init];
+    _passwordField.textAlignment = NSTextAlignmentCenter;
     _passwordField.font = [UIFont systemFontOfSize:13];
     _passwordField.backgroundColor = [UIColor clearColor];
     _passwordField.frame = CGRectMake(label1.frame.origin.x + 20, CGRectGetMaxY(label1.frame) + 5, whiteView.frame.size.width / 1.5, 30);
@@ -59,51 +60,67 @@
     label2.frame = CGRectMake(10, CGRectGetMaxY(_passwordField.frame) + 5, 100, 10);
     [whiteView addSubview:label2];
     
-    UIButton *reduceBtn = [[UIButton alloc]init];
-    reduceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    [reduceBtn addTarget:self action:@selector(reduceClicked) forControlEvents:UIControlEventTouchUpInside];
-    [reduceBtn setTitle:@"-" forState:UIControlStateNormal];
-    [reduceBtn setBackgroundColor:[UIColor clearColor]];
-    [reduceBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    CALayer *readBtnLayer2 = [reduceBtn layer];
-    [readBtnLayer2 setMasksToBounds:YES];
-    [readBtnLayer2 setCornerRadius:2.0];
-    [readBtnLayer2 setBorderWidth:1.0];
-    [readBtnLayer2 setBorderColor:kColor(188, 188, 188, 0.7).CGColor];
-    reduceBtn.frame = CGRectMake(_passwordField.frame.origin.x, CGRectGetMaxY(label2.frame) + 10, _passwordField.frame.size.width / 4, 30);
-    [whiteView addSubview:reduceBtn];
-    
     _moneyField = [[UITextField alloc]init];
-    _moneyField.userInteractionEnabled = NO;
     _moneyField.textAlignment = NSTextAlignmentCenter;
-    _moneyField.font = [UIFont systemFontOfSize:12];
-    _moneyField.text = @"1.00";
-    CALayer *readBtnLayer3 = [_moneyField layer];
-    [readBtnLayer3 setMasksToBounds:YES];
-    [readBtnLayer3 setCornerRadius:2.0];
-    [readBtnLayer3 setBorderWidth:1.0];
-    [readBtnLayer3 setBorderColor:kColor(188, 188, 188, 0.7).CGColor];
-    _moneyField.backgroundColor = kColor(188, 188, 188, 0.7);
-    _moneyField.frame = CGRectMake(CGRectGetMaxX(reduceBtn.frame) + 5, reduceBtn.frame.origin.y, reduceBtn.frame.size.width * 1.7, 30);
+    _moneyField.font = [UIFont systemFontOfSize:13];
+    _moneyField.backgroundColor = [UIColor clearColor];
+    _moneyField.frame = CGRectMake(label1.frame.origin.x + 20, CGRectGetMaxY(label2.frame) + 5, whiteView.frame.size.width / 1.5, 30);
+    _moneyField.leftViewMode = UITextFieldViewModeAlways;
+    UIView *v2 = [[UIView alloc]init];
+    v2.frame = CGRectMake(0, 0, 10, 30);
+    _moneyField.leftView = v2;
+    CALayer *readBtnLayer1 = [_moneyField layer];
+    [readBtnLayer1 setMasksToBounds:YES];
+    [readBtnLayer1 setCornerRadius:4.0];
+    [readBtnLayer1 setBorderWidth:1.0];
+    [readBtnLayer1 setBorderColor:kColor(188, 188, 188, 0.7).CGColor];
     [whiteView addSubview:_moneyField];
     
-    UIButton *addBtn = [[UIButton alloc]init];
-    addBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    [addBtn addTarget:self action:@selector(addBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [addBtn setTitle:@"+" forState:UIControlStateNormal];
-    [addBtn setBackgroundColor:[UIColor clearColor]];
-    [addBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    CALayer *readBtnLayer4 = [addBtn layer];
-    [readBtnLayer4 setMasksToBounds:YES];
-    [readBtnLayer4 setCornerRadius:2.0];
-    [readBtnLayer4 setBorderWidth:1.0];
-    [readBtnLayer4 setBorderColor:kColor(188, 188, 188, 0.7).CGColor];
-    addBtn.frame = CGRectMake(CGRectGetMaxX(_moneyField.frame) + 5, CGRectGetMaxY(label2.frame) + 10, _passwordField.frame.size.width / 4, 30);
-    [whiteView addSubview:addBtn];
+//    UIButton *reduceBtn = [[UIButton alloc]init];
+//    reduceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+//    [reduceBtn addTarget:self action:@selector(reduceClicked) forControlEvents:UIControlEventTouchUpInside];
+//    [reduceBtn setTitle:@"-" forState:UIControlStateNormal];
+//    [reduceBtn setBackgroundColor:[UIColor clearColor]];
+//    [reduceBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    CALayer *readBtnLayer2 = [reduceBtn layer];
+//    [readBtnLayer2 setMasksToBounds:YES];
+//    [readBtnLayer2 setCornerRadius:2.0];
+//    [readBtnLayer2 setBorderWidth:1.0];
+//    [readBtnLayer2 setBorderColor:kColor(188, 188, 188, 0.7).CGColor];
+//    reduceBtn.frame = CGRectMake(_passwordField.frame.origin.x, CGRectGetMaxY(label2.frame) + 10, _passwordField.frame.size.width / 4, 30);
+//    [whiteView addSubview:reduceBtn];
+//    
+//    _moneyField = [[UITextField alloc]init];
+//    _moneyField.userInteractionEnabled = NO;
+//    _moneyField.textAlignment = NSTextAlignmentCenter;
+//    _moneyField.font = [UIFont systemFontOfSize:12];
+//    _moneyField.text = @"1.00";
+//    CALayer *readBtnLayer3 = [_moneyField layer];
+//    [readBtnLayer3 setMasksToBounds:YES];
+//    [readBtnLayer3 setCornerRadius:2.0];
+//    [readBtnLayer3 setBorderWidth:1.0];
+//    [readBtnLayer3 setBorderColor:kColor(188, 188, 188, 0.7).CGColor];
+//    _moneyField.backgroundColor = kColor(188, 188, 188, 0.7);
+//    _moneyField.frame = CGRectMake(CGRectGetMaxX(reduceBtn.frame) + 5, reduceBtn.frame.origin.y, reduceBtn.frame.size.width * 1.7, 30);
+//    [whiteView addSubview:_moneyField];
+//    
+//    UIButton *addBtn = [[UIButton alloc]init];
+//    addBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+//    [addBtn addTarget:self action:@selector(addBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+//    [addBtn setTitle:@"+" forState:UIControlStateNormal];
+//    [addBtn setBackgroundColor:[UIColor clearColor]];
+//    [addBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    CALayer *readBtnLayer4 = [addBtn layer];
+//    [readBtnLayer4 setMasksToBounds:YES];
+//    [readBtnLayer4 setCornerRadius:2.0];
+//    [readBtnLayer4 setBorderWidth:1.0];
+//    [readBtnLayer4 setBorderColor:kColor(188, 188, 188, 0.7).CGColor];
+//    addBtn.frame = CGRectMake(CGRectGetMaxX(_moneyField.frame) + 5, CGRectGetMaxY(label2.frame) + 10, _passwordField.frame.size.width / 4, 30);
+//    [whiteView addSubview:addBtn];
     
     UIView *line = [[UIView alloc]init];
     line.backgroundColor = kColor(188, 188, 188, 0.7);
-    line.frame = CGRectMake(0, CGRectGetMaxY(addBtn.frame) + 30, whiteView.frame.size.width, 1);
+    line.frame = CGRectMake(0, CGRectGetMaxY(_moneyField.frame) + 30, whiteView.frame.size.width, 1);
     [whiteView addSubview:line];
     
     UIView *line2 = [[UIView alloc]init];
@@ -161,7 +178,7 @@
     NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
     int shipOwerId = [[userDefaults objectForKey:@"shipOwnerId"] intValue];
     int loginId = [[userDefaults objectForKey:@"loginId"] intValue];
-    [NetWorkInterface joinInTeamWithLoginId:loginId Code:_passwordField.text ShipOwnID:shipOwerId Quote:_money finished:^(BOOL success, NSData *response) {
+    [NetWorkInterface joinInTeamWithLoginId:loginId Code:_passwordField.text ShipOwnID:shipOwerId Quote:[_moneyField.text intValue] finished:^(BOOL success, NSData *response) {
         hud.customView = [[UIImageView alloc] init];
         hud.mode = MBProgressHUDModeCustomView;
         [hud hide:YES afterDelay:0.3f];
