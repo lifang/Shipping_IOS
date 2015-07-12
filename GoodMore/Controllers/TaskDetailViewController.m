@@ -196,7 +196,7 @@
     [headView addSubview:weight];
 
     UILabel *goodsPrice=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20, 120, 20)];
-    goodsPrice.text=@"竞价";
+    goodsPrice.text=@"报价";
     goodsPrice.font=[UIFont boldSystemFontOfSize:18];
     [headView addSubview:goodsPrice];
     
@@ -363,6 +363,8 @@
     
     UIView *whiteView=[[UIView alloc]initWithFrame:CGRectMake((width-width*0.8)/2, 100, width*0.8, height*0.3)];
     whiteView.backgroundColor=[UIColor whiteColor];
+    whiteView.layer.cornerRadius=6;
+    whiteView.layer.masksToBounds=YES;
     [_backView addSubview:whiteView];
     
     UILabel *title=[[UILabel alloc]init];
@@ -386,6 +388,10 @@
     remark.textColor=[self colorWithHexString:@"757474"];
     [whiteView addSubview:remark];
     
+    UIView *line=[[UIView alloc]initWithFrame:CGRectMake(0, height*0.3-bottomSpace-30, whiteView.bounds.size.width, 0.5)];
+    line.backgroundColor=kColor(201, 201, 201, 1);
+    [whiteView addSubview:line];
+    
     UIButton *sureBTN=[UIButton buttonWithType:UIButtonTypeCustom];
     sureBTN.frame=CGRectMake((width*0.8-60)/2, height*0.3-bottomSpace-30, 60, 30);
     sureBTN.titleLabel.font=[UIFont systemFontOfSize:16];
@@ -408,6 +414,9 @@
     [self.view addSubview:_priceView];
     
     UIView *whiteView=[[UIView alloc]initWithFrame:CGRectMake((width-width*0.8)/2, 100, width*0.8, height*0.3)];
+    whiteView.layer.cornerRadius=6;
+    whiteView.layer.masksToBounds=YES;
+
     whiteView.backgroundColor=[UIColor whiteColor];
     [_priceView addSubview:whiteView];
     
@@ -425,7 +434,7 @@
     [reduceBtn addTarget:self action:@selector(reduce:) forControlEvents:UIControlEventTouchUpInside];
     [whiteView addSubview:reduceBtn];
     
-    _priceNumber=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace*2+50+10, (whiteView.bounds.size.height-30)/2, whiteView.bounds.size.width-leftSpace*2*2-50*2-10*2, 30)];
+    _priceNumber=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace*2+50+10, (whiteView.bounds.size.height-50)/2, whiteView.bounds.size.width-leftSpace*2*2-50*2-10*2, 50)];
     _priceNumber.backgroundColor=kColor(231, 230, 230, 1);
     double pay=[_businessOrder.maxPay doubleValue];
     _priceNumber.text=[NSString stringWithFormat:@"%.2f",pay];
@@ -441,6 +450,10 @@
     [whiteView addSubview:addBtn];
 
 
+    UIView *line=[[UIView alloc]initWithFrame:CGRectMake(0, height*0.3-bottomSpace-30, whiteView.bounds.size.width, 0.5)];
+    line.backgroundColor=kColor(201, 201, 201, 1);
+    [whiteView addSubview:line];
+    
     UIButton *sureBTN=[UIButton buttonWithType:UIButtonTypeCustom];
     sureBTN.frame=CGRectMake((width*0.8-60)/2, height*0.3-bottomSpace-30, 60, 30);
     sureBTN.titleLabel.font=[UIFont systemFontOfSize:16];
@@ -556,7 +569,7 @@
     }else
     {
         //信息不完全
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"信息不完全,去完善船舶信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"请去完善船舶信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
         alert.tag=1;
         [alert show];
 
@@ -623,7 +636,7 @@
     }else
     {
         //信息不完全
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"信息不完全,去完善船舶信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"请去完善船舶信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
         [alert show];
 
     }

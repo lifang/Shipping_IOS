@@ -22,9 +22,9 @@
 -(void)initUI
 {
     self.backgroundColor=[UIColor whiteColor];
-    _message=[[UILabel alloc]initWithFrame:CGRectMake(40, 200, kScreenWidth-80, 30)];
+    _message=[[UILabel alloc]initWithFrame:CGRectMake(40, 160, kScreenWidth-80, 30)];
     _message.textAlignment=NSTextAlignmentCenter;
-    _message.backgroundColor=[UIColor lightGrayColor];
+    _message.textColor=[UIColor blackColor];
     [self addSubview:_message];
 }
 @end

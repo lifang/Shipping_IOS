@@ -42,6 +42,7 @@
 @property(nonatomic,strong)NSMutableArray *totalLastTime;
 
 @property(nonatomic,assign)int portID;
+@property(nonatomic,strong)PromptView *promtView;
 @end
 
 @implementation TaskViewController
@@ -388,8 +389,18 @@
         [_ordersArray addObject:order];
     }];
     
-  
+    if (_ordersArray.count==0)
+    {
+        
+        _promtView=[[PromptView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+        _promtView.message.text=@"亲,没有任务^.^";
+        [self.view addSubview:_promtView];
+    }else
+    {
+        [_promtView removeFromSuperview];
         [_tableView reloadData];
+    }
+    
     
 
     

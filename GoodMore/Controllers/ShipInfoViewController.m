@@ -164,6 +164,9 @@
     UIView *backView=[[UIView alloc]initWithFrame:cell.frame];
     cell.selectedBackgroundView=backView;
     cell.selectedBackgroundView.backgroundColor=[UIColor clearColor];
+    [cell setBackgroundView:[[UIView alloc] init]];          //取消边框线
+    cell.backgroundColor = [UIColor clearColor];
+
     
     cell.textLabel.text=_staticData[indexPath.row];
     
@@ -295,12 +298,20 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (indexPath.row==5)
-//    {
-//        [self showImageOption];
-//    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+//图片
 -(void)showImageOption
 {
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@""
