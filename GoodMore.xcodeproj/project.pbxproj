@@ -66,6 +66,7 @@
 		939621531B186D0300CB730B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 939621521B186D0300CB730B /* MBProgressHUD.m */; };
 		93A6588A1B4E736D005AADA9 /* MultipleDeleteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A658891B4E736D005AADA9 /* MultipleDeleteCell.m */; };
 		93A658941B4E77AE005AADA9 /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A658931B4E77AE005AADA9 /* MessageViewController.m */; };
+		93B77DC91B522551009E5F8F /* PromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B77DC81B522551009E5F8F /* PromptView.m */; };
 		93B84E291B1ED21200EF2DB4 /* MytaskModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B84E281B1ED21200EF2DB4 /* MytaskModel.m */; };
 		93B84E2F1B1EE34C00EF2DB4 /* ShipRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B84E2E1B1EE34C00EF2DB4 /* ShipRelation.m */; };
 		93B84E321B1EE37000EF2DB4 /* BusinessOrders.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B84E311B1EE37000EF2DB4 /* BusinessOrders.m */; };
@@ -103,7 +104,6 @@
 		93E6EC721B4BEF6B0082E990 /* MYInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6EC711B4BEF6B0082E990 /* MYInfoView.m */; };
 		93F08AE71B4F5E1600473237 /* MessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F08AE61B4F5E1600473237 /* MessageModel.m */; };
 		93F08AEA1B4F61D200473237 /* MessageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F08AE91B4F61D200473237 /* MessageDetailViewController.m */; };
-		93F08AEE1B4FEF8D00473237 /* MZTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F08AED1B4FEF8D00473237 /* MZTimerLabel.m */; };
 		93F673821B1C1E5900A4E34E /* TaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F673811B1C1E5900A4E34E /* TaskCell.m */; };
 		93F673851B1C6D3D00A4E34E /* TaskDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F673841B1C6D3D00A4E34E /* TaskDetailViewController.m */; };
 /* End PBXBuildFile section */
@@ -237,6 +237,8 @@
 		93A658891B4E736D005AADA9 /* MultipleDeleteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipleDeleteCell.m; sourceTree = "<group>"; };
 		93A658921B4E77AE005AADA9 /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
 		93A658931B4E77AE005AADA9 /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
+		93B77DC71B522551009E5F8F /* PromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PromptView.h; sourceTree = "<group>"; };
+		93B77DC81B522551009E5F8F /* PromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PromptView.m; sourceTree = "<group>"; };
 		93B84E271B1ED21200EF2DB4 /* MytaskModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MytaskModel.h; sourceTree = "<group>"; };
 		93B84E281B1ED21200EF2DB4 /* MytaskModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MytaskModel.m; sourceTree = "<group>"; };
 		93B84E2D1B1EE34C00EF2DB4 /* ShipRelation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipRelation.h; sourceTree = "<group>"; };
@@ -313,8 +315,6 @@
 		93F08AE61B4F5E1600473237 /* MessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageModel.m; sourceTree = "<group>"; };
 		93F08AE81B4F61D200473237 /* MessageDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageDetailViewController.h; sourceTree = "<group>"; };
 		93F08AE91B4F61D200473237 /* MessageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageDetailViewController.m; sourceTree = "<group>"; };
-		93F08AEC1B4FEF8D00473237 /* MZTimerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZTimerLabel.h; sourceTree = "<group>"; };
-		93F08AED1B4FEF8D00473237 /* MZTimerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZTimerLabel.m; sourceTree = "<group>"; };
 		93F673801B1C1E5900A4E34E /* TaskCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskCell.h; sourceTree = "<group>"; };
 		93F673811B1C1E5900A4E34E /* TaskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskCell.m; sourceTree = "<group>"; };
 		93F673831B1C6D3D00A4E34E /* TaskDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailViewController.h; sourceTree = "<group>"; };
@@ -591,7 +591,6 @@
 				93C89A701B1D3FD9008DF209 /* CommonViewController.h */,
 				93C89A711B1D3FD9008DF209 /* CommonViewController.m */,
 				93C4CA311B4CC15200FE23DE /* MMDrawerController */,
-				93F08AEB1B4FEF8D00473237 /* ZMTimerLabel */,
 				939621501B186D0300CB730B /* HUD */,
 				93C89A7A1B1DAC47008DF209 /* Refresh */,
 				93C89A731B1D8938008DF209 /* Model */,
@@ -668,6 +667,8 @@
 				93E6EC711B4BEF6B0082E990 /* MYInfoView.m */,
 				93C4CA421B4CE27600FE23DE /* LocationButton.h */,
 				93C4CA431B4CE27600FE23DE /* LocationButton.m */,
+				93B77DC71B522551009E5F8F /* PromptView.h */,
+				93B77DC81B522551009E5F8F /* PromptView.m */,
 			);
 			path = MY__UI;
 			sourceTree = "<group>";
@@ -684,15 +685,6 @@
 				93E6EC6E1B4BEDEA0082E990 /* TransportingViewController.m */,
 			);
 			path = transporting;
-			sourceTree = "<group>";
-		};
-		93F08AEB1B4FEF8D00473237 /* ZMTimerLabel */ = {
-			isa = PBXGroup;
-			children = (
-				93F08AEC1B4FEF8D00473237 /* MZTimerLabel.h */,
-				93F08AED1B4FEF8D00473237 /* MZTimerLabel.m */,
-			);
-			path = ZMTimerLabel;
 			sourceTree = "<group>";
 		};
 		93F6737F1B1C1E1F00A4E34E /* Cell */ = {
@@ -878,6 +870,7 @@
 				93C123A11B3954DE002BB29C /* CityHandle.m in Sources */,
 				93C4CA471B4CEBB500FE23DE /* SelectPortViewController.m in Sources */,
 				9396213F1B18563A00CB730B /* MainViewController.m in Sources */,
+				93B77DC91B522551009E5F8F /* PromptView.m in Sources */,
 				9342EE9F1B1F1F95000BF13F /* SetNewPWDViewController.m in Sources */,
 				93C4CA3D1B4CC15200FE23DE /* MMDrawerVisualState.m in Sources */,
 				93E6EC721B4BEF6B0082E990 /* MYInfoView.m in Sources */,
@@ -893,7 +886,6 @@
 				9302B59B1B3AC2F300596A80 /* GoodsTransDetailViewController.m in Sources */,
 				1A2B6FF61B4CF0B8002FFD96 /* TopButton.m in Sources */,
 				935C4FBA1B282ED5004F292B /* AvaliblePayModel.m in Sources */,
-				93F08AEE1B4FEF8D00473237 /* MZTimerLabel.m in Sources */,
 				9386339D1B4110F50092F05E /* AddCollectionViewCell.m in Sources */,
 				935C4FB41B281132004F292B /* WalletCell.m in Sources */,
 				1A2B6FFC1B4D2314002FFD96 /* ShipDetailCell.m in Sources */,

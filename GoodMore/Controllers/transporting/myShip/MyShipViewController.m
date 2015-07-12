@@ -174,6 +174,7 @@
     switch (btnType) {
         case BtnTypeOne:
             NSLog(@"点击了第1个按钮！");
+            [self loadShipDetail];
             [_historyVC.view removeFromSuperview];
             break;
         case BtnTypeTwo:

@@ -504,15 +504,15 @@
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-//    if (textField.tag==6 || textField.tag==7 || textField.tag==8 || textField.tag==9) {
-//        _tableView.center=CGPointMake(_tableView.center.x, _tableView.center.y-100);
-//    }
+    if (textField.tag==4 || textField.tag==5 || textField.tag==6) {
+       _tableView.contentOffset=CGPointMake(0, 100);
+    }
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-//    if (textField.tag==6 || textField.tag==7 || textField.tag==8 || textField.tag==9) {
-//        _tableView.center=CGPointMake(_tableView.center.x, _tableView.center.y+100);
-//    }
+    if (textField.tag==4 || textField.tag==5 || textField.tag==6) {
+         _tableView.contentOffset=CGPointZero;
+    }
 }
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {

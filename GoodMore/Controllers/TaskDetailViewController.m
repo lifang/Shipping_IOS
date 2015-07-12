@@ -163,11 +163,11 @@
     endTime.font=[UIFont systemFontOfSize:12];
     [view2 addSubview:endTime];
     
-    UILabel *deposit=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2, 0, kScreenWidth/2, 30)];
-    deposit.text=@"保证金:200.00元";
-    deposit.textAlignment=NSTextAlignmentCenter;
-    deposit.font=[UIFont systemFontOfSize:12];
-    [view2 addSubview:deposit];
+//    UILabel *deposit=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2, 0, kScreenWidth/2, 30)];
+//    deposit.text=@"保证金:200.00元";
+//    deposit.textAlignment=NSTextAlignmentCenter;
+//    deposit.font=[UIFont systemFontOfSize:12];
+//    [view2 addSubview:deposit];
     
     //topSpace+30+10+20+5+20+10+30+10
     UILabel *goods=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10, kScreenWidth/2, 20)];
@@ -182,7 +182,7 @@
     
     UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5, 120, 20)];
     name.textColor=kGrayColor;
-    name.text=_businessOrder.companyName;
+    name.text=_businessOrder.cargos;
     [headView addSubview:name];
     
     UILabel *goodsWeight=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5, 120, 20)];
@@ -380,7 +380,7 @@
     [whiteView addSubview:_shipPwd];
     
     UILabel *remark=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+30, whiteView.bounds.size.width-leftSpace*2, 30)];
-    remark.text=@"在\"我的任务\"中可以管理船队";
+    remark.text=@"在\"我的船队\"中可以管理船队";
     remark.textAlignment=NSTextAlignmentCenter;
     remark.font=[UIFont systemFontOfSize:14];
     remark.textColor=[self colorWithHexString:@"757474"];
@@ -420,21 +420,22 @@
     [whiteView addSubview:title];
     
     UIButton *reduceBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    reduceBtn.frame=CGRectMake(leftSpace*2, (whiteView.bounds.size.height-34)/2, 34, 34);
+    reduceBtn.frame=CGRectMake(leftSpace*2, (whiteView.bounds.size.height-50)/2, 50, 50);
     [reduceBtn setBackgroundImage:kImageName(@"reduceBtn.png") forState:UIControlStateNormal];
     [reduceBtn addTarget:self action:@selector(reduce:) forControlEvents:UIControlEventTouchUpInside];
     [whiteView addSubview:reduceBtn];
     
-    _priceNumber=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace*2+34+10, (whiteView.bounds.size.height-30)/2, whiteView.bounds.size.width-leftSpace*2*2-34*2-10*2, 30)];
+    _priceNumber=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace*2+50+10, (whiteView.bounds.size.height-30)/2, whiteView.bounds.size.width-leftSpace*2*2-50*2-10*2, 30)];
     _priceNumber.backgroundColor=kColor(231, 230, 230, 1);
     double pay=[_businessOrder.maxPay doubleValue];
     _priceNumber.text=[NSString stringWithFormat:@"%.2f",pay];
+    _price=[_businessOrder.maxPay doubleValue];
     _priceNumber.font=[UIFont systemFontOfSize:14];
     _priceNumber.textAlignment=NSTextAlignmentCenter;
     [whiteView addSubview:_priceNumber];
     
     UIButton *addBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    addBtn.frame=CGRectMake(whiteView.bounds.size.width-leftSpace*2-34, (whiteView.bounds.size.height-34)/2, 34, 34);
+    addBtn.frame=CGRectMake(whiteView.bounds.size.width-leftSpace*2-50, (whiteView.bounds.size.height-50)/2, 50, 50);
     [addBtn setBackgroundImage:kImageName(@"addBtn.png") forState:UIControlStateNormal];
     [addBtn addTarget:self action:@selector(add:) forControlEvents:UIControlEventTouchUpInside];
     [whiteView addSubview:addBtn];

@@ -22,7 +22,7 @@
 #import "LocationButton.h"
 #import "SelectPortViewController.h"
 #import "RightViewController.h"
-
+#import "PromptView.h"
 
 @interface TaskViewController ()<UITableViewDataSource,UITableViewDelegate,RefreshDelegate,UITextFieldDelegate,UIAlertViewDelegate,SelectPortDelegate>
 {
@@ -30,7 +30,7 @@
     UIView *_backView;
     UITextField *_pwd;
     NSTimer *_timer;
-    MZTimerLabel *timerLabel;
+    
 }
 @property(nonatomic,strong)NSMutableArray *ordersArray;
 @property (nonatomic, strong) RefreshView *topRefreshView;
@@ -327,19 +327,25 @@
                     hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
                 }
                 else if ([errorCode intValue] == RequestSuccess) {
-                    if (!isMore) {
+                    
+                    if (!isMore)
+                    {
                         [_ordersArray removeAllObjects];
                     }
                     id list = [[object objectForKey:@"result"] objectForKey:@"content"];
-                    if ([list isKindOfClass:[NSArray class]] && [list count] > 0) {
+                    if ([list isKindOfClass:[NSArray class]] && [list count] > 0)
+                    {
                         //有数据
                         self.page++;
                         [hud hide:YES];
                     }
-                    else {
+                    else
+                    {
                         //无数据
                         hud.labelText = @"没有更多数据了...";
                     }
+
+                    
                     [self parsePortListWithDictionary:object];
                 }
             }
@@ -368,7 +374,7 @@
     NSDictionary *result=[dic objectForKey:@"result"];
     NSArray *content=[result objectForKey:@"content"];
     
-    [_totalLastTime removeAllObjects];
+    //[_totalLastTime removeAllObjects];
     
     [content enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL *stop) {
         
@@ -382,9 +388,11 @@
         [_ordersArray addObject:order];
     }];
     
-   
+  
+        [_tableView reloadData];
+    
 
-    [_tableView reloadData];
+    
 }
 -(int)getTimeChaWithString:(NSString*)str
 {
@@ -469,7 +477,9 @@
     return YES;
 }
 
-#pragma mark ------ RefreshDelegate-----------------
+
+
+#pragma mark - Refresh
 
 - (void)refreshViewReloadData {
     _reloading = YES;
@@ -554,8 +564,8 @@
 //下拉刷新
 - (void)pullDownToLoadData {
     
-    [_totalLastTime removeAllObjects];
-    NSLog(@"======刷新----%lu---",(unsigned long)_totalLastTime.count);
+    //[_totalLastTime removeAllObjects];
+    
     [self firstLoadData];
 }
 

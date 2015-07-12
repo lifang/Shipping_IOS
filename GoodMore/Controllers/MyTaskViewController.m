@@ -21,7 +21,7 @@
 
 #import "PayFreightViewController.h"
 
-@interface MyTaskViewController ()<UITableViewDataSource,UITableViewDelegate,RefreshDelegate,MYViewDelegate>
+@interface MyTaskViewController ()<RefreshDelegate,MYViewDelegate>
 {
     UIButton *_SelectBtn;
     UITableView *_tableView;

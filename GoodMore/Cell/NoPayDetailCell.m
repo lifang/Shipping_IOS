@@ -23,8 +23,8 @@
 }
 -(void)initUI
 {
-    CGFloat leftSpace=10;
-    CGFloat width=(kScreenWidth-20)/4;
+    CGFloat leftSpace=0;
+    CGFloat width=(kScreenWidth-leftSpace*2)/4;
     _date=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, 0, width, self.bounds.size.height)];
     _date.font=[UIFont systemFontOfSize:14];
     [self.contentView addSubview:_date];

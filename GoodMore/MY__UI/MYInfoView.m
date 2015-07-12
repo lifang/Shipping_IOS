@@ -21,7 +21,7 @@
 }
 -(void)initData
 {
-    _data=[[NSArray alloc]initWithObjects:@"我的资料",@"船舶情况",@"我的钱包",@"我的消息",@"退出登录", nil];
+    _data=[[NSArray alloc]initWithObjects:@"我的资料",@"船舶情况",@"我的钱包",@"退出登录", nil];
 }
 -(void)initUI
 {
@@ -54,16 +54,15 @@
     _phone.font=[UIFont systemFontOfSize:11];
     [headView addSubview:_phone];
     
-    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(10, topSpace+40+20+20, (self.bounds.size.width-20)/2, 20)];
+    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(20, topSpace+40+20+20, self.bounds.size.width-40, 20)];
     label.text=@"可提现金额:";
-    label.textAlignment=NSTextAlignmentRight;
+    label.textAlignment=NSTextAlignmentCenter;
     label.textColor=[UIColor whiteColor];
     label.font=[UIFont systemFontOfSize:11];
     [headView addSubview:label];
     
-    _cash=[[UILabel alloc]initWithFrame:CGRectMake(10+(self.bounds.size.width-20)/2, topSpace+40+20+20, self.bounds.size.width-40, 20)];
+    _cash=[[UILabel alloc]initWithFrame:CGRectMake(20, topSpace+40+20+20+20, self.bounds.size.width-40, 20)];
     _cash.textAlignment=NSTextAlignmentCenter;
-    _cash.textAlignment=NSTextAlignmentLeft;
     _cash.font=[UIFont systemFontOfSize:11];
     [headView addSubview:_cash];
     

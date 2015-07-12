@@ -39,12 +39,12 @@
         
         UIView *leftLine = [[UIView alloc]init];
         leftLine.backgroundColor = kColor(213, 217, 218, 1.0);
-        leftLine.frame = CGRectMake(10, 47, 1, 160);
+        leftLine.frame = CGRectMake(10, 47, 1, 158);
         [self.contentView addSubview:leftLine];
         
         UIView *rightLine = [[UIView alloc]init];
         rightLine.backgroundColor = kColor(213, 217, 218, 1.0);
-        rightLine.frame = CGRectMake(K_MainWidth - 11, 47, 1, 160);
+        rightLine.frame = CGRectMake(K_MainWidth - 11, 47, 1, 158);
         [self.contentView addSubview:rightLine];
         
         _logistLogo = [[UIImageView alloc]init];

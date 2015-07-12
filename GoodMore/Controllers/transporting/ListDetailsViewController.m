@@ -65,7 +65,7 @@
     int loginId=[[userDefault objectForKey:@"loginId"] intValue];
     int shipOwnerId=[[userDefault objectForKey:@"shipOwnerId"] intValue];
 
-    [NetWorkInterface ListDetailWithID:self.ID loginId:86 shipOwnerId:63 finished:^(BOOL success, NSData *response) {
+    [NetWorkInterface ListDetailWithID:self.ID loginId:loginId shipOwnerId:shipOwnerId finished:^(BOOL success, NSData *response) {
    
         
         hud.customView=[[UIImageView alloc]init];

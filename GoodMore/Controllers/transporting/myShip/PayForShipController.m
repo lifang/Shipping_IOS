@@ -64,7 +64,7 @@
         ShipInTeam *shipInTeamModel = [_contentArray objectAtIndex:i];
         [_selectedIndexArray addObject:[NSNumber numberWithInteger:i]];
         allPay = allPay +  [shipInTeamModel.defaultMoney intValue];
-        NSString *selected = [NSString stringWithFormat:@"%ld",i];
+        NSString *selected = [NSString stringWithFormat:@"%ld",(long)i];
         NSString *money = [NSString stringWithFormat:@"￥%@",shipInTeamModel.defaultMoney];
         [_moneyDic setObject:money forKey:selected];
         [_reMoneyDic setObject:[NSNumber numberWithInt:[shipInTeamModel.defaultMoney intValue]] forKey:selected];

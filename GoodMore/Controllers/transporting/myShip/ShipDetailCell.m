@@ -143,7 +143,7 @@
     _weightLabel.text = [NSString stringWithFormat:@"%@吨",shipInTeamModel.volume];
     _nameLabel.text = shipInTeamModel.name;
     _phoneNumLabel.text = shipInTeamModel.phone;
-    _priceLabel.text = [NSString stringWithFormat:@"￥%@.00",shipInTeamModel.submitMoney];
+    _priceLabel.text = [NSString stringWithFormat:@"￥%@",shipInTeamModel.submitMoney];
 }
 
 -(void)setContentWithShipnoInTeamModel:(ShipInTeam *)shipInTeamModel {
@@ -152,7 +152,7 @@
     _weightLabel.text = [NSString stringWithFormat:@"%@吨",shipInTeamModel.volume];
     _nameLabel.text = shipInTeamModel.name;
     _phoneNumLabel.text = shipInTeamModel.phone;
-    _priceLabel.text = [NSString stringWithFormat:@"￥%@.00",shipInTeamModel.submitMoney];
+    _priceLabel.text = [NSString stringWithFormat:@"￥%@",shipInTeamModel.submitMoney];
 }
 
 -(void)setContentWithShipRankTeamModel:(ShipInTeam *)shipInTeamModel {
@@ -161,7 +161,7 @@
     _weightLabel.text = [NSString stringWithFormat:@"%@吨",shipInTeamModel.volume];
     _nameLabel.text = shipInTeamModel.name;
     _phoneNumLabel.text = shipInTeamModel.phone;
-    _priceLabel.text = [NSString stringWithFormat:@"￥%@.00",shipInTeamModel.submitMoney];
+    _priceLabel.text = [NSString stringWithFormat:@"￥%@",shipInTeamModel.submitMoney];
 }
 
 @end

@@ -49,7 +49,7 @@
 
     NSArray *titleArray=[[NSArray alloc]initWithObjects:@"日期", @"类型",@"金额",@"累计",nil];
     CGFloat topSpace=20;
-    CGFloat leftSpace=20;
+    CGFloat leftSpace=0;
     CGFloat width=(kScreenWidth-leftSpace*2)/titleArray.count;
     
     for (int i=0; i<titleArray.count; i++)
@@ -115,16 +115,11 @@
     cell.date.textColor=kWalletTitleColor;
     cell.type.textColor=kWalletTitleColor;
     cell.type.text=detailModel.typeName;
-    cell.money.text=[NSString stringWithFormat:@"￥%.2f",[detailModel.toPay doubleValue]];
-    cell.addUp.text=[NSString stringWithFormat:@"￥%.2f",[detailModel.allPay doubleValue]];
+    cell.money.text=[NSString stringWithFormat:@"%.2f",[detailModel.toPay doubleValue]];
+    cell.addUp.text=[NSString stringWithFormat:@"%.2f",[detailModel.allPay doubleValue]];
     cell.addUp.textColor=[self colorWithHexString:@"18A90D"];
-    if (indexPath.row==0)
-    {
-        cell.money.textColor=[self colorWithHexString:@"18A90D"];
-    }else
-    {
-        cell.money.textColor=[self colorWithHexString:@"F90824"];
-    }
+    cell.money.textColor=[self colorWithHexString:@"18A90D"];
+    
     return cell;
 
 }
