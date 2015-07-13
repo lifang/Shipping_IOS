@@ -31,7 +31,11 @@
         _tableView = [[UITableView alloc]init];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        if ([_shipOder.status isEqualToString:@"3"]) {
+        NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+        NSString *shipOwerId = [userDefaults objectForKey:@"shipOwnerId"];
+        NSLog(@"%@!!!!!!%@",_shipOder.shipID,shipOwerId);
+        NSLog(@"%@",_shipOder.status);
+        if ([_shipOder.status isEqualToString:@"3"] && [_shipOder.shipID intValue] == [shipOwerId intValue]) {
              _tableView.frame = CGRectMake(0, 0, K_MainWidth, K_MainHeight - 142);
             UIButton *settleBtn = [[UIButton alloc]initWithFrame:CGRectMake(K_MainWidth / 5 - 10, CGRectGetMaxY(_tableView.frame) + 10, K_MainWidth / 1.5, 40)];
             CALayer *readBtnLayer = [settleBtn layer];

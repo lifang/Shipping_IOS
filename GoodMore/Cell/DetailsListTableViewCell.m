@@ -21,6 +21,8 @@
 @property(nonatomic,strong)UIView *blueView;
 
 @property(nonatomic,strong)UIView *grayView;
+@property(nonatomic,strong)UIImageView *firstiamgeview;
+@property(nonatomic,strong)UIImageView *firstiamgeviews;
 
 @end
 
@@ -107,26 +109,32 @@
         [self.contentView addSubview:_endPortLabel];
         
         _moneyLabel = [[UILabel alloc]init];
-        _moneyLabel.textColor = kColor(250, 98, 14, 1.0);
+//        _moneyLabel.textColor = kColor(250, 98, 14, 1.0);
         _moneyLabel.font = [UIFont systemFontOfSize:16];
-        _moneyLabel.text = @"12.00 元";
+        _moneyLabel.text = @"装货吨位";
         [self.contentView addSubview:_moneyLabel];
         
         _dateLabel = [[UILabel alloc]init];
-        _dateLabel.textAlignment = NSTextAlignmentCenter;
+//        _dateLabel.textAlignment = NSTextAlignmentCenter;
 //        _dateLabel.textColor = kColor(110, 110, 110, 1.0);
         _dateLabel.font = [UIFont systemFontOfSize:12];
         _dateLabel.text = @"2015年7月5日装船";
         [self.contentView addSubview:_dateLabel];
         
         _weightLabel = [[UILabel alloc]init];
-        _weightLabel.textColor = kColor(250, 98, 14, 1.0);
-        _weightLabel.font = [UIFont systemFontOfSize:16];
+//        _weightLabel.textColor = kColor(250, 98, 14, 1.0);
+        _weightLabel.font = [UIFont systemFontOfSize:12];
         _weightLabel.text = @"2000 吨";
         [self.contentView addSubview:_weightLabel];
+        _weightLabel1 = [[UILabel alloc]init];
+//        _weightLabel1.textColor = kColor(250, 98, 14, 1.0);
+        _weightLabel1.font = [UIFont systemFontOfSize:16];
+        _weightLabel1.text = @"卸货吨位";
+        [self.contentView addSubview:_weightLabel1];
+
         
         _goodsLabel = [[UILabel alloc]init];
-        _goodsLabel.textAlignment = NSTextAlignmentCenter;
+//        _goodsLabel.textAlignment = NSTextAlignmentCenter;
 //        _goodsLabel.textColor = kColor(110, 110, 110, 1.0);
         _goodsLabel.font = [UIFont systemFontOfSize:12];
         _goodsLabel.text = @"水泥";
@@ -138,15 +146,15 @@
 //        
 //        
         _endTimeLabel = [[UILabel alloc]init];
-        _endTimeLabel.textAlignment = NSTextAlignmentCenter;
-        _endTimeLabel.font = [UIFont systemFontOfSize:12];
+//        _endTimeLabel.textAlignment = NSTextAlignmentCenter;
+        _endTimeLabel.font = [UIFont systemFontOfSize:9];
 //        _endTimeLabel.text = @"2小时53分36秒后结束";
         [self.contentView addSubview:_endTimeLabel];
 //
         _marginLabel = [[UILabel alloc]init];
-        _marginLabel.textAlignment = NSTextAlignmentCenter;
-        _marginLabel.font = [UIFont systemFontOfSize:12];
-        _marginLabel.text = @"保证金：200.00元";
+//        _marginLabel.textAlignment = NSTextAlignmentCenter;
+        _marginLabel.font = [UIFont systemFontOfSize:9];
+//        _marginLabel.text = @"保证金：200.00元";
         [self.contentView addSubview:_marginLabel];
 //
 //        _successLabel = [[UILabel alloc]init];
@@ -169,6 +177,13 @@
 //        }
 //        _successLabel.frame = CGRectMake(K_MainWidth - 80, _logistNameLabel.frame.origin.y + 20, 60, 20);
 //        [self.contentView addSubview:_successLabel];
+         _firstiamgeview = [[UIImageView alloc]init];
+        [self.contentView addSubview:_firstiamgeview];
+        _firstiamgeview.image = [UIImage imageNamed:@"indicate"];
+        _firstiamgeviews = [[UIImageView alloc]init];
+        [self.contentView addSubview:_firstiamgeviews];
+        _firstiamgeviews.image = [UIImage imageNamed:@"indicate"];
+        
     }
     return self;
 }
@@ -199,21 +214,24 @@
     
     [self drawLineWithTopView:_endPortLabel];
     
-    [self drawLineWithTopV:_endPortLabel AndHeight:50];
+//    [self drawLineWithTopV:_endPortLabel AndHeight:50];
     
-    _moneyLabel.frame = CGRectMake(_startLogo.frame.origin.x + 10, CGRectGetMaxY(_startPortLabel.frame) + 15, 120, 20);
-    
-    _weightLabel.frame = CGRectMake(_endLogo.frame.origin.x , CGRectGetMaxY(_endPortLabel.frame) + 15, 120, 20);
-    
-    _dateLabel.frame = CGRectMake(0, CGRectGetMaxY(_moneyLabel.frame) + 2, K_MainWidth / 2, 15);
-    
-    _goodsLabel.frame = CGRectMake(K_MainWidth / 2 , CGRectGetMaxY(_moneyLabel.frame) , K_MainWidth / 2, 20);
+    _moneyLabel.frame = CGRectMake(_startLogo.frame.origin.x -10, CGRectGetMaxY(_startPortLabel.frame) + 15, 120, 20);
+    _weightLabel1.frame = CGRectMake(kScreenWidth/2-25 , CGRectGetMaxY(_endPortLabel.frame) + 15, 120, 20);
+
+    _weightLabel.frame = CGRectMake(kScreenWidth-70 , CGRectGetMaxY(_endPortLabel.frame) + 35, 120, 20);
+
+    _dateLabel.frame = CGRectMake(40, CGRectGetMaxY(_moneyLabel.frame) + 2, 90, 15);
+    _firstiamgeview.frame = CGRectMake(100, CGRectGetMaxY(_moneyLabel.frame)-3 , 26, 26);
+    _firstiamgeviews.frame = CGRectMake(K_MainWidth-105, CGRectGetMaxY(_moneyLabel.frame)-3 , 26, 26);
+
+    _goodsLabel.frame = CGRectMake(K_MainWidth / 2-20 , CGRectGetMaxY(_moneyLabel.frame) , K_MainWidth / 2, 20);
     
     _blueView.frame = CGRectMake(10, CGRectGetMaxY(_goodsLabel.frame) + 15, K_MainWidth - 20, 30);
     
-    _endTimeLabel.frame = CGRectMake(0, CGRectGetMaxY(_goodsLabel.frame) , K_MainWidth / 2, 20);
+    _endTimeLabel.frame = CGRectMake(10, CGRectGetMaxY(_goodsLabel.frame) , K_MainWidth / 2, 20);
     
-    _marginLabel.frame = CGRectMake(K_MainWidth / 2 , CGRectGetMaxY(_goodsLabel.frame) , K_MainWidth / 2, 15);
+    _marginLabel.frame = CGRectMake(K_MainWidth / 2-30, CGRectGetMaxY(_goodsLabel.frame) , K_MainWidth / 2, 20);
     
 }
 -(void)drawLineWithTopView:(UIView *)topView {

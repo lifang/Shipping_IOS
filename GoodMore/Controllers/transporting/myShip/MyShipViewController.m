@@ -49,6 +49,7 @@
 
 @property(nonatomic,strong)UILabel *label;
 @property(nonatomic,strong)UIButton *btn;
+@property(nonatomic,strong)UIButton *btn2;
 
 /***************上下拉刷新**********/
 @property (nonatomic, strong) RefreshView *topRefreshView;
@@ -235,11 +236,11 @@
     UIView *topV = [[UIView alloc]init];
     topV.userInteractionEnabled = YES;
     topV.backgroundColor = kLightColor;
-    topV.frame = CGRectMake(0, 0, K_MainWidth, 60);
+    topV.frame = CGRectMake(0, 0, K_MainWidth, 65);
     
     TopButton *topBtn = [[TopButton alloc]init];
     topBtn.delegate = self;
-    topBtn.frame = CGRectMake(0, 20, K_MainWidth, 40);
+    topBtn.frame = CGRectMake(0, 20, K_MainWidth, 65);
     topBtn.userInteractionEnabled = YES;
     [topBtn.firstBtn setTitle:@"组队中" forState:UIControlStateNormal];
     [topBtn.secondBtn setTitle:@"历史记录" forState:UIControlStateNormal];
@@ -328,7 +329,7 @@
 
 -(void)pushToHistory {
     _historyVC = [[HistoryController alloc]init];
-    _historyVC.view.frame = CGRectMake(0, 60, K_MainWidth, K_MainHeight - 60);
+    _historyVC.view.frame = CGRectMake(0, 65, K_MainWidth, K_MainHeight - 65);
     [self.view addSubview:_historyVC.view];
 }
 
@@ -350,14 +351,16 @@
             if ([object isKindOfClass:[NSDictionary class]]) {
                 NSString *errorCode = [object objectForKey:@"code"];
                 if ([errorCode intValue] == RequestFail) {
-//                    //返回错误代码
-//                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                    //返回错误代码
+                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
                     [_tableView removeFromSuperview];
                     [_headerView removeFromSuperview];
                     [_dismissBtn removeFromSuperview];
                     [_grabBtn removeFromSuperview];
                     [_label removeFromSuperview];
                     [_btn removeFromSuperview];
+                    [_btn2 removeFromSuperview];
+                    [_logisticCell removeFromSuperview];
                     _label = [[UILabel alloc]init];
                     _label.font = [UIFont systemFontOfSize:13];
                     _label.text = @"您还未加入任何船队！";
@@ -378,6 +381,15 @@
                     _btn.frame = CGRectMake(_label.frame.origin.x - 20, CGRectGetMaxY(_label.frame) + 10, K_MainWidth / 1.7, 35);
                     [_btn addTarget:self action:@selector(joinInShipTeam) forControlEvents:UIControlEventTouchUpInside];
                     [self.view addSubview:_btn];
+                    
+                    _btn2 = [[UIButton alloc]init];
+                    [_btn2 addTarget:self action:@selector(refreshMySelf) forControlEvents:UIControlEventTouchUpInside];
+                    [_btn2 setTitle:@"已申请加入船队，刷新我的状态？" forState:UIControlStateNormal];
+                    _btn2.titleLabel.font = [UIFont systemFontOfSize:13];
+                    [_btn2 setTitleColor:kLightColor forState:UIControlStateNormal];
+                    [_btn2 setBackgroundColor:[UIColor clearColor]];
+                    _btn2.frame = CGRectMake(_btn.frame.origin.x - 20, CGRectGetMaxY(_btn.frame) + 20, 240, 20);
+                    [self.view addSubview:_btn2];
                 }
                 else if ([errorCode intValue] == RequestSuccess) {
                     [hud hide:YES];
@@ -396,6 +408,10 @@
         [self refreshViewFinishedLoadingWithDirection:PullFromTop];
 
     }];
+}
+
+-(void)refreshMySelf {
+    [self loadViews];
 }
 
 //解析字典

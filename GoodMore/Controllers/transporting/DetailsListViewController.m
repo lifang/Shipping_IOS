@@ -79,12 +79,12 @@
     cell.endPlaceLabel.text = order.endPortName;
     cell.endPortLabel.text = order.endDockName;
 //    double price = [order.maxPay doubleValue];
-    cell.moneyLabel.text = [NSString stringWithFormat:@"进价%.2f元",[order.quote floatValue]];
+//    cell.moneyLabel.text = [NSString stringWithFormat:@"进价%.2f元",[order.quote floatValue]];
     cell.weightLabel.text = [NSString stringWithFormat:@"运费%@元",order.payMoney];
-    cell.dateLabel.text = [NSString stringWithFormat:@"装货%@吨",order.inAccount];
-    cell.goodsLabel.text = [NSString stringWithFormat:@"装货时间:%@",order.inWriteTimeStr];
-    cell.endTimeLabel.text = [NSString stringWithFormat:@"卸货%@吨",order.outAccount];
-    cell.marginLabel.text = [NSString stringWithFormat:@"卸货时间:%@",order.outWriteTimeStr];
+    cell.dateLabel.text = [NSString stringWithFormat:@"%@吨",order.inAccount];
+    cell.goodsLabel.text = [NSString stringWithFormat:@"%@吨",order.outAccount];
+    cell.endTimeLabel.text = [NSString stringWithFormat:@"%@",order.inWriteTimeStr];
+    cell.marginLabel.text = [NSString stringWithFormat:@"%@",order.outWriteTimeStr];
 
     
     return cell;
