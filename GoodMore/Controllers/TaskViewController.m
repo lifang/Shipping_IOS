@@ -582,8 +582,6 @@
 //下拉刷新
 - (void)pullDownToLoadData {
     
-    //[_totalLastTime removeAllObjects];
-    
     [self firstLoadData];
 }
 

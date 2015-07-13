@@ -159,6 +159,7 @@
                     else {
                         //无数据
                         hud.labelText = @"没有更多数据了...";
+
                         _messageLabel=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2-70, kScreenHeight/2-75, 140, 30)];
                         _messageLabel.textAlignment = NSTextAlignmentCenter;
                         _messageLabel.text=@"还没历史任务";
@@ -197,6 +198,14 @@
         ShipOrder *historyModel = [[ShipOrder alloc]initWithParseDictionary:contentArray[i]];
         [_historyArray addObject:historyModel];
     }
+    if (_historyArray.count == 0) {
+        _messageLabel=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2-70, kScreenHeight/2-75, 140, 30)];
+        _messageLabel.textAlignment = NSTextAlignmentCenter;
+        _messageLabel.text=@"暂无历史任务";
+        _messageLabel.textColor=kGrayColor;
+        [self.view addSubview:_messageLabel];
+    }
+    
     [_tableView reloadData];
 }
 
