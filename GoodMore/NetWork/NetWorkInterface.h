@@ -382,7 +382,7 @@ static NSString *completeShipInfo_method = @"app/completeInfo";
 +(void)joinInTeamWithLoginId:(int)loginId
                         Code:(NSString *)code
                    ShipOwnID:(int)shipOwnId
-                       Quote:(int)quote
+                       Quote:(double)quote
                     finished:(requestDidFinished)finish;
 //单船竞价
 +(void)singleShipCompletWithshipOwnerId:(int)shipOwnerId bsOrderId:(int)bsOrderId loginId:(int)loginId quote:(double)quote finished:(requestDidFinished)finish;

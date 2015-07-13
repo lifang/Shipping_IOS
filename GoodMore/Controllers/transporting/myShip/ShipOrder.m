@@ -64,9 +64,9 @@
             _endDockName = @"-";
         }
         if ([dict objectForKey:@"maxPay"]) {
-            _maxPay = [NSString stringWithFormat:@"%@",[dict objectForKey:@"maxPay"]];
+            _maxPay = [[dict objectForKey:@"maxPay"] doubleValue];
         }else{
-            _maxPay = @"-";
+            _maxPay = 0.00;
         }
         if ([dict objectForKey:@"amount"]) {
             _amount = [NSString stringWithFormat:@"%@",[dict objectForKey:@"amount"]];

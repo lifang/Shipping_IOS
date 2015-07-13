@@ -19,8 +19,9 @@
 #import "MyShipModel.h"
 #import "PayForShipController.h"
 #import "ShipInfoViewController.h"
+#import "RefreshView.h"
 
-@interface MyShipViewController ()<TopButtonClickedDelegate,UITableViewDelegate,UITableViewDataSource,ShipDetailCellDelegate,UIAlertViewDelegate>
+@interface MyShipViewController ()<TopButtonClickedDelegate,UITableViewDelegate,UITableViewDataSource,ShipDetailCellDelegate,UIAlertViewDelegate,RefreshDelegate>
 
 @property(nonatomic,strong)UITableView *tableView;
 
@@ -45,6 +46,18 @@
 @property(nonatomic,strong)UIButton *grabBtn;
 
 @property(nonatomic,assign)int weight;
+
+@property(nonatomic,strong)UILabel *label;
+@property(nonatomic,strong)UIButton *btn;
+
+/***************上下拉刷新**********/
+@property (nonatomic, strong) RefreshView *topRefreshView;
+@property (nonatomic, strong) RefreshView *bottomRefreshView;
+
+@property (nonatomic, assign) BOOL reloading;
+@property (nonatomic, assign) CGFloat primaryOffsetY;
+@property (nonatomic, assign) int page;
+/**********************************/
 
 @end
 
@@ -78,6 +91,121 @@
 
 }
 
+-(void)setupRefreshView {
+    _topRefreshView = [[RefreshView alloc] initWithFrame:CGRectMake(0, -80, self.view.frame.size.width, 80)];
+    _topRefreshView.direction = PullFromTop;
+    _topRefreshView.delegate = self;
+    [_tableView addSubview:_topRefreshView];
+    
+//    _bottomRefreshView = [[RefreshView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,80)];
+//    _bottomRefreshView.direction = PullFromBottom;
+//    _bottomRefreshView.delegate = self;
+//    _bottomRefreshView.hidden = YES;
+//    [_tableView addSubview:_bottomRefreshView];
+}
+#pragma mark -- Refresh
+
+- (void)refreshViewReloadData {
+    _reloading = YES;
+}
+
+- (void)refreshViewFinishedLoadingWithDirection:(PullDirection)direction {
+    _reloading = NO;
+    if (direction == PullFromTop) {
+        [_topRefreshView refreshViewDidFinishedLoading:_tableView];
+    }
+    else if (direction == PullFromBottom) {
+        _bottomRefreshView.frame = CGRectMake(0, _tableView.contentSize.height, _tableView.bounds.size.width, 60);
+        [_bottomRefreshView refreshViewDidFinishedLoading:_tableView];
+    }
+    [self updateFooterViewFrame];
+}
+
+- (BOOL)refreshViewIsLoading:(RefreshView *)view {
+    return _reloading;
+}
+
+- (void)refreshViewDidEndTrackingForRefresh:(RefreshView *)view {
+    [self refreshViewReloadData];
+    //loading...
+    if (view == _topRefreshView) {
+        [self pullDownToLoadData];
+    }
+    else if (view == _bottomRefreshView) {
+        [self pullUpToLoadData];
+    }
+}
+
+- (void)updateFooterViewFrame {
+    _bottomRefreshView.frame = CGRectMake(0, _tableView.contentSize.height, _tableView.bounds.size.width, 60);
+    _bottomRefreshView.hidden = NO;
+    if (_tableView.contentSize.height < _tableView.frame.size.height) {
+        _bottomRefreshView.hidden = YES;
+    }
+}
+
+#pragma mark - UIScrollView
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    _primaryOffsetY = scrollView.contentOffset.y;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    CGFloat sectionHeaderHeight = 40;
+    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
+        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+    }
+    else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
+        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+    }
+    
+    if (scrollView == _tableView) {
+        if (_bottomRefreshView.frame.origin.y != scrollView.contentSize.height) {
+            [self updateFooterViewFrame];
+        }
+        CGPoint newPoint = scrollView.contentOffset;
+        if (_primaryOffsetY < newPoint.y) {
+            //上拉
+            if (_bottomRefreshView.hidden) {
+                return;
+            }
+            [_bottomRefreshView refreshViewDidScroll:scrollView];
+        }
+        else {
+            //下拉
+            [_topRefreshView refreshViewDidScroll:scrollView];
+        }
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (scrollView == _tableView) {
+        CGPoint newPoint = scrollView.contentOffset;
+        if (_primaryOffsetY < newPoint.y) {
+            //上拉
+            if (_bottomRefreshView.hidden) {
+                return;
+            }
+            [_bottomRefreshView refreshViewDidEndDragging:scrollView];
+        }
+        else {
+            //下拉
+            [_topRefreshView refreshViewDidEndDragging:scrollView];
+        }
+    }
+}
+#pragma mark - 上下拉刷新
+//下拉刷新
+- (void)pullDownToLoadData {
+    [self loadShipDetail];
+}
+
+//上拉加载
+- (void)pullUpToLoadData {
+//    [self downloadDataWithPage:self.page isMore:YES];
+}
+
 -(void)loadViews {
     _tableView = [[UITableView alloc]init];
     _tableView.delegate = self;
@@ -86,6 +214,9 @@
     _tableView.frame = CGRectMake(0, 60, K_MainWidth, K_MainHeight - 60 * 2.2);
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
+    
+    [self setupRefreshView];
+    
     _shipNoInTeamData = [[NSMutableArray alloc]init];
     _shipNumbersData = [[NSMutableArray alloc]init];
     _shipRankData = [[NSMutableArray alloc]init];
@@ -128,13 +259,17 @@
 //创建footerView
 -(void)setupFooterView {
     self.tableView.backgroundColor = [UIColor whiteColor];
-    _logisticCell = [[LogistCellTwo alloc]initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"zuduizhong"];
-    _logisticCell.successTeam.hidden = YES;
-    _logisticCell.frame = CGRectMake(0, 0, K_MainWidth, 250);
-    [_logisticCell setContentWithMyshipModel:_myshipModel];
-    [_headerView addSubview:_logisticCell];
-    _tableView.tableHeaderView = _headerView;
- 
+    if (!_logisticCell) {
+        _logisticCell = [[LogistCellTwo alloc]initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"zuduizhong"];
+        _logisticCell.successTeam.hidden = YES;
+        _logisticCell.frame = CGRectMake(0, 0, K_MainWidth, 250);
+        [_logisticCell setContentWithMyshipModel:_myshipModel];
+        [_headerView addSubview:_logisticCell];
+        _tableView.tableHeaderView = _headerView;
+    }else{
+        [_logisticCell setContentWithMyshipModel:_myshipModel];
+    }
+    
     if ([_myshipModel.isTeamLeader isEqualToString:@"1"]) {
         
         _tableView.frame = CGRectMake(0, 60, K_MainWidth, K_MainHeight - 60 * 3.2);
@@ -215,32 +350,34 @@
             if ([object isKindOfClass:[NSDictionary class]]) {
                 NSString *errorCode = [object objectForKey:@"code"];
                 if ([errorCode intValue] == RequestFail) {
+//                    //返回错误代码
+//                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
                     [_tableView removeFromSuperview];
                     [_headerView removeFromSuperview];
                     [_dismissBtn removeFromSuperview];
                     [_grabBtn removeFromSuperview];
-//                    //返回错误代码
-//                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
-                    UILabel *label = [[UILabel alloc]init];
-                    label.font = [UIFont systemFontOfSize:13];
-                    label.text = @"您还未加入任何船队！";
-                    label.textAlignment = NSTextAlignmentCenter;
-                    label.textColor = [UIColor blackColor];
-                    label.frame = CGRectMake(K_MainWidth / 4, K_MainHeight / 5, K_MainWidth / 2, 30);
-                    label.backgroundColor = [UIColor clearColor];
-                    [self.view addSubview:label];
+                    [_label removeFromSuperview];
+                    [_btn removeFromSuperview];
+                    _label = [[UILabel alloc]init];
+                    _label.font = [UIFont systemFontOfSize:13];
+                    _label.text = @"您还未加入任何船队！";
+                    _label.textAlignment = NSTextAlignmentCenter;
+                    _label.textColor = [UIColor blackColor];
+                    _label.frame = CGRectMake(K_MainWidth / 4, K_MainHeight / 5, K_MainWidth / 2, 30);
+                    _label.backgroundColor = [UIColor clearColor];
+                    [self.view addSubview:_label];
                     
-                    UIButton *btn = [[UIButton alloc]init];
-                    [btn setTitle:@"加入船队" forState:UIControlStateNormal];
-                    btn.titleLabel.font = [UIFont systemFontOfSize:13];
-                    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                    [btn setBackgroundImage:[UIImage imageNamed:@"lianglan"] forState:UIControlStateNormal];
-                    CALayer *readBtnLayer = [btn layer];
+                    _btn = [[UIButton alloc]init];
+                    [_btn setTitle:@"加入船队" forState:UIControlStateNormal];
+                    _btn.titleLabel.font = [UIFont systemFontOfSize:13];
+                    [_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                    [_btn setBackgroundImage:[UIImage imageNamed:@"lianglan"] forState:UIControlStateNormal];
+                    CALayer *readBtnLayer = [_btn layer];
                     [readBtnLayer setMasksToBounds:YES];
                     [readBtnLayer setCornerRadius:4.0];
-                    btn.frame = CGRectMake(label.frame.origin.x - 20, CGRectGetMaxY(label.frame) + 10, K_MainWidth / 1.7, 35);
-                    [btn addTarget:self action:@selector(joinInShipTeam) forControlEvents:UIControlEventTouchUpInside];
-                    [self.view addSubview:btn];
+                    _btn.frame = CGRectMake(_label.frame.origin.x - 20, CGRectGetMaxY(_label.frame) + 10, K_MainWidth / 1.7, 35);
+                    [_btn addTarget:self action:@selector(joinInShipTeam) forControlEvents:UIControlEventTouchUpInside];
+                    [self.view addSubview:_btn];
                 }
                 else if ([errorCode intValue] == RequestSuccess) {
                     [hud hide:YES];
@@ -256,6 +393,7 @@
         else {
             hud.labelText = kNetworkFailed;
         }
+        [self refreshViewFinishedLoadingWithDirection:PullFromTop];
 
     }];
 }
@@ -440,7 +578,7 @@
                 if ([errorCode intValue] == RequestFail) {
                     //返回错误代码
                     hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
-                    hud.labelFont = [UIFont systemFontOfSize:10];
+                    hud.labelFont = [UIFont systemFontOfSize:12];
                     [hud hide:YES afterDelay:0.3f];
                 }
                 else if ([errorCode intValue] == RequestSuccess) {
@@ -448,7 +586,11 @@
                     hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
                     [hud hide:YES];
                     [self loadShipDetail];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:PushTotransportationNotification object:nil userInfo:nil];
+                    
+                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"抢单成功！" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
+                    alert.tag = 333;
+                    alert.delegate = self;
+                    [alert show];
                 }
             }
             else {
@@ -561,16 +703,16 @@
     return 30.f;
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat sectionHeaderHeight = 40;
-    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
-        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
-    }
-    else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
-        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
-    }
-}
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    CGFloat sectionHeaderHeight = 40;
+//    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
+//        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+//    }
+//    else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
+//        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+//    }
+//}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -599,7 +741,6 @@
             [self dissmissShipRequest];
         }
     }
-    
     if (alertView.tag == 222) {
         if (buttonIndex != alertView.cancelButtonIndex) {
             ShipInfoViewController *shipInfo=[[ShipInfoViewController alloc]init];
@@ -609,6 +750,11 @@
         }
     }
     
+    if (alertView.tag == 333) {
+        if (buttonIndex != alertView.cancelButtonIndex) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:PushTotransportationNotification object:nil userInfo:nil];
+        }
+    }
 }
 
 -(void)grabClicked {

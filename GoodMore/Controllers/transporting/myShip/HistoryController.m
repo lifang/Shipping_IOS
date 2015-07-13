@@ -11,6 +11,7 @@
 #import "HistoryDetailController.h"
 #import "RefreshView.h"
 #import "ShipOrder.h"
+#import "PromptView.h"
 
 @interface HistoryController ()<UITableViewDataSource,UITableViewDelegate,RefreshDelegate>
 
@@ -27,6 +28,7 @@
 @property (nonatomic, assign) int page;
 /**********************************/
 
+@property(nonatomic,strong)PromptView *promtView;
 @end
 
 @implementation HistoryController
@@ -133,7 +135,7 @@
     [NetWorkInterface getHistoryListWithShipOwnerId:[shipOwerId intValue] Status:-1 page:page finished:^(BOOL success, NSData *response) {
         hud.customView = [[UIImageView alloc] init];
         hud.mode = MBProgressHUDModeCustomView;
-        [hud hide:YES afterDelay:0.3f];
+        [hud hide:YES afterDelay:1.0f];
         if (success) {
             NSLog(@"!!%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
             id object = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
@@ -156,6 +158,10 @@
                     else {
                         //无数据
                         hud.labelText = @"没有更多数据了...";
+                        _promtView=[[PromptView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+                        _promtView.message.text=@"亲,还没有历史记录^.^";
+                        [self.view addSubview:_promtView];
+                        
                     }
                     [self parseHistoryDataWithDictionary:object];
                 }
