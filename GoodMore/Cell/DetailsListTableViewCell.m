@@ -21,6 +21,8 @@
 @property(nonatomic,strong)UIView *blueView;
 
 @property(nonatomic,strong)UIView *grayView;
+@property(nonatomic,strong)UIImageView *firstiamgeview;
+@property(nonatomic,strong)UIImageView *firstiamgeviews;
 
 @end
 
@@ -175,9 +177,12 @@
 //        }
 //        _successLabel.frame = CGRectMake(K_MainWidth - 80, _logistNameLabel.frame.origin.y + 20, 60, 20);
 //        [self.contentView addSubview:_successLabel];
-        UIImageView *firstiamgeview = [[UIImageView alloc]init];
-        [self.contentView addSubview:firstiamgeview];
-        firstiamgeview.image = [UIImage imageNamed:@"indicate"];
+         _firstiamgeview = [[UIImageView alloc]init];
+        [self.contentView addSubview:_firstiamgeview];
+        _firstiamgeview.image = [UIImage imageNamed:@"indicate"];
+        _firstiamgeviews = [[UIImageView alloc]init];
+        [self.contentView addSubview:_firstiamgeviews];
+        _firstiamgeviews.image = [UIImage imageNamed:@"indicate"];
         
     }
     return self;
@@ -212,19 +217,21 @@
 //    [self drawLineWithTopV:_endPortLabel AndHeight:50];
     
     _moneyLabel.frame = CGRectMake(_startLogo.frame.origin.x -10, CGRectGetMaxY(_startPortLabel.frame) + 15, 120, 20);
-    _weightLabel1.frame = CGRectMake(kScreenWidth/2-5 , CGRectGetMaxY(_endPortLabel.frame) + 15, 120, 20);
+    _weightLabel1.frame = CGRectMake(kScreenWidth/2-25 , CGRectGetMaxY(_endPortLabel.frame) + 15, 120, 20);
 
-    _weightLabel.frame = CGRectMake(kScreenWidth-90 , CGRectGetMaxY(_endPortLabel.frame) + 35, 120, 20);
+    _weightLabel.frame = CGRectMake(kScreenWidth-70 , CGRectGetMaxY(_endPortLabel.frame) + 35, 120, 20);
 
     _dateLabel.frame = CGRectMake(40, CGRectGetMaxY(_moneyLabel.frame) + 2, 90, 15);
-    
-    _goodsLabel.frame = CGRectMake(K_MainWidth / 2 , CGRectGetMaxY(_moneyLabel.frame) , K_MainWidth / 2, 20);
+    _firstiamgeview.frame = CGRectMake(100, CGRectGetMaxY(_moneyLabel.frame)-3 , 26, 26);
+    _firstiamgeviews.frame = CGRectMake(K_MainWidth-105, CGRectGetMaxY(_moneyLabel.frame)-3 , 26, 26);
+
+    _goodsLabel.frame = CGRectMake(K_MainWidth / 2-20 , CGRectGetMaxY(_moneyLabel.frame) , K_MainWidth / 2, 20);
     
     _blueView.frame = CGRectMake(10, CGRectGetMaxY(_goodsLabel.frame) + 15, K_MainWidth - 20, 30);
     
     _endTimeLabel.frame = CGRectMake(10, CGRectGetMaxY(_goodsLabel.frame) , K_MainWidth / 2, 20);
     
-    _marginLabel.frame = CGRectMake(K_MainWidth / 2-10, CGRectGetMaxY(_goodsLabel.frame) , K_MainWidth / 2, 15);
+    _marginLabel.frame = CGRectMake(K_MainWidth / 2-30, CGRectGetMaxY(_goodsLabel.frame) , K_MainWidth / 2, 20);
     
 }
 -(void)drawLineWithTopView:(UIView *)topView {
