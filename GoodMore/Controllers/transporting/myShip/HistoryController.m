@@ -158,10 +158,6 @@
                     else {
                         //无数据
                         hud.labelText = @"没有更多数据了...";
-                        _promtView=[[PromptView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-                        _promtView.message.text=@"亲,还没有历史记录^.^";
-                        [self.view addSubview:_promtView];
-                        
                     }
                     [self parseHistoryDataWithDictionary:object];
                 }
@@ -194,6 +190,12 @@
         ShipOrder *historyModel = [[ShipOrder alloc]initWithParseDictionary:contentArray[i]];
         [_historyArray addObject:historyModel];
     }
+    if (_historyArray.count == 0) {
+        _promtView=[[PromptView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+        _promtView.message.text=@"亲,还没有历史记录^.^";
+        [self.view addSubview:_promtView];
+    }
+    
     [_tableView reloadData];
 }
 
