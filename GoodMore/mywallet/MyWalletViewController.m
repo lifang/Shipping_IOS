@@ -293,6 +293,8 @@
     
     UIView *whiteView=[[UIView alloc]initWithFrame:CGRectMake((width-width*0.8)/2, 120, width*0.8, height*0.3)];
     whiteView.backgroundColor=[UIColor whiteColor];
+    whiteView.layer.cornerRadius=6;
+    whiteView.layer.masksToBounds=YES;
     [_backView addSubview:whiteView];
     
     UILabel *title=[[UILabel alloc]init];
@@ -324,6 +326,14 @@
     _prompt.font=[UIFont systemFontOfSize:12];
     _prompt.frame=CGRectMake(width*0.8-160-rightSpace, topSpace+30+30, 160, 30);
     [whiteView addSubview:_prompt];
+    
+    UIView *hLine = [[UIView alloc]initWithFrame:CGRectMake(0, height*0.3-bottomSpace-30, whiteView.bounds.size.width, 0.5)];
+    hLine.backgroundColor = kColor(201, 201, 201, 1);
+    [whiteView addSubview:hLine];
+    
+    UIView *vLine = [[UIView alloc]initWithFrame:CGRectMake(whiteView.bounds.size.width/2, height*0.3-bottomSpace-30, 0.5, 30)];
+    vLine.backgroundColor = kColor(201, 201, 201, 1);
+    [whiteView addSubview:vLine];
     
     UIButton *cancelBTN=[UIButton buttonWithType:UIButtonTypeCustom];
     cancelBTN.frame=CGRectMake(2*leftSpace, height*0.3-bottomSpace-30, 60, 30);

@@ -60,6 +60,7 @@
     _scrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     
     _scrollView.contentSize=CGSizeMake(kScreenWidth, kScreenHeight+100);
+    _scrollView.showsVerticalScrollIndicator=NO;
     [self setSubviews];
     
     [self.view addSubview:_scrollView];

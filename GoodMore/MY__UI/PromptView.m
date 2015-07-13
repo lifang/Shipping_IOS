@@ -24,7 +24,8 @@
     self.backgroundColor=[UIColor whiteColor];
     _message=[[UILabel alloc]initWithFrame:CGRectMake(40, 160, kScreenWidth-80, 30)];
     _message.textAlignment=NSTextAlignmentCenter;
-    _message.textColor=[UIColor blackColor];
+    _message.font=[UIFont systemFontOfSize:16];
+    _message.textColor=[UIColor grayColor];
     [self addSubview:_message];
 }
 @end
