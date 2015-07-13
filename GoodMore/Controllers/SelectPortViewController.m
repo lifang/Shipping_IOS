@@ -89,9 +89,7 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-    UIView *backView=[[UIView alloc]initWithFrame:cell.frame];
-    cell.selectedBackgroundView=backView;
-    cell.selectedBackgroundView.backgroundColor=[UIColor clearColor];
+
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     CGFloat cellHeight=50;
     switch (indexPath.row)
@@ -121,6 +119,7 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     PortListViewController *portList=[[PortListViewController alloc]init];
     portList.index=indexPath.row;
     portList.delegate=self;

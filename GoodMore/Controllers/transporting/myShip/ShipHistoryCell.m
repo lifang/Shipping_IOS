@@ -24,6 +24,7 @@
 
 @property(nonatomic,strong)NSString *reseIdenfiers;
 
+@property(nonatomic,strong)ShipOrder *shipModel;
 @end
 
 @implementation ShipHistoryCell
@@ -215,7 +216,11 @@
     
     _quatLabel.frame = CGRectMake(- 30, CGRectGetMaxY(_startPortLabel.frame) + 15, 120, 30);
     
-    _moneyLabel.frame = CGRectMake(CGRectGetMaxX(_quatLabel.frame), CGRectGetMaxY(_startPortLabel.frame) + 15, 120, 30);
+    if (_shipModel.quote == 0.00) {
+        _moneyLabel.frame = CGRectMake(CGRectGetMaxX(_quatLabel.frame) - 40, CGRectGetMaxY(_startPortLabel.frame) + 15, 120, 30);
+    }else{
+        _moneyLabel.frame = CGRectMake(CGRectGetMaxX(_quatLabel.frame), CGRectGetMaxY(_startPortLabel.frame) + 15, 120, 30);
+    }
     
     _weightLabel.frame = CGRectMake(_endLogo.frame.origin.x , CGRectGetMaxY(_endPortLabel.frame) + 15, 120, 30);
     
@@ -252,13 +257,18 @@
 }
 
 -(void)setContentWithShipOrderModel:(ShipOrder *)shipOrderModel {
+    self.shipModel = shipOrderModel;
     _logistNameLabel.text = shipOrderModel.companyName;
     _startPlaceLabel.text = shipOrderModel.beginPortName;
     _startPortLabel.text = shipOrderModel.beginDockName;
     _endPlaceLabel.text = shipOrderModel.endPortName;
     _endPortLabel.text = shipOrderModel.endDockName;
-    _moneyLabel.text = [NSString stringWithFormat:@"%@.00元",shipOrderModel.maxPay];
-    _quatLabel.text = [NSString stringWithFormat:@"%.2f元/",shipOrderModel.quote];
+    _moneyLabel.text = [NSString stringWithFormat:@"%.2f元",shipOrderModel.maxPay];
+    if (shipOrderModel.quote == 0.00) {
+         _quatLabel.text = @"";
+    }else{
+        _quatLabel.text = [NSString stringWithFormat:@"%.2f元/",shipOrderModel.quote];
+    }
     _dateLabel.text = [NSString stringWithFormat:@"%@装船",shipOrderModel.workTime];
     _weightLabel.text = [NSString stringWithFormat:@"%@吨",shipOrderModel.amount];
     _goodsLabel.text = shipOrderModel.cargos;

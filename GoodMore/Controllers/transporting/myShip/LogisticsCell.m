@@ -264,7 +264,7 @@
     _startPortLabel.text = myshipModel.shipOder.beginDockName;
     _endPlaceLabel.text = myshipModel.shipOder.endPortName;
     _endPortLabel.text = myshipModel.shipOder.endDockName;
-    _moneyLabel.text = [NSString stringWithFormat:@"%@.00元",myshipModel.shipOder.maxPay];
+    _moneyLabel.text = [NSString stringWithFormat:@"%.2f元",myshipModel.shipOder.maxPay];
     _dateLabel.text = [NSString stringWithFormat:@"%@装船",myshipModel.shipOder.workTime];
     _weightLabel.text = [NSString stringWithFormat:@"%@吨",myshipModel.shipOder.amount];
     _goodsLabel.text = myshipModel.shipOder.cargos;
@@ -291,7 +291,7 @@
     _startPortLabel.text = shipOrderModel.beginDockName;
     _endPlaceLabel.text = shipOrderModel.endPortName;
     _endPortLabel.text = shipOrderModel.endDockName;
-    _moneyLabel.text = [NSString stringWithFormat:@"%@.00元",shipOrderModel.maxPay];
+    _moneyLabel.text = [NSString stringWithFormat:@"%.2f元",shipOrderModel.maxPay];
     _dateLabel.text = [NSString stringWithFormat:@"%@装船",shipOrderModel.workTime];
     _weightLabel.text = [NSString stringWithFormat:@"%@吨",shipOrderModel.amount];
     _goodsLabel.text = shipOrderModel.cargos;

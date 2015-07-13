@@ -28,7 +28,7 @@
 
 @property(nonatomic,strong)NSString *storage;
 
-@property(nonatomic,strong)NSString *maxPay;
+@property(nonatomic,assign)double maxPay;
 
 @property(nonatomic,assign)double quote;
 //总运货量
@@ -43,6 +43,8 @@
 @property(nonatomic,strong)NSString *status;
 
 @property(nonatomic,assign)double allPay;
+
+@property(nonatomic,strong)NSString *shipID;
 
 - (id)initWithParseDictionary:(NSDictionary *)dict;
 @end

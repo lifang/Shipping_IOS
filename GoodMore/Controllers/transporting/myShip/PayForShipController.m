@@ -12,25 +12,25 @@
 
 @interface PayForShipController ()<UITableViewDataSource,UITableViewDelegate,PayNumberCellDelegate>
 
-@property(nonatomic,strong)UITableView *tableView;
+@property (nonatomic,strong) UITableView         *tableView;
 
-@property(nonatomic,assign)double allPay;
+@property (nonatomic,assign) double              allPay;
 
-@property(nonatomic,assign)double nowPay;
+@property (nonatomic,assign) double              nowPay;
 
-@property(nonatomic,strong)UILabel *undistributedLabel;
+@property (nonatomic,strong) UILabel             *undistributedLabel;
 
-@property(nonatomic,strong)UIImageView *backView;
+@property (nonatomic,strong) UIImageView         *backView;
 
-@property(nonatomic,strong)UITextField *payTextField;
+@property (nonatomic,strong) UITextField         *payTextField;
 
-@property(nonatomic,strong)NSMutableArray *selectedIndexArray;
+@property (nonatomic,strong) NSMutableArray      *selectedIndexArray;
 
-@property(nonatomic,strong)NSMutableDictionary *moneyDic;
+@property (nonatomic,strong) NSMutableDictionary *moneyDic;
 
-@property(nonatomic,strong)NSMutableDictionary *reMoneyDic;
+@property (nonatomic,strong) NSMutableDictionary *reMoneyDic;
 
-@property(nonatomic,strong)NSMutableDictionary *MoneyDataDic;
+@property (nonatomic,strong) NSMutableDictionary *MoneyDataDic;
 
 
 @end
@@ -39,10 +39,10 @@
 
 -(UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc]init];
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        _tableView.frame = CGRectMake(0, 80, K_MainWidth, K_MainHeight - 200);
+        _tableView                = [[UITableView alloc]init];
+        _tableView.delegate       = self;
+        _tableView.dataSource     = self;
+        _tableView.frame          = CGRectMake(0, 80, K_MainWidth, K_MainHeight - 200);
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self.view addSubview:_tableView];
     }
@@ -51,6 +51,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.title = @"结算运费";
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.backgroundColor = [UIColor whiteColor];

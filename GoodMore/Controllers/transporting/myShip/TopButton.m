@@ -10,8 +10,8 @@
 
 #define BtnWidth 120.f
 #define BtnHeight 40.f
-#define imageWidth 20.f
-#define imageHeight 10.f
+#define imageWidth 18.f
+#define imageHeight 12.f
 
 @implementation TopButton
 
@@ -24,14 +24,14 @@
         
         _firstBtn = [[UIButton alloc]init];
         _firstBtn.tag = BtnTypeOne;
-        _firstBtn.titleLabel.font = [UIFont systemFontOfSize:19];
+        _firstBtn.titleLabel.font = [UIFont systemFontOfSize:17];
         [_firstBtn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
         _firstBtn.backgroundColor = [UIColor clearColor];
         [self addSubview:_firstBtn];
         
         _secondBtn = [[UIButton alloc]init];
         _secondBtn.tag = BtnTypeTwo;
-        _secondBtn.titleLabel.font = [UIFont systemFontOfSize:19];
+        _secondBtn.titleLabel.font = [UIFont systemFontOfSize:17];
         [_secondBtn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
         _secondBtn.backgroundColor = [UIColor clearColor];
         [self addSubview:_secondBtn];
@@ -50,10 +50,10 @@
 -(void)layoutSubviews {
     [super layoutSubviews];
     
-    _firstBtn.frame = CGRectMake(30, -5, BtnWidth, BtnHeight);
-    _secondBtn.frame = CGRectMake(CGRectGetMaxX(_firstBtn.frame), -5, BtnWidth, BtnHeight);
-    _imageV.frame = CGRectMake(_firstBtn.frame.origin.x + BtnWidth / 2 - 5, CGRectGetMaxY(_firstBtn.frame) - imageHeight + 5 , imageWidth, imageHeight);
-    _rightIcon.frame = CGRectMake(CGRectGetMaxX(_secondBtn.frame) + 8, 1, 34, 34);
+    _firstBtn.frame = CGRectMake(20, 5, BtnWidth, BtnHeight);
+    _secondBtn.frame = CGRectMake(CGRectGetMaxX(_firstBtn.frame), 5, BtnWidth, BtnHeight);
+    _imageV.frame = CGRectMake(_firstBtn.frame.origin.x + BtnWidth / 2 - 5, CGRectGetMaxY(_firstBtn.frame) - imageHeight + 3 , 10, 9);
+    _rightIcon.frame = CGRectMake(CGRectGetMaxX(_secondBtn.frame) + 20, 10, 24, 24);
 }
 
 -(void)btnClicked:(UIButton *)btn {
@@ -66,14 +66,14 @@
         case BtnTypeOne:
         {
             [UIView animateWithDuration:0.2 animations:^{
-                _imageV.frame = CGRectMake(btn.frame.origin.x + BtnWidth / 2 - 5, CGRectGetMaxY(btn.frame) - imageHeight + 5 , imageWidth, imageHeight);
+                _imageV.frame = CGRectMake(_firstBtn.frame.origin.x + BtnWidth / 2 - 5, CGRectGetMaxY(_firstBtn.frame) - imageHeight + 3 , 10, 9);
             }];
         }
             break;
         case BtnTypeTwo:
         {
             [UIView animateWithDuration:0.2 animations:^{
-                _imageV.frame = CGRectMake(btn.frame.origin.x + BtnWidth / 2 - 5, CGRectGetMaxY(btn.frame) - imageHeight + 5 , imageWidth, imageHeight);
+                _imageV.frame = CGRectMake(_secondBtn.frame.origin.x + BtnWidth / 2 - 5, CGRectGetMaxY(_firstBtn.frame) - imageHeight + 3 , 10, 9);
             }];
         }
             break;

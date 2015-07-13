@@ -143,6 +143,7 @@
     _tableView.delegate=self;
     _tableView.tableFooterView=[[UIView alloc]init];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.showsVerticalScrollIndicator=NO;
     [self.view addSubview:_tableView];
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
@@ -393,7 +394,7 @@
     {
         
         _promtView=[[PromptView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-        _promtView.message.text=@"亲,没有任务^.^";
+        _promtView.message.text=@"没有任务";
         [self.view addSubview:_promtView];
     }else
     {
