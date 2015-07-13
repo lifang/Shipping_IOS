@@ -60,14 +60,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
+    self.view.backgroundColor=[UIColor whiteColor];
     _index=1;
     _distance=@"";
     _ordersArray=[[NSMutableArray alloc]init];
     _totalLastTime=[[NSMutableArray alloc]init];
    
     [self initNavigation];
-    [self initAndLayoutUI];
+    //[self initAndLayoutUI];
     [self initBackView];
      _backView.hidden=YES;
     
@@ -392,19 +392,24 @@
         [_ordersArray addObject:order];
     }];
     
-    [_tableView reloadData];
+   
+    
+    NSLog(@"-------任务数量:%d",_ordersArray.count);
     
     if (_ordersArray.count==0)
     {
-        
         _messageLabel=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2-70, kScreenHeight/2-75, 140, 30)];
         _messageLabel.textAlignment = NSTextAlignmentCenter;
         _messageLabel.text=@"暂无任务";
         _messageLabel.textColor=kGrayColor;
         [self.view addSubview:_messageLabel];
+        
     }else
     {
         [_messageLabel removeFromSuperview];
+        
+        [self initAndLayoutUI];
+        
         [_tableView reloadData];
     }
     

@@ -331,7 +331,7 @@
     hLine.backgroundColor = kColor(201, 201, 201, 1);
     [whiteView addSubview:hLine];
     
-    UIView *vLine = [[UIView alloc]initWithFrame:CGRectMake(whiteView.bounds.size.width/2, height*0.3-bottomSpace-25, 0.5, 30)];
+    UIView *vLine = [[UIView alloc]initWithFrame:CGRectMake(whiteView.bounds.size.width/2, height*0.3-bottomSpace-30, 0.5, 30)];
     vLine.backgroundColor = kColor(201, 201, 201, 1);
     [whiteView addSubview:vLine];
     
