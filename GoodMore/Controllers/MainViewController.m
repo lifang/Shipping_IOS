@@ -78,6 +78,22 @@
 
     [NavigationBar setNavigationBarStyle:myShipNav];
     self.viewControllers=[[NSArray alloc]initWithObjects:taskNav,transNav,myShipNav, nil];
+
+    
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    NSNumber *hasTraningOrder=[user objectForKey:@"hasTraningOrder"];
+    
+    if ([hasTraningOrder intValue]==1)
+    {
+        //有任务
+        self.selectedIndex=1;
+    }else
+    {
+        //无任务
+        self.selectedIndex=0;
+    }
+    
+
     [self downloadGoodDetail];
     
     
