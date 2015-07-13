@@ -25,6 +25,8 @@
 @property(nonatomic,strong)UILabel *dateLabel;
 /** 货物重量 */
 @property(nonatomic,strong)UILabel *weightLabel;
+@property(nonatomic,strong)UILabel *weightLabel1;
+
 /** 货物种类 */
 @property(nonatomic,strong)UILabel *goodsLabel;
 /** 结束倒计时 */
