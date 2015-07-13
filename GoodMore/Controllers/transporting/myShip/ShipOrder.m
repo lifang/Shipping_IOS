@@ -92,6 +92,9 @@
         if ([dict objectForKey:@"quote"]) {
             _quote = [[dict objectForKey:@"quote"] doubleValue];
         }
+        if ([dict objectForKey:@"shipId"]) {
+            _shipID = [NSString stringWithFormat:@"%@",[dict objectForKey:@"shipId"]];
+        }
     }
     return self;
 }

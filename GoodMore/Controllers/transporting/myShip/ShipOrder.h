@@ -44,5 +44,7 @@
 
 @property(nonatomic,assign)double allPay;
 
+@property(nonatomic,strong)NSString *shipID;
+
 - (id)initWithParseDictionary:(NSDictionary *)dict;
 @end
