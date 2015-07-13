@@ -40,7 +40,10 @@
 @end
 
 @implementation TransportingViewController
-
+- (void)viewWillAppear:(BOOL)animated {
+    [self downloadGoodDetail];
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -395,7 +398,7 @@ _dataItem = [NSMutableArray arrayWithObjects:@"",[NSString stringWithFormat:@"æˆ
     else
     {
         NSString *type ;
-        if([_levelstatus intValue] == Loading)
+        if([_levelstatus intValue] == ArriveLoading)
         {
         
         type = @"2";
@@ -407,10 +410,11 @@ _dataItem = [NSMutableArray arrayWithObjects:@"",[NSString stringWithFormat:@"æˆ
 
         }
         NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
-
+        NSString*coordinate = [NSString stringWithFormat:@"%@,%@",[userDefault objectForKey:@"latitude"],[userDefault objectForKey:@"longitude"]];
+        
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         hud.labelText = @"åŠ è½½ä¸­...";
-        [NetWorkInterface signWithid:_ids type:type loginid:[userDefault objectForKey:@"loginId"] finished:^(BOOL success, NSData *response) {
+        [NetWorkInterface signWithid:_ids type:type loginid:[userDefault objectForKey:@"loginId"] coordimate:coordinate finished:^(BOOL success, NSData *response) {
             hud.customView = [[UIImageView alloc] init];
             hud.mode = MBProgressHUDModeCustomView;
             [hud hide:YES afterDelay:0.5f];

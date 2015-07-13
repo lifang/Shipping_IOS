@@ -215,9 +215,10 @@ static NSString *completeShipInfo_method = @"app/completeInfo";
 
 //到达装/卸货港签到
 + (void)signWithid:(NSString *)idbumber
-             type:(NSString *)type
-          loginid:(NSString *)loginid
-         finished:(requestDidFinished)finish;
+              type:(NSString *)type
+           loginid:(NSString *)loginid
+        coordimate:(NSString *)coordimate
+          finished:(requestDidFinished)finish;
 //发送验证码 (注册)
 +(void)sendCodeWith:(NSString*)phone finished:(requestDidFinished)finish;
 
