@@ -34,8 +34,11 @@
 @property(nonatomic,strong)NSString *shipRelationID;
 
 @property(nonatomic,strong)UILabel *goods;
+@property(nonatomic,strong)UILabel *Nillable;
+
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataItem;
+@property (nonatomic, assign) int codeInt;
 
 @end
 
@@ -195,8 +198,16 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if(_codeInt == 90)
+    {
+        return 0;
+        
     
-    return [_levelstatus intValue];
+    }else
+    {
+        return [_levelstatus intValue];
+
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -210,11 +221,13 @@
     {
         NSString *selectstrings=[NSString stringWithFormat:@"imageHeight%@",_levelstatus];
         cell.selectButton.enabled = YES;
-
+        cell.toimageview.hidden = YES;
+        
         [cell.selectButton setBackgroundImage:kImageName(selectstrings) forState:UIControlStateNormal];
     }else
     {
-        
+        cell.toimageview.hidden = NO;
+
         int selectimage;
         selectimage = [_levelstatus intValue]- indexPath.row;
                        
@@ -314,14 +327,32 @@
                 if ([errorCode intValue] == RequestFail) {
                     //返回错误代码
                     hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                    [_titleView removeFromSuperview];
+//                    [_tableView removeFromSuperview];
+//                    _tableView.hidden = YES;
+                    _codeInt = 90;
+                    [_tableView reloadData];
+                    _Nillable = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2-70, kScreenHeight/2-75, 140, 30)];
+//                    _Nillable.center = CGPointMake(kScreenWidth/2-60-15, kScreenHeight/2);
+                    _Nillable.textAlignment = NSTextAlignmentCenter;
+                    
+                    [self.view addSubview:_Nillable];
+                    _Nillable.text = @"暂时没有任务";
+                    _Nillable.textColor = [UIColor grayColor];
+                    
+                    
+
                 }
                 else if ([errorCode intValue] == RequestSuccess) {
+                    [_Nillable removeFromSuperview];
                     
                     [hud hide:YES];
                     [_dataItem removeAllObjects];
                     [_titleView removeFromSuperview];
-                    
+                    _codeInt = 80;
                     [self initAndlayoutUI];
+                    _tableView.hidden = NO;
+
                     [self parseTerminalListWithDictionary:object];
                 }
             }

@@ -23,6 +23,9 @@
 }
 @property(nonatomic,strong)UIView *backView;
 @property(nonatomic,strong)UILabel *pageLabel;
+@property(nonatomic,strong)UIImage *selectImage;
+@property(nonatomic,assign)int selectInt;
+
 @end
 
 @implementation LoadGoodsViewController
@@ -74,7 +77,7 @@
 //    goodsWeight.textColor=[UIColor blackColor];
 //    [self.view addSubview:goodsWeight];
 //    
-    _num=[[UITextField alloc]initWithFrame:CGRectMake(leftSpace, topSpace, (kScreenWidth-leftSpace*2)*0.8, 30)];
+    _num=[[UITextField alloc]initWithFrame:CGRectMake(leftSpace-10, topSpace, (kScreenWidth-leftSpace*2-20), 30)];
     _num.delegate=self;
     if (_index==2) {
         _num.placeholder=@"请输入装货重量";
@@ -131,9 +134,9 @@
     
     [self.view addSubview:_collectionView];
     
-    UIView *line2=[[UIView alloc]initWithFrame:CGRectMake(leftSpace, kScreenHeight-bottomSpace-80-64-40, kScreenWidth-leftSpace*2, 1)];
-    line2.backgroundColor=kColor(201, 201, 201, 1);
-    [self.view addSubview:line2];
+//    UIView *line2=[[UIView alloc]initWithFrame:CGRectMake(leftSpace, kScreenHeight-bottomSpace-80-64-40, kScreenWidth-leftSpace*2, 1)];
+//    line2.backgroundColor=kColor(201, 201, 201, 1);
+//    [self.view addSubview:line2];
     //kScreenHeight-bottomSpace-40
     UIButton *commit=[UIButton buttonWithType:UIButtonTypeCustom];
     commit.frame=CGRectMake(leftSpace*2, kScreenHeight-bottomSpace-110-64, kScreenWidth-leftSpace*4, 40);
@@ -156,13 +159,13 @@
 {
     [self.view endEditing:YES];
     
-    if (_imageArray.count==0)
-    {
+//    if (_imageArray.count==0)
+//    {
         [self showImageOption1];
-    }else
-    {
-        [self showImageOption2];
-    }
+//    }else
+//    {
+//        [self showImageOption2];
+//    }
     
 }
 //提交信息
@@ -231,7 +234,7 @@
                 }
                 else if ([errorCode intValue] == RequestSuccess) {
                     hud.labelText = @"提交成功";
-                    [[NSNotificationCenter defaultCenter] postNotificationName:RefreshListNotification object:nil];
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:RefreshListNotification object:nil];
 
                     [self.navigationController popToRootViewControllerAnimated:YES];
                     
@@ -292,7 +295,7 @@
                 }
                 else if ([errorCode intValue] == RequestSuccess) {
                     hud.labelText = @"提交成功";
-                    [[NSNotificationCenter defaultCenter] postNotificationName:RefreshListNotification object:nil];
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:RefreshListNotification object:nil];
 
                     [self.navigationController popToRootViewControllerAnimated:YES];
                     
@@ -404,40 +407,53 @@
                 buttonIndex != actionSheet.cancelButtonIndex) {
                 UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
                 imagePickerController.delegate = self;
-                imagePickerController.allowsEditing = YES;
+//                imagePickerController.allowsEditing = YES;
                 imagePickerController.sourceType = sourceType;
                 [self presentViewController:imagePickerController animated:YES completion:nil];
             }
 
         }
             break;
-        case 2222:
+        case 105:
         {
-             NSLog(@"---------2222222222222");
+            if (buttonIndex == 0) {
+                //查看大图
+                [self showBigImageWithImage:_selectImage index:_selectInt];
+                
+                return;
+            }
+            else if (buttonIndex == 1) {
+                //相册
+                [_imageArray removeObjectAtIndex:_selectInt];
+                [_collectionView reloadData];
+                
+            }
+
+            
         }
             break;
             
         default:
             break;
     }
-    NSInteger sourceType = UIImagePickerControllerSourceTypeCamera;
-//    if (buttonIndex==0)
-//    {
-//        //相册
-//        sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-//    }else if (buttonIndex==1)
-//    {
-//        //拍照
-//        sourceType = UIImagePickerControllerSourceTypeCamera;
+//    NSInteger sourceType = UIImagePickerControllerSourceTypeCamera;
+////    if (buttonIndex==0)
+////    {
+////        //相册
+////        sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+////    }else if (buttonIndex==1)
+////    {
+////        //拍照
+////        sourceType = UIImagePickerControllerSourceTypeCamera;
+////    }
+//    if ([UIImagePickerController isSourceTypeAvailable:sourceType] &&
+//        buttonIndex != actionSheet.cancelButtonIndex) {
+//        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+//        imagePickerController.delegate = self;
+//        imagePickerController.allowsEditing = YES;
+//        imagePickerController.sourceType = sourceType;
+//        [self presentViewController:imagePickerController animated:YES completion:nil];
 //    }
-    if ([UIImagePickerController isSourceTypeAvailable:sourceType] &&
-        buttonIndex != actionSheet.cancelButtonIndex) {
-        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-        imagePickerController.delegate = self;
-        imagePickerController.allowsEditing = YES;
-        imagePickerController.sourceType = sourceType;
-        [self presentViewController:imagePickerController animated:YES completion:nil];
-    }
     
 }
 #pragma mark --UIImagePickerDelegate--
@@ -447,7 +463,8 @@
     //调接口上传图片
     [picker dismissViewControllerAnimated:YES completion:nil];
     UIImage *editImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-   
+    NSData *dataImage = UIImageJPEGRepresentation(editImage,0.4);
+    NSLog(@"imagesize:%d",dataImage.length/1024);
     [self uploadPictureWithImage:editImage];
 
 }
@@ -504,7 +521,18 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ImageCollectionViewCell *cell=(ImageCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
-    [self showBigImageWithImage:cell.imv.image index:indexPath.row];
+        UIActionSheet *sheet = nil;
+            sheet = [[UIActionSheet alloc] initWithTitle:@""
+                                                delegate:self
+                                       cancelButtonTitle:@"取消"
+                                  destructiveButtonTitle:nil
+                                       otherButtonTitles:@"查看照片",@"删除照片",nil];
+                [sheet showInView:self.view];
+    sheet.tag= 105;
+    _selectImage = cell.imv.image;
+    _selectInt = indexPath.row;
+    
+
 }
 //显示大图
 -(void)showBigImageWithImage:(UIImage*)image index:(NSInteger)index
@@ -512,7 +540,7 @@
     _backView=[[UIView alloc]initWithFrame:self.view.frame];
     _backView.backgroundColor=[UIColor blackColor];
     
-    UIScrollView *scrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(20, 140, kScreenWidth-40, kScreenHeight-280)];
+    UIScrollView *scrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(20, 20, kScreenWidth-40, kScreenHeight-160)];
     scrollView.pagingEnabled=YES;
     scrollView.delegate=self;
     scrollView.showsHorizontalScrollIndicator=NO;
@@ -520,11 +548,12 @@
         scrollView.contentOffset=CGPointMake((kScreenWidth-40)*index, kScreenHeight-280);
     }];
     
-    scrollView.contentSize=CGSizeMake((self.view.bounds.size.width-40)*9, 0);
+    scrollView.contentSize=CGSizeMake((self.view.bounds.size.width-40)*_imageArray.count, 0);
     for (int i=0; i<_imageArray.count; i++)
     {
-        UIImageView *imaV=[[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth-40)*i, 0, kScreenWidth-40, kScreenHeight-280)];
+        UIImageView *imaV=[[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth-40)*i, 0, kScreenWidth-40, kScreenHeight-160)];
         imaV.image=[_imageArray objectAtIndex:i];
+//        imaV.contentMode = UIViewContentModeScaleAspectFill;
         [scrollView addSubview:imaV];
         
     }

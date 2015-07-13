@@ -303,7 +303,7 @@ static NSString *HTTP_GET = @"GET";
     NSString *urlString=[NSString stringWithFormat:@"%@%@%@",KServiceURL,uploadSingleImage_method,loginId];
     NSLog(@"-------%@",urlString);
     NetworkRequest *request=[[NetworkRequest alloc]initWithRequestURL:urlString httpMethod:HTTP_POST finished:finish];
-    [request uploadImageData:UIImagePNGRepresentation(image) imageName:nil key:@"img"];
+    [request uploadImageData:UIImageJPEGRepresentation(image,0.4) imageName:nil key:@"img"];
     [request start];
 }
 
