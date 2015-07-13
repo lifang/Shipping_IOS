@@ -28,6 +28,8 @@
     UIView *whiteView = [[UIView alloc]init];
     whiteView.backgroundColor = [UIColor whiteColor];
     whiteView.frame = CGRectMake(K_MainWidth / 5.5, K_MainHeight / 5, K_MainWidth / 1.5, K_MainHeight / 3);
+    whiteView.layer.cornerRadius=6;
+    whiteView.layer.masksToBounds=YES;
     [self.view addSubview:whiteView];
     
     UILabel *label1 = [[UILabel alloc]init];

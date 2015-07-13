@@ -43,6 +43,7 @@
 
 @property(nonatomic,assign)int portID;
 @property(nonatomic,strong)PromptView *promtView;
+@property(nonatomic,strong)UILabel *messageLabel;
 @end
 
 @implementation TaskViewController
@@ -345,6 +346,7 @@
                     {
                         //无数据
                         hud.labelText = @"没有更多数据了...";
+
                     }
 
                     
@@ -390,15 +392,19 @@
         [_ordersArray addObject:order];
     }];
     
+    [_tableView reloadData];
+    
     if (_ordersArray.count==0)
     {
         
-        _promtView=[[PromptView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-        _promtView.message.text=@"没有任务";
-        [self.view addSubview:_promtView];
+        _messageLabel=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2-70, kScreenHeight/2-75, 140, 30)];
+        _messageLabel.textAlignment = NSTextAlignmentCenter;
+        _messageLabel.text=@"暂无任务";
+        _messageLabel.textColor=kGrayColor;
+        [self.view addSubview:_messageLabel];
     }else
     {
-        [_promtView removeFromSuperview];
+        [_messageLabel removeFromSuperview];
         [_tableView reloadData];
     }
     
@@ -575,8 +581,6 @@
 #pragma mark - 上下拉刷新
 //下拉刷新
 - (void)pullDownToLoadData {
-    
-    //[_totalLastTime removeAllObjects];
     
     [self firstLoadData];
 }
