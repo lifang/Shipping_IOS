@@ -225,7 +225,7 @@
     _firstiamgeview.frame = CGRectMake(100, CGRectGetMaxY(_moneyLabel.frame)-3 , 26, 26);
     _firstiamgeviews.frame = CGRectMake(K_MainWidth-105, CGRectGetMaxY(_moneyLabel.frame)-3 , 26, 26);
 
-    _goodsLabel.frame = CGRectMake(K_MainWidth / 2-20 , CGRectGetMaxY(_moneyLabel.frame) , K_MainWidth / 2, 20);
+    _goodsLabel.frame = CGRectMake(K_MainWidth / 2-15 , CGRectGetMaxY(_moneyLabel.frame) , K_MainWidth / 2, 20);
     
     _blueView.frame = CGRectMake(10, CGRectGetMaxY(_goodsLabel.frame) + 15, K_MainWidth - 20, 30);
     
