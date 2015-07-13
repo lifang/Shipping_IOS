@@ -10,6 +10,7 @@
 #import "CommonViewController.h"
 #import "MyShipViewController.h"
 
+static NSString *HistoryDetailControllerRefreshNotification = @"HistoryDetailControllerRefreshNotification";
 @interface HistoryController : CommonViewController
 
 @end

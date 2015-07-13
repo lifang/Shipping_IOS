@@ -28,5 +28,7 @@
 
 @property(nonatomic,strong)NSString *shipNumber;
 
+@property(nonatomic,strong)NSString *defaultMoney;
+
 - (id)initWithParseDictionary:(NSDictionary *)dict;
 @end

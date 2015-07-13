@@ -10,6 +10,8 @@
 
 static NSString *PushTotransportationNotification = @"PushTotransportationNotification";
 
+static NSString *PushTomyShipNotification = @"PushTomyShipNotification";
+
 @interface MainViewController : UITabBarController
 
 @end

@@ -16,6 +16,7 @@ typedef enum {
 
 static NSString *PushToHistoryDetailNotification = @"PushToHistoryDetailNotification";
 static NSString *PushToPayForShipNotification = @"PushToPayForShipNotification";
+static NSString *JiedanchenggongShipNotification = @"JiedanchenggongShipNotification";
 @interface MyShipViewController : CommonViewController
 
 @end

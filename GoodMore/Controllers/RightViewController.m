@@ -36,12 +36,13 @@
     NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
     NSString *name=[userDefault objectForKey:@"name"];
     NSString *phone=[userDefault objectForKey:@"phone"];
+    NSString *moneyCanGet=[userDefault objectForKey:@"moneyCanGet"];
     MYInfoView *view=[[MYInfoView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth/2, kScreenHeight)];
     view.delegate=self;
     view.name.text=name;
     view.phone.text=phone;
-    view.cash.text=@"$20000";
-    view.cash.textColor=[UIColor blueColor];
+    view.cash.text=[NSString stringWithFormat:@"￥%@",moneyCanGet];
+    view.cash.textColor=kColor(250, 131, 8, 1.0);
     [self.view addSubview:view];
 }
 #pragma mark MYInfoViewDelegate
@@ -86,16 +87,11 @@
         case 3:
         {
             //我的消息
-            MessageViewController *message=[[MessageViewController alloc]init];
-            UINavigationController *messageNav=[[UINavigationController alloc]initWithRootViewController:message];
-            [NavigationBar setNavigationBarStyle:messageNav];
-            [self.mm_drawerController setCenterViewController:messageNav withCloseAnimation:YES completion:nil];
-        }
+//            MessageViewController *message=[[MessageViewController alloc]init];
+//            UINavigationController *messageNav=[[UINavigationController alloc]initWithRootViewController:message];
+//            [NavigationBar setNavigationBarStyle:messageNav];
+//            [self.mm_drawerController setCenterViewController:messageNav withCloseAnimation:YES completion:nil];
             
-         
-            break;
-        case 4:
-        {
             //退出登录
             AppDelegate *delegate = [UIApplication sharedApplication].delegate;
             
@@ -103,9 +99,9 @@
             
         }
             
-           
+         
             break;
-            
+                 
         default:
             break;
     }

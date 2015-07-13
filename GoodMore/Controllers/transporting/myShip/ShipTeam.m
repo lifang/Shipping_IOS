@@ -18,13 +18,19 @@
             _code = [NSString stringWithFormat:@"%@",[dict objectForKey:@"code"]];
         }else
         {
-            _code = @"";
+            _code = @"-";
         }
         if ([dict objectForKey:@"allAccount"]) {
             _allAccount = [NSString stringWithFormat:@"%@",[dict objectForKey:@"allAccount"]];
         }
         else{
-            _allAccount = @"";
+            _allAccount = @"-";
+        }
+        if ([dict objectForKey:@"timeLeft"]) {
+            _timeLeft = [NSString stringWithFormat:@"%@",[dict objectForKey:@"timeLeft"]];
+        }
+        else{
+            _timeLeft = @"-";
         }
     }
     return self;

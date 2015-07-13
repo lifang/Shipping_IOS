@@ -18,5 +18,7 @@
 //吨位
 @property(nonatomic,strong)NSString *allAccount;
 
+@property(nonatomic,strong)NSString *timeLeft;
+
 - (id)initWithParseDictionary:(NSDictionary *)dict;
 @end

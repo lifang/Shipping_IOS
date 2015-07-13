@@ -45,7 +45,7 @@
 }
 -(void)initStaticData
 {
-    _staticData=[[NSArray alloc]initWithObjects:@"船主姓名",@"电话",@"修改密码", @"银行帐号",nil];
+    _staticData=[[NSArray alloc]initWithObjects:@"船主姓名",@"电话",@"修改密码", nil];
 }
 #pragma mark action
 -(IBAction)showRight:(id)sender
@@ -271,13 +271,13 @@
            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         }
             break;
-        case 3:
-        {
-            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
-             _bankNumber.frame=CGRectMake(cell.bounds.size.width-160-30, (cell.bounds.size.height-30)/2, 160, 30);
-            [cell.contentView addSubview:_bankNumber];
-        }
-            break;
+//        case 3:
+//        {
+//            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+//             _bankNumber.frame=CGRectMake(cell.bounds.size.width-160-30, (cell.bounds.size.height-30)/2, 160, 30);
+//            [cell.contentView addSubview:_bankNumber];
+//        }
+//            break;
             
             
         default:

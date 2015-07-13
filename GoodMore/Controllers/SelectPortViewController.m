@@ -15,6 +15,7 @@
     UILabel *_loadPort;
     UILabel *_unLoadPort;
 }
+@property(nonatomic,assign)int portID;
 @end
 
 @implementation SelectPortViewController
@@ -49,10 +50,12 @@
     
     _loadPort=[[UILabel alloc]init];
     _loadPort.textColor=kGrayColor;
+    _loadPort.font=[UIFont systemFontOfSize:15];
     _loadPort.textAlignment=NSTextAlignmentRight;
     
     _unLoadPort=[[UILabel alloc]init];
     _unLoadPort.textColor=kGrayColor;
+    _unLoadPort.font=[UIFont systemFontOfSize:15];
     _unLoadPort.textAlignment=NSTextAlignmentRight;
 
 
@@ -71,7 +74,12 @@
 #pragma mark action
 -(IBAction)commit:(id)sender
 {
-    
+    if (_delegate && [_delegate respondsToSelector:@selector(selectPortWithportId:distance:)])
+    {
+        [_delegate selectPortWithportId:_portID distance:_loadPort.text];
+         [self.navigationController popViewControllerAnimated:YES];
+    }
+   
 }
 #pragma mark UITableView
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -118,9 +126,24 @@
     portList.delegate=self;
     [self.navigationController pushViewController:portList animated:YES];
 }
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
 #pragma mark PortListDelegate
--(void)getPortInfoWithportInfo:(NSString *)portInfo index:(NSInteger)index
+-(void)getPortInfoWithportInfo:(NSString *)portInfo portID:(int)portID  index:(NSInteger)index
 {
+    NSLog(@"portInfo:%@ portID:%d index:%ld",portInfo,portID,(long)index);
+    _portID=portID;
+    
     if (index==0)
     {
         _loadPort.text=portInfo;

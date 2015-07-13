@@ -36,6 +36,8 @@
 
 @property(nonatomic,strong)UILabel *successLabel;
 
+@property(nonatomic,strong)UILabel *quatLabel;
+
 -(void)setContentWithShipOrderModel:(ShipOrder *)shipOrderModel;
 
 @end

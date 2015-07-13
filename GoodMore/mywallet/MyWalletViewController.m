@@ -16,6 +16,8 @@
 #import "AvaliblePayModel.h"
 #import "SureCashViewController.h"
 #import "MoneyNumModel.h"
+#import "AppDelegate.h"
+#import "UIViewController+MMDrawerController.h"
 @interface MYButton : UIButton
 
 @end
@@ -116,12 +118,22 @@
     self.edgesForExtendedLayout=UIRectEdgeNone;
     [self.navigationController.view addSubview:navView];
     
-    CGFloat space=30;
-    CGFloat width=(kScreenWidth-space*3)/2;
+    CGFloat space=10;
+    CGFloat leftSpace=50;
+    CGFloat width=(kScreenWidth-space-leftSpace*2)/2;
+    
+    UIButton *backBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame=CGRectMake(10, 25, 30, 30);
+    [backBtn setTitle:@"返回" forState:UIControlStateNormal];
+    backBtn.titleLabel.font=[UIFont boldSystemFontOfSize:15];
+    [backBtn addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+    [navView addSubview:backBtn];
+    
     _leftButton=[MYButton buttonWithType:UIButtonTypeCustom];
+    //_leftButton.backgroundColor=[UIColor redColor];
     [_leftButton setTitle:@"可提现金额" forState:UIControlStateNormal];
-    _leftButton.titleLabel.font=[UIFont boldSystemFontOfSize:20];
-    _leftButton.frame=CGRectMake(space, 25, width, 30);
+    _leftButton.titleLabel.font=[UIFont boldSystemFontOfSize:16];
+    _leftButton.frame=CGRectMake(leftSpace, 25, width, 30);
     [_leftButton addTarget:self action:@selector(leftButton:) forControlEvents:UIControlEventTouchUpInside];
     _leftButton.tag=110;
     _leftButton.selected=YES;
@@ -130,9 +142,10 @@
     
     
     _rightButton=[MYButton buttonWithType:UIButtonTypeCustom];
-    _rightButton.frame=CGRectMake(space+space+width, 25, width, 30);
+    //_rightButton.backgroundColor=[UIColor blackColor];
+    _rightButton.frame=CGRectMake(leftSpace+space+width, 25, width, 30);
     [_rightButton setTitle:@"未支付运费" forState:UIControlStateNormal];
-    _rightButton.titleLabel.font=[UIFont boldSystemFontOfSize:20];
+    _rightButton.titleLabel.font=[UIFont boldSystemFontOfSize:16];
     [_rightButton addTarget:self action:@selector(rightButton:) forControlEvents:UIControlEventTouchUpInside];
     _rightButton.tag=111;
     _rightButton.selected=NO;
@@ -329,6 +342,13 @@
     [whiteView addSubview:sureBTN];
 }
 #pragma mark action
+-(void)back:(UIButton*)sender
+{
+    //返回主页面
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    
+    [self.mm_drawerController setCenterViewController:delegate.rootViewController.mainController withCloseAnimation:YES completion:nil];
+}
 -(void)cancelBTN:(UIButton*)btn
 {
     _moneyNum.text=nil;

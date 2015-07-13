@@ -7,19 +7,39 @@
 //
 
 #import "ShipInfoViewController.h"
-#import "Constants.h"
+#import "NetWorkInterface.h"
 #import "AppDelegate.h"
 #import "UIViewController+MMDrawerController.h"
 
-@interface ShipInfoViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface ShipInfoViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate>
 {
     UITableView *_tableView;
     NSArray *_staticData;
+    UITextField *_shipNameText;
+    
+    UITextField *_shipVolumeText;
+    
+    UITextField *_shipYearText;
+    
+    UITextField *_shipNumberText;
+   
+    UITextField *_shipLengthText;
+   
+    UITextField *_shipWaterEatText;
+    
 }
 @end
 
 @implementation ShipInfoViewController
-
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    //    for (UIView *v in self.navigationController.navigationBar.subviews) {
+    //        if ([NSStringFromClass(v.class) isEqualToString:@"_UINavigationBarBackground"]) {
+    //            [v removeFromSuperview];
+    //        }
+    //    }
+    self.navigationController.navigationBarHidden = NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -40,7 +60,7 @@
    
    
 
-    _staticData=[[NSArray alloc]initWithObjects:@"船名",@"载重",@"船舶号",@"船舶长度",@"吃水",@"签证薄概况页照片", nil];
+    _staticData=[[NSArray alloc]initWithObjects:@"船名",@"吨位",@"建成年份(选填)",@"船舶登记号(选填)",@"船舶长度(选填)",@"满载吃水(选填)", nil];
     
     [self initUI];
 }
@@ -56,6 +76,58 @@
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_tableView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_tableView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
+    
+    _shipNameText=[[UITextField alloc]init];
+    _shipNameText.delegate=self;
+    _shipNameText.tag=1;
+    _shipNameText.textAlignment=NSTextAlignmentRight;
+    _shipNameText.font=[UIFont systemFontOfSize:14];
+    _shipNameText.clearButtonMode=UITextFieldViewModeWhileEditing;
+    
+   
+    
+    _shipVolumeText=[[UITextField alloc]init];
+    _shipVolumeText.delegate=self;
+    _shipVolumeText.tag=2;
+    _shipVolumeText.textAlignment=NSTextAlignmentRight;
+    _shipVolumeText.font=[UIFont systemFontOfSize:14];
+    _shipVolumeText.clearButtonMode=UITextFieldViewModeWhileEditing;
+    
+    
+    _shipYearText=[[UITextField alloc]init];
+    _shipYearText.delegate=self;
+    _shipYearText.tag=3;
+    _shipYearText.textAlignment=NSTextAlignmentRight;
+    _shipYearText.font=[UIFont systemFontOfSize:14];
+    _shipYearText.clearButtonMode=UITextFieldViewModeWhileEditing;
+    
+    
+    _shipNumberText=[[UITextField alloc]init];
+    _shipNumberText.delegate=self;
+    _shipNumberText.tag=4;
+    _shipNumberText.textAlignment=NSTextAlignmentRight;
+    _shipNumberText.font=[UIFont systemFontOfSize:14];
+    _shipNumberText.clearButtonMode=UITextFieldViewModeWhileEditing;
+    
+   
+    
+    _shipLengthText=[[UITextField alloc]init];
+    _shipLengthText.delegate=self;
+    _shipLengthText.tag=5;
+    _shipLengthText.textAlignment=NSTextAlignmentRight;
+    _shipLengthText.font=[UIFont systemFontOfSize:14];
+    _shipLengthText.clearButtonMode=UITextFieldViewModeWhileEditing;
+    
+   
+    
+    _shipWaterEatText=[[UITextField alloc]init];
+    _shipWaterEatText.delegate=self;
+    _shipWaterEatText.tag=6;
+    _shipWaterEatText.textAlignment=NSTextAlignmentRight;
+    _shipWaterEatText.font=[UIFont systemFontOfSize:14];
+    _shipWaterEatText.clearButtonMode=UITextFieldViewModeWhileEditing;
+    
+    
 }
 -(void)setHeadAndFootView
 {
@@ -92,46 +164,132 @@
     UIView *backView=[[UIView alloc]initWithFrame:cell.frame];
     cell.selectedBackgroundView=backView;
     cell.selectedBackgroundView.backgroundColor=[UIColor clearColor];
+    [cell setBackgroundView:[[UIView alloc] init]];          //取消边框线
+    cell.backgroundColor = [UIColor clearColor];
+
     
     cell.textLabel.text=_staticData[indexPath.row];
     
-    cell.textLabel.font=[UIFont systemFontOfSize:16];
+    cell.textLabel.font=[UIFont systemFontOfSize:14];
     
     NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+    NSString *shipName=[userDefaults objectForKey:@"shipName"];
+    NSString *volume=[userDefaults objectForKey:@"volume"];
+    NSString *shipNumber=[userDefaults objectForKey:@"shipNumber"];
+    NSString *length=[userDefaults objectForKey:@"length"];
+    NSString *waterEat=[userDefaults objectForKey:@"waterEat"];
+    NSString *builderTime=[userDefaults objectForKey:@"builderTime"];
+    NSLog(@"------volume:%@",volume);
     switch (indexPath.row)
     {
         case 0:
         {
+            _shipNameText.frame=CGRectMake(cell.bounds.size.width-160-10, (cell.bounds.size.height-30)/2, 160, 30);
+            [cell.contentView addSubview:_shipNameText];
             
+            if (shipName && ![shipName isEqualToString:@""])
+            {
+                //存在信息
+                _shipNameText.text=shipName;
+                
+                
+            }else
+            {
+                _shipNameText.placeholder=@"请输入船名";
+            }
         }
             break;
         case 1:
         {
             
+            _shipVolumeText.frame=CGRectMake(cell.bounds.size.width-160-10, (cell.bounds.size.height-30)/2, 160, 30);
+            [cell.contentView addSubview:_shipVolumeText];
+            if (volume && ![volume doubleValue]==0)
+            {
+                //存在信息
+                _shipVolumeText.text=[NSString stringWithFormat:@"%@",volume];
+                
+                
+            }else
+            {
+                 _shipVolumeText.placeholder=@"请输入船吨位";
+            }
+
         }
             break;
         case 2:
         {
-            
+            _shipYearText.frame=CGRectMake(cell.bounds.size.width-160-10, (cell.bounds.size.height-30)/2, 160, 30);
+            [cell.contentView addSubview:_shipYearText];
+            if (builderTime && ![builderTime isEqualToString:@""])
+            {
+                //存在信息
+                _shipYearText.text=builderTime;
+                
+                
+            }else
+            {
+                _shipYearText.placeholder=@"请输入建成年份";
+            }
+
         }
             break;
         case 3:
         {
-            
+            _shipNumberText.frame=CGRectMake(cell.bounds.size.width-160-10, (cell.bounds.size.height-30)/2, 160, 30);
+            [cell.contentView addSubview:_shipNumberText];
+            if (shipNumber && ![shipNumber isEqualToString:@""])
+            {
+                //存在信息
+                _shipNumberText.text=shipNumber;
+               
+                
+            }else
+            {
+                _shipNumberText.placeholder=@"请输入船舶号";
+            }
+
         }
             break;
 
         case 4:
         {
+            _shipLengthText.frame=CGRectMake(cell.bounds.size.width-160-10, (cell.bounds.size.height-30)/2, 160, 30);
+            [cell.contentView addSubview:_shipLengthText];
+            NSLog(@"-----length==%@",length);
+            if (length && ![length doubleValue]==0)
+            {
+                //存在信息
+                _shipLengthText.text=[NSString stringWithFormat:@"%@",length];
+                
+                
+            }else
+            {
+                _shipLengthText.placeholder=@"请输入船舶长度";
+            }
+
+        }
+            break;
             
+        case 5:
+        {
+            _shipWaterEatText.frame=CGRectMake(cell.bounds.size.width-160-10, (cell.bounds.size.height-30)/2, 160, 30);
+            [cell.contentView addSubview:_shipWaterEatText];
+            if (waterEat && ![waterEat doubleValue]==0)
+            {
+                //存在信息
+                _shipWaterEatText.text=[NSString stringWithFormat:@"%@",waterEat];
+                
+                
+            }else
+            {
+                _shipWaterEatText.placeholder=@"请输入吃水深度";
+            }
+
         }
             break;
 
-        case 5:
-        {
-            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
-        }
-            break;
+        
         default:
             break;
     }
@@ -140,12 +298,20 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row==5)
-    {
-        [self showImageOption];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
     }
 }
-
+//图片
 -(void)showImageOption
 {
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@""
@@ -183,7 +349,7 @@
     NSLog(@"---------图片信息:%@",info);
     //调接口上传图片
     [picker dismissViewControllerAnimated:YES completion:nil];
-    UIImage *editImage = [info objectForKey:UIImagePickerControllerEditedImage];
+    //UIImage *editImage = [info objectForKey:UIImagePickerControllerEditedImage];
     
     //[self uploadPictureWithImage:editImage];
     
@@ -193,7 +359,8 @@
 //保存
 -(void)save:(UIButton*)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self saveShipInfo];
+    
 }
 -(IBAction)back:(id)sender
 {
@@ -201,6 +368,106 @@
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     
     [self.mm_drawerController setCenterViewController:delegate.rootViewController.mainController withCloseAnimation:YES completion:nil];
+}
+//保存信息
+-(void)saveShipInfo
+{
+    if (_shipNameText.text && ![_shipNameText.text isEqualToString:@""] && _shipVolumeText && ![_shipVolumeText.text isEqualToString:@""])
+    {
+        
+        MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.labelText=@"正在保存";
+        
+        NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
+        int loginId=[[userDefault objectForKey:@"loginId"] intValue];
+        int shipID=[[userDefault objectForKey:@"shipOwnerId"] intValue];
+        
+        [NetWorkInterface completeShipInfoWithShipID:shipID loginId:loginId shipNumber:_shipNumberText.text volume:[_shipVolumeText.text intValue] builderTime:_shipYearText.text shipName:_shipNameText.text length:[_shipLengthText.text doubleValue] waterEat:[_shipWaterEatText.text doubleValue] finished:^(BOOL success, NSData *response) {
+            
+            hud.customView=[[UIImageView alloc]init];
+            [hud hide:YES afterDelay:0.3];
+            NSLog(@"------------保存船信息:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+            if (success)
+            {
+                id object=[NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+                if ([object isKindOfClass:[NSDictionary class]])
+                {
+                    if ([[object objectForKey:@"code"]integerValue] == RequestSuccess)
+                    {
+                        [hud setHidden:YES];
+                        
+                        MBProgressHUD *hud1 = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                        hud1.customView = [[UIImageView alloc] init];
+                        hud1.mode = MBProgressHUDModeCustomView;
+                        [hud1 hide:YES afterDelay:1.f];
+                        hud1.labelText = @"保存成功";
+                    //存储信息
+                        [self writeInfo];
+                        //如果是push进来的就返回
+                        [self.navigationController popViewControllerAnimated:YES];
+                        
+                    }else
+                    {
+                        
+                        hud.labelText=[NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                    }
+                }else
+                {
+                    
+                    hud.labelText=kServiceReturnWrong;
+                }
+            }else
+            {
+                hud.labelText=kNetworkFailed;
+            }
+            
+        }];
+
+    }else
+    {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        [hud hide:YES afterDelay:1.f];
+        hud.labelText = @"船名和载重必须填写";
+        return;
+
+    }
+    
+}
+-(void)writeInfo
+{
+    NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
+    [userDefault setObject:_shipNameText.text forKey:@"shipName"];
+    [userDefault setObject:_shipNumberText.text forKey:@"shipNumber"];
+    [userDefault setObject:_shipYearText.text forKey:@"builderTime"];
+    [userDefault setObject:_shipVolumeText.text forKey:@"volume"];
+    [userDefault setObject:_shipLengthText.text forKey:@"length"];
+    [userDefault setObject:_shipWaterEatText.text forKey:@"waterEat"];
+    [userDefault synchronize];
+    
+}
+#pragma mark ------UITextFieldDelegate----
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    
+    if (textField.tag==4 || textField.tag==5 || textField.tag==6 ) {
+        
+        _tableView.contentOffset=CGPointMake(0, 120);
+    }
+}
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    
+    if (textField.tag==4 || textField.tag==5 || textField.tag==6 ) {
+        
+        _tableView.contentOffset=CGPointZero;
+    }
 }
 
 - (void)didReceiveMemoryWarning {

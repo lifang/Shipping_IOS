@@ -15,6 +15,7 @@
     if (self=[super init])
     {
         [self setValuesForKeysWithDictionary:dictionary];
+        self.ID=[dictionary objectForKey:@"id"];
     }
     return self;
 }

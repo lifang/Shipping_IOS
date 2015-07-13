@@ -449,22 +449,23 @@ static NSString *HTTP_GET = @"GET";
     [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
 }
 //单船竞价
-+(void)singleShipCompletWithshipOwnerId:(int)shipOwnerId bsOrderId:(int)bsOrderId loginId:(int)loginId quote:(int)quote finished:(requestDidFinished)finish
++(void)singleShipCompletWithshipOwnerId:(int)shipOwnerId bsOrderId:(int)bsOrderId loginId:(int)loginId quote:(double)quote finished:(requestDidFinished)finish
 {
     NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
     [paramDic setObject:[NSNumber numberWithInt:shipOwnerId] forKey:@"shipOwnerId"];
     [paramDic setObject:[NSNumber numberWithInt:bsOrderId] forKey:@"bsOrderId"];
     [paramDic setObject:[NSNumber numberWithInt:loginId] forKey:@"loginId"];
-    [paramDic setObject:[NSNumber numberWithInt:quote] forKey:@"quote"];
+    [paramDic setObject:[NSNumber numberWithDouble:quote] forKey:@"quote"];
     NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,singleShipComplete_method];
     [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
 
 }
 //消息列表
-+(void)getMessageListWithshipOwnerId:(int)shipOwnerId finished:(requestDidFinished)finish
++(void)getMessageListWithshipOwnerId:(int)shipOwnerId page:(int)page finished:(requestDidFinished)finish
 {
     NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
     [paramDic setObject:[NSNumber numberWithInt:shipOwnerId] forKey:@"shipOwnerId"];
+    [paramDic setObject:[NSNumber numberWithInt:page] forKey:@"page"];
     NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,messageList_method];
     [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
 
@@ -553,5 +554,27 @@ static NSString *HTTP_GET = @"GET";
 {
     NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,getPortList_method];
     [[self class] requestWithURL:urlString params:nil httpMethod:HTTP_GET finished:finish];
+}
+//获得距离列表
++(void)getDictanceListWithfinished:(requestDidFinished)finish
+{
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,getDistanceList_method];
+    [[self class] requestWithURL:urlString params:nil httpMethod:HTTP_GET finished:finish];
+}
+//保存船信息
++(void)completeShipInfoWithShipID:(int)shipID loginId:(int)loginId shipNumber:(NSString*)shipNumber volume:(int)volume builderTime:(NSString*)builderTime shipName:(NSString*)shipName length:(double)length waterEat:(double)waterEat finished:(requestDidFinished)finish
+{
+    NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
+    [paramDic setObject:[NSNumber numberWithInt:shipID] forKey:@"id"];
+    [paramDic setObject:[NSNumber numberWithInt:loginId] forKey:@"loginId"];
+    [paramDic setObject:shipNumber forKey:@"shipNumber"];
+    [paramDic setObject:[NSNumber numberWithInt:volume] forKey:@"volume"];
+    [paramDic setObject:builderTime forKey:@"builderTime"];
+    [paramDic setObject:shipName forKey:@"shipName"];
+    [paramDic setObject:[NSNumber numberWithDouble:length] forKey:@"length"];
+    [paramDic setObject:[NSNumber numberWithDouble:waterEat] forKey:@"waterEat"];
+    
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,completeShipInfo_method];
+    [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
 }
 @end

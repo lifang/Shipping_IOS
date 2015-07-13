@@ -55,6 +55,7 @@
         [self.contentView addSubview:_phoneNumLabel];
         
         _priceLabel = [[UILabel alloc]init];
+        _priceLabel.textAlignment = NSTextAlignmentCenter;
         _priceLabel.hidden = YES;
         _priceLabel.text = @"￥2.00";
         _priceLabel.font = [UIFont systemFontOfSize:13];
@@ -62,7 +63,7 @@
         
         UIView *line = [[UIView alloc]init];
         line.backgroundColor = kColor(201, 201, 201, 0.6);
-        line.frame = CGRectMake(K_MainWidth / 4 * 3.1, 20, 1, 40);
+        line.frame = CGRectMake(K_MainWidth / 4 * 2.8, 20, 1, 40);
         [self.contentView addSubview:line];
         
         _setBtn = [[UIButton alloc]init];
@@ -72,6 +73,14 @@
         [_setBtn setBackgroundColor:[UIColor clearColor]];
         [_setBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
         [self.contentView addSubview:_setBtn];
+        
+        _resetBtn = [[UIButton alloc]init];
+        [_resetBtn addTarget:self action:@selector(resetClicked) forControlEvents:UIControlEventTouchUpInside];
+        _resetBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+        [_resetBtn setTitle:@"重置运费" forState:UIControlStateNormal];
+        [_resetBtn setBackgroundColor:[UIColor clearColor]];
+        [_resetBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        [self.contentView addSubview:_resetBtn];
         
     }
     return self;
@@ -88,14 +97,32 @@
     
     _phoneNumLabel.frame = CGRectMake(CGRectGetMaxX(_weightLabel.frame) - 42, CGRectGetMaxY(_logistNameLabel.frame) - 8, 240, 20);
     
-    _priceLabel.frame = CGRectMake(K_MainWidth - 100, CGRectGetMaxY(_logistNameLabel.frame) - 25, 100, 30);
+    _priceLabel.frame = CGRectMake(K_MainWidth - 112, CGRectGetMaxY(_logistNameLabel.frame) - 35, 100, 30);
     
     _setBtn.frame = CGRectMake(K_MainWidth - 75, CGRectGetMaxY(_logistNameLabel.frame) - 20, 70, 20);
+    
+    _resetBtn.frame = CGRectMake(K_MainWidth - 95, CGRectGetMaxY(_logistNameLabel.frame) - 10, 70, 20);
 }
 
 -(void)setClicked {
     if (_delegate && [_delegate respondsToSelector:@selector(setClickedWithIndex:)]) {
         [_delegate setClickedWithIndex:_index];
     }
+}
+
+-(void)resetClicked {
+    if (_delegate && [_delegate respondsToSelector:@selector(resetClickedWithIndex:)]) {
+        [_delegate resetClickedWithIndex:_index];
+    }
+}
+
+-(void)setPayNumContentWithShipInTeamModel:(ShipInTeam *)shipInTeamModel {
+    if ([shipInTeamModel.isLeader isEqualToString:@"1"]) {
+        _leftTopView.hidden = NO;
+    }
+    _logistNameLabel.text = shipInTeamModel.shipNumber;
+    _nameLabel.text = shipInTeamModel.name;
+    _weightLabel.text = [NSString stringWithFormat:@"%@吨",shipInTeamModel.volume];
+    _phoneNumLabel.text = shipInTeamModel.phone;
 }
 @end

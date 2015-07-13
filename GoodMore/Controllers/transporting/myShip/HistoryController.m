@@ -44,6 +44,10 @@
     return _tableView;
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -52,6 +56,7 @@
     self.tableView.backgroundColor = [UIColor whiteColor];
     _historyArray = [[NSMutableArray alloc]init];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(firstLoadData) name:HistoryDetailControllerRefreshNotification object:nil];
     //获取历史列表
     [self firstLoadData];
 }
@@ -87,7 +92,7 @@
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 200.f;
+    return 170.f;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -101,6 +106,17 @@
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:shipOrder.ID,@"shipID", nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:PushToHistoryDetailNotification object:nil userInfo:dict];
 }
+
+//-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+//    UIView *line = [[UIView alloc]init];
+//    line.backgroundColor = kColor(188, 188, 188, 0.7);
+//    line.frame = CGRectMake(10, 0, K_MainWidth - 20, 1);
+//    return line;
+//}
+//
+//-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+//    return 1;
+//}
 
 #pragma mark -- Reuest
 

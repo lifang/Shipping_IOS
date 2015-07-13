@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyShipModel.h"
 //点击协议
 @protocol PayNumberCellDelegate <NSObject>
 
 @optional
 
 -(void)setClickedWithIndex:(NSIndexPath *)index;
+
+-(void)resetClickedWithIndex:(NSIndexPath *)index;
 
 @end
 #define ShipDetailCellHeight 80
@@ -37,4 +40,6 @@
 @property(nonatomic,strong)NSIndexPath *index;
 
 @property(nonatomic,weak)id<PayNumberCellDelegate> delegate;
+
+-(void)setPayNumContentWithShipInTeamModel:(ShipInTeam *)shipInTeamModel;
 @end
