@@ -28,18 +28,20 @@
     if (_index==0)
     {
         //装货港
-        self.title=@"距离";
+        self.title=@"装货港距离";
         _distanceArray=[[NSMutableArray alloc]initWithCapacity:0];
-        [self initUI];
+        
         [self getDistanceList];
+        
         
     }else if (_index==1)
     {
         //卸货港
         self.title=@"卸货港";
         _portArray=[[NSMutableArray alloc]initWithCapacity:0];
-        [self initUI];
+        
        [self getPortList];
+        [self initUI];
     }
     
    
@@ -47,8 +49,8 @@
 -(void)initUI
 {
     _tableView=[[UITableView alloc]init];
-    //_tableView.scrollEnabled=NO;
     _tableView.translatesAutoresizingMaskIntoConstraints=NO;
+    _tableView.showsVerticalScrollIndicator=NO;
     _tableView.dataSource=self;
     _tableView.delegate=self;
     _tableView.rowHeight=50;
@@ -209,6 +211,9 @@
         NSString *distance=[obj objectForKey:@"content"];
         [_distanceArray addObject:distance];
     }];
+    
+    [self initUI];
+    
     [_tableView reloadData];
 
 }
