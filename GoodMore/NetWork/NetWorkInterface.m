@@ -50,6 +50,7 @@ static NSString *HTTP_GET = @"GET";
 + (void)signWithid:(NSString *)idbumber
              type:(NSString *)type
           loginid:(NSString *)loginid
+        coordimate:(NSString *)coordimate
          finished:(requestDidFinished)finish
 {
 
@@ -57,6 +58,8 @@ static NSString *HTTP_GET = @"GET";
     [paramDict setObject:[NSNumber numberWithInt:[idbumber intValue]] forKey:@"id"];
     [paramDict setObject:[NSNumber numberWithInt:[type intValue]]  forKey:@"type"];
     [paramDict setObject:[NSNumber numberWithInt:[loginid intValue]] forKey:@"loginId"];
+    [paramDict setObject:coordimate forKey:@"coordinate"];
+
     //url
     NSString *urlString = [NSString stringWithFormat:@"%@/%@",KServiceURL,s_sign_method];
     [[self class] requestWithURL:urlString
@@ -439,12 +442,12 @@ static NSString *HTTP_GET = @"GET";
     [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
 }
 
-+(void)joinInTeamWithLoginId:(int)loginId Code:(NSString *)code ShipOwnID:(int)shipOwnId Quote:(int)quote finished:(requestDidFinished)finish {
++(void)joinInTeamWithLoginId:(int)loginId Code:(NSString *)code ShipOwnID:(int)shipOwnId Quote:(double)quote finished:(requestDidFinished)finish {
     NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
     [paramDic setObject:[NSNumber numberWithInt:loginId] forKey:@"loginId"];
     [paramDic setObject:code forKey:@"code"];
     [paramDic setObject:[NSNumber numberWithInt:shipOwnId] forKey:@"shipOwnerId"];
-    [paramDic setObject:[NSNumber numberWithInt:quote] forKey:@"quote"];
+    [paramDic setObject:[NSNumber numberWithDouble:quote] forKey:@"quote"];
     NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,shipInTeam_methd];
     [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
 }

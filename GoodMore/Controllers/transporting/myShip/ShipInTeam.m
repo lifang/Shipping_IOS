@@ -46,9 +46,9 @@
             _phone = @"-";
         }
         if ([dict objectForKey:@"quote"]) {
-            _submitMoney = [NSString stringWithFormat:@"%@",[dict objectForKey:@"quote"]];
+            _submitMoney = [[dict objectForKey:@"quote"] doubleValue];
         }else{
-            _submitMoney = @"-";
+            _submitMoney = 0.00;
         }
         if ([dict objectForKey:@"isLeader"]) {
             _isLeader = [NSString stringWithFormat:@"%@",[dict objectForKey:@"isLeader"]];

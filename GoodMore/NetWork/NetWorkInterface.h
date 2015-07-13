@@ -215,9 +215,10 @@ static NSString *completeShipInfo_method = @"app/completeInfo";
 
 //到达装/卸货港签到
 + (void)signWithid:(NSString *)idbumber
-             type:(NSString *)type
-          loginid:(NSString *)loginid
-         finished:(requestDidFinished)finish;
+              type:(NSString *)type
+           loginid:(NSString *)loginid
+        coordimate:(NSString *)coordimate
+          finished:(requestDidFinished)finish;
 //发送验证码 (注册)
 +(void)sendCodeWith:(NSString*)phone finished:(requestDidFinished)finish;
 
@@ -382,7 +383,7 @@ static NSString *completeShipInfo_method = @"app/completeInfo";
 +(void)joinInTeamWithLoginId:(int)loginId
                         Code:(NSString *)code
                    ShipOwnID:(int)shipOwnId
-                       Quote:(int)quote
+                       Quote:(double)quote
                     finished:(requestDidFinished)finish;
 //单船竞价
 +(void)singleShipCompletWithshipOwnerId:(int)shipOwnerId bsOrderId:(int)bsOrderId loginId:(int)loginId quote:(double)quote finished:(requestDidFinished)finish;

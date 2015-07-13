@@ -14,6 +14,7 @@
 
 @property(nonatomic,assign)double money;
 
+
 @end
 
 @implementation JoinShipController
@@ -167,6 +168,14 @@
 }
 
 -(void)sureClicked {
+    if (![[self class] isDouble:_moneyField.text]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.labelText = @"请输入正确的价格！";
+        [hud hide:YES afterDelay:0.3f];
+        return;
+    }
     [_passwordField resignFirstResponder];
     [self joinShipTeam];
 }
@@ -178,7 +187,7 @@
     NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
     int shipOwerId = [[userDefaults objectForKey:@"shipOwnerId"] intValue];
     int loginId = [[userDefaults objectForKey:@"loginId"] intValue];
-    [NetWorkInterface joinInTeamWithLoginId:loginId Code:_passwordField.text ShipOwnID:shipOwerId Quote:[_moneyField.text intValue] finished:^(BOOL success, NSData *response) {
+    [NetWorkInterface joinInTeamWithLoginId:loginId Code:_passwordField.text ShipOwnID:shipOwerId Quote:[_moneyField.text doubleValue] finished:^(BOOL success, NSData *response) {
         hud.customView = [[UIImageView alloc] init];
         hud.mode = MBProgressHUDModeCustomView;
         [hud hide:YES afterDelay:0.3f];
@@ -192,6 +201,7 @@
                     hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
                 }
                 else if ([errorCode intValue] == RequestSuccess) {
+                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
                     [hud hide:YES];
                     [self dismissViewControllerAnimated:YES completion:nil];
                 }
@@ -209,4 +219,9 @@
 
 }
 
++ (BOOL)isDouble:(NSString*)string {
+    NSScanner *scan = [NSScanner scannerWithString:string];
+    double val;
+    return[scan scanDouble:&val] && [scan isAtEnd];
+}
 @end

@@ -20,7 +20,7 @@
 
 @property(nonatomic,strong)NSString *phone;
 
-@property(nonatomic,strong)NSString *submitMoney;
+@property(nonatomic,assign)double submitMoney;
 
 @property(nonatomic,strong)NSString *isLeader;
 
