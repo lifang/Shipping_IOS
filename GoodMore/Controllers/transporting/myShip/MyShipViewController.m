@@ -601,7 +601,6 @@
                     //返回错误代码
                     hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
                     [hud hide:YES];
-                    [self loadShipDetail];
                     
                     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"抢单成功！" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
                     alert.tag = 333;
@@ -768,6 +767,11 @@
     
     if (alertView.tag == 333) {
         if (buttonIndex != alertView.cancelButtonIndex) {
+            [self loadViews];
+            [_shipRankData removeAllObjects];
+            [_shipNumbersData removeAllObjects];
+            [_shipRankData removeAllObjects];
+            [_tableView reloadData];
                 [[NSNotificationCenter defaultCenter] postNotificationName:PushTotransportationNotification object:nil userInfo:nil];
         }
     }
