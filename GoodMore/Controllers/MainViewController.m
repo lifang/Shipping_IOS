@@ -78,11 +78,70 @@
 
     [NavigationBar setNavigationBarStyle:myShipNav];
     self.viewControllers=[[NSArray alloc]initWithObjects:taskNav,transNav,myShipNav, nil];
-    self.selectedIndex=1;
+
     
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    NSNumber *hasTraningOrder=[user objectForKey:@"hasTraningOrder"];
     
+    if ([hasTraningOrder intValue]==1)
+    {
+        //有任务
+        self.selectedIndex=1;
+    }else
+    {
+        //无任务
+        self.selectedIndex=0;
+    }
+    
+    [self downloadGoodDetail];
     
 }
+
+- (void)downloadGoodDetail
+{
+    
+    
+    //    [self loadDetails];
+    NSUserDefaults *userDefault=[NSUserDefaults standardUserDefaults];
+    MBProgressHUD *hud = [[MBProgressHUD alloc]init];
+    hud.labelText = @"加载中...";
+    [self.view addSubview:hud];
+    
+    [NetWorkInterface getdetailsWithloginid:[userDefault objectForKey:@"loginId"] finished:^(BOOL success, NSData *response) {
+        
+        hud.customView = [[UIImageView alloc] init];
+        hud.mode = MBProgressHUDModeCustomView;
+        [hud hide:YES afterDelay:0.5f];
+        if (success) {
+            id object = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+            if ([object isKindOfClass:[NSDictionary class]]) {
+                NSString *errorCode = [object objectForKey:@"code"];
+                if ([errorCode intValue] == RequestFail) {
+                    //返回错误代码
+                    hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
+                
+                    self.selectedIndex=0;
+
+                    
+                    
+                }
+                else if ([errorCode intValue] == RequestSuccess) {
+                    self.selectedIndex=1;
+
+                }
+            }
+            else {
+                //返回错误数据
+                hud.labelText = kServiceReturnWrong;
+            }
+        }
+        else {
+            hud.labelText = kNetworkFailed;
+        }
+    }];
+    
+}
+
 -(IBAction)personal:(id)sender
 {
     NSLog(@"----------------个人");

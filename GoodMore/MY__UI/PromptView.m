@@ -22,7 +22,8 @@
 -(void)initUI
 {
     self.backgroundColor=[UIColor whiteColor];
-    _message=[[UILabel alloc]initWithFrame:CGRectMake(40, 160, kScreenWidth-80, 30)];
+    _message=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 30)];
+    _message.center=CGPointMake(self.center.x, self.center.y);
     _message.textAlignment=NSTextAlignmentCenter;
     _message.font=[UIFont systemFontOfSize:16];
     _message.textColor=[UIColor grayColor];

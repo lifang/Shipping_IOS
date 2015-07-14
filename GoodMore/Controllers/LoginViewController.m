@@ -249,6 +249,7 @@
     NSString *volume=[result objectForKey:@"volume"];
     NSString *length=[result objectForKey:@"length"];
     NSString *waterEat=[result objectForKey:@"waterEat"];
+    NSNumber *hasTraningOrder=[result objectForKey:@"hasTraningOrder"];
     //NSString *pwd=[result objectForKey:@"pwd"];
     
     //NSLog(@"-------登录loginName---%@",loginName);
@@ -267,6 +268,7 @@
     [userDefault setObject:volume forKey:@"volume"];
     [userDefault setObject:length forKey:@"length"];
     [userDefault setObject:waterEat forKey:@"waterEat"];
+    [userDefault setObject:hasTraningOrder forKey:@"hasTraningOrder"];
     //[userDefault setObject:pwd forKey:@"pwd"];
     [userDefault setObject:_pwd.text forKey:@"pwd"];
     [userDefault synchronize];

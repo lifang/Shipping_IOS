@@ -62,12 +62,20 @@
     
 //    UIBarButtonItem *rightItem=[[UIBarButtonItem alloc]initWithImage:kImageName(@"head_small.png") style:UIBarButtonItemStyleDone target:self action:@selector(showRight:)];
 //    self.navigationItem.rightBarButtonItem=rightItem;
+    
+    
+    UIButton *rightButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    rightButton.frame=CGRectMake(0, 0, 24, 24);
+    [rightButton setBackgroundImage:kImageName(@"head_small.png") forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(showRight:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem=[[UIBarButtonItem alloc]initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem=rightItem;
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithTitle:@"历史记录" style:UIBarButtonItemStyleDone target:self action:@selector(leftClick:)];
     
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:kImageName(@"personal.png") style:UIBarButtonItemStyleDone target:self action:@selector(showRight:)];
+//    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:kImageName(@"personal.png") style:UIBarButtonItemStyleDone target:self action:@selector(showRight:)];
     self.navigationItem.leftBarButtonItem = leftItem;
 
-    self.navigationItem.rightBarButtonItem = rightItem;
+//    self.navigationItem.rightBarButtonItem = rightItem;
     [self downloadGoodDetail];
     
 

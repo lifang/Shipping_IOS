@@ -37,6 +37,7 @@
 @property(nonatomic,strong)NSNumber *canSingleShipComplete;//单条船能否接单
 @property(nonatomic,strong)NSString *code;//组队密码
 @property(nonatomic,assign)double price;//记录报价
+@property(nonatomic,assign)CGFloat originY;
 
 @end
 
@@ -59,10 +60,11 @@
 {
     _scrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     
-    _scrollView.contentSize=CGSizeMake(kScreenWidth, kScreenHeight+100);
     _scrollView.showsVerticalScrollIndicator=NO;
-    [self setSubviews];
     
+    [self setSubviews];
+    NSLog(@"contentSize:%f",_originY);
+     _scrollView.contentSize=CGSizeMake(kScreenWidth, _originY+80);
     [self.view addSubview:_scrollView];
     
    
@@ -75,21 +77,13 @@
 {
     CGFloat topSpace=10;
     CGFloat leftSpace=20;
-
+    CGFloat originY=0;
     CGFloat cityWidth=160;
     CGFloat PortWidth=(kScreenWidth-leftSpace*2)/2;//港口label的宽度
     CGFloat jianTouWidth=42;//箭头的长度
 
-    UIView *Vline1=[[UIView alloc]initWithFrame:CGRectMake(10, topSpace, 1, kScreenHeight+100)];
-    Vline1.backgroundColor=kColor(213, 217, 218, 1.0);
-    [_scrollView addSubview:Vline1];
     
-    UIView *Vline2=[[UIView alloc]initWithFrame:CGRectMake(kScreenWidth-10, topSpace, 1, kScreenHeight+100)];
-    Vline2.backgroundColor=kColor(201, 201, 201, 1);
-    [_scrollView addSubview:Vline2];
-
-    
-    UIView *headView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight+100)];
+    UIView *headView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     UIView *view1=[[UIView alloc]initWithFrame:CGRectMake(10, topSpace, kScreenWidth-10*2, 30)];
     view1.backgroundColor=kColor(217, 220, 221, 1);
     UIImageView *imav1=[[UIImageView alloc]initWithFrame:CGRectMake(10, (30-17)/2, 17, 17)];
@@ -124,7 +118,7 @@
     fromCity.textColor=kGrayColor;
     [headView addSubview:fromCity];
     
-    UILabel *fromPort=[[UILabel alloc]initWithFrame:CGRectMake(0, topSpace+30+10+20+5, PortWidth, 20)];
+    UILabel *fromPort=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5, PortWidth, 20)];
     fromPort.text=_businessOrder.beginDockName;
     //fromPort.backgroundColor=[UIColor redColor];
     fromPort.textColor=kGrayColor;
@@ -197,7 +191,7 @@
     [headView addSubview:weight];
 
     UILabel *goodsPrice=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20, 120, 20)];
-    goodsPrice.text=@"报价";
+    goodsPrice.text=@"运价";
     goodsPrice.font=[UIFont boldSystemFontOfSize:18];
     [headView addSubview:goodsPrice];
     
@@ -347,7 +341,20 @@
     [button2 addTarget:self action:@selector(receive:) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:button2];
     
+    originY=topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+20+5+5+20+20+20+40+20;
+    _originY=originY;
+    
+    UIView *Vline1=[[UIView alloc]initWithFrame:CGRectMake(10, topSpace, 1, _originY)];
+    Vline1.backgroundColor=kColor(213, 217, 218, 1.0);
+    [_scrollView addSubview:Vline1];
+    
+    UIView *Vline2=[[UIView alloc]initWithFrame:CGRectMake(kScreenWidth-10, topSpace, 1, _originY)];
+    Vline2.backgroundColor=kColor(201, 201, 201, 1);
+    [_scrollView addSubview:Vline2];
+
+    
     [_scrollView addSubview:headView];
+    
 }
 -(void)initBackView
 {
