@@ -174,15 +174,15 @@
     
     _startPlaceLabel.frame = CGRectMake(CGRectGetMaxX(_startLogo.frame) + 8, _startLogo.frame.origin.y - 7, 120, 30);
     
-    _startPortLabel.frame = CGRectMake(0, CGRectGetMaxY(_startPlaceLabel.frame) + 2, K_MainWidth / 2, 15);
+    _startPortLabel.frame = CGRectMake(10, CGRectGetMaxY(_startPlaceLabel.frame) + 2, (K_MainWidth-20-10) / 2, 15);
     
-    _jiantouV.frame = CGRectMake(K_MainWidth / 2 - 15, CGRectGetMaxY(_startPlaceLabel.frame) - 10, 50, 4);
+    _jiantouV.frame = CGRectMake(K_MainWidth / 2 - 25 , CGRectGetMaxY(_startPlaceLabel.frame) - 10, 50, 4);
     
     _endLogo.frame = CGRectMake(CGRectGetMaxX(_jiantouV.frame) + 15, _startLogo.frame.origin.y, 14, 15);
     
     _endPlaceLabel.frame = CGRectMake(CGRectGetMaxX(_endLogo.frame) + 8, _endLogo.frame.origin.y - 7, 120, 30);
     
-    _endPortLabel.frame = CGRectMake(K_MainWidth / 2 + 10, CGRectGetMaxY(_endPlaceLabel.frame) + 2, K_MainWidth / 2, 15);
+    _endPortLabel.frame = CGRectMake(K_MainWidth / 2+5, CGRectGetMaxY(_endPlaceLabel.frame) + 2, (K_MainWidth-20-10) / 2, 15);
     
     [self drawLineWithTopView:_endPortLabel];
     
@@ -198,7 +198,7 @@
     
     _blueView.frame = CGRectMake(10, CGRectGetMaxY(_goodsLabel.frame) + 15, K_MainWidth - 20, 30);
     
-    _endTimeLabel.frame = CGRectMake(0, CGRectGetMaxY(_goodsLabel.frame) + 22, K_MainWidth / 2, 15);
+    _endTimeLabel.frame = CGRectMake(10, CGRectGetMaxY(_goodsLabel.frame) + 22, (K_MainWidth-20) / 2, 15);
     
     _marginLabel.frame = CGRectMake(K_MainWidth / 2 , CGRectGetMaxY(_goodsLabel.frame) + 22, K_MainWidth / 2, 15);
     

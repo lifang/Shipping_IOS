@@ -11,7 +11,7 @@
 
 @interface TaskDetailViewController : CommonViewController
 
-@property(nonatomic,assign)NSInteger selectedIndex;
+
 
 @property(nonatomic,assign)int ID;
 

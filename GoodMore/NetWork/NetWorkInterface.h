@@ -190,6 +190,8 @@ static NSString *getDistanceList_method = @"app/util/getDistanceList";
 //保存船信息
 static NSString *completeShipInfo_method = @"app/completeInfo";
 
+//保存推送信息
+static NSString *sendDeviceCode_method = @"app/sendDeviceCode";
 @interface NetWorkInterface : NSObject
 
 /*
@@ -239,7 +241,7 @@ static NSString *completeShipInfo_method = @"app/completeInfo";
  mlon
 */
 //任务大厅
-+(void)getOrderListWithPage:(int)page status:(int)status keys:(NSString*)keys mLat1:(double)mLat1 mLon1:(double)mLon1 portId:(int)portId distance:(NSString*)distance finished:(requestDidFinished)finish;
++(void)getOrderListWithPage:(int)page status:(int)status keys:(NSString*)keys mLat1:(double)mLat1 mLon1:(double)mLon1 portId:(int)portId distanceId:(int)distanceId finished:(requestDidFinished)finish;
 
 
 
@@ -427,5 +429,8 @@ static NSString *completeShipInfo_method = @"app/completeInfo";
 
 //保存船信息
 +(void)completeShipInfoWithShipID:(int)shipID loginId:(int)loginId shipNumber:(NSString*)shipNumber volume:(int)volume builderTime:(NSString*)builderTime shipName:(NSString*)shipName length:(double)length waterEat:(double)waterEat finished:(requestDidFinished)finish;
+
+//保存推送消息
++(void)sendDeviceCodeWithID:(int)ID deviceCode:(NSString*)deviceCode finished:(requestDidFinished)finish;
 @end
 

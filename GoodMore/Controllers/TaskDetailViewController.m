@@ -79,7 +79,7 @@
     CGFloat leftSpace=20;
     CGFloat originY=0;
     CGFloat cityWidth=160;
-    CGFloat PortWidth=(kScreenWidth-leftSpace*2)/2;//港口label的宽度
+    CGFloat PortWidth=(kScreenWidth-10*2)/2;//港口label的宽度
     CGFloat jianTouWidth=42;//箭头的长度
 
     
@@ -118,9 +118,8 @@
     fromCity.textColor=kGrayColor;
     [headView addSubview:fromCity];
     
-    UILabel *fromPort=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5, PortWidth, 20)];
+    UILabel *fromPort=[[UILabel alloc]initWithFrame:CGRectMake(10, topSpace+30+10+20+5, PortWidth, 20)];
     fromPort.text=_businessOrder.beginDockName;
-    //fromPort.backgroundColor=[UIColor redColor];
     fromPort.textColor=kGrayColor;
     fromPort.font=[UIFont systemFontOfSize:12];
     fromPort.textAlignment=NSTextAlignmentCenter;
@@ -141,7 +140,6 @@
     [headView addSubview:toCity];
     
     UILabel *toPort=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2, topSpace+30+10+20+5, PortWidth, 20)];
-    //toPort.backgroundColor=[UIColor blueColor];
     toPort.text=_businessOrder.endDockName;
     toPort.textAlignment=NSTextAlignmentCenter;
     toPort.font=[UIFont systemFontOfSize:12];
@@ -197,7 +195,7 @@
     
     UILabel *price=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5, 120, 20)];
     double pay=[_businessOrder.maxPay doubleValue];
-    price.text=[NSString stringWithFormat:@"￥%.2f元",pay];
+    price.text=[NSString stringWithFormat:@"%.2f元/吨",pay];
     price.textColor=kGrayColor;
     [headView addSubview:price];
     
@@ -258,10 +256,10 @@
     UILabel *shipW1=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+5, 120, 20)];
     if ([_businessOrder.minAmount intValue]==0)
     {
-        shipW1.text=@"-米";
+        shipW1.text=@"-吨";
     }else
     {
-         shipW1.text=[NSString stringWithFormat:@"%@天",_businessOrder.minAmount];
+         shipW1.text=[NSString stringWithFormat:@"%@吨",_businessOrder.minAmount];
     }
    
     shipW1.textColor=kGrayColor;

@@ -52,7 +52,7 @@
 -(void)initControllers
 {
     
-    [[self tabBar] setBackgroundImage:[UIImage imageNamed:@"tabBG.png"]];
+    [[self tabBar] setBackgroundImage:[UIImage imageNamed:@"tabBG"]];
     //处理黑线
     [[UITabBar appearance]setShadowImage:[[UIImage alloc]init]];
     TaskViewController *taskVC=[[TaskViewController alloc]init];
