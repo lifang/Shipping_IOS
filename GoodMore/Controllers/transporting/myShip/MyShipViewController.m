@@ -61,6 +61,8 @@
 /**********************************/
 
 @property (nonatomic, assign) BOOL isPush;
+
+@property(nonatomic,strong)NSString *selectedID;
 @end
 
 @implementation MyShipViewController
@@ -83,10 +85,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.selectedID = @"";
     self.isPush = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToHistoryDetail:) name:PushToHistoryDetailNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadViews) name:JiedanchenggongShipNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(joinSuccess) name:JoinShipSuccessNotification object:nil];
     
     [self loadViews];
    
@@ -260,6 +265,7 @@
 
 //创建footerView
 -(void)setupFooterView {
+    
     self.tableView.backgroundColor = [UIColor whiteColor];
     if (!_logisticCell) {
         _logisticCell = [[LogistCellTwo alloc]initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"zuduizhong"];
@@ -354,43 +360,7 @@
                 if ([errorCode intValue] == RequestFail) {
                     //返回错误代码
                     hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
-                    [_tableView removeFromSuperview];
-                    [_headerView removeFromSuperview];
-                    [_dismissBtn removeFromSuperview];
-                    [_grabBtn removeFromSuperview];
-                    [_label removeFromSuperview];
-                    [_btn removeFromSuperview];
-                    [_btn2 removeFromSuperview];
-                    [_logisticCell removeFromSuperview];
-                    _label = [[UILabel alloc]init];
-                    _label.font = [UIFont systemFontOfSize:13];
-                    _label.text = @"您还未加入任何船队！";
-                    _label.textAlignment = NSTextAlignmentCenter;
-                    _label.textColor = [UIColor blackColor];
-                    _label.frame = CGRectMake(K_MainWidth / 4, K_MainHeight / 5, K_MainWidth / 2, 30);
-                    _label.backgroundColor = [UIColor clearColor];
-                    [self.view addSubview:_label];
-                    
-                    _btn = [[UIButton alloc]init];
-                    [_btn setTitle:@"加入船队" forState:UIControlStateNormal];
-                    _btn.titleLabel.font = [UIFont systemFontOfSize:13];
-                    [_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                    [_btn setBackgroundImage:[UIImage imageNamed:@"lianglan"] forState:UIControlStateNormal];
-                    CALayer *readBtnLayer = [_btn layer];
-                    [readBtnLayer setMasksToBounds:YES];
-                    [readBtnLayer setCornerRadius:4.0];
-                    _btn.frame = CGRectMake(_label.frame.origin.x - 20, CGRectGetMaxY(_label.frame) + 10, K_MainWidth / 1.7, 35);
-                    [_btn addTarget:self action:@selector(joinInShipTeam) forControlEvents:UIControlEventTouchUpInside];
-                    [self.view addSubview:_btn];
-                    
-                    _btn2 = [[UIButton alloc]init];
-                    [_btn2 addTarget:self action:@selector(refreshMySelf) forControlEvents:UIControlEventTouchUpInside];
-                    [_btn2 setTitle:@"已申请加入船队，刷新我的状态？" forState:UIControlStateNormal];
-                    _btn2.titleLabel.font = [UIFont systemFontOfSize:13];
-                    [_btn2 setTitleColor:kLightColor forState:UIControlStateNormal];
-                    [_btn2 setBackgroundColor:[UIColor clearColor]];
-                    _btn2.frame = CGRectMake(_btn.frame.origin.x - 20, CGRectGetMaxY(_btn.frame) + 20, 240, 20);
-                    [self.view addSubview:_btn2];
+
                 }
                 else if ([errorCode intValue] == RequestSuccess) {
                     [hud hide:YES];
@@ -411,8 +381,52 @@
     }];
 }
 
+-(void)joinSuccess {
+    _label.text = @"待船长同意!";
+}
+
 -(void)refreshMySelf {
     [self loadViews];
+}
+
+-(void)setApplyShipTeam {
+    [_tableView removeFromSuperview];
+    [_headerView removeFromSuperview];
+    [_dismissBtn removeFromSuperview];
+    [_grabBtn removeFromSuperview];
+    [_label removeFromSuperview];
+    [_btn removeFromSuperview];
+    [_btn2 removeFromSuperview];
+    [_logisticCell removeFromSuperview];
+    _label = [[UILabel alloc]init];
+    _label.font = [UIFont systemFontOfSize:13];
+    _label.text = @"您还未加入任何船队！";
+    _label.textAlignment = NSTextAlignmentCenter;
+    _label.textColor = [UIColor blackColor];
+    _label.frame = CGRectMake(K_MainWidth / 4, K_MainHeight / 5, K_MainWidth / 2, 30);
+    _label.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:_label];
+    
+    _btn = [[UIButton alloc]init];
+    [_btn setTitle:@"加入船队" forState:UIControlStateNormal];
+    _btn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_btn setBackgroundImage:[UIImage imageNamed:@"lianglan"] forState:UIControlStateNormal];
+    CALayer *readBtnLayer = [_btn layer];
+    [readBtnLayer setMasksToBounds:YES];
+    [readBtnLayer setCornerRadius:4.0];
+    _btn.frame = CGRectMake(_label.frame.origin.x - 20, CGRectGetMaxY(_label.frame) + 10, K_MainWidth / 1.7, 35);
+    [_btn addTarget:self action:@selector(joinInShipTeam) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_btn];
+    
+    _btn2 = [[UIButton alloc]init];
+    [_btn2 addTarget:self action:@selector(refreshMySelf) forControlEvents:UIControlEventTouchUpInside];
+    [_btn2 setTitle:@"已申请加入船队，刷新我的状态？" forState:UIControlStateNormal];
+    _btn2.titleLabel.font = [UIFont systemFontOfSize:13];
+    [_btn2 setTitleColor:kLightColor forState:UIControlStateNormal];
+    [_btn2 setBackgroundColor:[UIColor clearColor]];
+    _btn2.frame = CGRectMake(_btn.frame.origin.x - 20, CGRectGetMaxY(_btn.frame) + 20, 240, 20);
+    [self.view addSubview:_btn2];
 }
 
 //解析字典
@@ -421,6 +435,16 @@
     if (![dict objectForKey:@"result"] || ![[dict objectForKey:@"result"] isKindOfClass:[NSDictionary class]]) {
         return;
     }
+    if ([[[dict objectForKey:@"result"] objectForKey:@"shipTeam"]isKindOfClass:[NSNull class]]) {
+        [self setApplyShipTeam];
+        if ([[[dict objectForKey:@"result"] objectForKey:@"hasTeamApply"] intValue] == 1) {
+            _label.text = @"待船长同意";
+        }
+        return;
+    }
+    [_label removeFromSuperview];
+    [_btn removeFromSuperview];
+    [_btn2 removeFromSuperview];
     [_shipNoInTeamData removeAllObjects];
     [_shipNumbersData removeAllObjects];
     [_shipRankData removeAllObjects];
@@ -622,14 +646,25 @@
 }
 
 #pragma mark -- ShipDtailCellDelegate
--(void)deleteDataWithSelectedID:(NSString *)selectedID {
+-(void)deleteDataWithSelectedID:(NSString *)selectedID AndIsExit:(BOOL)isExit {
     NSLog(@"删除了id%@",selectedID);
-    [self deleteRequestWithSelectedID:selectedID];
+    _selectedID = selectedID;
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"确定要删除该船吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+    if (isExit) {
+        alert = [[UIAlertView alloc]initWithTitle:nil message:@"确定要退出吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+    }
+    alert.tag = 444;
+    alert.delegate = self;
+    [alert show];
 }
 
 -(void)agreenWithSelectedID:(NSString *)selectedID {
     NSLog(@"同意了id%@",selectedID);
-    [self agreenRequestWithSelctedId:selectedID];
+    _selectedID = selectedID;
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"确定同意该船吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+    alert.tag = 555;
+    alert.delegate = self;
+    [alert show];
 }
 
 #pragma mark -- TableViewDelegate
@@ -783,6 +818,18 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:PushTotransportationNotification object:nil userInfo:nil];
         }
     }
+    
+    if (alertView.tag == 444) {
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            [self deleteRequestWithSelectedID:_selectedID];
+        }
+    }
+    
+    if (alertView.tag == 555) {
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            [self agreenRequestWithSelctedId:_selectedID];
+        }
+    }
 }
 
 -(void)grabClicked {
@@ -825,7 +872,7 @@
     NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
     NSString *shipName=[userDefaults objectForKey:@"shipName"];
     NSLog(@"%@",shipName);
-    if (shipName) {
+    if (![shipName isEqualToString:@""]) {
         JoinShipController *joinVC = [[JoinShipController alloc]init];
         joinVC.view.frame = CGRectMake(0, 0, 80, 80);
         UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:joinVC];

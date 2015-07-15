@@ -205,6 +205,7 @@
                 else if ([errorCode intValue] == RequestSuccess) {
                     hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
                     [hud hide:YES];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:JoinShipSuccessNotification object:nil userInfo:nil];
                     [self dismissViewControllerAnimated:YES completion:nil];
                 }
             }
