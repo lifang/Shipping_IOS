@@ -31,6 +31,9 @@
 
 #define kImageName(name) [UIImage imageNamed:name]
 
+//#define KServiceURL @"http://120.25.243.169:8888/HDDPlatForm/"
+
+//#define KServiceURL @"http://192.168.0.163:8080/HDDPlatForm/"
 //正式
 //#define KServiceURL @"http://120.25.243.169:8080/HDDPlatForm/"
 

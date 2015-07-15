@@ -27,9 +27,13 @@
 @property(nonatomic,strong)UILabel *price;
 
 @property(nonatomic,strong)UILabel *weight;
+@property(nonatomic,strong)UILabel *isHavePay;
+@property(nonatomic,strong)UIView *isHavePayview;
 
 @property(nonatomic,strong)UILabel *loadTime;
 @property(nonatomic,strong)NSString *levelstatus;
+@property(nonatomic,strong)NSString *isHasNoPay;
+
 @property(nonatomic,strong)NSString *ids;
 @property(nonatomic,strong)NSString *shipRelationID;
 
@@ -190,13 +194,25 @@
     [_titleView addSubview:lastline];
     
 
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 142, kScreenWidth, kScreenHeight-142-110) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 142, kScreenWidth, kScreenHeight-142-130) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     [self.view addSubview:_tableView];
+    
+    
+    _isHavePayview = [[UIView alloc]initWithFrame:CGRectMake(0, kScreenHeight-145, kScreenWidth, 40)];
+    _isHavePayview.backgroundColor = [UIColor orangeColor];
+    [self.view addSubview:_isHavePayview];
+    _isHavePay = [[UILabel alloc]initWithFrame:CGRectMake(0, kScreenHeight-155, kScreenWidth, 30)];
+    _isHavePay.text = @"有运费待结算";
+    _isHavePay.textColor = [UIColor whiteColor];
+    _isHavePay.backgroundColor = [UIColor orangeColor];
 
+//    _isHavePay.font = [UIFont systemFontOfSize:10];
+    _isHavePay.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:_isHavePay];
 
 }
 #pragma mark - UITableView
@@ -376,15 +392,28 @@
 
 }
 - (void)parseTerminalListWithDictionary:(NSDictionary *)dict {
-    if (![dict objectForKey:@"result"] || ![[dict objectForKey:@"result"] isKindOfClass:[NSDictionary class]])
+    if (![[dict objectForKey:@"result"] objectForKey:@"sbRelation"] || ![[[dict objectForKey:@"result"] objectForKey:@"sbRelation"]isKindOfClass:[NSDictionary class]])
     {
         return;
     }
-    _levelstatus=[[dict objectForKey:@"result"] objectForKey:@"level"];
+    _levelstatus=[[[dict objectForKey:@"result"] objectForKey:@"sbRelation"]objectForKey:@"level"];
     
-    _ids=[[dict objectForKey:@"result"] objectForKey:@"id"];
-    
-     TransportingModel *model = [[TransportingModel alloc] initWithParseDictionary:[dict objectForKey:@"result"]];
+    _ids = [[[dict objectForKey:@"result"] objectForKey:@"id"] objectForKey:@"sbRelation"];
+    _isHasNoPay = [[dict objectForKey:@"result"] objectForKey:@"hasNoPay"];
+    if ([_isHasNoPay integerValue] == 0) {
+        _isHavePay.hidden = YES;
+        _isHavePayview.hidden = YES;
+        _tableView.frame = CGRectMake(0, 142, kScreenWidth, kScreenHeight-142-110) ;
+
+    }
+    else
+    {
+        _tableView.frame = CGRectMake(0, 142, kScreenWidth, kScreenHeight-142-140) ;
+
+        _isHavePay.hidden = NO;
+        _isHavePayview.hidden = NO;
+    }
+     TransportingModel *model = [[TransportingModel alloc] initWithParseDictionary:[[dict objectForKey:@"result"] objectForKey:@"sbRelation"]];
     _titleLable.text = model.title;
     _fromCity.text = model.fromCity;
     _fromPort.text = model.fromPort;

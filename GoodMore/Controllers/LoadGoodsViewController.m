@@ -112,7 +112,7 @@
     [self.view addSubview:line1];
     
     UILabel *proof=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+Vspace+Vspace+Vspace+30, 80, 30)];
-    proof.text=@"凭证:";
+    proof.text=@"磅单照片:";
     proof.textColor=[UIColor blackColor];
     [self.view addSubview:proof];
         

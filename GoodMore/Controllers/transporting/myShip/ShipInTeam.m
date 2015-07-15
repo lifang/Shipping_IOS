@@ -62,6 +62,8 @@
         }
         if ([dict objectForKey:@"defaultMoney"]) {
             _defaultMoney = [NSString stringWithFormat:@"%@",[dict objectForKey:@"defaultMoney"]];
+        }else {
+            _defaultMoney = @"0";
         }
     }
     return self;

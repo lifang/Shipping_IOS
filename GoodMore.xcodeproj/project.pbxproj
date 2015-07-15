@@ -477,8 +477,8 @@
 		93C4CA4E1B4D533300FE23DE /* task */ = {
 			isa = PBXGroup;
 			children = (
-				9396213E1B18563A00CB730B /* MainViewController.m */,
 				9396213D1B18563A00CB730B /* MainViewController.h */,
+				9396213E1B18563A00CB730B /* MainViewController.m */,
 				939621401B18567D00CB730B /* TaskViewController.h */,
 				939621411B18567D00CB730B /* TaskViewController.m */,
 				93C4CA451B4CEBB500FE23DE /* SelectPortViewController.h */,
