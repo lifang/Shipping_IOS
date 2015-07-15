@@ -419,7 +419,7 @@
     _fromPort.text = model.fromPort;
     _toCity.text = model.toCity;
     _toPort.text = model.toPort;
-    _price.text = [NSString stringWithFormat:@"%@ 元",model.price];
+    _price.text = [NSString stringWithFormat:@"%@ 元/吨",model.price];
     _weight.text = [NSString stringWithFormat:@"%@ 吨",model.weight];;
     _loadTime.text = model.loadTime;
     _goods.text = model.goods;
