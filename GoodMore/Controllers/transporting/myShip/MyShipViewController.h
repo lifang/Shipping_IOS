@@ -15,8 +15,13 @@ typedef enum {
 }TableViewType;
 
 static NSString *PushToHistoryDetailNotification = @"PushToHistoryDetailNotification";
+
 static NSString *PushToPayForShipNotification = @"PushToPayForShipNotification";
+
 static NSString *JiedanchenggongShipNotification = @"JiedanchenggongShipNotification";
+
+static NSString *JoinShipSuccessNotification = @"JoinShipSuccessNotification";
+
 @interface MyShipViewController : CommonViewController
 
 @end

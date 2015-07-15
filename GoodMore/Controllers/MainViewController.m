@@ -93,7 +93,8 @@
         self.selectedIndex=0;
     }
     
-    [self downloadGoodDetail];
+
+//    [self downloadGoodDetail];
     
 }
 

@@ -14,7 +14,7 @@
 
 @optional
 
--(void)deleteDataWithSelectedID:(NSString *)selectedID;
+-(void)deleteDataWithSelectedID:(NSString *)selectedID AndIsExit:(BOOL)isExit;
 
 -(void)agreenWithSelectedID:(NSString *)selectedID;
 
