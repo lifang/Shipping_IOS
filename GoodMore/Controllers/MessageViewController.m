@@ -42,7 +42,7 @@
 @implementation MessageViewController
 -(void)viewWillAppear:(BOOL)animated
 {
-    
+    [self firstLoadData];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -60,12 +60,12 @@
                                                                  action:@selector(showEdit:)];
     self.navigationItem.rightBarButtonItem = rightItem;
     [self initAndLayoutUI];
-    [self firstLoadData];
+    //[self firstLoadData];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(refreshMessageList:)
-                                                 name:RefreshMessageListNotification
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(refreshMessageList:)
+//                                                 name:RefreshMessageListNotification
+//                                               object:nil];
 
 }
 - (void)setIsMultiDelete:(BOOL)isMultiDelete {

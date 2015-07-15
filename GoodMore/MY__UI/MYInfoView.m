@@ -21,7 +21,7 @@
 }
 -(void)initData
 {
-    _data=[[NSArray alloc]initWithObjects:@"我的资料",@"船舶情况",@"我的钱包",@"退出登录", nil];
+    _data=[[NSArray alloc]initWithObjects:@"我的资料",@"船舶情况",@"我的钱包",@"我的消息",@"退出登录", nil];
 }
 -(void)initUI
 {

@@ -10,13 +10,15 @@
 #import "NetWorkInterface.h"
 #import "MBProgressHUD.h"
 #import "PortModel.h"
+#import "Distance.h"
+
 @interface PortListViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_tableView;
     NSMutableArray *_portArray;
     NSMutableArray *_distanceArray;
 }
-@property(nonatomic,assign)int portID;
+
 @end
 
 @implementation PortListViewController
@@ -82,7 +84,7 @@
         return _portArray.count;
     }else
     {
-        return _distanceArray.count+1;
+        return _distanceArray.count;
     }
     
 }
@@ -101,15 +103,11 @@
         cell.textLabel.text=port.name;
     }else
     {
-        if (indexPath.row==0)
-        {
-            cell.textLabel.text=@"全部";
-        }else
-        {
-            cell.textLabel.text=_distanceArray[indexPath.row-1];
-        }
+        //港口筛选的距离
+       
+        Distance *distance=_distanceArray[indexPath.row];
+        cell.textLabel.text=distance.content;
         
-
     }
         return cell;
 }
@@ -122,13 +120,14 @@
     {
         case 0:
         {
-            
+            Distance *distance=_distanceArray[indexPath.row];
+            _loadportID=[distance.ID intValue];
         }
             break;
         case 1:
         {
             PortModel *port = _portArray[indexPath.row];
-            _portID=[port.ID intValue];
+            _unloadportID=[port.ID intValue];
            
         }
             break;
@@ -140,10 +139,10 @@
     
     UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
     
-    if (_delegate && [_delegate respondsToSelector:@selector(getPortInfoWithportInfo:portID:index:)])
+    if (_delegate && [_delegate respondsToSelector:@selector(getPortInfoWithportInfo:loadportID:unloadportID:index:)])
     {
         
-        [_delegate getPortInfoWithportInfo:cell.textLabel.text portID:_portID index:_index];
+        [_delegate getPortInfoWithportInfo:cell.textLabel.text loadportID:_loadportID unloadportID:_unloadportID index:_index];
         
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -208,7 +207,7 @@
     }
     NSArray *result=[dic objectForKey:@"result"];
     [result enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL *stop) {
-        NSString *distance=[obj objectForKey:@"content"];
+        Distance *distance=[[Distance alloc]initWithDictionary:obj];
         [_distanceArray addObject:distance];
     }];
     

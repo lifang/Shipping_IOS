@@ -11,7 +11,7 @@
 
 @protocol PortListDelegate <NSObject>
 
--(void)getPortInfoWithportInfo:(NSString *)portInfo portID:(int)portID index:(NSInteger)index;
+-(void)getPortInfoWithportInfo:(NSString *)portInfo loadportID:(int)loadportID unloadportID:(int)portID index:(NSInteger)index;
 
 @end
 
@@ -20,5 +20,8 @@
 @property(nonatomic,assign)NSInteger index;
 
 @property(nonatomic,assign)id <PortListDelegate> delegate;
+
+@property(nonatomic,assign)int loadportID;  //装货港口id
+@property(nonatomic,assign)int unloadportID; //卸货港口id
 
 @end

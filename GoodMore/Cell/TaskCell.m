@@ -198,7 +198,7 @@
     
     _blueView.frame = CGRectMake(10, CGRectGetMaxY(_goodsLabel.frame) + 15, K_MainWidth - 20, 30);
     
-    _endTimeLabel.frame = CGRectMake(0, CGRectGetMaxY(_goodsLabel.frame) + 22, K_MainWidth / 2, 15);
+    _endTimeLabel.frame = CGRectMake(10, CGRectGetMaxY(_goodsLabel.frame) + 22, (K_MainWidth-20) / 2, 15);
     
     _marginLabel.frame = CGRectMake(K_MainWidth / 2 , CGRectGetMaxY(_goodsLabel.frame) + 22, K_MainWidth / 2, 15);
     

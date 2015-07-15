@@ -197,7 +197,7 @@
     
     UILabel *price=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5, 120, 20)];
     double pay=[_businessOrder.maxPay doubleValue];
-    price.text=[NSString stringWithFormat:@"￥%.2f元",pay];
+    price.text=[NSString stringWithFormat:@"%.2f元/吨",pay];
     price.textColor=kGrayColor;
     [headView addSubview:price];
     
@@ -258,10 +258,10 @@
     UILabel *shipW1=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+5, 120, 20)];
     if ([_businessOrder.minAmount intValue]==0)
     {
-        shipW1.text=@"-米";
+        shipW1.text=@"-吨";
     }else
     {
-         shipW1.text=[NSString stringWithFormat:@"%@天",_businessOrder.minAmount];
+         shipW1.text=[NSString stringWithFormat:@"%@吨",_businessOrder.minAmount];
     }
    
     shipW1.textColor=kGrayColor;

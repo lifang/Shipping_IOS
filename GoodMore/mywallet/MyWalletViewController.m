@@ -184,18 +184,19 @@
     [cash addTarget:self action:@selector(cash:) forControlEvents:UIControlEventTouchUpInside];
     [_blueView addSubview:cash];
     
-    UILabel *label1=[[UILabel alloc]init];
-    label1.frame=CGRectMake(leftSpace*4, topSpace+cash.bounds.size.height+20, 30, 30);
-    label1.text=@"￥";
-    label1.textAlignment=NSTextAlignmentRight;
-    label1.font=[UIFont boldSystemFontOfSize:24];
-    label1.textColor=[UIColor whiteColor];
-    [_blueView addSubview:label1];
+//    UILabel *label1=[[UILabel alloc]init];
+//    label1.frame=CGRectMake(leftSpace*4, topSpace+cash.bounds.size.height+20, 30, 30);
+//    label1.text=@"￥";
+//    label1.textAlignment=NSTextAlignmentRight;
+//    label1.font=[UIFont boldSystemFontOfSize:24];
+//    label1.textColor=[UIColor whiteColor];
+//    [_blueView addSubview:label1];
     
     _totalVal=[[UILabel alloc]init];
-    _totalVal.frame=CGRectMake(leftSpace*4+30, topSpace+cash.bounds.size.height+5, kScreenWidth-leftSpace*2-leftSpace*4-30, 60);
+    _totalVal.frame=CGRectMake(0, topSpace+cash.bounds.size.height+5, kScreenWidth-leftSpace*2, 60);
+    _totalVal.textAlignment=NSTextAlignmentCenter;
     _totalVal.textColor=[UIColor whiteColor];
-    _totalVal.font=[UIFont boldSystemFontOfSize:48];
+    _totalVal.font=[UIFont boldSystemFontOfSize:40];
     [_blueView addSubview:_totalVal];
     
     NSArray *titleArray=[[NSArray alloc]initWithObjects:@"日期",@"说明",@"金额", nil];
@@ -654,7 +655,7 @@
     NSNumber *totalAvailble=[result objectForKey:@"totalAvailble"];
     double total=[totalAvailble doubleValue];
     _prompt.text=[NSString stringWithFormat:@"￥%.2f",total];
-    _totalVal.text=[NSString stringWithFormat:@"%.2f",total];
+    _totalVal.text=[NSString stringWithFormat:@"￥%.2f",total];
     NSDictionary *recordList=[result objectForKey:@"recordList"];
     NSArray *content=[recordList objectForKey:@"content"];
     [content enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL *stop) {

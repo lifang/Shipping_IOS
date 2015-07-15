@@ -87,21 +87,29 @@
         case 3:
         {
             //我的消息
-//            MessageViewController *message=[[MessageViewController alloc]init];
-//            UINavigationController *messageNav=[[UINavigationController alloc]initWithRootViewController:message];
-//            [NavigationBar setNavigationBarStyle:messageNav];
-//            [self.mm_drawerController setCenterViewController:messageNav withCloseAnimation:YES completion:nil];
+            MessageViewController *message=[[MessageViewController alloc]init];
+            UINavigationController *messageNav=[[UINavigationController alloc]initWithRootViewController:message];
+            [NavigationBar setNavigationBarStyle:messageNav];
+            [self.mm_drawerController setCenterViewController:messageNav withCloseAnimation:YES completion:nil];
             
-            //退出登录
+//            //退出登录
+//            AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+//            
+//            [delegate.rootViewController showLoginViewController];
+            
+        }
+            break;
+            
+        case 4:
+        {
+                      //退出登录
             AppDelegate *delegate = [UIApplication sharedApplication].delegate;
             
             [delegate.rootViewController showLoginViewController];
             
         }
+
             
-         
-            break;
-                 
         default:
             break;
     }
