@@ -76,6 +76,7 @@
         [self.contentView addSubview:_startPlaceLabel];
         
         _startPortLabel = [[UILabel alloc]init];
+        _startPortLabel.backgroundColor=[UIColor redColor];
         _startPortLabel.textAlignment = NSTextAlignmentCenter;
        // _startPortLabel.text = @"马达加斯加港口";
         _startPortLabel.font = [UIFont systemFontOfSize:10];
@@ -89,6 +90,7 @@
         [self.contentView addSubview:_endPlaceLabel];
         
         _endPortLabel = [[UILabel alloc]init];
+        _endPortLabel.backgroundColor=[UIColor blueColor];
         _endPortLabel.textAlignment = NSTextAlignmentCenter;
         //_endPortLabel.text = @"安达曼港口";
         _endPortLabel.font = [UIFont systemFontOfSize:10];
@@ -174,15 +176,15 @@
     
     _startPlaceLabel.frame = CGRectMake(CGRectGetMaxX(_startLogo.frame) + 8, _startLogo.frame.origin.y - 7, 120, 30);
     
-    _startPortLabel.frame = CGRectMake(0, CGRectGetMaxY(_startPlaceLabel.frame) + 2, K_MainWidth / 2, 15);
+    _startPortLabel.frame = CGRectMake(10, CGRectGetMaxY(_startPlaceLabel.frame) + 2, (K_MainWidth-20-10) / 2, 15);
     
-    _jiantouV.frame = CGRectMake(K_MainWidth / 2 - 15, CGRectGetMaxY(_startPlaceLabel.frame) - 10, 50, 4);
+    _jiantouV.frame = CGRectMake(K_MainWidth / 2 - 25 , CGRectGetMaxY(_startPlaceLabel.frame) - 10, 50, 4);
     
     _endLogo.frame = CGRectMake(CGRectGetMaxX(_jiantouV.frame) + 15, _startLogo.frame.origin.y, 14, 15);
     
     _endPlaceLabel.frame = CGRectMake(CGRectGetMaxX(_endLogo.frame) + 8, _endLogo.frame.origin.y - 7, 120, 30);
     
-    _endPortLabel.frame = CGRectMake(K_MainWidth / 2 + 10, CGRectGetMaxY(_endPlaceLabel.frame) + 2, K_MainWidth / 2, 15);
+    _endPortLabel.frame = CGRectMake(K_MainWidth / 2+5, CGRectGetMaxY(_endPlaceLabel.frame) + 2, (K_MainWidth-20-10) / 2, 15);
     
     [self drawLineWithTopView:_endPortLabel];
     

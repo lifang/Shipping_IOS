@@ -79,7 +79,7 @@
     CGFloat leftSpace=20;
     CGFloat originY=0;
     CGFloat cityWidth=160;
-    CGFloat PortWidth=(kScreenWidth-leftSpace*2)/2;//港口label的宽度
+    CGFloat PortWidth=(kScreenWidth-10*2)/2;//港口label的宽度
     CGFloat jianTouWidth=42;//箭头的长度
 
     
@@ -118,9 +118,8 @@
     fromCity.textColor=kGrayColor;
     [headView addSubview:fromCity];
     
-    UILabel *fromPort=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5, PortWidth, 20)];
+    UILabel *fromPort=[[UILabel alloc]initWithFrame:CGRectMake(10, topSpace+30+10+20+5, PortWidth, 20)];
     fromPort.text=_businessOrder.beginDockName;
-    //fromPort.backgroundColor=[UIColor redColor];
     fromPort.textColor=kGrayColor;
     fromPort.font=[UIFont systemFontOfSize:12];
     fromPort.textAlignment=NSTextAlignmentCenter;
@@ -141,7 +140,6 @@
     [headView addSubview:toCity];
     
     UILabel *toPort=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2, topSpace+30+10+20+5, PortWidth, 20)];
-    //toPort.backgroundColor=[UIColor blueColor];
     toPort.text=_businessOrder.endDockName;
     toPort.textAlignment=NSTextAlignmentCenter;
     toPort.font=[UIFont systemFontOfSize:12];

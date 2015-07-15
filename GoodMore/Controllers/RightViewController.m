@@ -102,7 +102,7 @@
             
         case 4:
         {
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"友情提示" message:@"您确认退出app吗?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"友情提示" message:@"您确认退出登录吗?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
             [alert show];
             
         }
