@@ -94,7 +94,7 @@
     }
     
 
-    [self downloadGoodDetail];
+//    [self downloadGoodDetail];
     
     
     
