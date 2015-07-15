@@ -8,12 +8,18 @@
 
 #import "ShipDetailCell.h"
 
+@interface ShipDetailCell()
+
+@property(nonatomic,assign)BOOL isExit;
+
+@end
 
 @implementation ShipDetailCell
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.isExit = NO;
         UIView *v = [[UIView alloc]init];
         v.frame = CGRectMake(10, 5, self.frame.size.width - 20, ShipDetailCellHeight - 10);
         CALayer *readBtnLayer = [v layer];
@@ -88,8 +94,8 @@
 }
 
 -(void)deleteClicked {
-    if (_delegate && [_delegate respondsToSelector:@selector(deleteDataWithSelectedID:)]) {
-        [_delegate deleteDataWithSelectedID:_selectedID];
+    if (_delegate && [_delegate respondsToSelector:@selector(deleteDataWithSelectedID:AndIsExit:)]) {
+        [_delegate deleteDataWithSelectedID:_selectedID AndIsExit:_isExit];
     }
 }
 
@@ -133,6 +139,7 @@
             _leftTopView.hidden = NO;
         }
         if ([shipInTeamModel.isSelf isEqualToString:@"1"]) {
+            _isExit = YES;
             [_deleteBtn setTitle:@"退出" forState:UIControlStateNormal];
             _deleteBtn.hidden = NO;
         }else{

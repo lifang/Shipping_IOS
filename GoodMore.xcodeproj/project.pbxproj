@@ -765,9 +765,11 @@
 				TargetAttributes = {
 					93CDA0751B15B6750008DCC0 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 63FVWL9TD6;
 					};
 					93CDA08E1B15B6750008DCC0 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 63FVWL9TD6;
 						TestTargetID = 93CDA0751B15B6750008DCC0;
 					};
 				};
@@ -1048,6 +1050,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1059,6 +1063,7 @@
 				INFOPLIST_FILE = GoodMoreTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = GoodMoreTests;
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GoodMore.app/GoodMore";
 			};
 			name = Debug;
@@ -1067,6 +1072,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1074,6 +1081,7 @@
 				INFOPLIST_FILE = GoodMoreTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = GoodMoreTests;
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GoodMore.app/GoodMore";
 			};
 			name = Release;
