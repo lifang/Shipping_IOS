@@ -27,6 +27,7 @@
 #define kWalletTitleColor [UIColor colorWithRed:117/255.0 green:116/255.0 blue:116/255.0 alpha:1.0]
 //弹出View的颜色
 #define kViewColor [UIColor colorWithRed:214/255.0 green:214/255.0 blue:214/255.0 alpha:1.0]
+
 #define kGrayColor [UIColor grayColor]
 
 #define kImageName(name) [UIImage imageNamed:name]
@@ -38,10 +39,10 @@
 //#define KServiceURL @"http://120.25.243.169:8080/HDDPlatForm/"
 
 //测试
-//#define KServiceURL @"http://120.25.243.169:8888/HDDPlatForm/"
+#define KServiceURL @"http://120.25.243.169:8888/HDDPlatForm/"
 
 //本地
-#define KServiceURL @"http://192.168.0.163:8080/HDDPlatForm/"
+//#define KServiceURL @"http://192.168.0.163:8080/HDDPlatForm/"
 
 #define kAppVersionType  2   //版本更新
 
