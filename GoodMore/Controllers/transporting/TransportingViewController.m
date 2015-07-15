@@ -82,18 +82,6 @@
 //    self.navigationItem.rightBarButtonItem = rightItem;
     [self downloadGoodDetail];
     
-    _isHavePayview = [[UIView alloc]initWithFrame:CGRectMake(0, kScreenHeight-145, kScreenWidth, 40)];
-    _isHavePayview.backgroundColor = [UIColor orangeColor];
-    [self.view addSubview:_isHavePayview];
-    _isHavePay = [[UILabel alloc]initWithFrame:CGRectMake(0, kScreenHeight-155, kScreenWidth, 30)];
-    _isHavePay.text = @"有运费待结算";
-    _isHavePay.textColor = [UIColor whiteColor];
-    _isHavePay.backgroundColor = [UIColor orangeColor];
-    
-    //    _isHavePay.font = [UIFont systemFontOfSize:10];
-    _isHavePay.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:_isHavePay];
-
     
     
 }
@@ -210,8 +198,21 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     [self.view addSubview:_tableView];
+    [_isHavePay removeFromSuperview];
+    [_isHavePayview removeFromSuperview];
+
+    _isHavePayview = [[UIView alloc]initWithFrame:CGRectMake(0, kScreenHeight-145, kScreenWidth, 40)];
+    _isHavePayview.backgroundColor = [UIColor orangeColor];
+    [self.view addSubview:_isHavePayview];
+    _isHavePay = [[UILabel alloc]initWithFrame:CGRectMake(0, kScreenHeight-155, kScreenWidth, 30)];
+    _isHavePay.text = @"有运费待结算";
+    _isHavePay.textColor = [UIColor whiteColor];
+    _isHavePay.backgroundColor = [UIColor orangeColor];
     
-    
+    //    _isHavePay.font = [UIFont systemFontOfSize:10];
+    _isHavePay.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:_isHavePay];
+
    
 
 }
@@ -369,6 +370,19 @@
                 }
                 else if ([errorCode intValue] == RequestSuccess) {
                     if ([[[object objectForKey:@"result"] objectForKey:@"sbRelation"] isKindOfClass:[NSNull class]]) {
+                        _isHavePayview = [[UIView alloc]initWithFrame:CGRectMake(0, kScreenHeight-145, kScreenWidth, 40)];
+                        _isHavePayview.backgroundColor = [UIColor orangeColor];
+                        [self.view addSubview:_isHavePayview];
+                        _isHavePay = [[UILabel alloc]initWithFrame:CGRectMake(0, kScreenHeight-155, kScreenWidth, 30)];
+                        _isHavePay.text = @"有运费待结算";
+                        _isHavePay.textColor = [UIColor whiteColor];
+                        _isHavePay.backgroundColor = [UIColor orangeColor];
+                        
+                        //    _isHavePay.font = [UIFont systemFontOfSize:10];
+                        _isHavePay.textAlignment = NSTextAlignmentCenter;
+                        [self.view addSubview:_isHavePay];
+                        
+
                         [_titleView removeFromSuperview];
                         //                    [_tableView removeFromSuperview];
                         //                    _tableView.hidden = YES;
