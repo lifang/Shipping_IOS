@@ -1025,7 +1025,7 @@
 				INFOPLIST_FILE = GoodMore/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = GoodMore;
-				PROVISIONING_PROFILE = "f22a4389-8b5c-4e75-b293-3670a2ea1ad0";
+				PROVISIONING_PROFILE = "cad5d974-d31c-4a37-a883-e0aa523ad8a3";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
@@ -1041,7 +1041,7 @@
 				INFOPLIST_FILE = GoodMore/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = GoodMore;
-				PROVISIONING_PROFILE = "f22a4389-8b5c-4e75-b293-3670a2ea1ad0";
+				PROVISIONING_PROFILE = "cad5d974-d31c-4a37-a883-e0aa523ad8a3";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
