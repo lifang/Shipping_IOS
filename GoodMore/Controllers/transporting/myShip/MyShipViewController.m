@@ -60,6 +60,7 @@
 @property (nonatomic, assign) int page;
 /**********************************/
 
+@property (nonatomic, assign) BOOL isPush;
 @end
 
 @implementation MyShipViewController
@@ -82,7 +83,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.isPush = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToHistoryDetail:) name:PushToHistoryDetailNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadViews) name:JiedanchenggongShipNotification object:nil];
@@ -601,7 +602,6 @@
                     //返回错误代码
                     hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
                     [hud hide:YES];
-                    [self loadShipDetail];
                     
                     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"抢单成功！" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
                     alert.tag = 333;
@@ -637,7 +637,9 @@
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if ([_myshipModel.isTeamLeader isEqualToString:@"1"]) {
         return 3;
-    }else{
+        
+    }
+    else{
         return 1;
     }
 }
@@ -716,7 +718,11 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 30.f;
+    if (!_isPush) {
+        return 0.f;
+    }else{
+        return 30.f;
+    }
 }
 
 //- (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -768,6 +774,12 @@
     
     if (alertView.tag == 333) {
         if (buttonIndex != alertView.cancelButtonIndex) {
+            [self loadViews];
+            [_shipRankData removeAllObjects];
+            [_shipNumbersData removeAllObjects];
+            [_shipRankData removeAllObjects];
+            _isPush = NO;
+            [_tableView reloadData];
                 [[NSNotificationCenter defaultCenter] postNotificationName:PushTotransportationNotification object:nil userInfo:nil];
         }
     }

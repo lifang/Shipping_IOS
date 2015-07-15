@@ -96,10 +96,6 @@
 
 //    [self downloadGoodDetail];
     
-    
-    
-    
-    
 }
 
 - (void)downloadGoodDetail
