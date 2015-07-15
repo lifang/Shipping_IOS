@@ -18,7 +18,7 @@
 #import "RootViewController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "AppDelegate.h"
-@interface RightViewController ()<MYInfoViewDelegate>
+@interface RightViewController ()<MYInfoViewDelegate,UIAlertViewDelegate>
 
 @end
 
@@ -102,18 +102,25 @@
             
         case 4:
         {
-                      //退出登录
-            AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-            
-            [delegate.rootViewController showLoginViewController];
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"友情提示" message:@"您确认退出app吗?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+            [alert show];
             
         }
-
-            
         default:
             break;
     }
 
+}
+#pragma mark -----UIAlertViewDelegate-----
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != alertView.cancelButtonIndex)
+    {
+        //退出登录
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+        
+        [delegate.rootViewController showLoginViewController];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
