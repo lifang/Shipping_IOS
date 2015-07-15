@@ -82,7 +82,17 @@
 //    self.navigationItem.rightBarButtonItem = rightItem;
     [self downloadGoodDetail];
     
-
+    _isHavePayview = [[UIView alloc]initWithFrame:CGRectMake(0, kScreenHeight-145, kScreenWidth, 40)];
+    _isHavePayview.backgroundColor = [UIColor orangeColor];
+    [self.view addSubview:_isHavePayview];
+    _isHavePay = [[UILabel alloc]initWithFrame:CGRectMake(0, kScreenHeight-155, kScreenWidth, 30)];
+    _isHavePay.text = @"有运费待结算";
+    _isHavePay.textColor = [UIColor whiteColor];
+    _isHavePay.backgroundColor = [UIColor orangeColor];
+    
+    //    _isHavePay.font = [UIFont systemFontOfSize:10];
+    _isHavePay.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:_isHavePay];
 
     
     
@@ -202,17 +212,7 @@
     [self.view addSubview:_tableView];
     
     
-    _isHavePayview = [[UIView alloc]initWithFrame:CGRectMake(0, kScreenHeight-145, kScreenWidth, 40)];
-    _isHavePayview.backgroundColor = [UIColor orangeColor];
-    [self.view addSubview:_isHavePayview];
-    _isHavePay = [[UILabel alloc]initWithFrame:CGRectMake(0, kScreenHeight-155, kScreenWidth, 30)];
-    _isHavePay.text = @"有运费待结算";
-    _isHavePay.textColor = [UIColor whiteColor];
-    _isHavePay.backgroundColor = [UIColor orangeColor];
-
-//    _isHavePay.font = [UIFont systemFontOfSize:10];
-    _isHavePay.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:_isHavePay];
+   
 
 }
 #pragma mark - UITableView
@@ -368,16 +368,48 @@
 
                 }
                 else if ([errorCode intValue] == RequestSuccess) {
-                    [_Nillable removeFromSuperview];
-                    
-                    [hud hide:YES];
-                    [_dataItem removeAllObjects];
-                    [_titleView removeFromSuperview];
-                    _codeInt = 80;
-                    [self initAndlayoutUI];
-                    _tableView.hidden = NO;
+                    if ([[[object objectForKey:@"result"] objectForKey:@"sbRelation"] isKindOfClass:[NSNull class]]) {
+                        [_titleView removeFromSuperview];
+                        //                    [_tableView removeFromSuperview];
+                        //                    _tableView.hidden = YES;
+                        _codeInt = 90;
+                        [_tableView reloadData];
+                        _Nillable = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2-70, kScreenHeight/2-75, 140, 30)];
+                        //                    _Nillable.center = CGPointMake(kScreenWidth/2-60-15, kScreenHeight/2);
+                        _Nillable.textAlignment = NSTextAlignmentCenter;
+                        
+                        [self.view addSubview:_Nillable];
+                        _Nillable.text = @"暂时没有任务";
+                        _Nillable.textColor = [UIColor grayColor];
+                        _isHasNoPay = [[object objectForKey:@"result"] objectForKey:@"hasNoPay"];
+                        if ([_isHasNoPay integerValue] == 0) {
+                            _isHavePay.hidden = YES;
+                            _isHavePayview.hidden = YES;
+                            _tableView.frame = CGRectMake(0, 142, kScreenWidth, kScreenHeight-142-110) ;
+                            
+                        }
+                        else
+                        {
+                            _tableView.frame = CGRectMake(0, 142, kScreenWidth, kScreenHeight-142-140) ;
+                            
+                            _isHavePay.hidden = NO;
+                            _isHavePayview.hidden = NO;
+                        }
 
-                    [self parseTerminalListWithDictionary:object];
+                    }else{
+                    
+                        [_Nillable removeFromSuperview];
+                        
+                        [hud hide:YES];
+                        [_dataItem removeAllObjects];
+                        [_titleView removeFromSuperview];
+                        _codeInt = 80;
+                        [self initAndlayoutUI];
+                        _tableView.hidden = NO;
+                        [self parseTerminalListWithDictionary:object];
+
+                    }
+
                 }
             }
             else {
@@ -398,7 +430,7 @@
     }
     _levelstatus=[[[dict objectForKey:@"result"] objectForKey:@"sbRelation"]objectForKey:@"level"];
     
-    _ids = [[[dict objectForKey:@"result"] objectForKey:@"id"] objectForKey:@"sbRelation"];
+    _ids = [[[dict objectForKey:@"result"] objectForKey:@"sbRelation"]objectForKey:@"id"];
     _isHasNoPay = [[dict objectForKey:@"result"] objectForKey:@"hasNoPay"];
     if ([_isHasNoPay integerValue] == 0) {
         _isHavePay.hidden = YES;
@@ -419,7 +451,7 @@
     _fromPort.text = model.fromPort;
     _toCity.text = model.toCity;
     _toPort.text = model.toPort;
-    _price.text = [NSString stringWithFormat:@"%@ 元",model.price];
+    _price.text = [NSString stringWithFormat:@"%@ 元/吨",model.price];
     _weight.text = [NSString stringWithFormat:@"%@ 吨",model.weight];;
     _loadTime.text = model.loadTime;
     _goods.text = model.goods;

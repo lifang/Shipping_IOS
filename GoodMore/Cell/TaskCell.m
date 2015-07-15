@@ -76,7 +76,6 @@
         [self.contentView addSubview:_startPlaceLabel];
         
         _startPortLabel = [[UILabel alloc]init];
-        _startPortLabel.backgroundColor=[UIColor redColor];
         _startPortLabel.textAlignment = NSTextAlignmentCenter;
        // _startPortLabel.text = @"马达加斯加港口";
         _startPortLabel.font = [UIFont systemFontOfSize:10];
@@ -90,7 +89,6 @@
         [self.contentView addSubview:_endPlaceLabel];
         
         _endPortLabel = [[UILabel alloc]init];
-        _endPortLabel.backgroundColor=[UIColor blueColor];
         _endPortLabel.textAlignment = NSTextAlignmentCenter;
         //_endPortLabel.text = @"安达曼港口";
         _endPortLabel.font = [UIFont systemFontOfSize:10];
