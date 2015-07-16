@@ -370,6 +370,9 @@
                 }
                 else if ([errorCode intValue] == RequestSuccess) {
                     if ([[[object objectForKey:@"result"] objectForKey:@"sbRelation"] isKindOfClass:[NSNull class]]) {
+                        [_isHavePay removeFromSuperview];
+                        [_isHavePayview removeFromSuperview];
+
                         _isHavePayview = [[UIView alloc]initWithFrame:CGRectMake(0, kScreenHeight-145, kScreenWidth, 40)];
                         _isHavePayview.backgroundColor = [UIColor orangeColor];
                         [self.view addSubview:_isHavePayview];

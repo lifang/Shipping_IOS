@@ -67,7 +67,7 @@
         
     }
     if (order.relationStatus  == 4) {
-        cell.statusLable.text = @"竞价中";
+        cell.statusLable.text = @"运输待结算";
         
     }
     cell.successLabel.hidden = YES;
