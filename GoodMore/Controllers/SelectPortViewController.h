@@ -10,7 +10,7 @@
 
 @protocol SelectPortDelegate <NSObject>
 
--(void)selectPortWithportId:(int)portId distance:(NSString*)distance;
+-(void)selectPortWithloadportId:(int)loadportId unloadportId:(int)unloadportId;
 
 @end
 

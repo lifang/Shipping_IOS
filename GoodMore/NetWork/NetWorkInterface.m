@@ -129,7 +129,7 @@ static NSString *HTTP_GET = @"GET";
 
 //任务大厅
 //如果获取定位失败，则mLat1,mLon1传0值
-+(void)getOrderListWithPage:(int)page status:(int)status keys:(NSString*)keys mLat1:(double)mLat1 mLon1:(double)mLon1 portId:(int)portId distance:(NSString*)distance finished:(requestDidFinished)finish
++(void)getOrderListWithPage:(int)page status:(int)status keys:(NSString*)keys mLat1:(double)mLat1 mLon1:(double)mLon1 portId:(int)portId distanceId:(int)distanceId finished:(requestDidFinished)finish
 {
     NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
     [paramDic setObject:[NSNumber numberWithInt:page] forKey:@"page"];
@@ -138,7 +138,7 @@ static NSString *HTTP_GET = @"GET";
     [paramDic setObject:[NSNumber numberWithDouble:mLat1]  forKey:@"mLat1"];
     [paramDic setObject:[NSNumber numberWithDouble:mLon1]  forKey:@"mLon1"];
     [paramDic setObject:[NSNumber numberWithDouble:portId]  forKey:@"portId"];
-    [paramDic setObject:distance forKey:@"distance"];
+    [paramDic setObject:[NSNumber numberWithDouble:distanceId] forKey:@"distanceId"];
     NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,orderList_method];
     [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
 }
@@ -578,6 +578,15 @@ static NSString *HTTP_GET = @"GET";
     [paramDic setObject:[NSNumber numberWithDouble:waterEat] forKey:@"waterEat"];
     
     NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,completeShipInfo_method];
+    [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
+}
+//保存推送消息
++(void)sendDeviceCodeWithID:(int)ID deviceCode:(NSString*)deviceCode finished:(requestDidFinished)finish
+{
+    NSMutableDictionary *paramDic=[[NSMutableDictionary alloc]init];
+    [paramDic setObject:[NSNumber numberWithInt:ID] forKey:@"id"];
+    [paramDic setObject:deviceCode forKey:@"deviceCode"];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",KServiceURL,sendDeviceCode_method];
     [[self class] requestWithURL:urlString params:paramDic httpMethod:HTTP_POST finished:finish];
 }
 @end

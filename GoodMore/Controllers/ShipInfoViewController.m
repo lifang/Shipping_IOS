@@ -60,7 +60,7 @@
    
    
 
-    _staticData=[[NSArray alloc]initWithObjects:@"船名",@"吨位",@"建成年份(选填)",@"船舶登记号(选填)",@"船舶长度(选填)",@"满载吃水(选填)", nil];
+    _staticData=[[NSArray alloc]initWithObjects:@"船名",@"吨位(吨)",@"建成年份(选填)",@"船舶登记号(选填)",@"船舶长度(米)(选填)",@"满载吃水(米)(选填)", nil];
     
     [self initUI];
 }

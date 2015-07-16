@@ -42,6 +42,8 @@
 @property(nonatomic,strong)NSMutableArray *totalLastTime;
 
 @property(nonatomic,assign)int portID;
+@property(nonatomic,assign)int distanceId;
+
 @property(nonatomic,strong)PromptView *promtView;
 @property(nonatomic,strong)UILabel *messageLabel;
 @end
@@ -61,13 +63,11 @@
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor=[UIColor whiteColor];
-    _index=1;
-    _distance=@"";
+    
     _ordersArray=[[NSMutableArray alloc]init];
     _totalLastTime=[[NSMutableArray alloc]init];
    
     [self initNavigation];
-    //[self initAndLayoutUI];
     [self initBackView];
      _backView.hidden=YES;
     
@@ -309,14 +309,12 @@
     {
         _portID=-1;
     }
-    if ([_distance isEqualToString:@"未选择"] || [_distance isEqualToString:@"全部"])
+    if (_distanceId==0)
     {
-        _distance=@"";
+        _distanceId=-1;
     }
-    
-    [NetWorkInterface getOrderListWithPage:page status:0 keys:@"" mLat1:latitude mLon1:longitude portId:_portID distance:_distance finished:^(BOOL success, NSData *response) {
-    
-    //[NetWorkInterface getOrderListWithPage:page status:0 keys:@"" mLat1:latitude mLon1:longitude finished:^(BOOL success, NSData *response) {
+    [NetWorkInterface getOrderListWithPage:page status:0 keys:@"" mLat1:latitude mLon1:longitude portId:_portID distanceId:_distanceId finished:^(BOOL success, NSData *response) {
+
          NSLog(@"!!---------------任务大厅:%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
          hud.customView=[[UIImageView alloc]init];
          [hud hide:YES afterDelay:0.3];
@@ -392,12 +390,9 @@
         [_ordersArray addObject:order];
     }];
     
-   
-    
-    NSLog(@"-------任务数量:%d",_ordersArray.count);
-    
     if (_ordersArray.count==0)
     {
+        [_tableView removeFromSuperview];
         _messageLabel=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2-70, kScreenHeight/2-75, 140, 30)];
         _messageLabel.textAlignment = NSTextAlignmentCenter;
         _messageLabel.text=@"暂无任务";
@@ -454,7 +449,7 @@
     cell.endPlaceLabel.text=order.endPortName;
     cell.endPortLabel.text=order.endDockName;
     double price=[order.maxPay doubleValue];
-    cell.moneyLabel.text=[NSString stringWithFormat:@"%.2f元",price];
+    cell.moneyLabel.text=[NSString stringWithFormat:@"%.2f元/吨",price];
     cell.weightLabel.text=[NSString stringWithFormat:@"%@吨",order.amount];
     cell.dateLabel.text=order.workTime;
     cell.goodsLabel.text=order.cargos;
@@ -483,7 +478,6 @@
     OrdersModel *order=_ordersArray[indexPath.row];
     int ID=[order.ID intValue];
     TaskDetailViewController *detail=[[TaskDetailViewController alloc]init];
-    detail.selectedIndex=_index;
     detail.ID=ID;
     detail.hidesBottomBarWhenPushed=YES;
     [self.navigationController pushViewController:detail animated:YES];
@@ -656,12 +650,14 @@
 }
 
 #pragma mark SelectPortDelegate
--(void)selectPortWithportId:(int)portId distance:(NSString *)distance
+
+-(void)selectPortWithloadportId:(int)loadportId unloadportId:(int)unloadportId
 {
-    NSLog(@"id:%d  distance:%@",portId,distance);
-    _portID=portId;
-    _distance=distance;
+    NSLog(@"loadportId:%d  unloadportId:%d",loadportId,unloadportId);
+    _distanceId=loadportId;
+    _portID=unloadportId;
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

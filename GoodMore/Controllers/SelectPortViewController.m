@@ -15,7 +15,8 @@
     UILabel *_loadPort;
     UILabel *_unLoadPort;
 }
-@property(nonatomic,assign)int portID;
+@property(nonatomic,assign)int unloadportID;
+@property(nonatomic,assign)int loadportID;
 @end
 
 @implementation SelectPortViewController
@@ -74,9 +75,9 @@
 #pragma mark action
 -(IBAction)commit:(id)sender
 {
-    if (_delegate && [_delegate respondsToSelector:@selector(selectPortWithportId:distance:)])
+    if (_delegate && [_delegate respondsToSelector:@selector(selectPortWithloadportId:unloadportId:)])
     {
-        [_delegate selectPortWithportId:_portID distance:_loadPort.text];
+        [_delegate selectPortWithloadportId:_loadportID unloadportId:_unloadportID];
          [self.navigationController popViewControllerAnimated:YES];
     }
    
@@ -122,6 +123,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     PortListViewController *portList=[[PortListViewController alloc]init];
     portList.index=indexPath.row;
+    portList.loadportID=_loadportID;
+    portList.unloadportID=_unloadportID;
     portList.delegate=self;
     [self.navigationController pushViewController:portList animated:YES];
 }
@@ -138,20 +141,24 @@
 }
 
 #pragma mark PortListDelegate
--(void)getPortInfoWithportInfo:(NSString *)portInfo portID:(int)portID  index:(NSInteger)index
+
+-(void)getPortInfoWithportInfo:(NSString *)portInfo loadportID:(int)loadportID unloadportID:(int)portID index:(NSInteger)index
 {
-    NSLog(@"portInfo:%@ portID:%d index:%ld",portInfo,portID,(long)index);
-    _portID=portID;
+    NSLog(@"portInfo:%@  loadportID:%d  unloadportID:%d",portInfo,loadportID,portID);
+    
+    _unloadportID=portID;
+    _loadportID=loadportID;
     
     if (index==0)
     {
         _loadPort.text=portInfo;
     }else
     {
-         _unLoadPort.text=portInfo;
+        _unLoadPort.text=portInfo;
     }
-   
+
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

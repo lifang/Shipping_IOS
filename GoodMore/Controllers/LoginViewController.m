@@ -14,6 +14,7 @@
 #import "MainViewController.h"
 #import "FindPwdViewController.h"
 #import "AppDelegate.h"
+#import "BPush.h"
 @interface LoginViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIAlertViewDelegate>
 
 {
@@ -236,6 +237,12 @@
     NSDictionary *result=[dictionary objectForKey:@"result"];
     _loginId=[NSString stringWithFormat:@"%@",[result objectForKey:@"id"]];
     _shipOwnerId=[result objectForKey:@"shipOwnerId"];
+    
+    AppDelegate *delegate=[AppDelegate shareAppDelegate];
+    delegate.ID=_loginId;
+    
+    //绑定推送
+    [BPush bindChannel];
     
     _type=[NSString stringWithFormat:@"%@",[result objectForKey:@"type"]];
     NSString *name=[result objectForKey:@"name"];

@@ -15,6 +15,8 @@
 
 @property(nonatomic,strong)RootViewController *rootViewController;
 
+@property(nonatomic,strong)NSString *ID;
+
 + (AppDelegate *)shareAppDelegate;
 @end
 

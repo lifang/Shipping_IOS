@@ -62,17 +62,19 @@
     _greenView.backgroundColor=[self colorWithHexString:@"03D97C"];
     [self.view addSubview:_greenView];
     
-    UILabel *label1=[[UILabel alloc]init];
-    label1.frame=CGRectMake(leftSpace*4, _greenView.bounds.size.height/2-15, 30, 30);
-    label1.text=@"￥";
-    label1.textAlignment=NSTextAlignmentRight;
-    label1.font=[UIFont boldSystemFontOfSize:24];
-    label1.textColor=[UIColor whiteColor];
-    [_greenView addSubview:label1];
+//    UILabel *label1=[[UILabel alloc]init];
+//    label1.frame=CGRectMake(leftSpace*4, _greenView.bounds.size.height/2-15, 30, 30);
+//    label1.text=@"￥";
+//    label1.textAlignment=NSTextAlignmentRight;
+//    label1.font=[UIFont boldSystemFontOfSize:24];
+//    label1.textColor=[UIColor whiteColor];
+//    [_greenView addSubview:label1];
     _totalNoPay=[[UILabel alloc]init];
-    _totalNoPay.frame=CGRectMake(leftSpace*4+30, (_greenView.bounds.size.height-60)/2, kScreenWidth-leftSpace*2-leftSpace*4-30, 60);
+    _totalNoPay.frame=CGRectMake(0, (_greenView.bounds.size.height-60)/2, kScreenWidth-leftSpace*2, 60);
+    
+    _totalNoPay.textAlignment=NSTextAlignmentCenter;
     _totalNoPay.textColor=[UIColor whiteColor];
-    _totalNoPay.font=[UIFont boldSystemFontOfSize:48];
+    _totalNoPay.font=[UIFont boldSystemFontOfSize:40];
     [_greenView addSubview:_totalNoPay];
     
     UILabel *company=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, CGRectGetMaxY(_greenView.frame)+topSpace, 100, 30)];
@@ -211,7 +213,7 @@
     
     NSDictionary *result=[dic objectForKey:@"result"];
     double totalNoPay=[[result objectForKey:@"totalNoPay"]doubleValue];
-    _totalNoPay.text=[NSString stringWithFormat:@"%.2f",totalNoPay];
+    _totalNoPay.text=[NSString stringWithFormat:@"￥%.2f",totalNoPay];
     NSArray *noPayList=[[result objectForKey:@"noPayList"]copy];
     [noPayList enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL *stop) {
         NoPayModel *noPay=[[NoPayModel alloc]initWithDictionary:obj];

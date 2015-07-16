@@ -40,6 +40,7 @@
 		933514361B3D8BB40059611B /* ShipListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 933514351B3D8BB40059611B /* ShipListModel.m */; };
 		9342EE9C1B1F0F43000BF13F /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9342EE9B1B1F0F43000BF13F /* SettingViewController.m */; };
 		9342EE9F1B1F1F95000BF13F /* SetNewPWDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9342EE9E1B1F1F95000BF13F /* SetNewPWDViewController.m */; };
+		935658AF1B562BB000AC8D13 /* Distance.m in Sources */ = {isa = PBXBuildFile; fileRef = 935658AE1B562BB000AC8D13 /* Distance.m */; };
 		935C4FB41B281132004F292B /* WalletCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 935C4FB31B281132004F292B /* WalletCell.m */; };
 		935C4FB71B281A06004F292B /* NopayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935C4FB61B281A06004F292B /* NopayViewController.m */; };
 		935C4FBA1B282ED5004F292B /* AvaliblePayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 935C4FB91B282ED5004F292B /* AvaliblePayModel.m */; };
@@ -106,6 +107,11 @@
 		93F08AEA1B4F61D200473237 /* MessageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F08AE91B4F61D200473237 /* MessageDetailViewController.m */; };
 		93F673821B1C1E5900A4E34E /* TaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F673811B1C1E5900A4E34E /* TaskCell.m */; };
 		93F673851B1C6D3D00A4E34E /* TaskDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F673841B1C6D3D00A4E34E /* TaskDetailViewController.m */; };
+		93F7E4701B54EAD800A8AB5E /* libBPush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F7E46F1B54EAD800A8AB5E /* libBPush.a */; };
+		93F7E4721B54EB1200A8AB5E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F7E4711B54EB1200A8AB5E /* Foundation.framework */; };
+		93F7E4741B54EB2600A8AB5E /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F7E4731B54EB2600A8AB5E /* CoreTelephony.framework */; };
+		93F7E4761B54EB3A00A8AB5E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F7E4751B54EB3A00A8AB5E /* libz.dylib */; };
+		93F7E4781B54EB4D00A8AB5E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F7E4771B54EB4D00A8AB5E /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,6 +192,8 @@
 		9342EE9B1B1F0F43000BF13F /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		9342EE9D1B1F1F95000BF13F /* SetNewPWDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetNewPWDViewController.h; sourceTree = "<group>"; };
 		9342EE9E1B1F1F95000BF13F /* SetNewPWDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetNewPWDViewController.m; sourceTree = "<group>"; };
+		935658AD1B562BB000AC8D13 /* Distance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Distance.h; sourceTree = "<group>"; };
+		935658AE1B562BB000AC8D13 /* Distance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Distance.m; sourceTree = "<group>"; };
 		935C4FB21B281132004F292B /* WalletCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WalletCell.h; sourceTree = "<group>"; };
 		935C4FB31B281132004F292B /* WalletCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WalletCell.m; sourceTree = "<group>"; };
 		935C4FB51B281A06004F292B /* NopayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NopayViewController.h; sourceTree = "<group>"; };
@@ -319,6 +327,12 @@
 		93F673811B1C1E5900A4E34E /* TaskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskCell.m; sourceTree = "<group>"; };
 		93F673831B1C6D3D00A4E34E /* TaskDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailViewController.h; sourceTree = "<group>"; };
 		93F673841B1C6D3D00A4E34E /* TaskDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailViewController.m; sourceTree = "<group>"; };
+		93F7E46E1B54EAD800A8AB5E /* BPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPush.h; sourceTree = "<group>"; };
+		93F7E46F1B54EAD800A8AB5E /* libBPush.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBPush.a; sourceTree = "<group>"; };
+		93F7E4711B54EB1200A8AB5E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		93F7E4731B54EB2600A8AB5E /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		93F7E4751B54EB3A00A8AB5E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		93F7E4771B54EB4D00A8AB5E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -326,6 +340,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93F7E4781B54EB4D00A8AB5E /* SystemConfiguration.framework in Frameworks */,
+				93F7E4761B54EB3A00A8AB5E /* libz.dylib in Frameworks */,
+				93F7E4741B54EB2600A8AB5E /* CoreTelephony.framework in Frameworks */,
+				93F7E4721B54EB1200A8AB5E /* Foundation.framework in Frameworks */,
+				93F7E4701B54EAD800A8AB5E /* libBPush.a in Frameworks */,
 				938E975E1B207FF70050FE4D /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -515,9 +534,11 @@
 			isa = PBXGroup;
 			children = (
 				93C89A741B1D895D008DF209 /* PortModel.h */,
+				93C89A751B1D895D008DF209 /* PortModel.m */,
+				935658AD1B562BB000AC8D13 /* Distance.h */,
+				935658AE1B562BB000AC8D13 /* Distance.m */,
 				0ECD2EC81B4E408000C65456 /* TransportingModel.h */,
 				0ECD2EC91B4E408000C65456 /* TransportingModel.m */,
-				93C89A751B1D895D008DF209 /* PortModel.m */,
 				93C89A771B1D9708008DF209 /* OrdersModel.h */,
 				93C89A781B1D9708008DF209 /* OrdersModel.m */,
 				93B84E271B1ED21200EF2DB4 /* MytaskModel.h */,
@@ -564,6 +585,10 @@
 		93CDA06D1B15B6750008DCC0 = {
 			isa = PBXGroup;
 			children = (
+				93F7E4771B54EB4D00A8AB5E /* SystemConfiguration.framework */,
+				93F7E4751B54EB3A00A8AB5E /* libz.dylib */,
+				93F7E4731B54EB2600A8AB5E /* CoreTelephony.framework */,
+				93F7E4711B54EB1200A8AB5E /* Foundation.framework */,
 				938E975D1B207FF70050FE4D /* CoreLocation.framework */,
 				93CDA0781B15B6750008DCC0 /* GoodMore */,
 				93CDA0921B15B6750008DCC0 /* GoodMoreTests */,
@@ -592,6 +617,7 @@
 				93C89A711B1D3FD9008DF209 /* CommonViewController.m */,
 				93C4CA311B4CC15200FE23DE /* MMDrawerController */,
 				939621501B186D0300CB730B /* HUD */,
+				93F7E46D1B54EAD800A8AB5E /* LibBPush */,
 				93C89A7A1B1DAC47008DF209 /* Refresh */,
 				93C89A731B1D8938008DF209 /* Model */,
 				93F6737F1B1C1E1F00A4E34E /* Cell */,
@@ -714,6 +740,15 @@
 				93A658891B4E736D005AADA9 /* MultipleDeleteCell.m */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		93F7E46D1B54EAD800A8AB5E /* LibBPush */ = {
+			isa = PBXGroup;
+			children = (
+				93F7E46E1B54EAD800A8AB5E /* BPush.h */,
+				93F7E46F1B54EAD800A8AB5E /* libBPush.a */,
+			);
+			path = LibBPush;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -865,6 +900,7 @@
 				938633A01B4116D50092F05E /* ImageCollectionViewCell.m in Sources */,
 				93E6EC6B1B4BE5D90082E990 /* CommonCell.m in Sources */,
 				93CDA0821B15B6750008DCC0 /* RootViewController.m in Sources */,
+				935658AF1B562BB000AC8D13 /* Distance.m in Sources */,
 				938E253A1B29B00A003B7EC5 /* BankInfoViewController.m in Sources */,
 				93C89A721B1D3FD9008DF209 /* CommonViewController.m in Sources */,
 				1A883C821B4FD8B500AC858A /* PayNumberCell.m in Sources */,
@@ -1024,6 +1060,10 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/GoodMore/PrefixHeader.pch";
 				INFOPLIST_FILE = GoodMore/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/GoodMore/LibBPush",
+				);
 				PRODUCT_NAME = GoodMore;
 				PROVISIONING_PROFILE = "cad5d974-d31c-4a37-a883-e0aa523ad8a3";
 				VALIDATE_PRODUCT = YES;
@@ -1040,6 +1080,10 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/GoodMore/PrefixHeader.pch";
 				INFOPLIST_FILE = GoodMore/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/GoodMore/LibBPush",
+				);
 				PRODUCT_NAME = GoodMore;
 				PROVISIONING_PROFILE = "cad5d974-d31c-4a37-a883-e0aa523ad8a3";
 				VALIDATE_PRODUCT = YES;

@@ -7,13 +7,13 @@
 //
 
 #import "AppDelegate.h"
-
+#import "NetWorkInterface.h"
 #import "Constants.h"
 #import <CoreLocation/CoreLocation.h>
 #import "MyWalletViewController.h"
+#import "BPush.h"
 
-
-@interface AppDelegate ()<CLLocationManagerDelegate>
+@interface AppDelegate ()<CLLocationManagerDelegate,BPushDelegate>
 {
     
     CLLocationManager *_locationManager;
@@ -36,19 +36,6 @@
     self.window.backgroundColor=[UIColor whiteColor];
     
     
-//    RootViewController*rootViewController=[[RootViewController alloc]init];
-//    self.window.rootViewController=rootViewController;
-    
-    //NSString *deviceString=[UIDevice currentDevice].model;
-    //NSLog(@"设备型号--------%@",deviceString);
-    
-    //UIScreen *currentScreen = [UIScreen mainScreen];
-    
-    //NSLog(@"applicationFrame.size.height = %f",currentScreen.applicationFrame.size.height);
-    //NSLog(@"applicationFrame.size.width = %f",currentScreen.applicationFrame.size.width);
-    
-    //[self checkAppVersion];
-    
     _rootViewController=[[RootViewController alloc]init];
     self.window.rootViewController=_rootViewController;
     
@@ -58,6 +45,29 @@
     _timer = [NSTimer scheduledTimerWithTimeInterval:15*60 target:self selector:@selector(getUserLocation) userInfo:nil repeats:YES];
     
     [self.window makeKeyAndVisible];
+    
+    //******百度推送******
+    // iOS8 下需要使⽤用新的 API
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        UIUserNotificationType myTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound
+        | UIUserNotificationTypeAlert;
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes
+                                                                                 categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    }else {
+        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+    }
+    // 上线 AppStore 时需要修改 pushMode
+    // 在 App 启动时注册百度云推送服务,需要提供 Apikey
+    [BPush registerChannel:launchOptions apiKey:@"Wcs9yGqEzHeklGTxhsj6IyK3" pushMode:BPushModeDevelopment isDebug:NO];
+    // 设置 BPush 的回调
+    [BPush setDelegate:self];
+    // App 是⽤用户点击推送消息启动
+    NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (userInfo) {
+        [BPush handleNotification:userInfo];
+    }
     
     return YES;
 }
@@ -141,4 +151,65 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+//**************推送
+-(void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    [application registerForRemoteNotifications];
+}
+//调用API,注册deviceToken,并且绑定Push服务
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    [BPush registerDeviceToken:deviceToken];
+    //[BPush bindChannel];
+}
+//若上面的方法不被调用,可以实现下面的方法来查看原因
+//******  当deviceToken获取失败时,系统会回调此方法  **********
+-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"deviceToken获取失败,原因:%@",error);
+}
+//处理接收到的Push消息
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    //收到推送通知
+    [BPush handleNotification:userInfo];
+    NSLog(@"------------收到推送通知:userInfo:%@",[userInfo description]);
+    if (userInfo)
+    {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"您有新消息" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
+    }
+    
+    
+}
+//API调用返回结果:
+-(void)onMethod:(NSString *)method response:(NSDictionary *)data
+{
+    NSLog(@"method:%@",method);
+    NSLog(@"data:%@",[data description]);
+    
+    NSDictionary *dic=[[NSDictionary alloc]initWithDictionary:data];
+    if ([BPushRequestMethodBind isEqualToString:method])
+    {
+        NSString *appID = [dic valueForKey:BPushRequestAppIdKey];
+        NSString *channelID=[dic valueForKey:BPushRequestChannelIdKey];
+        NSString *userID = [dic valueForKey:BPushRequestUserIdKey];
+        int returnCode=[[dic valueForKey:BPushRequestErrorCodeKey] intValue];
+        
+        NSLog(@"-------%@,%@,%@,%d",appID,channelID,userID,returnCode);
+        
+        if (returnCode==0)
+        {
+            [self uploadPushChannelID:channelID];
+        }
+    }
+    
+}
+-(void)uploadPushChannelID:(NSString*)channelID
+{
+    NSString *deviceCode=[NSString stringWithFormat:@"1%@",channelID];
+    [NetWorkInterface sendDeviceCodeWithID:[self.ID intValue] deviceCode:deviceCode finished:^(BOOL success, NSData *response) {
+         NSLog(@"绑定推送!!%@",[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+    }];
+}
 @end
