@@ -276,6 +276,8 @@
         _tableView.tableHeaderView = _headerView;
     }else{
         [_logisticCell setContentWithMyshipModel:_myshipModel];
+        [_headerView addSubview:_logisticCell];
+        _tableView.tableHeaderView = _headerView;
     }
     
     if ([_myshipModel.isTeamLeader isEqualToString:@"1"]) {
@@ -585,6 +587,7 @@
                     //返回错误代码
                     hud.labelText = [NSString stringWithFormat:@"%@",[object objectForKey:@"message"]];
                     [hud hide:YES];
+                    [_logisticCell removeFromSuperview];
                     [self loadShipDetail];
                 }
             }
