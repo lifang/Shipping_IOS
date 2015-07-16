@@ -1065,7 +1065,7 @@
 					"$(PROJECT_DIR)/GoodMore/LibBPush",
 				);
 				PRODUCT_NAME = GoodMore;
-				PROVISIONING_PROFILE = "cad5d974-d31c-4a37-a883-e0aa523ad8a3";
+				PROVISIONING_PROFILE = "f22a4389-8b5c-4e75-b293-3670a2ea1ad0";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
@@ -1085,7 +1085,7 @@
 					"$(PROJECT_DIR)/GoodMore/LibBPush",
 				);
 				PRODUCT_NAME = GoodMore;
-				PROVISIONING_PROFILE = "cad5d974-d31c-4a37-a883-e0aa523ad8a3";
+				PROVISIONING_PROFILE = "f22a4389-8b5c-4e75-b293-3670a2ea1ad0";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
