@@ -174,6 +174,14 @@
     //收到推送通知
     [BPush handleNotification:userInfo];
     NSLog(@"------------收到推送通知:userInfo:%@",[userInfo description]);
+//    if (application.applicationState==UIApplicationStateActive)
+//    {
+//        //前台
+//    }else
+//    {
+//        //后台
+//        
+//    }
     if (userInfo)
     {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"您有新消息" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];

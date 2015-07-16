@@ -135,7 +135,7 @@
 
     
     _fromPort=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace+10, topSpace+20+10+20+5, PortWidth, 20)];
-    _fromPort.font=[UIFont systemFontOfSize:14];
+    _fromPort.font=[UIFont systemFontOfSize:12];
     _fromPort.textAlignment=NSTextAlignmentCenter;
     [_titleView addSubview:_fromPort];
 
@@ -156,7 +156,7 @@
     
     _toPort = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2+leftSpace, topSpace+20+10+20+5, PortWidth, 20)];
     _toPort.textAlignment = NSTextAlignmentCenter;
-    _toPort.font = [UIFont systemFontOfSize:14];
+    _toPort.font = [UIFont systemFontOfSize:12];
     [_titleView addSubview:_toPort];
 
     

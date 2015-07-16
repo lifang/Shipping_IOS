@@ -377,7 +377,7 @@
     NSDictionary *result=[dic objectForKey:@"result"];
     NSArray *content=[result objectForKey:@"content"];
     
-    //[_ordersArray removeAllObjects];
+    [_ordersArray removeAllObjects];
     
     [content enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL *stop) {
         
