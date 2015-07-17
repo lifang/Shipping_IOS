@@ -84,6 +84,7 @@
 
     
     UIView *headView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+    NSLog(@"headView frame:%f",_originY);
     UIView *view1=[[UIView alloc]initWithFrame:CGRectMake(10, topSpace, kScreenWidth-10*2, 30)];
     view1.backgroundColor=kColor(217, 220, 221, 1);
     UIImageView *imav1=[[UIImageView alloc]initWithFrame:CGRectMake(10, (30-17)/2, 17, 17)];
@@ -150,8 +151,8 @@
     view2.backgroundColor=kColor(193, 230, 242, 1.0);
     [headView addSubview:view2];
     
-    UILabel *endTime=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth/2, 30)];
-    endTime.text=_businessOrder.timeLeft;
+    UILabel *endTime=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth-10*2, 30)];
+    endTime.text=[NSString stringWithFormat:@"组队于%@",_businessOrder.timeLeft];
     endTime.textAlignment=NSTextAlignmentCenter;
     endTime.font=[UIFont systemFontOfSize:12];
     [view2 addSubview:endTime];
@@ -315,31 +316,48 @@
     capacity.textColor=kGrayColor;
     [headView addSubview:capacity];
     
-    UIView *line2=[[UIView alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+20+5+5+20+20, kScreenWidth-leftSpace*2, 1)];
+    UILabel *remarkLabel=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+20+5+5+20+10, kScreenWidth/2, 12)];
+    remarkLabel.text=@"其他说明:";
+    remarkLabel.font=[UIFont systemFontOfSize:12];
+    [headView addSubview:remarkLabel];
+    
+    UILabel *remark=[[UILabel alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+20+5+5+20+10+12+5, kScreenWidth-leftSpace*2, 20)];
+    if ([_businessOrder.remarks isEqualToString:@""])
+    {
+        remark.text=@"无";
+    }else
+    {
+        remark.text=_businessOrder.remarks;
+    }
+    
+    remark.font=[UIFont systemFontOfSize:16];
+    [headView addSubview:remark];
+    
+    UIView *line2=[[UIView alloc]initWithFrame:CGRectMake(leftSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+20+5+5+20+10+12+5+20+20, kScreenWidth-leftSpace*2, 1)];
     line2.backgroundColor=kColor(201, 201, 201, 1);
     [headView addSubview:line2];
     
     CGFloat buttonWidth=120;
     CGFloat buttonSpace=kScreenWidth-30*2-buttonWidth*2;
     UIButton *button1=[UIButton buttonWithType:UIButtonTypeCustom];
-    button1.frame=CGRectMake(30, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+20+5+5+20+20+20, buttonWidth, 40);
+    button1.frame=CGRectMake(30, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+20+5+5+20+10+12+5+20+20+20, buttonWidth, 40);
     button1.layer.cornerRadius=4;
     button1.layer.masksToBounds=YES;
     [button1 setTitle:@"单船报价" forState:UIControlStateNormal];
     [button1 setBackgroundColor:kColor(22, 168, 238, 1)];
     [button1 addTarget:self action:@selector(quotation:) forControlEvents:UIControlEventTouchUpInside];
-    [headView addSubview:button1];
+    [_scrollView addSubview:button1];
     
     UIButton *button2=[UIButton buttonWithType:UIButtonTypeCustom];
-    button2.frame=CGRectMake(30+buttonWidth+buttonSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+20+5+5+20+20+20, buttonWidth, 40);
+    button2.frame=CGRectMake(30+buttonWidth+buttonSpace, topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+20+5+5+20+10+12+5+20+20+20, buttonWidth, 40);
     button2.layer.cornerRadius=4;
     button2.layer.masksToBounds=YES;
     [button2 setTitle:@"组队接单" forState:UIControlStateNormal];
     [button2 setBackgroundColor:kMainColor];
     [button2 addTarget:self action:@selector(receive:) forControlEvents:UIControlEventTouchUpInside];
-    [headView addSubview:button2];
+    [_scrollView addSubview:button2];
     
-    originY=topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+20+5+5+20+20+20+40+20;
+    originY=topSpace+30+10+20+5+20+10+30+10+20+5+20+5+20+20+20+5+20+20+20+5+20+20+10+20+5+20+20+20+5+5+20+10+12+5+20+20+20+40+20;
     _originY=originY;
     
     UIView *Vline1=[[UIView alloc]initWithFrame:CGRectMake(10, topSpace, 1, _originY)];
@@ -566,6 +584,7 @@
 //单船报价
 -(void)quotation:(UIButton*)sender
 {
+    NSLog(@"单船报价---------------");
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     NSString *shipName=[user objectForKey:@"shipName"];
 
@@ -588,9 +607,9 @@
 //组队接单
 -(IBAction)receive:(UIButton*)sender
 {
-//    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"信息不完全,去完善船舶信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
-//    [alert show];
-    
+
+
+    NSLog(@"组队接单---------------");
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     NSString *shipName=[user objectForKey:@"shipName"];
     
@@ -621,7 +640,7 @@
                         _backView.hidden=NO;
                         _code=[object objectForKey:@"result"];
                         _shipPwd.text=[NSString stringWithFormat:@"组队密码:%@",_code];
-                        [self changeStatus];
+                        //[self changeStatus];
                         
                     }else
                     {
@@ -714,8 +733,8 @@
     _businessOrder=[[BusinessOrders alloc]initWithDictionary:businessOrder];
     
     //判断是否能组队接单 0不能 1能
-    NSNumber *canMT=[result objectForKey:@"canMT"];
-    _canMT=[canMT intValue];
+//    NSNumber *canMT=[result objectForKey:@"canMT"];
+//    _canMT=[canMT intValue];
     
      [self initAndLayoutUI];
     

@@ -45,7 +45,9 @@
 @property(nonatomic,assign)int distanceId;
 
 @property(nonatomic,strong)PromptView *promtView;
+
 @property(nonatomic,strong)UILabel *messageLabel;
+
 @end
 
 @implementation TaskViewController
@@ -58,6 +60,17 @@
     
     [self firstLoadData];
 }
+-(UILabel*)messageLabel
+{
+    if (!_messageLabel)
+    {
+        _messageLabel=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2-70, kScreenHeight/2-75, 140, 30)];
+        _messageLabel.textAlignment = NSTextAlignmentCenter;
+        _messageLabel.textColor=kGrayColor;
+        [self.view addSubview:_messageLabel];
+    }
+    return _messageLabel;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -68,9 +81,10 @@
     _totalLastTime=[[NSMutableArray alloc]init];
    
     [self initNavigation];
-    [self initBackView];
+    //[self initBackView];
+    
     [self initAndLayoutUI];
-     _backView.hidden=YES;
+    
     
 }
 
@@ -377,7 +391,6 @@
     NSDictionary *result=[dic objectForKey:@"result"];
     NSArray *content=[result objectForKey:@"content"];
     
-    [_ordersArray removeAllObjects];
     
     [content enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL *stop) {
         
@@ -391,26 +404,20 @@
         [_ordersArray addObject:order];
     }];
     
+    
     if (_ordersArray.count==0)
     {
-        _tableView.hidden=YES;
-        _messageLabel=[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/2-70, kScreenHeight/2-75, 140, 30)];
-        _messageLabel.textAlignment = NSTextAlignmentCenter;
-        _messageLabel.text=@"暂无任务";
-        _messageLabel.textColor=kGrayColor;
-        [self.view addSubview:_messageLabel];
+        self.messageLabel.hidden=NO;
+        self.messageLabel.text=@"暂无任务";
+        NSLog(@"1111111111----%@",_messageLabel);
         
     }else
     {
-        [_messageLabel removeFromSuperview];
         
-        _tableView.hidden=NO;
-        
-        //[self initAndLayoutUI];
-        
-        [_tableView reloadData];
+        self.messageLabel.hidden=YES;
+
     }
-    
+    [_tableView reloadData];
     
 
     
@@ -456,19 +463,9 @@
     cell.weightLabel.text=[NSString stringWithFormat:@"%@吨",order.amount];
     cell.dateLabel.text=order.workTime;
     cell.goodsLabel.text=order.cargos;
-//    
-//    NSLog(@"======表----%lu---",(unsigned long)_totalLastTime.count);
-//
-//    
-//    int second = [_totalLastTime[indexPath.row] intValue];
-//    
-//    NSLog(@"-----表上-----%d",second);
-//    
-//    timerLabel=[[MZTimerLabel alloc]initWithLabel:cell.endTimeLabel andTimerType:MZTimerLabelTypeTimer];
-//    [timerLabel setCountDownTime:second];
-//    [timerLabel start];
+
     
-    cell.endTimeLabel.text=order.timeLeft;
+    cell.endTimeLabel.text=[NSString stringWithFormat:@"组队于%@",order.timeLeft];
     //cell.marginLabel.text=@"保证金:200.00元";
     
     return cell;

@@ -13,7 +13,7 @@
 #import "AddCollectionViewCell.h"
 #import "ImageCollectionViewCell.h"
 #import "TransportingViewController.h"
-@interface LoadGoodsViewController ()<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UITextFieldDelegate>
+@interface LoadGoodsViewController ()<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UITextFieldDelegate,UIAlertViewDelegate>
 {
     UITextField *_num;
     UICollectionView *_collectionView;
@@ -296,8 +296,11 @@
                 else if ([errorCode intValue] == RequestSuccess) {
                     hud.labelText = @"提交成功";
 //                    [[NSNotificationCenter defaultCenter] postNotificationName:RefreshListNotification object:nil];
-
-                    [self.navigationController popToRootViewControllerAnimated:YES];
+ 
+                    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"本次运输任务已完成,请等待结算运费" delegate:self cancelButtonTitle:@"确认" otherButtonTitles: nil];
+                    [alert show];
+                    
+                   
                     
                 }
             }
@@ -590,7 +593,14 @@
     [_num resignFirstResponder];
     return YES;
 }
-
+#pragma mark UIAlertViewDelegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==alertView.cancelButtonIndex)
+    {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
