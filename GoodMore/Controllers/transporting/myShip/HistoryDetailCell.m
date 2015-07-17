@@ -76,8 +76,8 @@
         _leftTopView.hidden = NO;
     }
     _logistNameLabel.text = shipInTeamModel.shipName;
-    _nameLabel.text = shipInTeamModel.name;
-    _weightLabel.text = [NSString stringWithFormat:@"%@吨",shipInTeamModel.volume];
+    _weightLabel.text = shipInTeamModel.name;
+    _nameLabel.text = [NSString stringWithFormat:@"%@吨",shipInTeamModel.volume];
     _phoneNumLabel.text = shipInTeamModel.phone;
 }
 
